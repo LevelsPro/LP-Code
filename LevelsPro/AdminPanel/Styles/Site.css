@@ -1,0 +1,41 @@
+﻿body 
+{
+    font-family:Tahoma;
+}
+
+#Menu
+    {
+        padding:0;
+        margin:0;
+        list-style-type:none;
+        font-size:13px;
+        color:#717171;
+        width:70%;        
+    }
+
+    #Menu li
+    {
+        border-bottom:1px solid #eeeeee;
+        padding:7px 10px 7px 10px;
+    }
+
+    #Menu li:hover
+    {
+        background-color:#F7F6F3;
+    }
+#Menu li:hover a
+    {
+        color:#717171;
+    }
+
+
+    #Menu a:link
+    {
+        color:#717171;
+        text-decoration:none;
+    }
+
+    #Menu a:hover
+    {
+        color:White;
+    }

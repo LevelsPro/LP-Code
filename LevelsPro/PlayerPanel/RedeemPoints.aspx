@@ -1,0 +1,142 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PlayerPanel/Player.master" AutoEventWireup="true"
+    CodeBehind="RedeemPoints.aspx.cs" Inherits="LevelsPro.PlayerPanel.RedeemPoints" %>
+
+<%@ Register TagPrefix="uc" TagName="Profile" Src="~/PlayerPanel/UserControls/uc_Profile.ascx" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="”text/css”">
+        .imgclass
+        {
+            background-color: #000000;
+            text-align: center;
+        }
+        .imgclass map
+        {
+            margin: auto;
+        }
+        img
+        {
+            display: block;
+        }
+        
+    </style>
+     <style type="text/css">
+        .tbl-processing
+        {
+            background-color: Gray;
+            filter: alpha(opacity=50);
+            opacity: 0.50;
+        }
+        
+        
+        
+        
+        .updateProgress
+        {
+            color: #FFFFFF;
+            font-family: Trebuchet MS;
+            font-size: small;
+            margin: auto;
+            opacity: 1;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            vertical-align: middle;
+            margin-left: -150px;
+            margin-top: -100px;
+        }
+    </style>
+    <script type="text/javascript" src="Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.tinyscrollbar.min.js"></script>
+    <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />
+  	<link href="Styles/theme.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/website.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#scrollbar1').tinyscrollbar();
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:UpdatePanel ID="upRedeem" runat="server">
+<ContentTemplate>
+<div class="container">
+	<div class="top-b">
+	
+		<div class="green-ar-wrapper fl">
+        <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>" 
+            PostBackUrl="~/PlayerPanel/PlayerHome.aspx" class="green-ar"></asp:Button>
+		</div>
+		<asp:Label ID="lblName" runat="server" class="user-nt"></asp:Label>
+		
+		<div class="green-wrapper logout">
+        <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
+           class="green" OnClick="btnLogout_Click"></asp:Button>
+		</div>
+		
+		<div class="clear"></div>
+	</div>
+    <div class="body-cont">
+	<uc:Profile ID="ViewProfile" runat="server" />
+	
+
+		<div class="redemption-holder" id="scrollbar1">
+				
+				<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+		<div class="viewport redemption">
+			 <div class="overview">
+				
+			<asp:DataList ID="dlRewards" runat="server" DataKeyField="Reward_ID" OnItemCommand="dlRewards_ItemCommand"
+                        OnItemDataBound="dlRewards_ItemDataBound">
+                        <ItemTemplate>
+                            <div class="red-cont box">
+                                <asp:Image Width="100px" Height="100px" ID="imgGraphics" CssClass="fl" runat="server"
+                                    ImageUrl='<%# ConfigurationSettings.AppSettings["RewardsPath"].ToString() + Eval("Reward_Image") %>' />
+                                <div class="desc fl">
+                                    <h2 class="red-heading">
+                                        <%# Eval("Reward_Name") %></h2>
+                                    <div class="text">
+                                        <%# Eval("Reward_Descp")%></div>
+                                    <div class="btn-holder">
+
+                                    <asp:LinkButton ID="lbtnRedeem" runat="server" Font-Overline="false"  CommandName="redeem" CommandArgument='<%# Eval("Reward_Cost") %>'>
+                                        <div class="rdmption-btn" id="divscore" runat="server">                                       
+                                            <%--<img src="images/arrow-redmp.png" width="23" height="31" alt="arrow" class="arrow" />--%>
+                                            <img src="Images/star.png" width="23" height="31" alt="star" />
+                                            <asp:Label ID="lblRewardName" runat="server" Visible="false" Text='<%# Eval("Reward_Name") %>'></asp:Label>
+                                            <asp:Label ID="lblRedeem" runat="server" Font-Size="X-Large" Font-Bold="true" ForeColor="Black" Text='<%# Eval("Reward_Cost") %>'></asp:Label>
+                                            <%--<asp:Button BackColor="Transparent" BorderColor="Transparent"  Font-Size="X-Large" Font-Bold="true" ID="btnRedeem" alt="star" runat="server" Text='<%# Eval("Reward_Cost") %>'
+                                                />--%>
+                                        </div>
+                                    </asp:LinkButton>
+                                    
+                                    </div>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:DataList>
+	<asp:UpdateProgress ID="uprogressHome" runat="server" DisplayAfter="0" AssociatedUpdatePanelID="upRedeem">
+                <ProgressTemplate>
+                    <div style="background-color: Teal; filter: alpha(opacity=80); opacity: 0.80; width: 100%;
+                        top: 0px; left: 0px; position: fixed; height: 100%;">
+                    </div>
+                    <div class="updateProgress">
+                        <table width="100%">
+                            <tr>
+                                <td style="width: 30%">
+                                    <img src="../Images/loading-small.gif" alt="wait" />
+                                </td>
+                                <td style="width: 70%" align="left">
+                                    <span style="font-family: Georgia; font-size: medium; font-weight: bold; color: #FFFFFF">
+                                        <asp:Literal ID="ltProcessing" runat="server" Text="<%$ Resources:TestSiteResources, Processing %>"></asp:Literal></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </ProgressTemplate>
+            </asp:UpdateProgress>
+            </ContentTemplate>
+            </asp:UpdatePanel>
+
+</asp:Content>

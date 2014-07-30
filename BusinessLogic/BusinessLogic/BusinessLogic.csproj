@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{56B582D3-9B34-46BC-B13C-499A2D3AEFBB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BusinessLogic</RootNamespace>
+    <AssemblyName>BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Delete\AssignAwardDeleteBLL.cs" />
+    <Compile Include="Delete\AwardImageDeleteBLL.cs" />
+    <Compile Include="Delete\level_TargetDeleteBLL.cs" />
+    <Compile Include="Delete\MessageDeleteBLL.cs" />
+    <Compile Include="Delete\QuestionDeleteBLL.cs" />
+    <Compile Include="Delete\QuestionLevelDeleteBLL.cs" />
+    <Compile Include="Delete\QuizDeleteBLL.cs" />
+    <Compile Include="Delete\QuizScoreDeleteBLL.cs" />
+    <Compile Include="Delete\RewardImageDeleteBLL.cs" />
+    <Compile Include="Delete\SecurityAnswersDeleteBLL.cs" />
+    <Compile Include="Delete\UserImageDeleteBLL.cs" />
+    <Compile Include="Insert\AwardImageInsertBLL.cs" />
+    <Compile Include="Insert\BulkInsertQuizQuestionsBLL.cs" />
+    <Compile Include="Insert\CategoryInsertBLL.cs" />
+    <Compile Include="Insert\LifeLineInsertBLL.cs" />
+    <Compile Include="Insert\QuestionLevelsInsertBLL.cs" />
+    <Compile Include="Insert\QuizInsertBLL.cs" />
+    <Compile Include="Insert\LevelGameDDLInsertBLL.cs" />
+    <Compile Include="Insert\LevelGameInsertBLL.cs" />
+    <Compile Include="Insert\MessageReplyInsertBLL.cs" />
+    <Compile Include="Insert\MessagesInsertBLL.cs" />
+    <Compile Include="Insert\PostInsertBLL.cs" />
+    <Compile Include="Insert\PostRepliedLikeInsertBLL.cs" />
+    <Compile Include="Insert\PostReplyInsertBLL.cs" />
+    <Compile Include="Insert\QuestionsInsertBLL.cs" />
+    <Compile Include="Insert\QuizPlayLogBLL.cs" />
+    <Compile Include="Insert\QuizScoreInsertBLL.cs" />
+    <Compile Include="Insert\RewardImageInsertBLL.cs" />
+    <Compile Include="Insert\ScoreInsertAutoBLL.cs" />
+    <Compile Include="Insert\ScoreInsertBLL.cs" />
+    <Compile Include="Insert\SecurityAnswerInsertBLL.cs" />
+    <Compile Include="Insert\SiteInsertBLL.cs" />
+    <Compile Include="Insert\UserAwardInsertBLL.cs" />
+    <Compile Include="Select\AwardImagesViewBLL.cs" />
+    <Compile Include="Select\CategoryViewBLL.cs" />
+    <Compile Include="Select\CheckPasswordBLL.cs" />
+    <Compile Include="Select\CheckPasswordDALNull.cs" />
+    <Compile Include="Select\CheckPasswordNullBLL.cs" />
+    <Compile Include="Select\CheckSecurityAnswersBLL.cs" />
+    <Compile Include="Delete\KPIDeleteBLL.cs" />
+    <Compile Include="Delete\LevelsDeleteBLL.cs" />
+    <Compile Include="Delete\RolesDeleteBLL.cs" />
+    <Compile Include="Insert\AwardInsertBLL.cs" />
+    <Compile Include="Insert\ContestInsertBLL.cs" />
+    <Compile Include="Insert\KPIInsertBLL.cs" />
+    <Compile Include="Insert\LevelsInsertBLL.cs" />
+    <Compile Include="Insert\PointsInsertBLL.cs" />
+    <Compile Include="Insert\RewardInsertBLL.cs" />
+    <Compile Include="Insert\RolesInsertBLL.cs" />
+    <Compile Include="Insert\TargetInsertBLL.cs" />
+    <Compile Include="Insert\UserImageInsertBLL.cs" />
+    <Compile Include="Insert\UserInsertBLL.cs" />
+    <Compile Include="Reports\UserPointsReportBLL.cs" />
+    <Compile Include="Select\AwardViewBLL.cs" />
+    <Compile Include="Select\CheckUserNameBLL.cs" />
+    <Compile Include="Select\ContestPlayersScoreBLL.cs" />
+    <Compile Include="Select\ContestViewBLL.cs" />
+    <Compile Include="Select\GetFullLevelTableBLL.cs" />
+    <Compile Include="Select\GetLifeLinesBLL.cs" />
+    <Compile Include="Select\GetPopupShowed_LevelPerformanceBLL.cs" />
+    <Compile Include="Select\GetRewardUserBLL.cs" />
+    <Compile Include="Select\RolesLevelsViewBLL.cs" />
+    <Compile Include="Select\DropdownViewBLL.cs" />
+    <Compile Include="Select\GelAllMilestonesBLL.cs" />
+    <Compile Include="Select\GetAutomaticAwardsBLL.cs" />
+    <Compile Include="Select\GetPostByIDBLL.cs" />
+    <Compile Include="Select\GetProgressDetailBLL.cs" />
+    <Compile Include="Select\GetQuizPlayLogBLL.cs" />
+    <Compile Include="Select\LevelGameDDLViewBLL.cs" />
+    <Compile Include="Select\LevelGameViewBLL.cs" />
+    <Compile Include="Select\LevelPerformanceViewBLL.cs" />
+    <Compile Include="Select\ManagerDropDownBLL.cs" />
+    <Compile Include="Select\ManualAwardViewBLL.cs" />
+    <Compile Include="Select\MapViewBLL.cs" />
+    <Compile Include="Select\MessagesViewBLL.cs" />
+    <Compile Include="Select\PlayerContestDetailsViewBLL.cs" />
+    <Compile Include="Select\PlayerPointsViewBLL.cs" />
+    <Compile Include="Select\PlayerQuizQuestionsViewBLL.cs" />
+    <Compile Include="Select\PlayerQuizViewBLL.cs" />
+    <Compile Include="Select\PlayerRewardViewBLL.cs" />
+    <Compile Include="Select\PlayerTargetScoreViewBLL.cs" />
+    <Compile Include="Select\PointsViewBLL.cs" />
+    <Compile Include="Select\PostDetaislBLL.cs" />
+    <Compile Include="Select\PostsViewBLL.cs" />
+    <Compile Include="Select\PostTypesViewBLL.cs" />
+    <Compile Include="Select\QuestionLevelsViewBLL.cs" />
+    <Compile Include="Select\QuizQuestionsViewBLL.cs" />
+    <Compile Include="Select\QuizViewBLL.cs" />
+    <Compile Include="Select\RepliedLikeStatusBLL.cs" />
+    <Compile Include="Select\RewardImagesViewBLL.cs" />
+    <Compile Include="Select\SiteViewBLL.cs" />
+    <Compile Include="Select\SecurityQuestionsViewBLL.cs" />
+    <Compile Include="Select\Site_DropDownBLL.cs" />
+    <Compile Include="Select\TargetDesciptionViewBLL.cs" />
+    <Compile Include="Select\TeamPerformanceBLL.cs" />
+    <Compile Include="Select\TotalPlayerScoreViewBLL.cs" />
+    <Compile Include="Select\UserAwardAchievedBLL.cs" />
+    <Compile Include="Select\UserInfoBLL.cs" />
+    <Compile Include="Select\KPIViewBLL.cs" />
+    <Compile Include="Select\LevelsViewBLL.cs" />
+    <Compile Include="Select\RewardViewBLL.cs" />
+    <Compile Include="Select\RolesViewBLL.cs" />
+    <Compile Include="Select\TargetViewBLL.cs" />
+    <Compile Include="Select\UserImageViewBLL.cs" />
+    <Compile Include="Select\UserInfoByEmailBLL.cs" />
+    <Compile Include="Select\UserLevelPercentBLL.cs" />
+    <Compile Include="Select\UserQuizScoreBLL.cs" />
+    <Compile Include="Select\UsersByRoleViewBLL.cs" />
+    <Compile Include="Select\UserViewBLL.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update\CategoryUpdateBLL.cs" />
+    <Compile Include="Update\LoginUpdateBLL.cs" />
+    <Compile Include="Update\PasswordResetUpdateBLL.cs" />
+    <Compile Include="Update\QuizUpdateBLL.cs" />
+    <Compile Include="Update\LevelGameDDLUpdateBLL.cs" />
+    <Compile Include="Update\LevelGameUpdateBLL.cs" />
+    <Compile Include="Update\Level_LevelInfoUpdateBLL.cs" />
+    <Compile Include="Update\Level_TargetUpdateBLL.cs" />
+    <Compile Include="Update\MessageStatusUpdateBLL.cs" />
+    <Compile Include="Update\PopupShowedUpdateBLL.cs" />
+    <Compile Include="Update\QuestionsUpdateBLL.cs" />
+    <Compile Include="Update\ScoreManualUpdateBLL.cs" />
+    <Compile Include="Update\SiteUpdateBLL.cs" />
+    <Compile Include="Update\UpdateLevelPositionBLL.cs" />
+    <Compile Include="Update\UpdatePasswordBLL.cs" />
+    <Compile Include="Update\AwardUpdateBLL.cs" />
+    <Compile Include="Update\ContestUpdateBLL.cs" />
+    <Compile Include="Update\KPIUpdateBLL.cs" />
+    <Compile Include="Update\LevelsUpdateBLL.cs" />
+    <Compile Include="Update\RewardUpdateBLL.cs" />
+    <Compile Include="Update\RolesUpdateBLL.cs" />
+    <Compile Include="Update\TargetUpdateBLL.cs" />
+    <Compile Include="Update\UpdatePopup_LevelPerformanceBLL.cs" />
+    <Compile Include="Update\UserAwardAchievedUpdateBLL.cs" />
+    <Compile Include="Update\UserAwardAchievedUpdatePopupBLL.cs" />
+    <Compile Include="Update\UserEditUpdateBLL.cs" />
+    <Compile Include="Update\UserImageUpdateBLL.cs" />
+    <Compile Include="Update\UserManualAwardPopupUpdateBLL.cs" />
+    <Compile Include="Update\UserMassUpdateBLL.cs" />
+    <Compile Include="Update\UserPointsUpdateBLL.cs" />
+    <Compile Include="Update\UserTargetAchievedUpdateBLL.cs" />
+    <Compile Include="Update\UserUpdateAdminBLL.cs" />
+    <Compile Include="Update\UserUpdateBLL.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common\Common.csproj">
+      <Project>{B86D0714-1E9A-48C8-82EC-0654FD52DAD5}</Project>
+      <Name>Common %28Common\Common%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataAccess\DataAccess\DataAccess.csproj">
+      <Project>{91248207-DC4B-4683-B591-50763A585888}</Project>
+      <Name>DataAccess %28DataAccess\DataAccess%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,353 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BusinessLogic.Select;
+using Common;
+using LevelsPro.App_Code;
+using System.Data;
+using System.Configuration;
+using System.Web.UI.HtmlControls;
+
+namespace LevelsPro.ManagerPanel
+{
+    public partial class PlayerPerformance : AuthorizedPage
+    {
+        int level = 0;
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["Base"] != null && Request.QueryString["Base"].ToString() != "" && Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "" && Request.QueryString["likelihood"] != null && Request.QueryString["likelihood"].ToString() != "" && Request.QueryString["remaining"] != null && Request.QueryString["remaining"].ToString() != "")
+                {
+                    Session["playerid"] = Convert.ToInt32(Request.QueryString["id"]);
+                    Session["likelihood"] = Request.QueryString["likelihood"];
+                    Session["Base"] = Convert.ToInt32(Request.QueryString["Base"]);
+                    Session["remaining"] = Convert.ToInt32(Request.QueryString["remaining"]);
+                    ViewState["likelihood"] = Request.QueryString["likelihood"];
+                    ViewState["remaining"] = Convert.ToInt32(Request.QueryString["remaining"]);
+                    ViewState["Base"] = Convert.ToInt32(Request.QueryString["Base"]);
+                    decimal percentage = 0;
+                    percentage = Convert.ToDecimal(Request.QueryString["likelihood"].ToString());
+                    lblLike.Text = percentage.ToString("0") + "%";
+                    lblHours.Text = Convert.ToInt32(ViewState["remaining"]).ToString();
+                    int Percent = Convert.ToInt32(ViewState["remaining"]) * 100 / Convert.ToInt32(ViewState["Base"]);
+                    //if (percentage < 80)
+                    //{
+                    //System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
+                    //div1.Attributes["class"] = "level-cont-red";
+                    //}
+                    //else if (percentage > 80 && percentage < 90)
+                    //{
+                    //    System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
+                    //    div1.Attributes["class"] = "level-cont-yellow";
+                    //}
+                    //else
+                    //{
+                    //    System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
+                    //    div1.Attributes["class"] = "level-cont-green";
+                    //}
+              
+
+
+
+                    LoadData(Convert.ToInt32(Request.QueryString["id"]));
+                    MessagesViewBLL messageview = new MessagesViewBLL();
+
+                    try
+                    {
+                        messageview.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+
+                    DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
+
+                    dvNoti.RowFilter = "To_UserID=" + Session["userid"] + " AND IsRead=" + 0;
+
+                    DataTable dtNoti = dvNoti.ToTable();
+
+                    if (dtNoti != null && dtNoti.Rows.Count > 0)
+                    {
+                        lblMessageNotification.Text = dtNoti.Rows.Count.ToString();
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
+                {
+                    LoadData(Convert.ToInt32(Request.QueryString["id"]));
+                    MessagesViewBLL messageview = new MessagesViewBLL();
+
+                    try
+                    {
+                        messageview.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+
+                    DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
+
+                    dvNoti.RowFilter = "To_UserID=" + Session["userid"] + " AND IsRead=" + 0;
+
+                    DataTable dtNoti = dvNoti.ToTable();
+
+                    if (dtNoti != null && dtNoti.Rows.Count > 0)
+                    {
+                        lblMessageNotification.Text = dtNoti.Rows.Count.ToString();
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+               
+            }
+        }
+
+        protected void LoadData(int userid)
+        {
+            UserImageViewBLL UserImage = new UserImageViewBLL();
+
+            Common.UserImage image = new Common.UserImage();
+            string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
+            if (Session["userid"] != null && Session["userid"].ToString() != "")
+            {
+               
+                lblFullName.Text = Session["displayname"].ToString();
+                lblUserRole.Text = Session["rolename"].ToString();
+                lblName.Text = Session["displayname"].ToString() + " - " + Resources.TestSiteResources.Team;
+
+              
+
+                image.UserID = Convert.ToInt32(Session["userid"]);
+                
+                UserImage.UserImages = image;
+
+                try
+                {
+                    UserImage.Invoke();
+                }
+                catch (Exception ex)
+                {
+                }
+                DataView dvImage1 = UserImage.ResultSet.Tables[0].DefaultView;
+                dvImage1.RowFilter = "U_Current=1";
+                DataTable dtcImage = new DataTable();
+                dtcImage = dvImage1.ToTable();
+                if (dtcImage != null && dtcImage.Rows.Count > 0 && dtcImage.Rows[0]["Player_Thumbnail"].ToString() != "")
+                {
+                    imgCurrentImage.ImageUrl = Thumbpath + dtcImage.Rows[0]["Player_Thumbnail"].ToString();
+                }
+            }
+           
+
+            image.UserID = Convert.ToInt32(Request.QueryString["id"]);
+
+            UserImage.UserImages= image;
+
+            try
+            {
+                UserImage.Invoke();
+            }
+            catch (Exception ex)
+            {
+            }
+            DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
+            dvImage.RowFilter = "U_Current=1";
+            DataTable dtcImage1 = new DataTable();
+            dtcImage1 = dvImage.ToTable();
+            if (dtcImage1 != null && dtcImage1.Rows.Count > 0 && dtcImage1.Rows[0]["Player_Thumbnail"].ToString() != "")
+            {
+                Image1.ImageUrl = Thumbpath + dtcImage1.Rows[0]["Player_Thumbnail"].ToString();
+            }
+
+            TeamPerformanceBLL team = new TeamPerformanceBLL();
+            Common.User user = new Common.User();
+
+            user.ManagerID = Convert.ToInt32(Session["userid"]);
+
+            team.User = user;
+
+            try
+            {
+                team.Invoke();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            DataView dv=team.ResultSet.Tables[0].DefaultView;
+            dv.RowFilter="UserID =" +Convert.ToInt32(Request.QueryString["id"]);
+            DataTable ds = dv.ToTable();
+           
+            if (ds != null && ds.Rows.Count > 0)
+            {
+            //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
+            //    dv.RowFilter = "PlayerStatus = 'red'";
+                lblPlayerName1.Text=ds.Rows[0]["PlayerName"].ToString();
+                Session["playernamemanager"] = lblPlayerName1.Text;
+                lblLevel1.Text = ds.Rows[0]["Role_Name"].ToString() + "- Level " + ds.Rows[0]["Level_Position"].ToString();
+                level=Convert.ToInt32(ds.Rows[0]["Level_ID"]);
+                MainColor.Attributes["class"] = "level-cont-" + ds.Rows[0]["PlayerStatus"].ToString().ToLower();
+            }
+
+            TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
+           
+
+            user.UserID = userid;
+            user.CurrentLevel = level;
+            progress.User = user;
+            //user.UserID = Convert.ToInt32(user);
+
+            try
+            {
+                progress.Invoke();
+            }
+            catch (Exception ex)
+            {
+            }
+            if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
+            {
+
+                dlProgressDetail.DataSource = progress.ResultSet.Tables[0];
+                dlProgressDetail.DataBind();
+               // lblPlayerName.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
+                //lblLevel.Text = Resources.TestSiteResources.Challengesfor + ' ' progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); 
+                //lblLevel.Text = Resources.TestSiteResources.Challengesfor +' '+ progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); //PlayerName
+                //lblPlayerName.Text = Resources.TestSiteResources.PlayerName +' '+ progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString(); //PlayerName
+            }
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TeamPerformance.aspx",false);
+        }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("~/Index.aspx");
+        }
+
+        protected void dlProgressDetail_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            //Common.User user = new Common.User();
+            //TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
+
+
+            //user.UserID = Convert.ToInt32(Request.QueryString["id"]);
+            //user.CurrentLevel = level;
+            //progress.User = user;
+            ////user.UserID = Convert.ToInt32(user);
+
+            //try
+            //{
+            //    progress.Invoke();
+            //}
+            //catch (Exception ex)
+            //{
+            //}
+
+            //DataTable dt = progress.ResultSet.Tables[0];
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+
+                Label lblCurrent = e.Item.FindControl("lblCurrent") as Label;
+                Label lblStatus = e.Item.FindControl("lblStatus") as Label;
+                Label lblTargetValue = e.Item.FindControl("lblTargetValue") as Label;
+                Label lblname = e.Item.FindControl("lblname") as Label;
+
+                lblname.Text = lblname.Text.Replace("X", lblTargetValue.Text);
+
+                HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+                span.Attributes["class"] = "navy-bar";
+                span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";     
+
+                //if (lblStatus.Text.ToLower() == "yellow")
+                //{
+                //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+                //    span.Attributes["class"] = "yellow-bar";
+                //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";                    
+                //}
+                //else if (lblStatus.Text.ToLower() == "red")
+                //{
+                //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+                //    span.Attributes["class"] = "red-bar";
+                //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";                    
+                //}
+                //else
+                //{
+                //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+                //    span.Attributes["class"] = "green-bar";
+                //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";                   
+                //}
+
+
+
+
+            //if (lblStatus.Text.ToLower() == "yellow")
+            //{
+            //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+            //    span.Attributes["class"] = "yellow-bar";
+            //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
+            //}
+            //else if (lblStatus.Text.ToLower() == "red")
+            //{
+            //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+            //    span.Attributes["class"] = "red-bar";
+            //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
+            //}
+            //else
+            //{
+            //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
+            //    span.Attributes["class"] = "green-bar";
+            //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
+            //}
+
+            //}
+        }
+
+        protected void btnEditProfile_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ManagerProfile.aspx");
+        }
+
+        protected void btnMessages_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/ManagerPanel/Messages.aspx", false);
+        }
+
+        protected void btnMes_Click(object sender, EventArgs e)
+        {
+            //if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "")
+            //{
+            //    Response.Redirect("~/ManagerPanel/Messages.aspx?playerid=" + Convert.ToInt32(Request.QueryString["id"]), false);
+            //}
+            //Session["playerid"] = Convert.ToInt32(Request.QueryString["id"]);
+            mpeComposeMessageDiv.Show();
+
+        }
+
+        protected void btnawrd_Click(object sender, EventArgs e)
+        {
+           // mpeViewMessageDetailsDiv.Show();
+
+            Response.Redirect("AssignAward.aspx");
+        }
+    }
+}

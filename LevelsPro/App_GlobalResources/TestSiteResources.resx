@@ -1,0 +1,1504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AchievedScore" xml:space="preserve">
+    <value>Achieved Score</value>
+    <comment>Achieved Score Heading</comment>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+    <comment>all screens</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>all screen add button</comment>
+  </data>
+  <data name="ApplicationRole" xml:space="preserve">
+    <value>Application Role</value>
+    <comment>Application Role Label</comment>
+  </data>
+  <data name="AssignAward" xml:space="preserve">
+    <value>Assign Award</value>
+    <comment>Assign Award Link Admin Master</comment>
+  </data>
+  <data name="AssignAwardB" xml:space="preserve">
+    <value>Assign Award</value>
+    <comment>Assign  Award Button</comment>
+  </data>
+  <data name="Award" xml:space="preserve">
+    <value>Award :</value>
+    <comment>Award Label</comment>
+  </data>
+  <data name="AwardManagement" xml:space="preserve">
+    <value>Award Management</value>
+    <comment>Award Management Link Admin Master</comment>
+  </data>
+  <data name="AwardsB" xml:space="preserve">
+    <value>Awards</value>
+    <comment>Awards Button Player</comment>
+  </data>
+  <data name="BaseHours" xml:space="preserve">
+    <value>Base Hours :</value>
+    <comment>Base Hours Label</comment>
+  </data>
+  <data name="BaseHoursH" xml:space="preserve">
+    <value>Base Hours</value>
+    <comment>Base Hours Heading</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>all screens cancel button</comment>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+    <comment>Change password Label</comment>
+  </data>
+  <data name="ChangePasswordB" xml:space="preserve">
+    <value>Change Password</value>
+    <comment>button change password </comment>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Confirm Password label</comment>
+  </data>
+  <data name="ContestLabel" xml:space="preserve">
+    <value>You are Currently in </value>
+    <comment>Contest Heading Label</comment>
+  </data>
+  <data name="ContestManagement" xml:space="preserve">
+    <value>Contest Management</value>
+    <comment>Contest Management Link Admin Master</comment>
+  </data>
+  <data name="contestsL" xml:space="preserve">
+    <value>contests.</value>
+    <comment>Contest Label</comment>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost :</value>
+    <comment>Cost Label</comment>
+  </data>
+  <data name="CostH" xml:space="preserve">
+    <value>Cost</value>
+    <comment>Cost Heading</comment>
+  </data>
+  <data name="CurrentImageL" xml:space="preserve">
+    <value>Current Image</value>
+    <comment>Current Image Label Player Profile</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description </value>
+    <comment>Description Label</comment>
+  </data>
+  <data name="DescriptionH" xml:space="preserve">
+    <value>Description</value>
+    <comment>Description Heading</comment>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>Display Name :</value>
+    <comment>Display Name label Edit Profile</comment>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+    <comment>Done Heading</comment>
+  </data>
+  <data name="Due" xml:space="preserve">
+    <value>Due</value>
+    <comment>Due Heading</comment>
+  </data>
+  <data name="EditB" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Edit Button Player</comment>
+  </data>
+  <data name="EditProfileL" xml:space="preserve">
+    <value>Edit Profile</value>
+    <comment>Edit Profile Label Player Profile</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+    <comment>Email Label</comment>
+  </data>
+  <data name="EmailH" xml:space="preserve">
+    <value>Email</value>
+    <comment>Email Heading</comment>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date :</value>
+    <comment>End Date Label</comment>
+  </data>
+  <data name="EndDateH" xml:space="preserve">
+    <value>End Date</value>
+    <comment>End Date Heading</comment>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+    <comment>First Name label Edit Profile</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot Password ?</value>
+    <comment>Login Buttons</comment>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Full Name</value>
+    <comment>Full Name Radio Edit Profile</comment>
+  </data>
+  <data name="Graphic" xml:space="preserve">
+    <value>Graphic :</value>
+    <comment>Graphic Label</comment>
+  </data>
+  <data name="GraphicH" xml:space="preserve">
+    <value>Graphic</value>
+    <comment>Graphic Heading</comment>
+  </data>
+  <data name="HomeAdmin" xml:space="preserve">
+    <value>Home</value>
+    <comment>Home Link Admin Master</comment>
+  </data>
+  <data name="ImagesL" xml:space="preserve">
+    <value>Image</value>
+    <comment>Image Label Player Profile</comment>
+  </data>
+  <data name="KPI" xml:space="preserve">
+    <value>KPI</value>
+    <comment>KPI Heading</comment>
+  </data>
+  <data name="KPIL" xml:space="preserve">
+    <value>KPI :</value>
+    <comment>KPI Label</comment>
+  </data>
+  <data name="KPIManagement" xml:space="preserve">
+    <value>KPI Management</value>
+    <comment>KPI Management Link Admin Master</comment>
+  </data>
+  <data name="KPIMeasure" xml:space="preserve">
+    <value>KPI Measure</value>
+    <comment>KPI Measure</comment>
+  </data>
+  <data name="KPIMeasureDesc" xml:space="preserve">
+    <value>KPI Measure : (The unit of measure for the KPI. E.g. Dollars, Units, etc. For some KPI types, no KPI Measure is needed)</value>
+    <comment>KPI Measure Descp</comment>
+  </data>
+  <data name="KPIName" xml:space="preserve">
+    <value>KPI Name</value>
+    <comment>KPI Name</comment>
+  </data>
+  <data name="KPINameDesc" xml:space="preserve">
+    <value>KPI Name : A short easily remembered description of a KPI</value>
+    <comment>KPI Name Descp</comment>
+  </data>
+  <data name="KPINameL" xml:space="preserve">
+    <value>KPI Name :</value>
+    <comment>KPI Name Label</comment>
+  </data>
+  <data name="KPIType" xml:space="preserve">
+    <value>KPI Type</value>
+    <comment>KPI Type</comment>
+  </data>
+  <data name="KPITypeDesc" xml:space="preserve">
+    <value>KPI Type : (How is the KPI used/calculated. For example a KPI Type of “Cumulative” would indicate that scores are summed to give a rolling total. A KPI Type of “Maximum” would indicate that only the highest score achieved by a player would be recorded. A KPI Type of “Boolean” would indicate that once a “Yes” value has been achieved, no further measuring of that KPI is necessary.)</value>
+    <comment>KPI  Type Descp</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language :</value>
+    <comment>Login Lable</comment>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+    <comment>Last Name label Edit Profile</comment>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+    <comment>Level Heading</comment>
+  </data>
+  <data name="LevelID" xml:space="preserve">
+    <value>Level ID</value>
+    <comment>Level ID Heading</comment>
+  </data>
+  <data name="LevelManagement" xml:space="preserve">
+    <value>Level Management</value>
+    <comment>Level Management Link Admin Master</comment>
+  </data>
+  <data name="LevelName" xml:space="preserve">
+    <value>Level Name :</value>
+    <comment>Level Name Label</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Log In</value>
+    <comment>Login Buttons</comment>
+  </data>
+  <data name="LogoutAdmin" xml:space="preserve">
+    <value>Logout</value>
+    <comment>Logout Admin Master</comment>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Manager</value>
+    <comment>Manager Label</comment>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual :</value>
+    <comment>Manual Label</comment>
+  </data>
+  <data name="ManualAwardAssignment" xml:space="preserve">
+    <value>Manual Award Assignment :</value>
+    <comment>Manual Award Heading Assign Award</comment>
+  </data>
+  <data name="MilestonesB" xml:space="preserve">
+    <value>Milestones</value>
+    <comment>MileStone Button View Award</comment>
+  </data>
+  <data name="MyAwardsB" xml:space="preserve">
+    <value>My Awards</value>
+    <comment>My award Button View Award</comment>
+  </data>
+  <data name="MyTeam" xml:space="preserve">
+    <value>My Team</value>
+    <comment>MyTeam Heading</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Name Heading</comment>
+  </data>
+  <data name="NameL" xml:space="preserve">
+    <value>Name :</value>
+    <comment>Name Label</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password:</value>
+    <comment>New Password label</comment>
+  </data>
+  <data name="NickName" xml:space="preserve">
+    <value>Nick Name</value>
+    <comment>Nick Name label Edit Profile</comment>
+  </data>
+  <data name="NickNameR" xml:space="preserve">
+    <value>Nick Name</value>
+    <comment>Nick Name Radio Edit Profile</comment>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password:</value>
+    <comment>Old Password label</comment>
+  </data>
+  <data name="OtherDetails" xml:space="preserve">
+    <value>Other Details :</value>
+    <comment>Other Details Label</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PersonalDetails" xml:space="preserve">
+    <value>Personal Details :</value>
+    <comment>Personal Details</comment>
+  </data>
+  <data name="PlayAGame" xml:space="preserve">
+    <value>Play a Game</value>
+    <comment>Play a Game Button Player</comment>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>Player</value>
+    <comment>Player Label</comment>
+  </data>
+  <data name="PlayerManagement" xml:space="preserve">
+    <value>Player Management</value>
+    <comment>Player Management Link Admin Master</comment>
+  </data>
+  <data name="PlayerPerformance" xml:space="preserve">
+    <value>Player Performance</value>
+    <comment>Player Performance Heading</comment>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position :</value>
+    <comment>Position Label</comment>
+  </data>
+  <data name="PositionH" xml:space="preserve">
+    <value>Position </value>
+    <comment>Position Heading</comment>
+  </data>
+  <data name="RedeemPoints" xml:space="preserve">
+    <value>Redeem Points</value>
+    <comment>Redeem Points Button Player</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Refresh Button</comment>
+  </data>
+  <data name="RewardManagement" xml:space="preserve">
+    <value>Reward Management</value>
+    <comment>Reward Management Link Admin Master</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+    <comment>Role Label</comment>
+  </data>
+  <data name="RoleH" xml:space="preserve">
+    <value>Role</value>
+    <comment>Role Heading</comment>
+  </data>
+  <data name="RoleManagement" xml:space="preserve">
+    <value>Role Management</value>
+    <comment>Role Management Link Admin Master</comment>
+  </data>
+  <data name="RoleManagementS" xml:space="preserve">
+    <value>Role Management :</value>
+    <comment>Role Management Screen Label</comment>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>Role Name :</value>
+    <comment>Role Screen name,</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>Save Button</comment>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="SiteH" xml:space="preserve">
+    <value>Site</value>
+    <comment>Site Heading</comment>
+  </data>
+  <data name="SNO" xml:space="preserve">
+    <value>S.No.</value>
+    <comment>Serial number Grid</comment>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date :</value>
+    <comment>Start Date Label</comment>
+  </data>
+  <data name="StartDateH" xml:space="preserve">
+    <value>Start Date</value>
+    <comment>Start Date Heading</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>Status Heading</comment>
+  </data>
+  <data name="StatusUpdatedDate" xml:space="preserve">
+    <value>Status Updated Date</value>
+    <comment>Grid Header Role Screen</comment>
+  </data>
+  <data name="SwapRole" xml:space="preserve">
+    <value>Swap Role</value>
+    <comment>Swap Role Link</comment>
+  </data>
+  <data name="TargetID" xml:space="preserve">
+    <value>Target ID</value>
+    <comment>Target ID Heading</comment>
+  </data>
+  <data name="TargetL" xml:space="preserve">
+    <value>Target Value :</value>
+    <comment>Target  Label</comment>
+  </data>
+  <data name="TargetManagement" xml:space="preserve">
+    <value>Target Management</value>
+    <comment>Target Management Link Admin Master</comment>
+  </data>
+  <data name="TargetScore" xml:space="preserve">
+    <value>Target Score</value>
+    <comment>Target Score Heading</comment>
+  </data>
+  <data name="TargetValue" xml:space="preserve">
+    <value>Target</value>
+    <comment>Target Heading</comment>
+  </data>
+  <data name="TargetValueL" xml:space="preserve">
+    <value>Target Value :</value>
+    <comment>Target Value Label</comment>
+  </data>
+  <data name="UpdateProfileB" xml:space="preserve">
+    <value>Update</value>
+    <comment>Update Button Player Profile</comment>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>User ID</value>
+    <comment>User ID Label</comment>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name :</value>
+    <comment>Login lable User Name</comment>
+  </data>
+  <data name="ViewTeamProgress" xml:space="preserve">
+    <value>View Team Progress</value>
+    <comment>View Team Progress Link</comment>
+  </data>
+  <data name="VisittheForums" xml:space="preserve">
+    <value>Visit the Forums</value>
+    <comment>Visit the Forums Link Button</comment>
+  </data>
+  <data name="WelcomeHomeAdmin" xml:space="preserve">
+    <value>Welcome to LevelsPro Admin Panel</value>
+    <comment>Welcome Heading Admin Home</comment>
+  </data>
+  <data name="WelcomeHomeManager" xml:space="preserve">
+    <value>Welcome To LevelPro Manager Panel</value>
+    <comment>Welcome note Manager</comment>
+  </data>
+  <data name="MassUpdate" xml:space="preserve">
+    <value>Mass Update</value>
+    <comment>Mass Update Text</comment>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+    <comment>Update Text</comment>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+    <comment>Back Button</comment>
+  </data>
+  <data name="Challengesfor" xml:space="preserve">
+    <value>Challenges for</value>
+    <comment>Challenges for Label</comment>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Please enter your email address:</value>
+    <comment>Enter Email Message</comment>
+  </data>
+  <data name="InfoNeeded" xml:space="preserve">
+    <value>We need some information to verify your ID.</value>
+    <comment>Info Needed</comment>
+  </data>
+  <data name="Level0" xml:space="preserve">
+    <value>Level 1</value>
+    <comment>Level 0</comment>
+  </data>
+  <data name="LevelL" xml:space="preserve">
+    <value>Level</value>
+    <comment>Level Label</comment>
+  </data>
+  <data name="PlayerName" xml:space="preserve">
+    <value>Player Name:</value>
+    <comment>Player Name Label</comment>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Proceed to Next Step</value>
+    <comment>Proceed Button Forgot</comment>
+  </data>
+  <data name="ProtectsAccount" xml:space="preserve">
+    <value>This protects your account from unauthorized access.</value>
+    <comment>Protects Account</comment>
+  </data>
+  <data name="Question1" xml:space="preserve">
+    <value>What is the name of your favorite childhood friend?</value>
+    <comment>Question1</comment>
+  </data>
+  <data name="Question2" xml:space="preserve">
+    <value>What was your favorite place to visit as a child?</value>
+    <comment>Question2</comment>
+  </data>
+  <data name="Question3" xml:space="preserve">
+    <value>What is your pet's name?</value>
+    <comment>Question3</comment>
+  </data>
+  <data name="RetrievePassword" xml:space="preserve">
+    <value>Retrieve password by:</value>
+    <comment>Retrieve password by</comment>
+  </data>
+  <data name="SecurityQuestions" xml:space="preserve">
+    <value>Security Questions</value>
+    <comment>Security Questions Heading</comment>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Submit Button Forgot</comment>
+  </data>
+  <data name="YourRank" xml:space="preserve">
+    <value>Your Rank :</value>
+    <comment>Your Rank Label Contest</comment>
+  </data>
+  <data name="ActiveH" xml:space="preserve">
+    <value>Active</value>
+    <comment>Active Heading</comment>
+  </data>
+  <data name="DimensionLeft" xml:space="preserve">
+    <value>Dimension Left :</value>
+    <comment>Dimension Left Label</comment>
+  </data>
+  <data name="DimensionTop" xml:space="preserve">
+    <value>Dimension Top :</value>
+    <comment>Dimension Top Label</comment>
+  </data>
+  <data name="InActive" xml:space="preserve">
+    <value>In Active</value>
+    <comment>In Active Heading</comment>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+    <comment>Left</comment>
+  </data>
+  <data name="LevelPosition" xml:space="preserve">
+    <value>Level Position</value>
+    <comment>Level Position</comment>
+  </data>
+  <data name="LevelUPDown" xml:space="preserve">
+    <value>First select and use the UP and DOWN button to set position of levels.</value>
+    <comment>Level UP Down</comment>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+    <comment>Reset Button</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+    <comment>Search Button</comment>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+    <comment>Select Heading</comment>
+  </data>
+  <data name="SetPosition" xml:space="preserve">
+    <value>Set Position</value>
+    <comment>Set Position</comment>
+  </data>
+  <data name="ShowHideFilter" xml:space="preserve">
+    <value>Show/Hide Filter</value>
+    <comment>Show/Hide Filter Label</comment>
+  </data>
+  <data name="SortTasks" xml:space="preserve">
+    <value>Swap Level Positions</value>
+    <comment>Sort Tasks Button</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Top</value>
+    <comment>Top Heading</comment>
+  </data>
+  <data name="AndEarnA" xml:space="preserve">
+    <value>and earn a</value>
+    <comment>And Earn A</comment>
+  </data>
+  <data name="bonus" xml:space="preserve">
+    <value>bonus!</value>
+    <comment>bonus</comment>
+  </data>
+  <data name="Reach" xml:space="preserve">
+    <value>Reach</value>
+    <comment>Reach Label</comment>
+  </data>
+  <data name="TargetDate" xml:space="preserve">
+    <value>Target Date :</value>
+    <comment>Target Date</comment>
+  </data>
+  <data name="YouAreIn" xml:space="preserve">
+    <value>You Are In</value>
+    <comment>You Are In</comment>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+    <comment>view label</comment>
+  </data>
+  <data name="Already" xml:space="preserve">
+    <value>already exists.</value>
+    <comment>Already</comment>
+  </data>
+  <data name="Click" xml:space="preserve">
+    <value>Click on a challenge for tips and tricks.</value>
+    <comment>Click Message</comment>
+  </data>
+  <data name="Contest" xml:space="preserve">
+    <value>Contest</value>
+    <comment>Contest</comment>
+  </data>
+  <data name="Goal" xml:space="preserve">
+    <value>Goal :</value>
+    <comment>Goal</comment>
+  </data>
+  <data name="HeadingTo" xml:space="preserve">
+    <value>Heading To :</value>
+    <comment>Heading To</comment>
+  </data>
+  <data name="InitialStage" xml:space="preserve">
+    <value>initial stage</value>
+    <comment>initial stage</comment>
+  </data>
+  <data name="NotAdd" xml:space="preserve">
+    <value>Cannot add</value>
+    <comment>Not Add</comment>
+  </data>
+  <data name="NotUpdate" xml:space="preserve">
+    <value>Cannot update</value>
+    <comment>Not Update</comment>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>- Progress</value>
+    <comment>Progress</comment>
+  </data>
+  <data name="Reward" xml:space="preserve">
+    <value>Reward</value>
+    <comment>Reward</comment>
+  </data>
+  <data name="SavedMessage" xml:space="preserve">
+    <value>has been saved successfully.</value>
+    <comment>Saved Message</comment>
+  </data>
+  <data name="ToGo" xml:space="preserve">
+    <value>To Go</value>
+    <comment>To Go</comment>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+    <comment>Total</comment>
+  </data>
+  <data name="Total0" xml:space="preserve">
+    <value>0 Total</value>
+    <comment>Total 0</comment>
+  </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>has been updated successfully.</value>
+    <comment>Update Message</comment>
+  </data>
+  <data name="ApplicationRequired" xml:space="preserve">
+    <value>Application Role is required.</value>
+    <comment>Application Role is required.</comment>
+  </data>
+  <data name="AssignedAward" xml:space="preserve">
+    <value>Award Assigned Successfully</value>
+    <comment>Award Assigned Successfully</comment>
+  </data>
+  <data name="LevelChange" xml:space="preserve">
+    <value>Level positions changed successfully</value>
+    <comment>Level positions changed successfully</comment>
+  </data>
+  <data name="LevelError" xml:space="preserve">
+    <value>Error while updating Level positions</value>
+    <comment>Error while updating Level positions</comment>
+  </data>
+  <data name="LevelRequired" xml:space="preserve">
+    <value>Level is Required.</value>
+    <comment>Level is Required.</comment>
+  </data>
+  <data name="ManagerRequired" xml:space="preserve">
+    <value>Manager is required.</value>
+    <comment>Manager is required.</comment>
+  </data>
+  <data name="RoleRequired" xml:space="preserve">
+    <value>Role is required.</value>
+    <comment>Role is required.</comment>
+  </data>
+  <data name="SiteRequired" xml:space="preserve">
+    <value>Site is required.</value>
+    <comment>Site is required.</comment>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+    <comment>Points</comment>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address:</value>
+    <comment>Site Address in Site Management</comment>
+  </data>
+  <data name="AddressGV" xml:space="preserve">
+    <value>Address</value>
+    <comment>Site Address GV in Site Management</comment>
+  </data>
+  <data name="SiteManagement" xml:space="preserve">
+    <value>Site Management</value>
+    <comment>Site Management Heading</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type:</value>
+    <comment>Site Type in Site Management</comment>
+  </data>
+  <data name="TypeGV" xml:space="preserve">
+    <value>Type</value>
+    <comment>Site Type GV in Site Management</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Edit</comment>
+  </data>
+  <data name="IsAdmin" xml:space="preserve">
+    <value>Is Admin?</value>
+    <comment>Is Admin?</comment>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Answer :</value>
+    <comment>Answer</comment>
+  </data>
+  <data name="ForgotPasswordH" xml:space="preserve">
+    <value>Forgot Password</value>
+    <comment>Forgot Password</comment>
+  </data>
+  <data name="GoLogin" xml:space="preserve">
+    <value>Go to Login Page</value>
+    <comment>Got to Login Page</comment>
+  </data>
+  <data name="INCaseForgot" xml:space="preserve">
+    <value>In case of password forget, use :</value>
+    <comment>In case of password forget, use :</comment>
+  </data>
+  <data name="ProvideInformation" xml:space="preserve">
+    <value>Provide Information</value>
+    <comment>Provide Information</comment>
+  </data>
+  <data name="QuestionOne" xml:space="preserve">
+    <value>Question 1:</value>
+    <comment>Question 1:</comment>
+  </data>
+  <data name="Questionthree" xml:space="preserve">
+    <value>Question 3:</value>
+    <comment>Question 3:</comment>
+  </data>
+  <data name="Questiontwo" xml:space="preserve">
+    <value>Question 2:</value>
+    <comment>Question 2:</comment>
+  </data>
+  <data name="AlreadyAssigned" xml:space="preserve">
+    <value>already assigned.</value>
+    <comment>Assign Award</comment>
+  </data>
+  <data name="AwardedDate" xml:space="preserve">
+    <value>Awarded Date</value>
+    <comment>Assign Award</comment>
+  </data>
+  <data name="AwardName" xml:space="preserve">
+    <value>Award Name</value>
+    <comment>Assign Award</comment>
+  </data>
+  <data name="NotAssigned" xml:space="preserve">
+    <value>Cannot assign award.</value>
+    <comment>Assign Award</comment>
+  </data>
+  <data name="PlayerNameAssign" xml:space="preserve">
+    <value>Player Name</value>
+    <comment>Assign Award</comment>
+  </data>
+  <data name="EndOn" xml:space="preserve">
+    <value>Ends on :</value>
+    <comment>Ends on :</comment>
+  </data>
+  <data name="Rank" xml:space="preserve">
+    <value>Rank</value>
+    <comment>Rank</comment>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>Score</value>
+    <comment>Score</comment>
+  </data>
+  <data name="YouHave" xml:space="preserve">
+    <value>You Have :</value>
+    <comment>YouHave</comment>
+  </data>
+  <data name="LastReply" xml:space="preserve">
+    <value>Last Reply By</value>
+    <comment>Last Reply By to any post in discussion forum</comment>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>Likes</value>
+    <comment>Likes of the Posts</comment>
+  </data>
+  <data name="Replies" xml:space="preserve">
+    <value>Replies</value>
+    <comment>Repies of the posts</comment>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Topic</value>
+    <comment>Topic of the post in discussion forum</comment>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category :</value>
+    <comment>Category :</comment>
+  </data>
+  <data name="CategoryH" xml:space="preserve">
+    <value>Category</value>
+    <comment>Category :</comment>
+  </data>
+  <data name="Choice1" xml:space="preserve">
+    <value>Choice 1:</value>
+    <comment>Choice1:</comment>
+  </data>
+  <data name="Choice1H" xml:space="preserve">
+    <value>Choice 1</value>
+    <comment>Choice 1:</comment>
+  </data>
+  <data name="Choice2" xml:space="preserve">
+    <value>Choice 2:</value>
+    <comment>Choice2:</comment>
+  </data>
+  <data name="Choice2H" xml:space="preserve">
+    <value>Choice 2</value>
+    <comment>Choice 2:</comment>
+  </data>
+  <data name="Choice3" xml:space="preserve">
+    <value>Choice 3:</value>
+    <comment>Choice3:</comment>
+  </data>
+  <data name="Choice3H" xml:space="preserve">
+    <value>Choice 3</value>
+    <comment>Choice 3:</comment>
+  </data>
+  <data name="Choice4" xml:space="preserve">
+    <value>Choice 4:</value>
+    <comment>Choice4:</comment>
+  </data>
+  <data name="Choice4H" xml:space="preserve">
+    <value>Choice 4</value>
+    <comment>Choice 4:</comment>
+  </data>
+  <data name="Correct" xml:space="preserve">
+    <value>Correct</value>
+    <comment>Correct Answer :</comment>
+  </data>
+  <data name="CorrectAnswer" xml:space="preserve">
+    <value>Correct Answer </value>
+    <comment>CorrectAnswer:</comment>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>Game :</value>
+    <comment>Game :</comment>
+  </data>
+  <data name="GameName" xml:space="preserve">
+    <value>Game Name</value>
+    <comment>Game Name</comment>
+  </data>
+  <data name="LevelLab" xml:space="preserve">
+    <value>Level :</value>
+    <comment>Level :</comment>
+  </data>
+  <data name="PointsH" xml:space="preserve">
+    <value>Points</value>
+    <comment>PointsH</comment>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question </value>
+    <comment>Question :</comment>
+  </data>
+  <data name="QuestionH" xml:space="preserve">
+    <value>Question</value>
+    <comment>Question :</comment>
+  </data>
+  <data name="QuestionPoints" xml:space="preserve">
+    <value>Question Points :</value>
+    <comment>QuestionPoints:</comment>
+  </data>
+  <data name="QuestionsDetail" xml:space="preserve">
+    <value>Questions Detail :</value>
+    <comment>Questions Detail :</comment>
+  </data>
+  <data name="QuizGames" xml:space="preserve">
+    <value>Quiz Games:</value>
+    <comment>Quiz Games:</comment>
+  </data>
+  <data name="QuizManagement" xml:space="preserve">
+    <value>Quiz Management </value>
+    <comment>Quiz Management :</comment>
+  </data>
+  <data name="QuizManagementH" xml:space="preserve">
+    <value>Quiz Management </value>
+    <comment>Quiz Management :</comment>
+  </data>
+  <data name="QuizName" xml:space="preserve">
+    <value>Quiz Name :</value>
+    <comment>Quiz Name :</comment>
+  </data>
+  <data name="RewardName" xml:space="preserve">
+    <value>Reward Name </value>
+    <comment>Reward Name</comment>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Nombre Recompensa</value>
+  </data>
+  <data name="ImageName" xml:space="preserve">
+    <value>Image :</value>
+    <comment>Image</comment>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreatePost" xml:space="preserve">
+    <value>Create Post</value>
+    <comment>Create Post</comment>
+  </data>
+  <data name="Processing" xml:space="preserve">
+    <value>Processing...</value>
+    <comment>Processing Message</comment>
+  </data>
+  <data name="Levels" xml:space="preserve">
+    <value>Levels</value>
+    <comment>Level Heading</comment>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Performance</value>
+    <comment>Performance</comment>
+  </data>
+  <data name="AddAward" xml:space="preserve">
+    <value>Add Award</value>
+    <comment>Add Award</comment>
+  </data>
+  <data name="AddGame" xml:space="preserve">
+    <value>Add Game</value>
+    <comment>Add Game</comment>
+  </data>
+  <data name="AddGoal" xml:space="preserve">
+    <value>Add Goal</value>
+    <comment>Add Goal</comment>
+  </data>
+  <data name="AddKPI" xml:space="preserve">
+    <value>Add KPI</value>
+    <comment>Add KPI</comment>
+  </data>
+  <data name="AddLevel" xml:space="preserve">
+    <value>Add Level</value>
+    <comment>Add Level</comment>
+  </data>
+  <data name="AddPlayer" xml:space="preserve">
+    <value>Add Player</value>
+    <comment>Add Player</comment>
+  </data>
+  <data name="AddReward" xml:space="preserve">
+    <value>Add Reward</value>
+    <comment>Add Reward</comment>
+  </data>
+  <data name="AddRole" xml:space="preserve">
+    <value>Add Role</value>
+    <comment>Add Role</comment>
+  </data>
+  <data name="AddValue" xml:space="preserve">
+    <value>Add Value</value>
+    <comment>Add Value</comment>
+  </data>
+  <data name="AnswerSecurity" xml:space="preserve">
+    <value>Answer Your Security Questions</value>
+    <comment>Answer Your Security Questions</comment>
+  </data>
+  <data name="APIImportSheet" xml:space="preserve">
+    <value>API Import Sheet</value>
+    <comment>API Import Sheet</comment>
+  </data>
+  <data name="Associates" xml:space="preserve">
+    <value>associates requiring attention.</value>
+    <comment>associates requiring attention.</comment>
+  </data>
+  <data name="AwardCategory" xml:space="preserve">
+    <value>Award Category</value>
+    <comment>Award Category</comment>
+  </data>
+  <data name="Bonush" xml:space="preserve">
+    <value>Bonus</value>
+    <comment>Bonus</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>Close</comment>
+  </data>
+  <data name="ComposeMessage" xml:space="preserve">
+    <value>Compose Message</value>
+    <comment>Compose Message</comment>
+  </data>
+  <data name="ConfirmPasswordH" xml:space="preserve">
+    <value>Confirm Password:</value>
+    <comment>Confirm Password:</comment>
+  </data>
+  <data name="CreateGame" xml:space="preserve">
+    <value>Create Game</value>
+    <comment>Create Game</comment>
+  </data>
+  <data name="CreateNewAward" xml:space="preserve">
+    <value>Create New Award</value>
+    <comment>Create New Award</comment>
+  </data>
+  <data name="CreateNewContest" xml:space="preserve">
+    <value>Create New Contest</value>
+    <comment>Create New Contest</comment>
+  </data>
+  <data name="CreateNewGame" xml:space="preserve">
+    <value>Create New Game</value>
+    <comment>Create New Game</comment>
+  </data>
+  <data name="CreateNewKPI" xml:space="preserve">
+    <value>Create New KPI</value>
+    <comment>Create New KPI</comment>
+  </data>
+  <data name="CreateNewLevel" xml:space="preserve">
+    <value>Create New Level</value>
+    <comment>Create New Level</comment>
+  </data>
+  <data name="CreateNewPlayer" xml:space="preserve">
+    <value>Create New Player</value>
+    <comment>Create New Player</comment>
+  </data>
+  <data name="CreateNewReward" xml:space="preserve">
+    <value>Create New Reward</value>
+    <comment>Create New Reward</comment>
+  </data>
+  <data name="CreateNewRole" xml:space="preserve">
+    <value>Create New Role</value>
+    <comment>Create New Role</comment>
+  </data>
+  <data name="CreateNewSite" xml:space="preserve">
+    <value>Create New Site</value>
+    <comment>Create New Site</comment>
+  </data>
+  <data name="CreateNewValue" xml:space="preserve">
+    <value>Create New Value</value>
+    <comment>Create New Value</comment>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date :</value>
+    <comment>Date</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="DeleteGoal" xml:space="preserve">
+    <value>Delete Goal</value>
+    <comment>Delete Goal</comment>
+  </data>
+  <data name="DimensionLeft1" xml:space="preserve">
+    <value>Dimension Left</value>
+    <comment>Dimension Left</comment>
+  </data>
+  <data name="DimensionTop1" xml:space="preserve">
+    <value>Dimension Top</value>
+    <comment>Dimension Top</comment>
+  </data>
+  <data name="EditAward" xml:space="preserve">
+    <value>Edit Award</value>
+    <comment>Edit Award</comment>
+  </data>
+  <data name="EditKPI" xml:space="preserve">
+    <value>Edit KPI</value>
+    <comment>Edit KPI</comment>
+  </data>
+  <data name="EditLevel" xml:space="preserve">
+    <value>Edit Level</value>
+    <comment>Edit Level</comment>
+  </data>
+  <data name="EditPlayer" xml:space="preserve">
+    <value>Edit Player</value>
+    <comment>Edit Player</comment>
+  </data>
+  <data name="EditReward" xml:space="preserve">
+    <value>Edit Reward</value>
+    <comment>Edit Reward</comment>
+  </data>
+  <data name="EditRole" xml:space="preserve">
+    <value>Edit Role</value>
+    <comment>Edit Role</comment>
+  </data>
+  <data name="EditSite" xml:space="preserve">
+    <value>Edit Site</value>
+    <comment>Edit Site</comment>
+  </data>
+  <data name="EnterAnswer" xml:space="preserve">
+    <value>Enter your answers.</value>
+    <comment>Enter your answers.</comment>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter Password:</value>
+    <comment>Enter Password:</comment>
+  </data>
+  <data name="Expectation" xml:space="preserve">
+    <value>Expectation of completion: </value>
+    <comment>Expectation of completion:</comment>
+  </data>
+  <data name="ExpectationTime" xml:space="preserve">
+    <value>Expectation of completion in time:</value>
+    <comment>Expectation of completion in time:</comment>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From :</value>
+    <comment>From</comment>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+    <comment>Import</comment>
+  </data>
+  <data name="MainPanel" xml:space="preserve">
+    <value>Main Panel</value>
+    <comment>Main Panel</comment>
+  </data>
+  <data name="ManageAwards" xml:space="preserve">
+    <value>Manage Awards</value>
+    <comment>Manage Awards</comment>
+  </data>
+  <data name="ManageContests" xml:space="preserve">
+    <value>Manage Contests</value>
+    <comment>Manage Contests</comment>
+  </data>
+  <data name="ManageGame" xml:space="preserve">
+    <value>Manage Game</value>
+    <comment>Manage Game</comment>
+  </data>
+  <data name="ManageKPI" xml:space="preserve">
+    <value>Manage KPI</value>
+    <comment>Manage KPI</comment>
+  </data>
+  <data name="ManageLevelGame" xml:space="preserve">
+    <value>Manage Level Game</value>
+    <comment>Manage Level Game</comment>
+  </data>
+  <data name="ManageLevels" xml:space="preserve">
+    <value>Manage Levels</value>
+    <comment>Manage Levels</comment>
+  </data>
+  <data name="ManagePlayers" xml:space="preserve">
+    <value>Manage Players</value>
+    <comment>Manage Players</comment>
+  </data>
+  <data name="ManageQuiz" xml:space="preserve">
+    <value>Manage Quiz</value>
+    <comment>Manage Quiz</comment>
+  </data>
+  <data name="ManageRewards" xml:space="preserve">
+    <value>Manage Rewards</value>
+    <comment>Manage Rewards</comment>
+  </data>
+  <data name="ManageRoles" xml:space="preserve">
+    <value>Manage Roles</value>
+    <comment>Manage Roles</comment>
+  </data>
+  <data name="ManageSites" xml:space="preserve">
+    <value>Manage Sites</value>
+    <comment>Manage Sites</comment>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messages</value>
+    <comment>Messages</comment>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note: use X to represent the changable value of the KPI in the string.</value>
+    <comment>Note: use X to represent the changable value of the KPI in the string.</comment>
+  </data>
+  <data name="Passwordmatch" xml:space="preserve">
+    <value>Password does not match with each other,Please Enter Again</value>
+    <comment>Password does not match with each other,Please Enter Again</comment>
+  </data>
+  <data name="RearrangeLevels" xml:space="preserve">
+    <value>Rearrange Levels</value>
+    <comment>Rearrange Levels</comment>
+  </data>
+  <data name="RemainingHours" xml:space="preserve">
+    <value>Remaining Hours:</value>
+    <comment>Remaining Hours:</comment>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Reply</value>
+    <comment>Reply</comment>
+  </data>
+  <data name="RequestReset" xml:space="preserve">
+    <value>Request Reset</value>
+    <comment>Request Reset</comment>
+  </data>
+  <data name="SelectSecurity" xml:space="preserve">
+    <value>Select a security question and enter your answer.</value>
+    <comment>Select a security question and enter your answer.</comment>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+    <comment>Send</comment>
+  </data>
+  <data name="SendtoAdmin" xml:space="preserve">
+    <value>Send to Admin</value>
+    <comment>Send to Admin</comment>
+  </data>
+  <data name="SetPassword" xml:space="preserve">
+    <value>Set Your Password</value>
+    <comment>Set Your Password</comment>
+  </data>
+  <data name="SetSecurity" xml:space="preserve">
+    <value>Set Your Security Question</value>
+    <comment>Set Your Security Question</comment>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Show All</value>
+    <comment>Show All</comment>
+  </data>
+  <data name="ShowUnread" xml:space="preserve">
+    <value>Show Unread</value>
+    <comment>Show Unread</comment>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject :</value>
+    <comment>Subject</comment>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>Team</value>
+    <comment>Team</comment>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+    <comment>To</comment>
+  </data>
+  <data name="UpdateGame" xml:space="preserve">
+    <value>Update Game</value>
+    <comment>Update Game</comment>
+  </data>
+  <data name="UpdateValue" xml:space="preserve">
+    <value>Update Value</value>
+    <comment>Update Value</comment>
+  </data>
+  <data name="UploadToGrid" xml:space="preserve">
+    <value>Upload To Grid</value>
+    <comment>Upload To Grid</comment>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+    <comment>Value</comment>
+  </data>
+  <data name="ValueName" xml:space="preserve">
+    <value>Value Name</value>
+    <comment>Value Name</comment>
+  </data>
+  <data name="Wouldyoulike" xml:space="preserve">
+    <value>Would you like to request a password reset from the administrator?</value>
+    <comment>Would you like to request a password reset from the administrator?</comment>
+  </data>
+  <data name="Younew" xml:space="preserve">
+    <value>You must set a new password now.</value>
+    <comment>You must set a new password now.</comment>
+  </data>
+  <data name="AssignAward1" xml:space="preserve">
+    <value>Assign a New Award</value>
+    <comment>Assign a New Award:</comment>
+  </data>
+  <data name="MainInfo" xml:space="preserve">
+    <value>Main Info</value>
+    <comment>Main Info</comment>
+  </data>
+  <data name="PlayerAwards" xml:space="preserve">
+    <value>Player Awards</value>
+    <comment>Player Awards</comment>
+  </data>
+  <data name="PlayerProgress" xml:space="preserve">
+    <value>Player Progress</value>
+    <comment>Player Progress</comment>
+  </data>
+  <data name="PlayerRewards" xml:space="preserve">
+    <value>Player Rewards</value>
+    <comment>Player Rewards</comment>
+  </data>
+  <data name="PointsUpdate" xml:space="preserve">
+    <value>Points are updated successfully.</value>
+    <comment>Points are updated successfully.</comment>
+  </data>
+  <data name="Progress1" xml:space="preserve">
+    <value>Progress</value>
+    <comment>Progress</comment>
+  </data>
+  <data name="WorkedHours" xml:space="preserve">
+    <value>Worked Hours</value>
+    <comment>Worked Hours</comment>
+  </data>
+  <data name="AddImage" xml:space="preserve">
+    <value>Add Image</value>
+    <comment>AddImage</comment>
+  </data>
+  <data name="AddQuestion" xml:space="preserve">
+    <value>Add Question</value>
+    <comment>Add Question</comment>
+  </data>
+  <data name="AddQuiz" xml:space="preserve">
+    <value>Add Quiz</value>
+    <comment>AddQuiz</comment>
+  </data>
+  <data name="ChangeImage" xml:space="preserve">
+    <value>Change Image</value>
+    <comment>Change Image</comment>
+  </data>
+  <data name="CreateQuiz" xml:space="preserve">
+    <value>Create Quiz</value>
+    <comment>CreateQuiz</comment>
+  </data>
+  <data name="Explanation" xml:space="preserve">
+    <value>Explanation</value>
+    <comment>Explanation</comment>
+  </data>
+  <data name="IncorrectAnswers" xml:space="preserve">
+    <value>Incorrect Answers</value>
+    <comment>Incorrect Answers</comment>
+  </data>
+  <data name="Levels1" xml:space="preserve">
+    <value>Levels</value>
+    <comment>Level Heading</comment>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>Location</comment>
+  </data>
+  <data name="ManageQuestions" xml:space="preserve">
+    <value>Manage Questions</value>
+    <comment>Manage Questions</comment>
+  </data>
+  <data name="MessageNoQ" xml:space="preserve">
+    <value>No Question Left OR Quiz Contain No Question</value>
+    <comment>No Question Left OR Quiz Contain No Question</comment>
+  </data>
+  <data name="NoOfQuestions" xml:space="preserve">
+    <value># of Questions</value>
+    <comment># of Questions</comment>
+  </data>
+  <data name="NoTimesPlayable" xml:space="preserve">
+    <value># times playable per day</value>
+    <comment># times playable per day</comment>
+  </data>
+  <data name="PlayGame" xml:space="preserve">
+    <value>Play Game</value>
+    <comment>PlayGame</comment>
+  </data>
+  <data name="Points1" xml:space="preserve">
+    <value>points!</value>
+    <comment>Points</comment>
+  </data>
+  <data name="Pointsperquestion" xml:space="preserve">
+    <value>Points per question</value>
+    <comment>Points per question</comment>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Questions</value>
+    <comment>Questions</comment>
+  </data>
+  <data name="Quiz" xml:space="preserve">
+    <value>- Quiz</value>
+    <comment>quiz</comment>
+  </data>
+  <data name="QuizGames1" xml:space="preserve">
+    <value>Quiz &amp; Games</value>
+    <comment>QuizGames1</comment>
+  </data>
+  <data name="QuizResults" xml:space="preserve">
+    <value>- Quiz Results</value>
+    <comment>QuizResults</comment>
+  </data>
+  <data name="TimeDeduction" xml:space="preserve">
+    <value>Time before points start deducting (Seconds)</value>
+    <comment>Time before points start deducting (Seconds)</comment>
+  </data>
+  <data name="TimePerQuestion" xml:space="preserve">
+    <value>Time per question (Seconds)</value>
+    <comment>Time per question (Seconds)</comment>
+  </data>
+  <data name="TopScore" xml:space="preserve">
+    <value>Top Score :</value>
+    <comment>TopScore</comment>
+  </data>
+  <data name="youAlreadyPlayed" xml:space="preserve">
+    <value>You’ve already played this game today.</value>
+    <comment>You’ve already played this game today.</comment>
+  </data>
+  <data name="YourBest" xml:space="preserve">
+    <value>Your Best :</value>
+    <comment>YourBest</comment>
+  </data>
+  <data name="YourResults" xml:space="preserve">
+    <value>Your Results</value>
+    <comment>YourResults</comment>
+  </data>
+  <data name="YouScored" xml:space="preserve">
+    <value>You Scored</value>
+    <comment>YouScored</comment>
+  </data>
+</root>

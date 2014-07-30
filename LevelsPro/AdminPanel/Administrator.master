@@ -1,0 +1,98 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Administrator.master.cs"
+    Inherits="LevelsPro.AdminPanel.Administrator" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server" id="PageHead">
+    <title></title>
+    <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
+    <%--<link href="Styles/website.css" rel="stylesheet" type="text/css" />--%>
+    <link href="Styles/admin-theme.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/admin-website.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/Site.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('div.noti:empty').hide();
+           
+        });
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ToolkitScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <div class="container-2">
+        <div class="top-banner">
+            <div class="logo">
+                <img src="images/logo.png" />
+            </div>
+            <div class="banner">
+                <div class="txt1">
+                    Acme Inc.</div>
+                <div class="txt2">
+                    Around the World</div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="body-cont">
+            <div class="box profile secadmin">
+                <div class="pro-name">
+                    <%--Anthony Jameson <span>Administrator</span>--%>
+                    <asp:Literal ID="ltName" runat="server"></asp:Literal>
+                    <asp:Label ID="lblRole" runat="server"></asp:Label>
+                </div>
+                <div class="inbox">
+
+                    <asp:Button ID="btnMessages" runat="server" OnClick="btnMessages_Click" 
+                        ToolTip="Send Message" />
+
+                    <div class="noti"><asp:Literal ID="lblMessageNotification" runat="server"></asp:Literal></div>
+                </div>
+                <%--<div class="bar-inbox">
+                    <div class="inbox auto-h">
+                    <asp:Button ID="btnMessages" runat="server" OnClick="btnMessages_Click" CssClass="inbox auto-h">
+                            </asp:Button>
+                    </div>
+               </div>--%>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <%--<div style="width: 100%">
+        <div style="width: 25%; float: left;">
+            <ul id="Menu">
+                <li><a href="AdminHome.aspx"><asp:Label ID="lblHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"></asp:Label></a></li>
+                <li><a href="PlayerManagement.aspx"><asp:Label ID="lblPlayerMang" runat="server" Text="<%$ Resources:TestSiteResources, PlayerManagement %>"></asp:Label></a></li>
+                <li><a href="RoleManagement.aspx"><asp:Label ID="lblRoleManagement" runat="server" Text="<%$ Resources:TestSiteResources, RoleManagement %>"></asp:Label></a></li>
+                <li><a href="LevelManagement.aspx"><asp:Label ID="lblLevelManagement" runat="server" Text="<%$ Resources:TestSiteResources, LevelManagement %>"></asp:Label></a></li>
+                <li><a href="KPIManagement.aspx"><asp:Label ID="lblKPIManagement" runat="server" Text="<%$ Resources:TestSiteResources, KPIManagement %>"></asp:Label></a></li>
+                <li><a href="TargetManagement.aspx"><asp:Label ID="lblTargetManagement" runat="server" Text="<%$ Resources:TestSiteResources, TargetManagement %>"></asp:Label></a></li>
+                <li><a href="AwardManagement.aspx"><asp:Label ID="lblAwardManagement" runat="server" Text="<%$ Resources:TestSiteResources, AwardManagement %>"></asp:Label></a></li>
+                <li><a href="RewardManagement.aspx"><asp:Label ID="lblRewardManagement" runat="server" Text="<%$ Resources:TestSiteResources, RewardManagement %>"></asp:Label></a></li>
+                <li><a href="ContestManagement.aspx"><asp:Label ID="lblContestManagement" runat="server" Text="<%$ Resources:TestSiteResources, ContestManagement %>"></asp:Label></a></li>
+                <li><a href="SiteManagement.aspx"><asp:Label ID="lblSiteManagement" runat="server" Text="<%$ Resources:TestSiteResources, SiteManagement %>"></asp:Label></a></li>
+                <li><a href="AssignAwards.aspx"><asp:Label ID="lblAssignAward" runat="server" Text="<%$ Resources:TestSiteResources, AssignAward %>"></asp:Label></a></li>
+                <li><a href="QuizManagement.aspx"><asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources, QuizManagementH %>"></asp:Label></a></li> 
+                <li><asp:LinkButton ID="lnkbtnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>" 
+                        onclick="lnkbtnLogout_Click"  PostBackUrl="~/Login.aspx"></asp:LinkButton></li></ul>                
+            
+        </div>
+        <div style="width: 75%; float: left;">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                <div align="center">
+                </div>
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>--%>
+    </div>
+    </form>
+</body>
+</html>

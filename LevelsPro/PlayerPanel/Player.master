@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Player.master.cs" Inherits="LevelsPro.PlayerPanel.Player" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server" id="PageHead">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Gamification</title>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<link href="Styles/theme.css" rel="stylesheet" type="text/css" />--%>
+   <%-- <script type="text/javascript">
+        window.history.forward(1);
+    </script>--%>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+    </asp:ToolkitScriptManager>
+
+   
+
+    <%--<div class="container-2">--%>
+      
+      
+        <%--<div style="width: 13%; float: left;">
+            <ul>
+                <li><a href="PlayerHome.aspx">Home</a></li>
+                <li><a href="ViewAwards.aspx">View Awards</a></li>
+                <li><a href="#">Player Performance</a></li>
+                <li><a href="#">View Contests</a></li>
+                <li><a href="QuizSelection.aspx">Play Game</a></li>
+                <li><a href="#">View Discussions</a></li>
+                <li><a href="ChangePassword.aspx">Change Password</a></li>
+                <li>
+                    <asp:LinkButton ID="lnkbtnLogout" runat="server" Text="Logout" OnClick="lnkbtnLogout_Click"
+                        PostBackUrl="~/Login.aspx"></asp:LinkButton></li></ul>
+        </div>--%>
+       <%-- <div class="body-cont">--%>
+             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                <%-- <div align="center">
+                </div>--%>
+            </asp:ContentPlaceHolder>
+        <%--</div>
+    </div>--%>
+    </form>
+</body>
+</html>

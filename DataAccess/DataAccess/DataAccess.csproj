@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91248207-DC4B-4683-B591-50763A585888}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataAccess</RootNamespace>
+    <AssemblyName>DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BusinessLogic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BusinessLogic\BusinessLogic\bin\Release\BusinessLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataAccessBase.cs" />
+    <Compile Include="DataBaseHelper.cs" />
+    <Compile Include="Delete\AssignAwardDeleteDAL.cs" />
+    <Compile Include="Delete\AwardImageDeleteDAL.cs" />
+    <Compile Include="Delete\KPIDeleteDAL.cs" />
+    <Compile Include="Delete\LevelsDeleteDAL.cs" />
+    <Compile Include="Delete\level_TargetDeleteDAL.cs" />
+    <Compile Include="Delete\MessageDeleteDAL.cs" />
+    <Compile Include="Delete\QuestionDeleteDAL.cs" />
+    <Compile Include="Delete\QuestionLevelDeleteDAL.cs" />
+    <Compile Include="Delete\QuizDeleteDAL.cs" />
+    <Compile Include="Delete\QuizScoreDeleteDAL.cs" />
+    <Compile Include="Delete\RewardImageDeleteDAL.cs" />
+    <Compile Include="Delete\RolesDeleteDAL.cs" />
+    <Compile Include="Delete\SecurityAnswersDeleteDAL.cs" />
+    <Compile Include="Delete\UserImageDeleteDAL.cs" />
+    <Compile Include="Insert\AwardImageInsertDAL.cs" />
+    <Compile Include="Insert\AwardInsertDAL.cs" />
+    <Compile Include="Insert\BulkInsertQuizQuestionsDAL.cs" />
+    <Compile Include="Insert\CategoryInsertDAL.cs" />
+    <Compile Include="Insert\ContestInsertDAL.cs" />
+    <Compile Include="Insert\LifeLineInsertDAL.cs" />
+    <Compile Include="Insert\QuestionLevelsInsertDAL.cs" />
+    <Compile Include="Insert\QuizInsertDAL.cs" />
+    <Compile Include="Insert\KPIInsertDAL.cs" />
+    <Compile Include="Insert\LevelGameDDLInsertDAL.cs" />
+    <Compile Include="Insert\LevelGameInsertDAL.cs" />
+    <Compile Include="Insert\LevelsInsertDAL.cs" />
+    <Compile Include="Insert\MessageInsertDAL.cs" />
+    <Compile Include="Insert\MessageReplyInsertDAL.cs" />
+    <Compile Include="Insert\PointsInsertDAL.cs" />
+    <Compile Include="Insert\PostInsertDAL.cs" />
+    <Compile Include="Insert\PostRepliedLikeInsertDAL.cs" />
+    <Compile Include="Insert\PostReplyInsertDAL.cs" />
+    <Compile Include="Insert\QuestionsInsertDAL.cs" />
+    <Compile Include="Insert\QuizPlayLogDAL.cs" />
+    <Compile Include="Insert\QuizScoreInsertDAL.cs" />
+    <Compile Include="Insert\RewardImageInsertDAL.cs" />
+    <Compile Include="Insert\RewardInsertDAL.cs" />
+    <Compile Include="Insert\RolesInsertDAL.cs" />
+    <Compile Include="Insert\ScoreInsertAutoDAL.cs" />
+    <Compile Include="Insert\ScoreInsertDAL.cs" />
+    <Compile Include="Insert\SecurityAnswerInsertDAL.cs" />
+    <Compile Include="Insert\SiteInsertDAL.cs" />
+    <Compile Include="Insert\TargetInsertDAL.cs" />
+    <Compile Include="Insert\UserAwardsInsertDAL.cs" />
+    <Compile Include="Insert\UserImageInsertDAL.cs" />
+    <Compile Include="Insert\UserInsertDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\UserPointsReportDAL.cs" />
+    <Compile Include="Select\AwardImagesViewDAL.cs" />
+    <Compile Include="Select\AwardViewDAL.cs" />
+    <Compile Include="Select\CategoryViewDAL.cs" />
+    <Compile Include="Select\CheckPasswordDAL.cs" />
+    <Compile Include="Select\CheckPasswordNullDAL.cs" />
+    <Compile Include="Select\CheckSecurityAnswersDAL.cs" />
+    <Compile Include="Select\CheckUserNameDAL.cs" />
+    <Compile Include="Select\ContestPlayersScoreDAL.cs" />
+    <Compile Include="Select\ContestViewDAL.cs" />
+    <Compile Include="Select\GetFullLevelTableDAL.cs" />
+    <Compile Include="Select\GetLifeLineDAL.cs" />
+    <Compile Include="Select\GetPopupShowed_LevelPerformanceDAL.cs" />
+    <Compile Include="Select\GetRewardUserDAL.cs" />
+    <Compile Include="Select\RolesLevelsViewDAL.cs" />
+    <Compile Include="Select\DropdownViewDAL.cs" />
+    <Compile Include="Select\GetAllMilestonesDAL.cs" />
+    <Compile Include="Select\GetAutomaticAwardsDAL.cs" />
+    <Compile Include="Select\GetPostByIDDAL.cs" />
+    <Compile Include="Select\GetQuizPlayLogDAL.cs" />
+    <Compile Include="Select\LevelGameDDLViewDAL.cs" />
+    <Compile Include="Select\LevelGameViewDAL.cs" />
+    <Compile Include="Select\LevelPerformanceViewDAL.cs" />
+    <Compile Include="Select\Manager_DropDownDAL.cs" />
+    <Compile Include="Select\ManualAwardViewDAL.cs" />
+    <Compile Include="Select\MapViewDAL.cs" />
+    <Compile Include="Select\MessagesViewDAL.cs" />
+    <Compile Include="Select\PlayerContestDetailsViewDAL.cs" />
+    <Compile Include="Select\PlayerContestViewDAL.cs" />
+    <Compile Include="Select\PlayerPointsViewDAL.cs" />
+    <Compile Include="Select\PlayerQuizQuestionsViewDAL.cs" />
+    <Compile Include="Select\PlayerQuizViewDAL.cs" />
+    <Compile Include="Select\PlayerRewardViewDAL.cs" />
+    <Compile Include="Select\PlayerTargetScoreViewDAL.cs" />
+    <Compile Include="Select\PointsViewDAL.cs" />
+    <Compile Include="Select\PostDetailsDAL.cs" />
+    <Compile Include="Select\PostsView2DAL.cs" />
+    <Compile Include="Select\PostsViewDAL.cs" />
+    <Compile Include="Select\QuestionLevelsViewDAL.cs" />
+    <Compile Include="Select\QuizQuestionsViewDAL.cs" />
+    <Compile Include="Select\QuizViewDAL.cs" />
+    <Compile Include="Select\RepliedLikeStatusDAL.cs" />
+    <Compile Include="Select\RewardImagesViewDAL.cs" />
+    <Compile Include="Select\SiteViewDAL.cs" />
+    <Compile Include="Select\SecurityQuestionsViewDAL.cs" />
+    <Compile Include="Select\Site_DropDownDAL.cs" />
+    <Compile Include="Select\TargetDescriptionVeiwDAL.cs" />
+    <Compile Include="Select\TeamPerformanceDAL.cs" />
+    <Compile Include="Select\TotalPlayerScoreViewDAL.cs" />
+    <Compile Include="Select\UserAwardAchievedViewDAL.cs" />
+    <Compile Include="Select\UserInfoByEmailDAL.cs" />
+    <Compile Include="Select\UserLevelPercentDAL.cs" />
+    <Compile Include="Select\UserProgressDetailDAL.cs" />
+    <Compile Include="Select\UserQuizScoreDAL.cs" />
+    <Compile Include="Select\UsersByRoleViewDAL.cs" />
+    <Compile Include="Select\UsersInfoDAL.cs" />
+    <Compile Include="Select\KPIViewDAL.cs" />
+    <Compile Include="Select\LevelsViewDAL.cs" />
+    <Compile Include="Select\RewardViewDAL.cs" />
+    <Compile Include="Select\RolesViewDAL.cs" />
+    <Compile Include="Select\TargetViewDAL.cs" />
+    <Compile Include="Select\UserImageViewDAL.cs" />
+    <Compile Include="Select\UserViewDAL.cs" />
+    <Compile Include="SQLHelper.cs" />
+    <Compile Include="StoredProcedure.cs" />
+    <Compile Include="Update\AwardUpdateDAL.cs" />
+    <Compile Include="Update\CategoryUpdateDAL.cs" />
+    <Compile Include="Update\ContestUpdateDAL.cs" />
+    <Compile Include="Update\LoginUpdateDAL.cs" />
+    <Compile Include="Update\PasswordResetUpdateDAL.cs" />
+    <Compile Include="Update\QuizUpdateDAL.cs" />
+    <Compile Include="Update\KPIUpdateDAL.cs" />
+    <Compile Include="Update\LevelGameDDLUpdateDAL.cs" />
+    <Compile Include="Update\LevelGameUpdateDAL.cs" />
+    <Compile Include="Update\LevelsUpdateDAL.cs" />
+    <Compile Include="Update\Level_LevelInfoUpdateDAL.cs" />
+    <Compile Include="Update\Level_TargetUpdateDAL.cs" />
+    <Compile Include="Update\MessageStatusUpdateDAL.cs" />
+    <Compile Include="Update\PasswordUpdateDAL.cs" />
+    <Compile Include="Update\PopupShowedUpdateDAL.cs" />
+    <Compile Include="Update\QuestionsUpdateDAL.cs" />
+    <Compile Include="Update\RewardUpdateDAL.cs" />
+    <Compile Include="Update\RolesUpdateDAL.cs" />
+    <Compile Include="Update\ScoreManualUpdateDAL.cs" />
+    <Compile Include="Update\SiteUpdateDAL.cs" />
+    <Compile Include="Update\TargetUpdateDAL.cs" />
+    <Compile Include="Update\UpdateLevelPositionDAL.cs" />
+    <Compile Include="Update\UpdatePasswordDAL.cs" />
+    <Compile Include="Update\UpdatePopup_LevelPerformanceDAL.cs" />
+    <Compile Include="Update\UserAwardAchievedUpdateDAL.cs" />
+    <Compile Include="Update\UserAwardAchievedUpdatePopupDAL.cs" />
+    <Compile Include="Update\UserEditUpdateDAL.cs" />
+    <Compile Include="Update\UserImageUpdateDAL.cs" />
+    <Compile Include="Update\UserManualAwardPopupUpdateDAL.cs" />
+    <Compile Include="Update\UserMassUpdateDAL.cs" />
+    <Compile Include="Update\UserPointsUpdateDAL.cs" />
+    <Compile Include="Update\UserTargetAchievedUpdateDAL.cs" />
+    <Compile Include="Update\UserUpdateAdminDAL.cs" />
+    <Compile Include="Update\UserUpdateDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common\Common.csproj">
+      <Project>{B86D0714-1E9A-48C8-82EC-0654FD52DAD5}</Project>
+      <Name>Common %28Common\Common%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
