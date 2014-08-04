@@ -34,13 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxControlToolkit">
-      <HintPath>C:\Users\abdul.haseeb\Documents\AjaxControlToolkit.dll</HintPath>
+      <HintPath>..\..\..\levelspro\LevelsPro\bin\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Facebook">
-      <HintPath>C:\Users\abdul.haseeb\Documents\Facebook.dll</HintPath>
+      <HintPath>..\..\..\levelspro\LevelsPro\bin\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="LinqToTwitter">
-      <HintPath>C:\Users\abdul.haseeb\Documents\LinqToTwitter.dll</HintPath>
+      <HintPath>..\..\..\levelspro\LevelsPro\bin\LinqToTwitter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
