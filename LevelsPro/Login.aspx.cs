@@ -14,6 +14,7 @@ namespace LevelsPro
 {
     public partial class Login : AuthorizedPage
     {
+        // Comments for GitHUb
         static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
         protected void Page_Load(object sender, EventArgs e)
         {            
