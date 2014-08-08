@@ -439,7 +439,7 @@
                                     <img src="../Images/loading-small.gif" alt="wait" />
                                 </td>
                                 <td style="width: 70%" align="left">
-                                    <span style="font-family: Georgia; font-size: medium; font-weight: bold; color: #FFFFFF">
+                                    <span style="font-size: medium; font-weight: bold; color: #FFFFFF">
                                         <asp:Literal ID="ltProcessing" runat="server" Text="<%$ Resources:TestSiteResources, Processing %>"></asp:Literal></span>
                                 </td>
                             </tr>

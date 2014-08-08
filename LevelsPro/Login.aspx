@@ -19,6 +19,18 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $(window).resize(function () {
+                var winHeight = $(window).height();
+
+                if (winHeight < 585) {
+
+                    $('.login-cont').css({ top: '135px', margin: '0px 0 0 -244px' });
+                }
+                else {
+                    $('.login-cont').css({ top: '50%', margin: '-155px 0 0 -244px' });
+                }
+            });
+
             var faw = $('.filled-area').text();
             $('.filled-area').css("width", faw);
         });
@@ -54,13 +66,13 @@
             margin-top: 10px;
             outline: medium none;
             padding: 12px 15px;
-            width: 397px;
+            width: 418px;
         }
         
         .updateProgress
         {
             color: #FFFFFF;
-            font-family: Trebuchet MS;
+            
             font-size: small;
             margin: auto;
             opacity: 1;
@@ -98,7 +110,7 @@
                     <div class="login-cont">
                         Log In<br />
                         <asp:DropDownList ID="ddlLanguage" runat="server" AutoPostBack="True" CssClass="up-login"
-                            Width="427px">
+                            Width="448px">
                             <asp:ListItem Selected="True" Value="0">US English</asp:ListItem>
                             <asp:ListItem Value="1">French</asp:ListItem>
                             <asp:ListItem Value="2">Spanish</asp:ListItem>
@@ -138,7 +150,7 @@
                                             <img src="Images/loading-small.gif" alt="wait" />
                                         </td>
                                         <td style="width: 70%" align="left">
-                                            <span style="font-family: Georgia; font-size: medium; font-weight: bold; color: #FFFFFF">
+                                            <span style="font-size: medium; font-weight: bold; color: #FFFFFF">
                                                 <asp:Literal ID="ltProcessing" runat="server" Text="<%$ Resources:TestSiteResources, Processing %>"></asp:Literal>
                                             </span>
                                         </td>

@@ -358,46 +358,80 @@ and (min-width : 500px) {
 	}
 	
 .green{
-	background:url(../images/green-left.png) top left no-repeat;
+	background:url(../images/btn-spr-left.png) top left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
 	cursor:pointer;
+	outline:none;
 	}
 	
 .green-wrapper{
 	padding-right:8px;
-	background:url(../images/green-right.png) top right no-repeat;	
+	background:url(../images/btn-spr-right.png) top right no-repeat;	
+	}
+	
+.green-wrapper:hover .green{
+	background:url(../images/btn-spr-left.png) bottom left no-repeat;
+	height:37px;
+	font-size:20px;
+	border:0;
+	cursor:pointer;
+	outline:none;
+	}
+	
+.green-wrapper:hover{
+	padding-right:8px;
+	background:url(../images/btn-spr-right.png) bottom right no-repeat;	
 	}
 	
 
 .green-ar{
-	background:url(../images/left-arrow-btn.png) top left no-repeat;
+	background:url(../images/arrow-spr-left.png) top left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
 	padding:0 10px 0 30px;
 	cursor:pointer;
+	outline:none;
 	}
 	
 .green-ar-wrapper{
 	cursor:pointer;
 	padding-right:8px;
-	background:url(../images/green-right.png) top right no-repeat;	
+	background:url(../images/arrow-spr-right.png) top right no-repeat;	
+	}
+	
+	
+.green-ar-wrapper:hover .green-ar{
+	background:url(../images/arrow-spr-left.png) bottom left no-repeat;
+	height:37px;
+	font-size:20px;
+	border:0;
+	padding:0 10px 0 30px;
+	cursor:pointer;
+	outline:none;
+	}
+	
+.green-ar-wrapper:hover{
+	cursor:pointer;
+	padding-right:8px;
+	background:url(../images/arrow-spr-right.png) bottom right no-repeat;	
 	}
 	
 
 .orange{
-	background:url(../images/orange-left.png) top left no-repeat;
+	background:url(../images/btn-spr-left.png) top left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
 	cursor:pointer;
+	outline:none;
 	}
 	
 .orange-wrapper{
 	padding-right:7px;
-	background:url(../images/orange-right.png) top right no-repeat;	
+	background:url(../images/btn-spr-right.png) top right no-repeat;	
 	}
 	
 .show-all{

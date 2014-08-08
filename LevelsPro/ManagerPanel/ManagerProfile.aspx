@@ -8,7 +8,13 @@
     <link href="Styles/horizontal-website.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
+            
+            
+            
             $('#scrollbar1').tinyscrollbar({ axis: 'x' });
+
+            
+
         });
 
         function onFileSelect() {

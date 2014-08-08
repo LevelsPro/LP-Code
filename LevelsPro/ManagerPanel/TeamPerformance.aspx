@@ -17,6 +17,17 @@
         $(document).ready(function () {
             $('#scrollbar1').tinyscrollbar();
             $('div.noti:empty').hide();
+//            $('.green-wrapper').hover(function () {
+
+//                $(this).css({ 'background-image': 'url("images/btn-spr-right.png")', 'background-position': 'bottom right' });
+//                $(this).find('input').css({ 'background-image': 'url("images/btn-spr-left.png")', 'background-position': 'bottom left' });
+//            },
+//                   function () {
+
+//                       $(this).css({ 'background-image': 'url("images/btn-spr-right.png")', 'background-position': 'top right' });
+//                       $(this).find('input').css({ 'background-image': 'url("images/btn-spr-left.png")', 'background-position': 'top left' });
+
+//                   });
         });
     </script>
     <script type="text/javascript">

@@ -1812,15 +1812,17 @@ table.forums-grid tr.even td{
 
 .flog{
 	min-height:1000px;
-	}
 	
+	}
+
+
 
 .login-cont{
 	padding:20px;
 	position:absolute;
 	left:50%;
 	top:50%;
-	margin:-155px 0 0 -224px;
+	margin:-155px 0 0 -244px;
 	width:448px;
 	font-size:30px;
 	color:#FFF;
@@ -1841,7 +1843,7 @@ table.forums-grid tr.even td{
 	}
 	
 input.up-login{
-	width: 397px;
+	width: 418px;
 	padding:12px 15px;
 	font-size:24px;
 	color:#000;

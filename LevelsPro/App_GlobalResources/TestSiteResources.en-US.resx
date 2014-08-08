@@ -162,7 +162,7 @@
     <comment>First Name label Edit Profile</comment>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
-    <value>Forgot Password ?</value>
+    <value>Forgot Password?</value>
     <comment>Login Buttons</comment>
   </data>
   <data name="FullName" xml:space="preserve">

@@ -178,6 +178,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', end
     margin-left: 1px;
     padding-bottom: 2px;
 }
+
+#ContentPlaceHolder1_ViewAwards_dlViewAwards
+{
+    margin-left:8px;
+}
+
+
+
 @media only screen 
 and (max-width : 690px)
 and (min-width : 645px) 
@@ -303,34 +311,73 @@ and (min-width : 500px) {
 	}
 	
 .green{
-	background:url(../images/green-left.png) top left no-repeat;
+	background:url(../images/btn-spr-left.png) top left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
 	cursor:pointer;
+	outline:none;
 	}
 	
 .green-wrapper{
 	padding-right:8px;
-	background:url(../images/green-right.png) top right no-repeat;	
+	background:url(../images/btn-spr-right.png) top right no-repeat;	
+	}
+	
+.green-wrapper:hover .green{
+	background:url(../images/btn-spr-left.png) bottom left no-repeat;
+	height:37px;
+	font-size:20px;
+	border:0;
+	cursor:pointer;
+	outline:none;
+	}
+	
+.green-wrapper:hover{
+	padding-right:8px;
+	background:url(../images/btn-spr-right.png) bottom right no-repeat;	
 	}
 	
 
 .green-ar{
-	background:url(../images/left-arrow-btn.png) top left no-repeat;
+	background:url(../images/arrow-spr-left.png) top left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
 	padding:0 10px 0 30px;
 	cursor:pointer;
+	outline:none;
 	}
 	
 .green-ar-wrapper{
 	cursor:pointer;
 	padding-right:8px;
-	background:url(../images/green-right.png) top right no-repeat;	
+	background:url(../images/arrow-spr-right.png) top right no-repeat;	
 	}
 	
+	
+.green-ar-wrapper:hover .green-ar{
+	background:url(../images/arrow-spr-left.png) bottom left no-repeat;
+	height:37px;
+	font-size:20px;
+	border:0;
+	padding:0 10px 0 30px;
+	cursor:pointer;
+	outline:none;
+	}
+	
+.green-ar-wrapper:hover{
+	cursor:pointer;
+	padding-right:8px;
+	background:url(../images/arrow-spr-right.png) bottom right no-repeat;	
+	}
+
+.green-wrapper:hover a
+{
+   
+    height:31px !important;
+	
+}
 .green-wrapper a
 {
     padding-top:6px;
@@ -350,16 +397,17 @@ and (min-width : 500px) {
 	
 
 .orange{
-	background:url(../images/orange-left.png) top left no-repeat;
+	background:url(../images/btn-spr-left.png) top left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
 	cursor:pointer;
+	outline:none;
 	}
 	
 .orange-wrapper{
 	padding-right:7px;
-	background:url(../images/orange-right.png) top right no-repeat;	
+	background:url(../images/btn-spr-right.png) top right no-repeat;	
 	}
 	
 .show-all{
@@ -1057,6 +1105,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0250b9', end
 	padding-left:5%;
 	padding-top:10px;
 	padding-bottom:10px;
+	margin-left:1px;
 	}
 	
 .lm span{
@@ -2929,7 +2978,7 @@ and (max-device-width : 480px) {*/
 
 @media all and (max-width:846px) and (min-width: 715px) 
 {
-    
+    .anch-btn{margin-top:-6px !important;}
     .user-edit {
         width: 50%;
         float: right;
@@ -2965,7 +3014,9 @@ and (max-device-width : 480px) {*/
     
     }
 .vf input{width:100%;}
-@media all and (max-width:714px) and (min-width: 100px) {
+@media all and (max-width:714px) and (min-width: 100px) 
+{
+    .anch-btn{margin-top:-6px !important;}
 
 	.user-edit {
         width: 56%;
@@ -3135,3 +3186,5 @@ and (max-device-width : 480px) {*/
 	}
 	
 	}
+	
+

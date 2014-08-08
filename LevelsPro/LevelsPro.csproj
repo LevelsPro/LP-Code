@@ -357,6 +357,8 @@
     <Content Include="ManagerPanel\Images\arrow-left.png" />
     <Content Include="ManagerPanel\Images\arrow-redmp.png" />
     <Content Include="ManagerPanel\Images\arrow-right-grey.png" />
+    <Content Include="ManagerPanel\Images\arrow-spr-left.png" />
+    <Content Include="ManagerPanel\Images\arrow-spr-right.png" />
     <Content Include="ManagerPanel\Images\avatar-bg.png" />
     <Content Include="ManagerPanel\Images\avatar.png" />
     <Content Include="ManagerPanel\Images\awards.png" />
@@ -372,6 +374,8 @@
     <Content Include="ManagerPanel\Images\big-bar-ptrn.png" />
     <Content Include="ManagerPanel\Images\big-bar-right.png" />
     <Content Include="ManagerPanel\Images\body-bg.png" />
+    <Content Include="ManagerPanel\Images\btn-spr-left.png" />
+    <Content Include="ManagerPanel\Images\btn-spr-right.png" />
     <Content Include="ManagerPanel\Images\btns-bg.png" />
     <Content Include="ManagerPanel\Images\c1.png" />
     <Content Include="ManagerPanel\Images\c2.png" />
