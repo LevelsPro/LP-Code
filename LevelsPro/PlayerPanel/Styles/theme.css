@@ -3155,6 +3155,12 @@ and (max-device-width : 480px) {*/
 */
 
 
+.frdb
+{
+ 
+	float:right;
+ 
+}
 
 
 /* Smartphones (portrait and landscape) ----------- 
@@ -3168,7 +3174,8 @@ and (max-device-width : 480px) {*/
 	
 .fr{
 	float:right;
-	}
+    
+}
 	
 .m0a{
 	margin:0px auto;

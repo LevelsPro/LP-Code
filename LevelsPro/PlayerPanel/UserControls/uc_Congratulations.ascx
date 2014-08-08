@@ -46,7 +46,7 @@
         Width="329" Height="62" OnClick="imgbtnFacebook_Click" />
     <asp:ImageButton ID="imgbtnTwiter" runat="server" src="images/post-on-twitter.png"
         Width="329" Height="62" OnClick="imgbtnTwiter_Click" />
-    <div class="green-wrapper fr donebtn">
+    <div class="green-wrapper frdb donebtn">
         <asp:Button ID="btnDone" runat="server" CssClass="green" Text="Done" OnClick="btnDone_Click" />
     </div>
 </div>
