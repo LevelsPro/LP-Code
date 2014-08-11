@@ -522,6 +522,10 @@
     <Content Include="PlayerPanel\ForumDetails.aspx" />
     <Content Include="PlayerPanel\ForumPostDetails.aspx" />
     <Content Include="PlayerPanel\Images\ans-bg.png" />
+    <Content Include="PlayerPanel\Images\arrow-spr-left.png" />
+    <Content Include="PlayerPanel\Images\arrow-spr-right.png" />
+    <Content Include="PlayerPanel\Images\btn-spr-left.png" />
+    <Content Include="PlayerPanel\Images\btn-spr-right.png" />
     <Content Include="PlayerPanel\Images\confirm-bg.png" />
     <Content Include="PlayerPanel\Images\leve-1.png" />
     <Content Include="PlayerPanel\Images\leve-10.png" />

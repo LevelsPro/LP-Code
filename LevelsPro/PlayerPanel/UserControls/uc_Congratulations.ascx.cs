@@ -156,15 +156,15 @@ namespace LevelsPro.PlayerPanel.UserControls
                 {
                 }
 
-                //Button lblScore = (Button)this.Parent.FindControl("lblScore");
-                if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
-                {
-                    Session["U_Points"] = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(lblBonus1.Text.Trim())).ToString();
-                }
-                else
-                {
-                    Session["U_Points"] = lblBonus1.Text.Trim();
-                }
+                ////Button lblScore = (Button)this.Parent.FindControl("lblScore");
+                //if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
+                //{
+                //    Session["U_Points"] = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(lblBonus1.Text.Trim())).ToString();
+                //}
+                //else
+                //{
+                //    Session["U_Points"] = lblBonus1.Text.Trim();
+                //}
                 #endregion
 
                 //for Message sending to Player manager and Admins

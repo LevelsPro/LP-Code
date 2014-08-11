@@ -17,8 +17,13 @@
                 they can complete. And remember, for every application that is accepted, you get
                 an extra $3.--%>
             </p>
+            <h2><asp:Label ID="lblTip" runat="server" Text="Tips and Tricks"></asp:Label></h2>
+            <br />
+            <asp:LinkButton ID="lbtnurl" runat="server" Text="Google" 
+        onclick="lbtnurl_Click" OnClientClick ="document.forms[0].target = '_blank';"></asp:LinkButton>
         </div>
         </div>
+      
         <div class="green-wrapper fl pd-close">
 <asp:Button ID="btnClose" class="green" Text="<%$ Resources:TestSiteResources, Close %>" 
     runat="server" onclick="btnClose_Click" />

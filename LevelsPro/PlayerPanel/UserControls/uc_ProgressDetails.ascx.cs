@@ -14,11 +14,11 @@ namespace LevelsPro.PlayerPanel.UserControls
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
         }
 
         public void LoadTargetDescription(int targetid)
         {
+            Session["targetid"]=targetid;
             TargetDesciptionViewBLL desc = new TargetDesciptionViewBLL();
            
             try
@@ -37,7 +37,14 @@ namespace LevelsPro.PlayerPanel.UserControls
             if (dt != null && dt.Rows.Count > 0)
             {
                 lblheading.Text = dt.Rows[0]["KPIName"].ToString();
-                pdesc.InnerText = dt.Rows[0]["KPIDesc"].ToString();
+                //pdesc.InnerText = dt.Rows[0]["KPIDesc"].ToString();
+                string descs = dt.Rows[0]["KPIDesc"].ToString();
+
+                string[] arg = new string[2];
+                arg = descs.Split('^');
+
+                pdesc.InnerText =arg[0];
+                lbtnurl.Text = arg[1];
             }
         }
 
@@ -48,6 +55,14 @@ namespace LevelsPro.PlayerPanel.UserControls
             //((ProgressDetails)this.Parent.Page).LoadData();
             //((UpdatePanel)this.Parent.FindControl("upViewProgressDetails")).Update();
             //Response.Redirect("ProgressDetails.aspx",false);
+        }
+
+        protected void lbtnurl_Click(object sender, EventArgs e)
+        {
+            Session["lbturl"] = lbtnurl.Text;
+            Session["check"] = 1;
+            Response.Redirect("ProgressDetails.aspx");
+          
         }            
     }
 }
