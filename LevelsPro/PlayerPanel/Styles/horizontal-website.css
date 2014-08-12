@@ -9,7 +9,7 @@
 #scrollbar1 .admin-prog { width:500px !important; height: 370px; overflow: hidden; position: relative; }
 #scrollbar1 .progadmin { width:542px !important; height: 450px !important; overflow: hidden; position: relative; }
 
-#scrollbar1 .scrollbar{ background: transparent url(../images/bg-scrollbar-track-x.png) no-repeat 0 0; position: relative; background-position: right 0; float: left; height: 19px; margin-right:10px; margin-top:12px; }
+#scrollbar1 .scrollbar{ background: transparent url(../images/bg-scrollbar-track-x.png) no-repeat 0 0; position: relative; background-position: right 0; float: left; height: 19px; margin-right:10px; margin-top:17px; margin-left:152px; }
 #scrollbar1 .viewport { width: 528px; height:135px; overflow: hidden; position: relative; }
 #scrollbar1 .track { background: transparent url(../images/bg-scrollbar-trackend-x.png) no-repeat 0 100%; height: 100%; height:19px; position: relative; padding: 0 1px; }
 #scrollbar1 .thumb { background: transparent url(../images/bg-scrollbar-thumb.png) no-repeat 50% 100%; height: 52px ; width: 51px; cursor: pointer; overflow: hidden; position: absolute; top: -17px; left: 0; }
@@ -22,7 +22,7 @@
 and (max-width : 849px)
 and (min-width : 321px) {
 
-#scrollbar1 .viewport { width: 88% !important; height: 300px; overflow: hidden; position: relative; }
+#scrollbar1 .viewport { /*width: 88% !important;*/ height: 300px; overflow: hidden; position: relative; }
 .ul-imgs-sel .viewport { height:135px !important; }
 .qs-cont .viewport { height:400px !important;}
 

@@ -888,7 +888,7 @@
     <comment>Score</comment>
   </data>
   <data name="YouHave" xml:space="preserve">
-    <value>You Have :</value>
+    <value>You Have:</value>
     <comment>YouHave</comment>
   </data>
   <data name="LastReply" xml:space="preserve">

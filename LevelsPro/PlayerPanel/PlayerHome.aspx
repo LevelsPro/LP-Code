@@ -13,6 +13,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 <script type="text/javascript">
+
+    
     function windowpop(url) {
 
         var leftPosition, topPosition;
@@ -48,8 +50,14 @@
 	</script>--%>
    
     <script type="text/javascript">
-
+        $.fn.digits = function () {
+            return this.each(function () {
+                $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            })
+        }
         $(document).ready(function () {
+
+            $('.grpoints .grey').digits();
 
             var faw = $('.filled-area').text();
             $('.filled-area').css('width', faw);
@@ -58,7 +66,7 @@
             $('.opac-wrap').height(dh);
 
 
-            $('div.noti:empty').hide();
+            
 
 
             //	$('.filled-area').slideRight();
@@ -83,14 +91,14 @@
 
             $(window).resize(function () {
 
-                var mcr = $(".mcr").position();
-                var map = $(".map").position();
-                var top = parseInt(map.top) - parseInt(mcr.top) - 18;
-                var left = parseInt(mcr.left) - parseInt(map.left) - 18;
+            var mcr = $(".mcr").position();
+            var map = $(".map").position();
+            var top = parseInt(map.top) - parseInt(mcr.top) - 18;
+            var left = parseInt(mcr.left) - parseInt(map.left) - 18;
 
-                $('.pic-holder').css({ 'top': top });
-                //$('.pic-holder').css({ 'top': top, 'left': left });
-                //alert("pos");
+            $('.pic-holder').css({ 'top': top });
+            //$('.pic-holder').css({ 'top': top, 'left': left });
+            //alert("pos");
 
 
             }); */

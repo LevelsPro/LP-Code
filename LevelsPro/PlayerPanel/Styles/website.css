@@ -11,7 +11,7 @@
 
 #scrollbar1 .msgs { width:97% !important; height: 540px !important; overflow: hidden; position: relative; }
 
-#scrollbar1 .msgs2 { width:96% !important; height: 540px !important; overflow: hidden; position: relative; }
+#scrollbar1 .msgs2 { margin-right:50px; width:auto !important; height: 540px !important; overflow: hidden; position: relative; }
 
 #scrollbar1 .redemption { width:96% !important; height: 800px !important; overflow: hidden; position: relative; }
 
@@ -30,12 +30,12 @@
 #scrollbar1 .disable { display: none; }
 .noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
 
-
+/*#scrollbar1 .viewport { width: 88% !important; height: 300px; overflow: hidden; position: relative; }*/
 @media only screen 
 and (max-width : 849px)
 and (min-width : 321px) {
 
-#scrollbar1 .viewport { width: 88% !important; height: 300px; overflow: hidden; position: relative; }
+
 .qs-cont .viewport { height:400px !important;}
 
 }

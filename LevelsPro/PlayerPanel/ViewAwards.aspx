@@ -11,8 +11,25 @@
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+
+        $.fn.digits = function () {
+            return this.each(function () {
+                $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            })
+        }
+
         $(document).ready(function () {
             $('#scrollbar1').tinyscrollbar();
+
+            $('.points-label').digits();
+
+
+            $('.green-wrapper').each(function () {
+                if ($(this).text().match(/^\s*$/) && !$(this).children().length>0) {
+                    $(this).hide();
+                }
+            });
+
         });
     </script>
 </asp:Content>
@@ -34,7 +51,7 @@
                 <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"
                     PostBackUrl="~/PlayerPanel/PlayerHome.aspx" class="green-ar"></asp:Button>
             </div>
-            <asp:Label ID="lblName" runat="server" class="user-nt"></asp:Label>
+            <div class="user-nt"><asp:Label ID="lblName" runat="server"></asp:Label></div>
             <div class="green-wrapper logout">
                 <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
                     class="green" OnClick="btnLogout_Click"></asp:Button>
@@ -45,33 +62,55 @@
         <div class="body-cont">
             <uc:Profile ID="ViewProfile" runat="server" />
             <div class="box brd mt10 m10px p10px">
-                <div class="orange-wrapper fl maw m10px">
+
+            <table align="center">
+            
+                <tr>
+                
+                    <td> <div class="orange-wrapper fl maw m10px">
                     <%--<asp:Button ID="btnMyAwards" runat="server" Text="<%$ Resources:TestSiteResources, MyAwardsB %>"  class="orange"></asp:Button>--%>
                     <asp:Button ID="btnMyAwards" runat="server" Text="<%$ Resources:TestSiteResources, MyAwardsB %>"
                         CssClass="orange" OnClick="btnMyAwards_Click" />
-                </div>
-                <div class="green-wrapper fl maw m10px">
+                </div></td>
+                    <td>
+                        <div class="green-wrapper fl maw m10px">
                     <asp:Button ID="btnMilestones" runat="server" Text="<%$ Resources:TestSiteResources, MilestonesB %>"
                         PostBackUrl="~/PlayerPanel/ViewMilestones.aspx" class="green"></asp:Button>
                 </div>
-                <div class="green-wrapper fl maw m10px">
-                    <asp:Button ID="btnManagerAwards" runat="server" Text="<%$ Resources:TestSiteResources, Manager %> "
-                        class="green" PostBackUrl="~/PlayerPanel/ViewManagerAwards.aspx"></asp:Button>
-                </div>
-                <div class="green-wrapper fl maw m10px">
-                    <asp:Button ID="Button2" runat="server" Text="<%$ Resources:TestSiteResources, Levels %> "
-                        class="green" PostBackUrl="~/PlayerPanel/ViewLevelAwards.aspx"></asp:Button>
-                </div>
-                <div class="green-wrapper fl maw m10px">
-                    <asp:Button ID="Button3" runat="server" Text="<%$ Resources:TestSiteResources, Performance %> "
-                        class="green" PostBackUrl="~/PlayerPanel/ViewPerformanceAwards.aspx"></asp:Button>
-                </div>
-                <div class="green-wrapper fl maw m10px">
-                    <asp:Button ID="Button4" runat="server" Text="<%$ Resources:TestSiteResources, Contest %> "
-                        class="green" PostBackUrl="~/PlayerPanel/ViewContestAwards.aspx"></asp:Button>
-                </div>
-                <div class="clear">
-                </div>
+                    </td>
+                    <td>
+                    <div class="green-wrapper fl maw m10px"><asp:Button ID="btnManagerAwards" runat="server" Text="<%$ Resources:TestSiteResources, Manager %> "
+                        class="green" PostBackUrl="~/PlayerPanel/ViewManagerAwards.aspx"></asp:Button></div>
+                    </td>
+
+                    <td>
+                    <div class="green-wrapper fl maw m10px"><asp:Button ID="Button2" runat="server" Text="<%$ Resources:TestSiteResources, Levels %> "
+                        class="green" PostBackUrl="~/PlayerPanel/ViewLevelAwards.aspx"></asp:Button></div>
+                    </td>
+                    <td>
+                    <div class="green-wrapper fl maw m10px"><asp:Button ID="Button3" runat="server" Text="<%$ Resources:TestSiteResources, Performance %> "
+                        class="green" PostBackUrl="~/PlayerPanel/ViewPerformanceAwards.aspx"></asp:Button></div>
+
+                    </td>
+
+                    <td>
+                    
+                         <div class="green-wrapper fl maw m10px"><asp:Button ID="Button4" runat="server" Text="<%$ Resources:TestSiteResources, Contest %> "
+                        class="green" PostBackUrl="~/PlayerPanel/ViewContestAwards.aspx"></asp:Button></div>
+
+                    </td>
+                
+                </tr>
+
+            </table>
+
+               
+                
+                
+               
+                
+               
+                
             </div>
             <div class="manager-cont fl-wrapper" id="scrollbar1">
                 <div class="scrollbar">
@@ -93,7 +132,7 @@
                                         <tr>
                                             <td width="187px" valign="top" align="center">
                                                 <br />
-                                                <asp:Image ID="imgAwards" runat="server" ImageUrl='<%# Eval("Award_Image").ToString().Trim() != "" ? ConfigurationSettings.AppSettings["AwardsPath"].ToString() + Eval("Award_Image") : "Images/placeholder.png" %>'
+                                                <asp:Image ID="imgAwards" CssClass="myawardimg" runat="server" ImageUrl='<%# Eval("Award_Image").ToString().Trim() != "" ? ConfigurationSettings.AppSettings["AwardsPath"].ToString() + Eval("Award_Image") : "Images/placeholder.png" %>'
                                                     Width="70px" Height="70px" /><br />
                                                 <asp:Label ID="lblAwardName" runat="server" Text='<%# Eval("Award_Name") %>' Font-Bold="true"></asp:Label><br />
                                                 <%--<asp:Label ID="lblAwardDesc" runat="server" Text='<%# Eval("Award_Desc") %>' Font-Bold="true"></asp:Label><br />--%>

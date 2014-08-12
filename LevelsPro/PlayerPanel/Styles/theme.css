@@ -16,7 +16,7 @@ body{
 	background-size:100% 100%;
  	}
 	
-.my-map{
+.my-map{                                                                                                                    
 	
 	}
 	
@@ -179,6 +179,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', end
     padding-bottom: 2px;
 }
 
+
+.home-btn
+{
+    
+    position:absolute;
+    top:5px;
+    left:10px;
+    
+    }
+
+.myawardimg
+{
+    margin-bottom:10px;
+    }
+
 #ContentPlaceHolder1_ViewAwards_dlViewAwards
 {
     margin-left:8px;
@@ -284,6 +299,18 @@ and (min-width : 645px) {
 .block1-1, .block1{width:82%;}
 .lvl-desc h1.lvl span{padding-right:5%;}
 }
+
+@media only screen 
+and (max-width : 672px)
+and (min-width : 640px) {
+
+    .profile-bcont .usern
+    {
+        font-size:20px !important;
+    }
+
+}
+
 
 @media only screen 
 and (max-width : 644px)
@@ -397,7 +424,7 @@ and (min-width : 500px) {
 	
 
 .orange{
-	background:url(../images/btn-spr-left.png) top left no-repeat;
+	background:url(../images/btn-spr-left.png) bottom left no-repeat;
 	height:37px;
 	font-size:20px;
 	border:0;
@@ -407,7 +434,7 @@ and (min-width : 500px) {
 	
 .orange-wrapper{
 	padding-right:7px;
-	background:url(../images/btn-spr-right.png) top right no-repeat;	
+	background:url(../images/btn-spr-right.png) bottom right no-repeat;	
 	}
 	
 .show-all{
@@ -593,14 +620,26 @@ and (min-width : 500px) {
 	margin-top:15px;
 	}
 	
+.points-label
+{
+    color:#ffed7d;
+}
+
+.star-icon
+{
+    vertical-align: middle;
+    margin-top: -7px;
+    margin-right: -5px;
+}
+	
 .scores{
-	width:162px;
+	width:156px;
 	height:60px;
 	background:url(../images/points-bg.png) top left no-repeat;
 	font-size:24px;
 	text-align:right;
 	color:#FFF;
-	padding:5px 8px;
+	padding:5px 11px;
 	font-weight:bold;
 	}
 	
@@ -799,7 +838,10 @@ table.grid tr.even td{
        }
 */
 
-
+#ContentPlaceHolder1_rblName
+{
+    margin-top:4px;
+}
 .red-bar{
 	height:29px;
 	margin-top:-1px;
@@ -1300,7 +1342,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#474748', end
 	
 .strip{
 	border-bottom:none;
-	background:url(../images/right-arrow.png) 98% 50% no-repeat;
+	/*background:url(../images/right-arrow.png) 98% 50% no-repeat;*/
 	padding:1% 2%;
 	position:relative;
 	border-bottom:1px solid #b0b0b0;
@@ -1535,9 +1577,9 @@ and (min-width : 500px) {
 	
 
 .top-b{
-	background:url(../images/bar-ptrn.png) top repeat-x;
-	height:41px;
-	padding:5px;
+	background: url(../images/bar-ptrn.png) top repeat-x;
+    height: 41px;
+    padding: 7px 9px 3px 9px;
 	}
 	
 .user-nt{
@@ -1550,11 +1592,11 @@ and (min-width : 500px) {
 .logout{
 	position:absolute;
 	top:5px;
-	right:5px;
+	right:10px;
 	}
 
 .logout input{
-	padding:0 5px 0 10px;
+	padding:0 5px 0 13px;
 	}
 	
 
@@ -1584,8 +1626,8 @@ and (min-width : 500px) {
 	
 .strip{
 	border-bottom:none;
-	background:url(../images/right-arrow.png) 98% 50% no-repeat;
-	/*padding:12px 10px;*/
+	/*background:url(../images/right-arrow.png) 98% 50% no-repeat;
+	padding:12px 10px;*/
 	position:relative;
 	border-bottom:1px solid #b0b0b0;
 	}
@@ -1619,6 +1661,7 @@ and (min-width : 500px) {
 	font-size:30px;
 	color:#000;
 	display:block;
+	white-space:nowrap;
 	}
 	
 .img-h{
@@ -1629,7 +1672,7 @@ and (min-width : 500px) {
 	width:141px;
 	float:left;
 	font-size:24px;
-	margin-right:52px;
+	margin-right:10px;
 	text-align:center;
 	}
 	
@@ -1649,8 +1692,8 @@ and (min-width : 500px) {
 	}
 	
 .ul-imgs-sel{
-	width:528px;
-	float:left;
+	/*width:528px;
+	float:left;*/
 	}
 	
 .mscr{
@@ -1732,7 +1775,7 @@ and (min-width : 500px) {
 	border: 1px solid #b0b0b0;
 	background: #FFF;
 	border-bottom: none;
-	padding:10px;
+	padding:10px 10px 25px 10px;
 	}
 	
 .msg-ico{
@@ -1947,10 +1990,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	}
 	
 .quiz-selection .tophead, .quiz-question .tophead{
-	font-size:;18px;
+	
 	text-align:center;
 	color:#fff;
-	padding-top:4px;
+	padding-top:8px;
+	height:14px;
 	}
 	
 
@@ -1966,6 +2010,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	display:block;
 	padding:11px;
 	margin-bottom:6px;
+	position:relative;
 	}
 	
 .qs-mid{
@@ -2064,7 +2109,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	}
 	
 .play-game{
-	margin:10px; 
+	margin:19px 10px; 
 	float:right;
 	}
 	
@@ -3059,7 +3104,17 @@ and (max-device-width : 480px) {*/
 	
 }
 
-
+@media all and (max-width:662px) and (min-width: 481px) 
+{
+    
+    .qs-mid
+    {
+        font-size:16px;
+        width:236px;
+    }
+    
+    
+    }
 @media all and (max-width:1600px) and (min-width: 700px) {
 
 	.tr-in{

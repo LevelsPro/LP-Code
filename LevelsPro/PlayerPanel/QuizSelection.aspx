@@ -11,6 +11,9 @@
             $('.filled-area').css("width", faw);
             //	$('.filled-area').slideRight();
 
+            var h = $('.scrollbar').height();
+            h = h - 11;
+            $('.scrollbar').css("height", h);
 
         });
     </script>

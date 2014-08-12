@@ -19,8 +19,8 @@
         </div>
         <div class="scores sposition">
             <span class="wc"><asp:Label ID="lblContest" runat="server" Text="<%$ Resources:TestSiteResources, YouHave %>"></asp:Label></span><br />
-            <img src="images/star-small.png" width="24" height="24" alt="Star" />
-            <asp:Label ID="lblPoints" runat="server"></asp:Label></div>
+            <img src="images/star-small.png" width="24" height="24" alt="Star" class="star-icon" />
+            <asp:Label ID="lblPoints" runat="server" CssClass="points-label"></asp:Label></div>
           <div class="profile-bright"></div>
         <div class="clear">
         </div>
