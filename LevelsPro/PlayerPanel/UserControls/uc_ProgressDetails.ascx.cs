@@ -42,10 +42,23 @@ namespace LevelsPro.PlayerPanel.UserControls
 
                 string[] arg = new string[2];
                 arg = descs.Split('^');
+                if (!arg.Equals(""))
+                {
+                    pdesc.InnerText = arg[0];
+                    try
+                    {
+                        hpl.Text = arg[1];
+                        hpl.NavigateUrl = hpl.Text;
+                    }
+                    catch (Exception ex)
+                    {
+                        hpl.Text = "Click";
+                        hpl.NavigateUrl="http://www.levelspro.com/";
+                        pdesc.InnerText = descs;
 
-                pdesc.InnerText =arg[0];
-                hpl.Text = arg[1];
-                hpl.NavigateUrl = hpl.Text;
+                    }
+                }
+              
             }
         }
 

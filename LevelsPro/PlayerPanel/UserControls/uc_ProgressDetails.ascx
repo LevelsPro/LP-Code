@@ -17,9 +17,10 @@
                 they can complete. And remember, for every application that is accepted, you get
                 an extra $3.--%>
             </p>
-            <h2><asp:Label ID="lblTip" runat="server" Text="Tips and Tricks"></asp:Label></h2>
-            <br />
-            <asp:HyperLink ID="hpl" runat="server" NavigateUrl="http://www.espncricinfo.com/"  Text="click" Target="_blank"></asp:HyperLink>
+             <p id="p1" runat="server">
+            For Further Reference go to that Link:
+           <asp:HyperLink ID="hpl" runat="server" NavigateUrl="http://www.levelspro.com/"  Text="click" Target="_blank"></asp:HyperLink>
+           </p>
             <%--asp:LinkButton ID="lbtnurl" runat="server" Text="Google" 
         onclick="lbtnurl_Click" OnClientClick ="document.forms[0].target = '_blank';"></asp:LinkButton>--%>
         </div>
