@@ -357,9 +357,9 @@
                                 <div class="mainbox-right">
                                 </div>
                                 <div class="grey-wrapper fr grpoints">
-                              <%--  <asp:Label ID="lblScore" runat="server" Text="0" CssClass="grey"></asp:Label>--%>
-                                    <asp:Button ID="lblScore" runat="server" Text="0" CssClass="grey" 
-                                        OnClientClick="return false;">
+                                <asp:Label ID="lblScore" runat="server" Text="0" CssClass="grey"></asp:Label>
+                                   <%-- <asp:Button ID="lblScore" runat="server" Text="0" CssClass="grey" 
+                                        OnClientClick="return false;">--%>
                                     </asp:Button>
                                     <%--<input type="button" class="grey" value="1,203" />--%>
                                 </div>
