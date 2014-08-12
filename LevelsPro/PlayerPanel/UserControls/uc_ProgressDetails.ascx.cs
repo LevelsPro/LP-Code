@@ -44,7 +44,8 @@ namespace LevelsPro.PlayerPanel.UserControls
                 arg = descs.Split('^');
 
                 pdesc.InnerText =arg[0];
-                lbtnurl.Text = arg[1];
+                hpl.Text = arg[1];
+                hpl.NavigateUrl = hpl.Text;
             }
         }
 
@@ -57,12 +58,6 @@ namespace LevelsPro.PlayerPanel.UserControls
             //Response.Redirect("ProgressDetails.aspx",false);
         }
 
-        protected void lbtnurl_Click(object sender, EventArgs e)
-        {
-            Session["lbturl"] = lbtnurl.Text;
-            Session["check"] = 1;
-            Response.Redirect("ProgressDetails.aspx");
-          
-        }            
+                   
     }
 }

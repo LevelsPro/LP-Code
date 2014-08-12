@@ -328,6 +328,8 @@
     <Content Include="Images\qbtns-bg.png" />
     <Content Include="Images\qq-right-bg.png" />
     <Content Include="Images\quiz-done.png" />
+    <Content Include="Images\Role\RoleImages\59c5ca7f-825b-406f-b7ae-fbd13f37e8b2.png" />
+    <Content Include="Images\Role\RoleImages\e395279b-aaa2-417d-a73d-e25b08be3c5d.png" />
     <Content Include="Images\slide-bg.png" />
     <Content Include="Images\spec-sprite.png" />
     <Content Include="Images\sprite.png" />
@@ -1569,7 +1571,6 @@
     <Folder Include="Images\Quiz\QuizThumbNails\" />
     <Folder Include="Images\Rewards\RewardImages\" />
     <Folder Include="Images\Rewards\RewardThumbnails\" />
-    <Folder Include="Images\Role\RoleImages\" />
     <Folder Include="Images\Role\RoleThumbnails\" />
     <Folder Include="ManagerPanel\Reports\" />
     <Folder Include="PlayerPanel\Images\New Folder\" />

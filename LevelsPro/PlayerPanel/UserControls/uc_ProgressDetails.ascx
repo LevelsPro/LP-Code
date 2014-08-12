@@ -19,8 +19,9 @@
             </p>
             <h2><asp:Label ID="lblTip" runat="server" Text="Tips and Tricks"></asp:Label></h2>
             <br />
-            <asp:LinkButton ID="lbtnurl" runat="server" Text="Google" 
-        onclick="lbtnurl_Click" OnClientClick ="document.forms[0].target = '_blank';"></asp:LinkButton>
+            <asp:HyperLink ID="hpl" runat="server" NavigateUrl="http://www.espncricinfo.com/"  Text="click" Target="_blank"></asp:HyperLink>
+            <%--asp:LinkButton ID="lbtnurl" runat="server" Text="Google" 
+        onclick="lbtnurl_Click" OnClientClick ="document.forms[0].target = '_blank';"></asp:LinkButton>--%>
         </div>
         </div>
       

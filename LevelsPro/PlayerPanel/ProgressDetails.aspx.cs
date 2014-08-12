@@ -56,15 +56,15 @@ namespace LevelsPro.PlayerPanel
 
                 LoadData();
             }
-            if(Convert.ToInt32(Session["check"])==1)
-            {
-                Session["check"] = 0;
-                ucViewProgressDetails.LoadTargetDescription(Convert.ToInt32(Session["targetid"]));
-                mpeViewProgressDetailsDiv.Show();
-                string URL = Session["lbturl"].ToString();
-               ClientScript.RegisterStartupScript(this.Page.GetType(), "", "window.open('"+URL+"');", true);
+            //if(Convert.ToInt32(Session["check"])==1)
+            //{
+            //    Session["check"] = 0;
+            //    ucViewProgressDetails.LoadTargetDescription(Convert.ToInt32(Session["targetid"]));
+            //    mpeViewProgressDetailsDiv.Show();
+            //    string URL = Session["lbturl"].ToString();
+            //   ClientScript.RegisterStartupScript(this.Page.GetType(), "", "window.open('"+URL+"');", true);
              
-            }
+            //}
         }
 
         public void LoadData()
