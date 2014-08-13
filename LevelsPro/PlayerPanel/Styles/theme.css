@@ -575,12 +575,14 @@ and (min-width : 500px) {
 
 .grey{
 	background:url(../images/points-left.png) top left no-repeat;
-	height:37px;
+	/*height:37px;*/
 	font-size:20px;
 	border:0;
 	color:#ffeb71;
 	cursor:default;
 	text-align:right;
+	padding:7px 9px 4px 34px;
+	display:block;
 	}
 	
 .grey-wrapper{
