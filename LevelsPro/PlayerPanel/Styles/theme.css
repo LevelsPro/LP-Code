@@ -188,6 +188,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', end
     left:10px;
     
     }
+.amount
+{
+    
+    color: black;
+font-size: 30px !important;
+font-weight: bold;
+padding-top: 2px;
+display: inline-block;
+    
+    }    
+.btn-star
+   {
+       
+       width: 30px;
+vertical-align: middle;
+margin-top: -6px;
+       }
 
 .myawardimg
 {
@@ -2351,9 +2368,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	}
 	
 .red-cont .desc{
-	width:85%;
-	margin-left:10px;
-	float:left;
+	/*width:85%;*/
+	
+	padding-left:124px;
+	/*float:left;*/
 	}
 	
 .red-cont .text{
@@ -2367,7 +2385,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	width:215px;
 	margin-left:20px;
 	padding-top:50px;
-	margin-top: -77px;
+	margin-top: -85px;
 	}
 	
 .red-cont .rdmption-btn{

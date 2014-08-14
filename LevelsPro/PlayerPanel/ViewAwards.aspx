@@ -47,7 +47,7 @@
     </div>--%>
     <div class="container">
         <div class="top-b">
-            <div class="green-ar-wrapper fl">
+            <div class="green-ar-wrapper fl home-btn">
                 <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"
                     PostBackUrl="~/PlayerPanel/PlayerHome.aspx" class="green-ar"></asp:Button>
             </div>

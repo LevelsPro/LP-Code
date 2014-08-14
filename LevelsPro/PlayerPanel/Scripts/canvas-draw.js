@@ -34,8 +34,7 @@ $(document).ready(function () {
         var secrh = $('.sec-right').height();
         $(".pd-desc").height(secrh - 38);
 
-        var mpclm = $('.pd-mp').height();
-        $(".pd-left-dt").height(mpclm - 32);
+        
 
 
 
@@ -46,9 +45,7 @@ $(document).ready(function () {
 
 
 
-    var mpclmm = $('.pd-mp').height();
-    $(".pd-left-dt").height(mpclmm - 187);
-    //alert(mpclmm);
+    
 
     var canvaswidth = $('.my-map').width();
     //alert(canvaswidth);
@@ -68,6 +65,10 @@ $(document).ready(function () {
     var kheight = Math.round((canvaswidth / 216) * 85);
 
     $("#myCanvas").attr("height", kheight);
+
+    var mpclmm = $('.pd-mp').height();
+    $(".pd-left-dt").height(mpclmm - 187);
+    //alert(mpclmm);
 
     var rcolumn = $('.lof').height();
     $(".awpoints").height(rcolumn - 22);
@@ -159,10 +160,13 @@ $(document).ready(function () {
 //        }
 
 
-
+        var mpclm = $('.pd-mp').height();
+        $(".pd-left-dt").height(mpclm - 32);
     });
 
     drawStuff();
+    
+
 
     function drawStuff() {
 

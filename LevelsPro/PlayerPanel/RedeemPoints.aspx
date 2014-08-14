@@ -51,8 +51,19 @@
   	<link href="Styles/theme.css" rel="stylesheet" type="text/css" />
 	<link href="Styles/website.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
+        $.fn.digits = function () {
+            return this.each(function () {
+                $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            })
+        }
+
         $(document).ready(function () {
             $('#scrollbar1').tinyscrollbar();
+            $('.amount').digits();
+
+            var h = $('.scrollbar').height();
+            h = h - 11;
+            $('.scrollbar').css("height", h);
         });
     </script>
 </asp:Content>
@@ -62,11 +73,11 @@
 <div class="container">
 	<div class="top-b">
 	
-		<div class="green-ar-wrapper fl">
+		<div class="green-ar-wrapper fl home-btn">
         <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>" 
             PostBackUrl="~/PlayerPanel/PlayerHome.aspx" class="green-ar"></asp:Button>
 		</div>
-		<asp:Label ID="lblName" runat="server" class="user-nt"></asp:Label>
+		<div class="user-nt"><asp:Label ID="lblName" runat="server" ></asp:Label></div>
 		
 		<div class="green-wrapper logout">
         <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
@@ -91,7 +102,7 @@
                             <div class="red-cont box">
                                 <asp:Image Width="100px" Height="100px" ID="imgGraphics" CssClass="fl" runat="server"
                                     ImageUrl='<%# ConfigurationSettings.AppSettings["RewardsPath"].ToString() + Eval("Reward_Image") %>' />
-                                <div class="desc fl">
+                                <div class="desc">
                                     <h2 class="red-heading">
                                         <%# Eval("Reward_Name") %></h2>
                                     <div class="text">
@@ -101,9 +112,9 @@
                                     <asp:LinkButton ID="lbtnRedeem" runat="server" Font-Overline="false"  CommandName="redeem" CommandArgument='<%# Eval("Reward_Cost") %>'>
                                         <div class="rdmption-btn" id="divscore" runat="server">                                       
                                             <%--<img src="images/arrow-redmp.png" width="23" height="31" alt="arrow" class="arrow" />--%>
-                                            <img src="Images/star.png" width="23" height="31" alt="star" />
-                                            <asp:Label ID="lblRewardName" runat="server" Visible="false" Text='<%# Eval("Reward_Name") %>'></asp:Label>
-                                            <asp:Label ID="lblRedeem" runat="server" Font-Size="X-Large" Font-Bold="true" ForeColor="Black" Text='<%# Eval("Reward_Cost") %>'></asp:Label>
+                                            <img src="Images/star.png" class="btn-star" alt="star" />
+                                            <asp:Label ID="lblRewardName" runat="server" Visible="false"  CssClass="amount" Text='<%# Eval("Reward_Name") %>'></asp:Label>
+                                            <asp:Label ID="lblRedeem" runat="server" Font-Size="X-Large" CssClass="amount" Font-Bold="true" ForeColor="Black" Text='<%# Eval("Reward_Cost") %>'></asp:Label>
                                             <%--<asp:Button BackColor="Transparent" BorderColor="Transparent"  Font-Size="X-Large" Font-Bold="true" ID="btnRedeem" alt="star" runat="server" Text='<%# Eval("Reward_Cost") %>'
                                                 />--%>
                                         </div>
