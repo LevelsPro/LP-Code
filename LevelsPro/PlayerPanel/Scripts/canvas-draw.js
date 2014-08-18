@@ -11,6 +11,7 @@ $(document).ready(function () {
 
 
     $(window).resize(function () {
+        
 
 //        var canvas = document.getElementById('myCanvas');
 //        var context = canvas.getContext('2d');
@@ -92,7 +93,7 @@ $(document).ready(function () {
     $('.block1').width(stripw - 92);
 
     $(window).resize(function () {
-
+       
         var mcr = $('.pic-holder').prev().position();
 
 
@@ -108,10 +109,10 @@ $(document).ready(function () {
 
 
 
-    $(window).resize(function () {
+//    $(window).resize(function () {
 
 
-
+        
 
 
         // drawStuff();
@@ -160,9 +161,8 @@ $(document).ready(function () {
 //        }
 
 
-        var mpclm = $('.pd-mp').height();
-        $(".pd-left-dt").height(mpclm - 32);
-    });
+       
+//    });
 
     drawStuff();
     

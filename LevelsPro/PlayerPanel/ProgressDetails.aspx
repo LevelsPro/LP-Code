@@ -15,9 +15,18 @@
     
     <script type="text/javascript">
         $(document).ready(function () {
+            $(window).resize(function () {
+
+                var mpclm = $('.mapb').height();
+                $(".pd-left-dt").height(mpclm - 32);
+                console.log(mpclm);
+
+            });
             $('#scrollbar1').tinyscrollbar();
             var faw = $('.filled-area').text();
             $('.filled-area').css("width", faw);
+
+
         });
 		
 	</script>
