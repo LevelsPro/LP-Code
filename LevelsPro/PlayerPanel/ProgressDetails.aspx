@@ -102,7 +102,7 @@
            
             <div class="map">
                     <canvas id="myCanvas"> </canvas>
-                    <img  id="MapImage" runat="server"  class="my-map" width="925" />
+                    <img  id="MapImage" runat="server"  class="my-map" width="925" height="550" />
                    
                     <uc:Map ID="ucMap" runat="server" />
                     <%--<div class="orange-cir" style="top: 30%; left: 13%;">

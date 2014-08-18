@@ -325,7 +325,14 @@ and (min-width : 640px) {
     {
         font-size:20px !important;
     }
-
+    
+    .user-nt
+    {
+        
+        padding-left:103px !important;
+        padding-right:90px !important;
+        
+        }
 }
 
 
@@ -2058,7 +2065,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	}
 	
 .qs-mid{
-	width:265px;
+	width:284px;
 	font-size:18px;
 	color:#FFF;
 	margin-left:15px;

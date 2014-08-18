@@ -321,7 +321,7 @@
                         <div class="box-2 mapb">
                             <div class="map" onclick="ondivclick();" style="cursor: pointer;">
                                 <canvas id="myCanvas"> </canvas>
-                                <img  id="MapImage" runat="server"  class="my-map" width="925" height="425" />
+                                <img  id="MapImage" runat="server"  class="my-map" width="925" height="550" />
                                 <uc:Map ID="ucMap" runat="server" />
                                 <%--<div class="orange-cir mcr" style="top: 30%; left: 13%;">
                                     1</div>
@@ -360,7 +360,7 @@
                                 <asp:Label ID="lblScore" runat="server" Text="0" CssClass="grey"></asp:Label>
                                    <%-- <asp:Button ID="lblScore" runat="server" Text="0" CssClass="grey" 
                                         OnClientClick="return false;">--%>
-                                    </asp:Button>
+                                  <%--  </asp:Button>--%>
                                     <%--<input type="button" class="grey" value="1,203" />--%>
                                 </div>
                                 <div class="clear">

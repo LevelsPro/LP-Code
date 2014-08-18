@@ -23,7 +23,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <div class="top-b">
-            <div class="green-ar-wrapper fl">
+            <div class="green-ar-wrapper home-btn">
                 <asp:Button ID="btnHome" runat="server" CssClass="green-ar" Text="<%$ Resources:TestSiteResources, HomeAdmin %>" OnClick="btnHome_Click" />
             </div>
             <div class="user-nt">

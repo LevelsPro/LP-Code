@@ -888,7 +888,7 @@
     <comment>Score</comment>
   </data>
   <data name="YouHave" xml:space="preserve">
-    <value>You Have:</value>
+    <value>You have:</value>
     <comment>YouHave</comment>
   </data>
   <data name="LastReply" xml:space="preserve">
@@ -1456,7 +1456,7 @@
     <comment>Questions</comment>
   </data>
   <data name="Quiz" xml:space="preserve">
-    <value>- Quiz</value>
+    <value> - Quiz</value>
     <comment>quiz</comment>
   </data>
   <data name="QuizGames1" xml:space="preserve">
