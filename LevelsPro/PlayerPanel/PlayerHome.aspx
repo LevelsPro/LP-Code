@@ -370,7 +370,7 @@
                     </div>
                     <div class="clear">
                     </div>
-                    <div class="tm box-l">
+                  <%--  <div class="tm box-l">
                         <div class="box twobb b1">
                             <uc:Contests ID="ucContests" runat="server" />
                             <%--<div class="sm-h">
@@ -404,10 +404,10 @@
                                     </div>
                                 </div>
                             </div>--%>
-                        </div>
-                    </div>
+                   <%--     </div>
+                    </div>--%>
                 
-                    <div class="tm box-r">
+                   <%-- <div class="tm box-r">
                         <div class="box twobb b2">
                             <div class="rflwr m0a">
                                 <div class="green-wrapper vf">
@@ -432,7 +432,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="clear">
                     </div>
                 </div>

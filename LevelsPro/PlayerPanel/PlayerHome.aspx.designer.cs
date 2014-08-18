@@ -265,24 +265,6 @@ namespace LevelsPro.PlayerPanel {
         protected global::System.Web.UI.WebControls.Label lblScore;
         
         /// <summary>
-        /// ucContests control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::LevelsPro.PlayerPanel.UserControls.uc_Contests ucContests;
-        
-        /// <summary>
-        /// btnViewForums control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnViewForums;
-        
-        /// <summary>
         /// uprogressHome control.
         /// </summary>
         /// <remarks>
