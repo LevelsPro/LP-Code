@@ -123,7 +123,7 @@
                 </div>
                 <div class="viewport">
                     <div class="overview">
-                        <asp:DataList ID="dlViewAwards" runat="server" RepeatColumns="4" RepeatDirection="Horizontal"
+                         <asp:DataList ID="dlViewAwards" runat="server" RepeatColumns="4" RepeatDirection="Horizontal"
                             RepeatLayout="Table" OnItemDataBound="dlViewAwards_ItemDataBound" OnItemCommand="dlViewAwards_ItemCommand">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lbtnView" runat="server" CommandName="ViewPopup" CommandArgument='<%# Eval("Award_ID")%>'
@@ -146,6 +146,7 @@
                             </ItemTemplate>
                             <ItemStyle CssClass="award-cont" VerticalAlign="Top" BorderWidth="0px" />
                         </asp:DataList>
+
                     </div>
                 </div>
             </div>

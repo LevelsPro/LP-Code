@@ -1,6 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="uc_ProgressDetails.ascx.cs"
     Inherits="LevelsPro.PlayerPanel.UserControls.uc_ProgressDetails" %>
+    <script>
 
+        $(document).ready(function () {
+
+            $('#scrollbar1').tinyscrollbar();
+        
+        });
+    
+    </script>
 	<div class="box pd-popup">
 <div class="in-cont" id="scrollbar1">
 <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
