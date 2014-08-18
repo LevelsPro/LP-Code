@@ -22,6 +22,8 @@ namespace Common
         SqlString _currentlyin;
         SqlString _reach;
         SqlString _game;
+        SqlString _levelimage;
+        SqlString _levelthumbnail;
 
         #endregion
         public Levels()
@@ -102,6 +104,16 @@ namespace Common
         {
             get { return _game; }
             set { _game = value; }
+        }
+        public SqlString LevelThumbnail
+        {
+            get { return _levelthumbnail; }
+            set { _levelthumbnail = value; }
+        }
+        public SqlString LevelImage
+        {
+            get { return _levelimage; }
+            set { _levelimage = value; }
         }
         #endregion
     }

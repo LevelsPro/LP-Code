@@ -42,7 +42,7 @@
             <div class="clear">
             </div>
         </div>
-        <div class="strip">
+       <%-- <div class="strip">
        
                     <asp:Label ID="lblImageName" runat="server" class="edit-name fl" Text="Progress Map"></asp:Label>
                 
@@ -57,7 +57,7 @@
                         <asp:HyperLink ID="hplView" runat="server" Text="<%$ Resources:TestSiteResources, View %>" rel="lightbox" Visible="false"></asp:HyperLink>
                           <div class="clear">
             </div>
-        </div>
+        </div>--%>
               
          <div class="strip">
             <asp:Label ID="lblActive" class="edit-name fl" runat="server" Text="<%$ Resources:TestSiteResources, Active %>"></asp:Label>

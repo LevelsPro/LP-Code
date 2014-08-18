@@ -1,7 +1,14 @@
 ﻿<%@ Page Title="Edit Level" Language="C#" MasterPageFile="~/AdminPanel/Administrator.master" MaintainScrollPositionOnPostback="true"
     AutoEventWireup="true" CodeBehind="LevelEdit.aspx.cs" Inherits="LevelsPro.AdminPanel.LevelEdit" %>
-
+   <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+ <script src="../Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+     <script src="../Scripts/lightbox.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery.smooth-scroll.min.js" type="text/javascript"></script>
+     <link href="../Styles/lightbox.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
+    <link href="Styles/admin-theme.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/admin-website.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
             $('#scrollbar1').tinyscrollbar();
@@ -111,6 +118,23 @@
     </div>
     <div class="lvl-desc edit-block">
         <h1 class="edit-name fl">
+       <asp:Label ID="lblImageName" runat="server" class="edit-name fl" Text="Progress Map"></asp:Label>
+           </h1>
+        <h1 class="edit-desc2 fl">
+            <asp:FileUpload ID="fileQuizImage" runat="server" CssClass="FUImage" /></h1>
+       <asp:RequiredFieldValidator ID="rfvGraphic" runat="server" ErrorMessage=" Graphic is required."
+                        ControlToValidate="fileQuizImage" Display="Static" SetFocusOnError="True" ValidationGroup="Insertion">*</asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ControlToValidate="fileQuizImage"
+                        Display="Dynamic" ErrorMessage=".jpeg, .jpg, .bmp, .png, .tif & gif formats are allowed"
+                        SetFocusOnError="True" ValidationExpression="(.+\.([Jj][Pp][Gg])|.+\.([Jj][Pp][Ee][Gg])|.+\.([Bb][Mm][Pp])|.+\.([Pp][Nn][Gg])|.+\.([Gg][Ii][Ff])|.+\.([Tt][Ii][Ff]))"
+                        ValidationGroup="Insertion" ToolTip=".jpeg, .jpg, .bmp, .png, .tif & gif formats are allowed"
+                        Font-Size="36px" ForeColor="Red">*</asp:RegularExpressionValidator>
+                        <asp:HyperLink ID="hplView" runat="server" Text="<%$ Resources:TestSiteResources, View %>" rel="lightbox" Visible="false"></asp:HyperLink>
+        <div class="clear">
+        </div>
+    </div>
+   <%-- <div class="lvl-desc edit-block">
+        <h1 class="edit-name fl">
          <asp:Label ID="Label5" runat="server" Text="<%$ Resources:TestSiteResources,  DimensionLeft1 %>"></asp:Label>
            </h1>
         <h1 class="edit-desc2 fl">
@@ -132,7 +156,7 @@
             ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>
         <div class="clear">
         </div>
-    </div>
+    </div>--%>
     <div class="gr-hr">
     </div>
     <div class="manager-cont" id="scrollbar1">

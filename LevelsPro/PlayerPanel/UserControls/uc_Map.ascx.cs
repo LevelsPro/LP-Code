@@ -16,7 +16,7 @@ namespace LevelsPro.PlayerPanel.UserControls
         {
             if (!IsPostBack)
             {
-                LoadMap();
+              //  LoadMap();
             }
         }
 

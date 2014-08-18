@@ -67,15 +67,15 @@ namespace LevelsPro.AdminPanel
                     lblmessage.Visible = false;
 
                     txtRoleName.Text = dt.Rows[0]["Role_Name"].ToString();
-                    if (dt.Rows[0]["ImageName"].ToString() != null && dt.Rows.Count >0 && dt.Rows[0]["ImageName"].ToString() != "")
-                    {
-                        string imagepath = dt.Rows[0]["ImageName"].ToString();
+                    //if (dt.Rows[0]["ImageName"].ToString() != null && dt.Rows.Count >0 && dt.Rows[0]["ImageName"].ToString() != "")
+                    //{
+                    //    string imagepath = dt.Rows[0]["ImageName"].ToString();
 
 
-                        hplView.Visible = true;
-                        rfvGraphic.ValidationGroup = "update";
-                        hplView.NavigateUrl = path + imagepath;
-                    }
+                    //    hplView.Visible = true;
+                    //    rfvGraphic.ValidationGroup = "update";
+                    //    hplView.NavigateUrl = path + imagepath;
+                    //}
                     if (dt.Rows[0]["Active"].ToString() == "1")
                     {
                         cbActive.Checked = true;
@@ -113,32 +113,32 @@ namespace LevelsPro.AdminPanel
                 role.RoleName = txtRoleName.Text.Trim();
                 
 
-                String imageID = SaveImageInFolder();
-                if (imageID != "")
-                {
+                //String imageID = SaveImageInFolder();
+                //if (imageID != "")
+                //{
 
-                    role.ImageName = imageID;
+                //    role.ImageName = imageID;
                     
-                }
-                else
-                {
-                    RolesViewBLL roles = new RolesViewBLL();
-                    try
-                    {
-                        roles.Invoke();
-                    }
-                    catch (Exception ex)
-                    {
-                    }
+                //}
+                //else
+                //{
+                //    RolesViewBLL roles = new RolesViewBLL();
+                //    try
+                //    {
+                //        roles.Invoke();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //    }
 
-                    DataView dv = roles.ResultSet.Tables[0].DefaultView;
-                    dv.RowFilter = "Role_ID=" + Convert.ToInt32(Request.QueryString["roleid"]);
-                    DataTable dt = dv.ToTable();
+                //    DataView dv = roles.ResultSet.Tables[0].DefaultView;
+                //    dv.RowFilter = "Role_ID=" + Convert.ToInt32(Request.QueryString["roleid"]);
+                //    DataTable dt = dv.ToTable();
 
-                    role.ImageName = dt.Rows[0]["ImageName"].ToString();
+                //    role.ImageName = dt.Rows[0]["ImageName"].ToString();
                    
 
-                }
+                //}
 
 
                 if (btnAddRole.Text == "Update" || btnAddRole.Text == "mettre à jour" || btnAddRole.Text == "actualizar")
@@ -207,8 +207,8 @@ namespace LevelsPro.AdminPanel
                 btnAddRole.Text = Resources.TestSiteResources.Add;
                 txtRoleName.Text = "";
                 cbActive.Checked = false;
-                rfvGraphic.ValidationGroup = "Insertion";
-                hplView.Visible = false;
+              //  rfvGraphic.ValidationGroup = "Insertion";
+                //hplView.Visible = false;
 
                 LoadData();
                 
@@ -220,8 +220,8 @@ namespace LevelsPro.AdminPanel
             btnAddRole.Text = Resources.TestSiteResources.Add;
             txtRoleName.Text = "";
             cbActive.Checked = false;
-            hplView.Visible = false;
-            rfvGraphic.ValidationGroup = "Insertion";
+           // hplView.Visible = false;
+            //rfvGraphic.ValidationGroup = "Insertion";
 
             Response.Redirect("RoleManagement.aspx");
         }
@@ -239,35 +239,35 @@ namespace LevelsPro.AdminPanel
                 return true;
             return false;
         }
-        public String SaveImageInFolder()
-        {
-            string path = Server.MapPath(ConfigurationSettings.AppSettings["RolePath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["RoleThumbPath"].ToString());
-            if (fileQuizImage.HasFile)
-            {
-                string s = fileQuizImage.FileName;
-                FileInfo fleInfo = new FileInfo(s);
-                if (AllowedFile(fleInfo.Extension))
-                {
-                    string GuidOne = Guid.NewGuid().ToString();
-                    string FileExtension = Path.GetExtension(fileQuizImage.FileName).ToLower();
-                    fileQuizImage.SaveAs(path + GuidOne + FileExtension);
-                    string ipath =string.Format("{0}{1}", GuidOne, FileExtension);
+        //public String SaveImageInFolder()
+        //{
+        //    string path = Server.MapPath(ConfigurationSettings.AppSettings["RolePath"].ToString());
+        //    string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["RoleThumbPath"].ToString());
+        //    if (fileQuizImage.HasFile)
+        //    {
+        //        string s = fileQuizImage.FileName;
+        //        FileInfo fleInfo = new FileInfo(s);
+        //        if (AllowedFile(fleInfo.Extension))
+        //        {
+        //            string GuidOne = Guid.NewGuid().ToString();
+        //            string FileExtension = Path.GetExtension(fileQuizImage.FileName).ToLower();
+        //            fileQuizImage.SaveAs(path + GuidOne + FileExtension);
+        //            string ipath =string.Format("{0}{1}", GuidOne, FileExtension);
 
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                    System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                    thumbImage.Save(Thumbpath + GuidOne + FileExtension);
+        //            System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
+        //            System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
+        //            thumbImage.Save(Thumbpath + GuidOne + FileExtension);
                    
-                    return ipath;
-                }
-                else
-                    return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
+        //            return ipath;
+        //        }
+        //        else
+        //            return "";
+        //    }
+        //    else
+        //    {
+        //        return "";
+        //    }
+        //}
        
     }
 }

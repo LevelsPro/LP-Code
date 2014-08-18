@@ -26,31 +26,63 @@ namespace LevelsPro.PlayerPanel
             if (!IsPostBack)
             {
                 //Session["check"]=0;
-                RolesViewBLL roles = new RolesViewBLL();
+                //RolesViewBLL roles = new RolesViewBLL();
+                //try
+                //{
+                //    roles.Invoke();
+                //}
+                //catch (Exception ex)
+                //{
+                //    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
+                //}
+
+                //DataView dv = roles.ResultSet.Tables[0].DefaultView;
+
+                //dv.RowFilter = "Role_ID=" + Convert.ToInt32(Session["UserRoleID"]);
+
+                //DataTable dt1 = new DataTable();
+                //dt1 = dv.ToTable();
+                //if (dt1.Rows[0]["ImageName"].ToString() != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"].ToString() != "")
+                //{
+                //    string imagepath = dt1.Rows[0]["ImageName"].ToString();
+
+                //    MapImage.Src = path + imagepath;
+                //}
+                //else 
+                //{
+                //    MapImage.Src = "images/map.png";
+                //}
+
+                LevelsViewBLL level = new LevelsViewBLL();
+                Common.Roles role = new Roles();
+                role.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+                level.Role = role;
                 try
                 {
-                    roles.Invoke();
+                    level.Invoke();
                 }
                 catch (Exception ex)
                 {
                     //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
                 }
-
-                DataView dv = roles.ResultSet.Tables[0].DefaultView;
-
-                dv.RowFilter = "Role_ID=" + Convert.ToInt32(Session["UserRoleID"]);
-
-                DataTable dt1 = new DataTable();
-                dt1 = dv.ToTable();
-                if (dt1.Rows[0]["ImageName"].ToString() != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"].ToString() != "")
+                if (Session["UserRoleID"] != null)
                 {
-                    string imagepath = dt1.Rows[0]["ImageName"].ToString();
+                    DataView dv = level.ResultSet.Tables[0].DefaultView;
 
-                    MapImage.Src = path + imagepath;
-                }
-                else 
-                {
-                    MapImage.Src = "images/map.png";
+                    dv.RowFilter = "Level_ID=" + Convert.ToInt32(Session["CurLevel"]);
+
+                    DataTable dt1 = new DataTable();
+                    dt1 = dv.ToTable();
+                    if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
+                    {
+                        string imagepath = dt1.Rows[0]["ImageName"].ToString();
+
+                        MapImage.Src = path + imagepath;
+                    }
+                    else
+                    {
+                        MapImage.Src = "images/map.png";
+                    }
                 }
 
 

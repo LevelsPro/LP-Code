@@ -117,34 +117,34 @@ namespace LevelsPro.PlayerPanel
 
                 #endregion
 
-                RolesViewBLL roles = new RolesViewBLL();
-                try
-                {
-                    roles.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
-                }
-                if (Session["UserRoleID"] != null)
-                {
-                    DataView dv = roles.ResultSet.Tables[0].DefaultView;
+                //RolesViewBLL roles = new RolesViewBLL();
+                //try
+                //{
+                //    roles.Invoke();
+                //}
+                //catch (Exception ex)
+                //{
+                //    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
+                //}
+                //if (Session["UserRoleID"] != null)
+                //{
+                //    DataView dv = roles.ResultSet.Tables[0].DefaultView;
 
-                    dv.RowFilter = "Role_ID=" + Convert.ToInt32(Session["UserRoleID"]);
+                //    dv.RowFilter = "Role_ID=" + Convert.ToInt32(Session["UserRoleID"]);
 
-                    DataTable dt1 = new DataTable();
-                    dt1 = dv.ToTable();
-                    if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
-                    {
-                        string imagepath = dt1.Rows[0]["ImageName"].ToString();
+                //    DataTable dt1 = new DataTable();
+                //    dt1 = dv.ToTable();
+                //    if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
+                //    {
+                //        string imagepath = dt1.Rows[0]["ImageName"].ToString();
 
-                        MapImage.Src = path + imagepath;
-                    }
-                    else
-                    {
-                        MapImage.Src = "images/map.png";
-                    }
-                }
+                //        MapImage.Src = path + imagepath;
+                //    }
+                //    else
+                //    {
+                //        MapImage.Src = "images/map.png";
+                //    }
+                //}
 
                 Points point = new Points();
                 point.UserID = Convert.ToInt32(Session["userid"]);
@@ -530,7 +530,7 @@ namespace LevelsPro.PlayerPanel
                                 //string p = "images/star_yellow_" + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString() + ".png";
 
                                 #endregion
-                              
+                                Session["CurLevel"] = userlevel.ResultSet.Tables[0].Rows[0]["current_level"].ToString();
                                 LevelStar.ImageUrl = "images/star_yellow_" + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString() + ".png";
                                 // imgFxNews.ImageUrl = "~/" + FxNewsFolder + FxNewsImageFilename;
 
@@ -788,6 +788,41 @@ namespace LevelsPro.PlayerPanel
 
                         //PlayerAwardViewBLL award = new PlayerAwardViewBLL();
                         #endregion
+
+                        //Image of map.....by aun
+
+                        LevelsViewBLL level = new LevelsViewBLL();
+                        Common.Roles role = new Roles();
+                        role.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+                        level.Role = role;
+                        try
+                        {
+                            level.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
+                        }
+                        if (Session["UserRoleID"] != null)
+                        {
+                            DataView dv = level.ResultSet.Tables[0].DefaultView;
+
+                            dv.RowFilter = "Level_ID=" + Convert.ToInt32(Session["CurLevel"]);
+
+                            DataTable dt1 = new DataTable();
+                            dt1 = dv.ToTable();
+                            if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
+                            {
+                                string imagepath = dt1.Rows[0]["ImageName"].ToString();
+
+                                MapImage.Src = path + imagepath;
+                            }
+                            else
+                            {
+                                MapImage.Src = "images/map.png";
+                            }
+                        }
+
                         GetAutomaticAwardsBLL auto = new GetAutomaticAwardsBLL();
                         //Points points = new Points();
                         Common.User userAw = new Common.User();

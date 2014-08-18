@@ -11,6 +11,8 @@ using System.Data;
 using BusinessLogic.Insert;
 using BusinessLogic.Delete;
 using LevelsPro.App_Code;
+using System.Configuration;
+using System.IO;
 
 namespace LevelsPro.AdminPanel
 {
@@ -22,7 +24,22 @@ namespace LevelsPro.AdminPanel
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+
             lblmessage.Visible = false;
+            if (Convert.ToInt32(Session["viewcheck"]) == 1)
+            {
+                lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.UpdateMessage;
+                Session["viewcheck"] = 0;
+                lblmessage.Visible = true;
+            }
+            else if (Convert.ToInt32(Session["viewcheck"]) == 2)
+            {
+                lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.SavedMessage;
+                Session["viewcheck"] = 0;
+                lblmessage.Visible = true;
+
+            }
+
             if (!IsPostBack)
             {
                 if (Request.QueryString["levelid"] != null && Request.QueryString["levelid"].ToString() != "")
@@ -175,6 +192,9 @@ namespace LevelsPro.AdminPanel
         #endregion
         protected void LoadData(int RoleID, int LevelID)
         {
+            string path = ConfigurationSettings.AppSettings["RolePath"].ToString();
+            string Thumbpath = ConfigurationSettings.AppSettings["RoleThumbPath"].ToString();
+
             TargetViewBLL Target = new TargetViewBLL();
             try
             {
@@ -245,10 +265,20 @@ namespace LevelsPro.AdminPanel
                         ddlHeadingTo.SelectedValue = "0";
 
                     }
-                     
 
-                    txtDimension_left.Text = dvlevel.ToTable().Rows[0]["Dimension_left"].ToString();
-                    txtDimension_top.Text = dvlevel.ToTable().Rows[0]["Dimension_top"].ToString(); 
+                    if (dvlevel.ToTable().Rows[0]["ImageName"].ToString() != null && dvlevel.ToTable().Rows.Count > 0 && dvlevel.ToTable().Rows[0]["ImageName"].ToString() != "")
+                    {
+                      
+                        string imagepath = dvlevel.ToTable().Rows[0]["ImageName"].ToString();
+                        ViewState["imagepath"] = imagepath;
+                         ViewState["imagethumbpath"] =  dvlevel.ToTable().Rows[0]["ImageThumbnail"].ToString();
+                        hplView.Visible = true;
+                        rfvGraphic.ValidationGroup = "update";
+                        hplView.NavigateUrl = path + imagepath;
+                    }
+
+                    //txtDimension_left.Text = dvlevel.ToTable().Rows[0]["Dimension_left"].ToString();
+                    //txtDimension_top.Text = dvlevel.ToTable().Rows[0]["Dimension_top"].ToString(); 
                 }
                 else
                 {
@@ -287,8 +317,19 @@ namespace LevelsPro.AdminPanel
                     ddlHeadingTo.SelectedValue = "0";
 
                 }
-                txtDimension_left.Text = dv.ToTable().Rows[0]["Dimension_left"].ToString();
-                txtDimension_top.Text = dv.ToTable().Rows[0]["Dimension_top"].ToString();
+
+                if (dv.ToTable().Rows[0]["ImageName"].ToString() != null && dv.ToTable().Rows.Count > 0 && dv.ToTable().Rows[0]["ImageName"].ToString() != "")
+                {
+                    string imagepath = dv.ToTable().Rows[0]["ImageName"].ToString();
+                    ViewState["imagepath"] = imagepath;
+                    ViewState["imagethumbpath"] = dv.ToTable().Rows[0]["ImageThumbnail"].ToString();
+                    hplView.Visible = true;
+                    rfvGraphic.ValidationGroup = "update";
+                    hplView.NavigateUrl = path + imagepath;
+                }
+
+               // txtDimension_left.Text = dv.ToTable().Rows[0]["Dimension_left"].ToString();
+               // txtDimension_top.Text = dv.ToTable().Rows[0]["Dimension_top"].ToString();
 
                 if (ViewState["levelid"] != null && ViewState["levelid"].ToString() != "")
                 {
@@ -359,10 +400,56 @@ namespace LevelsPro.AdminPanel
 
             }
         }
+
+        protected bool AllowedFile(string extension)
+        {
+            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
+            if (strArr.Contains(extension))
+                return true;
+            return false;
+        }
+
+
+        public String SaveImageInFolder()
+        {
+            string path = Server.MapPath(ConfigurationSettings.AppSettings["RolePath"].ToString());
+            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["RoleThumbPath"].ToString());
+            if (fileQuizImage.HasFile)
+            {
+                string s = fileQuizImage.FileName;
+                FileInfo fleInfo = new FileInfo(s);
+                if (AllowedFile(fleInfo.Extension))
+                {
+                    string GuidOne = Guid.NewGuid().ToString();
+                    string FileExtension = Path.GetExtension(fileQuizImage.FileName).ToLower();
+                    fileQuizImage.SaveAs(path + GuidOne + FileExtension);
+                    string ipath = string.Format("{0}{1}", GuidOne, FileExtension);
+
+                    System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
+                    System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
+                    thumbImage.Save(Thumbpath + GuidOne + FileExtension);
+                    ViewState["thumbpathnew"] = string.Format("{0}{1}", GuidOne, FileExtension);
+
+
+                   return ipath;
+                }
+                else
+                    return "";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+
         #region update and add level
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-           
+            string path = Server.MapPath(ConfigurationSettings.AppSettings["RolePath"].ToString());
+            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["RoleThumbPath"].ToString());
+
+
             if (btnUpdate.Text == "Update" || btnUpdate.Text == "mettre à jour" || btnUpdate.Text == "actualizar")
             {
                 
@@ -380,16 +467,32 @@ namespace LevelsPro.AdminPanel
                     level.CurrentlyIn = ddlYouIn.SelectedValue;
                     level.Reach = ddlHeadingTo.SelectedValue;
                     level.Game = ddlGame.SelectedValue;
+                    String imageID = SaveImageInFolder();
+                    if (imageID != "")
+                    {
+                        ViewState["Image"] = imageID;
+                        level.LevelImage = imageID;
+                        level.LevelThumbnail = ViewState["thumbpathnew"].ToString();
 
-                    level.Dimension_left = Convert.ToInt32(txtDimension_left.Text);
-                    level.Dimension_top = Convert.ToInt32(txtDimension_top.Text);
+                    }
+                    else
+                    {
+                        level.LevelThumbnail = ViewState["imagethumbpath"].ToString();
+                        level.LevelImage=ViewState["imagepath"].ToString();
+                    }
+
+                   // level.LevelImage =
+                  //  level.LevelThumbnail =
+                   // level.Dimension_top = Convert.ToInt32(txtDimension_top.Text);
 
 
                     UpdateLevel.Levels = level;
                     try
                     {
                         UpdateLevel.Invoke();                        
-                        lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.UpdateMessage;                                     
+                        lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.UpdateMessage;
+                     
+
                     }
                     catch (Exception ex)
                     {
@@ -437,6 +540,16 @@ namespace LevelsPro.AdminPanel
 
                     lblmessage.Text = "Provide Game ,you are in and Heading to values";
                 }
+                if (ViewState["Image"] != null || !ViewState["Image"].Equals(""))
+                {
+                    hplView.Visible = true;
+                    hplView.NavigateUrl = path + ViewState["Image"].ToString();
+                    if (!ViewState["levelid"].Equals("") || ViewState["levelid"] != null || !ViewState["roleid"].Equals("") || ViewState["roleid"] != null)
+                    {
+                        Session["viewcheck"] = 1;
+                        Response.Redirect("LevelEdit.aspx?levelid=" + Convert.ToInt32(ViewState["levelid"]) + "&roleid=" + Convert.ToInt32(ViewState["roleid"]), false);
+                    }
+                    }
             }
             else
                 if (ViewState["roleid"] != null && ViewState["roleid"].ToString() != "" && ViewState["count"] != null && ViewState["count"].ToString() != "")
@@ -462,9 +575,21 @@ namespace LevelsPro.AdminPanel
                             level.BaseHours = Convert.ToInt32(txtBaseHours.Text.Trim());
                             level.Points = Convert.ToInt32(txtlevelPoints.Text.Trim());
 
-                            level.Dimension_top = Convert.ToInt32(txtDimension_top.Text.Trim());
-                            level.Dimension_left = Convert.ToInt32(txtDimension_left.Text.Trim());
+                           // level.Dimension_top = Convert.ToInt32(txtDimension_top.Text.Trim());
+                           // level.Dimension_left = Convert.ToInt32(txtDimension_left.Text.Trim());
+                            String imageID = SaveImageInFolder();
+                            if (imageID != "")
+                            {
+                                ViewState["Image"] = imageID;
+                                level.LevelImage = imageID;
+                                level.LevelThumbnail = ViewState["thumbpathnew"].ToString();
 
+                            }
+                            else
+                            {
+                                level.LevelThumbnail = ViewState["imagethumbpath"].ToString();
+                                level.LevelImage = ViewState["imagepath"].ToString();
+                            }
                            
                             level.CurrentlyIn = ddlYouIn.SelectedValue;  
                             level.Reach = ddlHeadingTo.SelectedValue;
@@ -479,7 +604,11 @@ namespace LevelsPro.AdminPanel
                                 ViewState["count"] = null;
                                 imgbtnright.Enabled = true;
                                 imgbtnleft.Enabled = true;
-                                
+                                if (ViewState["Image"] != null || !ViewState["Image"].Equals(""))
+                                {
+                                    hplView.Visible = true;
+                                    hplView.NavigateUrl = path + ViewState["Image"].ToString();
+                                }
                                 lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.SavedMessage;//"Level has been saved successfully";                                
                                 btnUpdate.Text = Resources.TestSiteResources.Update;
 
@@ -526,7 +655,13 @@ namespace LevelsPro.AdminPanel
                                
                             }                            
                         }
+                        if (!ViewState["levelid"].Equals("") || ViewState["levelid"] != null || !ViewState["roleid"].Equals("") || ViewState["roleid"] != null)
+                        {
+                            Session["viewcheck"] = 2;
+                            Response.Redirect("LevelEdit.aspx?levelid=" + Convert.ToInt32(ViewState["levelid"]) + "&roleid=" + Convert.ToInt32(ViewState["roleid"]), false);
+                        }
                     }
+                   
                 }
                 else
                 {

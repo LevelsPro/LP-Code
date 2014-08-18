@@ -78,6 +78,8 @@
                                     <asp:Label ID="lblActive" runat="server" Text='<%# Eval("Active") %>' Visible="false"></asp:Label>
                                     <div class="adminprog-cont">
                                         <h1 class="admin-text ot">
+                                         <asp:Image ID="imgLevelImage" runat="server" ImageUrl='<%# Eval("ImageThumbnail").ToString().Trim() != "" ?  "../" + ConfigurationSettings.AppSettings["RoleThumbPath"].ToString() + Eval("ImageThumbnail") :"Images/placeholder.png" %>'
+                                       class="fl" Width="72" Height="72" />&nbsp;
                                             <%# Eval("Level_Position")%>
                                             -
                                             <%# Eval("Level_Name")%></h1>
