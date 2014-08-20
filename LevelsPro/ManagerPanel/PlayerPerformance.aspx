@@ -137,7 +137,7 @@
                             PostBackUrl="~/ManagerPanel/TeamPerformance.aspx" class="green-ar" >
                         </asp:Button>
                     </div>
-                    <div class="green-wrapper fr pag m10px">
+                    <div class="green-wrapper fr pag m10pxer">
                     <asp:Button  ID="btnMes" runat="server" class="green" 
                             Text="Send Message" onclick="btnMes_Click" />
                             <%--<%$ Resources:TestSiteResources, Messages %>--%>

@@ -2590,6 +2590,11 @@ and (max-device-width : 480px) {*/
 	margin:10px;
 	}
 	
+.m10pxer
+{
+    margin:10px 0px 10px 10px;
+    }
+	
 .mtb10px{
 	margin:8px 0 10px 0px;
 	}
