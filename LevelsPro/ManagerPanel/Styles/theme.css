@@ -1124,12 +1124,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#474748', end
 	
 .strip{
 	border-bottom:none;
-	background:url(../images/right-arrow.png) 98% 50% no-repeat;
+	/*background:url(../images/right-arrow.png) 98% 50% no-repeat;*/
 	padding:1% 2%;
 	position:relative;
 	border-bottom:1px solid #b0b0b0;
 	}
-	
+
+.home-btn
+{
+    position:absolute;
+    top:5px;
+    left:10px;
+}
+
 .strip .lt{
 	color:#000;
 	font-size:18px;
@@ -1296,6 +1303,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4898f', end
 	font-size:30px;
 	color:#000;
 	display:block;
+	white-space:nowrap;
+	margin-top:4px;
 	}
 	
 .img-h{
@@ -1306,7 +1315,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4898f', end
 	width:141px;
 	float:left;
 	font-size:24px;
-	margin-right:52px;
+	margin-right:10px;
 	text-align:center;
 	}
 	
@@ -1326,8 +1335,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4898f', end
 	}
 	
 .ul-imgs-sel{
-	width:528px;
-	float:left;
+	/*width:528px;
+	float:left;*/
 	}
 	
 .mscr{

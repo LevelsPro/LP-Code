@@ -22,7 +22,7 @@
 and (max-width : 849px)
 and (min-width : 321px) {
 
-#scrollbar1 .viewport { width: 88% !important; height: 300px; overflow: hidden; position: relative; }
+#scrollbar1 .viewport {/* width: 88% !important; */height: 300px; overflow: hidden; position: relative; }
 .ul-imgs-sel .viewport { height:135px !important; }
 .qs-cont .viewport { height:400px !important;}
 

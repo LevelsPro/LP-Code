@@ -8,10 +8,19 @@
     <link href="Styles/horizontal-website.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
-            
-            
-            
-            $('#scrollbar1').tinyscrollbar({ axis: 'x' });
+
+            $('.strip').last().css("border", 0);
+
+            var maxWidth = $('.fl-wrapper').width();
+            $('.imgs-sel').width(maxWidth - 190);
+            $('.scrollbar, .track').width(maxWidth - 190);
+            $(window).resize(function () {
+                var maxWidth = $('.fl-wrapper').width();
+                $('.imgs-sel').width(maxWidth - 190);
+                $('.scrollbar, .track').width(maxWidth - 190);
+                $('#scrollbar1').tinyscrollbar({ axis: 'x' });
+            });
+            $('#scrollbar1').tinyscrollbar({ axis: 'x' }); 
 
             
 
@@ -44,7 +53,7 @@
     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" Visible="false">LinkButton</asp:LinkButton>
     <div class="container">
         <div class="top-b">
-            <div class="green-ar-wrapper fl">
+            <div class="green-ar-wrapper fl home-btn">
                 <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"
                     PostBackUrl="~/ManagerPanel/TeamPerformance.aspx" CssClass="green-ar"></asp:Button>
             </div>
@@ -204,10 +213,17 @@
                     <div class="clear">
                     </div>
                 </div>
-                <div class="green-wrapper fl reply-msg">
-            <asp:Button ID="btnUpdateInfo" runat="server" Text="<%$ Resources:TestSiteResources, UpdateProfileB %>"
-                ValidationGroup="Insertion" OnClick="btnUpdateInfo_Click" CssClass="green" />
-            </div>
+                <table align="center">
+                    <tr>
+                        <td>
+                            <div class="green-wrapper fl reply-msg">
+                            <asp:Button ID="btnUpdateInfo" runat="server" Text="<%$ Resources:TestSiteResources, UpdateProfileB %>"
+                                ValidationGroup="Insertion" OnClick="btnUpdateInfo_Click" CssClass="green" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
             <div class="clear"></div>
             </div>
             
