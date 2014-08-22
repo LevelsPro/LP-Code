@@ -35,11 +35,12 @@
     <%--<link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />
     <link href="Styles/website.css" rel="stylesheet" type="text/css" />--%>
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+     <script src="Scripts/jquery.ba-resize.min.js" type="text/javascript"></script>
     <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
     <%-- <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />--%>
     <%--<link href="Styles/theme-2.css" rel="stylesheet" type="text/css" />
 <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />--%>
-    <script type="text/javascript" src="Scripts/jquery.min.js"></script>
+    <%--<script type="text/javascript" src="Scripts/jquery.min.js"></script>--%>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     <link href="Styles/website.css" rel="stylesheet" type="text/css" />
    
@@ -57,6 +58,7 @@
         }
         $(document).ready(function () {
 
+            
             $('.grpoints .grey').digits();
 
             var faw = $('.filled-area').text();
@@ -66,7 +68,7 @@
             $('.opac-wrap').height(dh);
 
 
-            
+
 
 
             //	$('.filled-area').slideRight();
@@ -321,7 +323,7 @@
                         <div class="box-2 mapb">
                             <div class="map" onclick="ondivclick();" style="cursor: pointer;">
                                 <canvas id="myCanvas"> </canvas>
-                                <img  id="MapImage" runat="server"  class="my-map" width="925" height="550" />
+                                <img  id="MapImage" runat="server"  class="my-map" />
                                 <uc:Map ID="ucMap" runat="server" />
                                 <%--<div class="orange-cir mcr" style="top: 30%; left: 13%;">
                                     1</div>
