@@ -8,14 +8,6 @@
 
 $(document).ready(function () {
 
-    //    var img = document.getElementById('mymapimg');
-    //    var width = img.clientWidth;
-    //    var height = img.clientHeight;
-
-   
-
-   
-
 
     $("#myCanvas").hide();
 
@@ -29,10 +21,10 @@ $(document).ready(function () {
         //        var canvaswidth = $('.map').width();
         //        $("#myCanvas").width(canvaswidth);
 
-        //                setTimeout(function () {
-        //                    var canvaswidth = $('.map').width();
-        //                    $("#myCanvas").width(canvaswidth);
-        //                }, 20);
+//                setTimeout(function () {
+//                    var canvaswidth = $('.map').width();
+//                    $("#myCanvas").width(canvaswidth);
+//                }, 20);
 
 
 
@@ -89,8 +81,8 @@ $(document).ready(function () {
     }, 20);
 
 
-    var secrh = $('.sec-right').height();
-    $(".pd-desc").height(secrh - 38);
+        var secrh = $('.sec-right').height();
+        $(".pd-desc").height(secrh - 38);
 
 
     //    var cirhalf = $('.orange-cir').outerWidth();

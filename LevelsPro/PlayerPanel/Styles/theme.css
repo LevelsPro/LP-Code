@@ -3196,11 +3196,11 @@ and (max-device-width : 480px) {*/
 	}
 	
 .map{
-	/*height:211px;*/
+	height:211px;
 	}
 	
 	.my-map{
-		/*height:211px;*/
+		height:211px;
 		width:100%;
 		}
 		
@@ -3209,7 +3209,7 @@ and (max-device-width : 480px) {*/
 
 @media all and (max-width:850px) and (min-width: 662px){
 	.my-map{
-			/*height:300px;*/
+			height:300px;
 			width:100%;
 			}	
 }
