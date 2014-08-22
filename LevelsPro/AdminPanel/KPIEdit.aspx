@@ -1,4 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/Administrator.master" AutoEventWireup="true" CodeBehind="KPIEdit.aspx.cs" Inherits="LevelsPro.AdminPanel.KPIEdit" %>
+
+<%@ Register TagPrefix="uc" TagName="Tips" Src="~/AdminPanel/UserControls/uc_TipsTricks.ascx" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
  <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
@@ -64,6 +68,8 @@
                <div class="lvl-desc edit-block mt50 wbg">
                     <asp:Label ID="lblKPIDesc" runat="server" class="edit-name fl" Text="<%$ Resources:TestSiteResources, Description %>"></asp:Label>
                     <asp:TextBox ID="txtDescp" class="edit-desc fl" runat="server" MaxLength="200" TextMode="MultiLine"></asp:TextBox>
+                    <asp:Button ID="btnHyperLink" CssClass="green-btn fr" Text="Tips & Tricks" 
+                        runat="server" onclick="btnHyperLink_Click"/>
                     <asp:RequiredFieldValidator ID="rfvDescp" runat="server" ErrorMessage="Provide KPI Description"
                         ControlToValidate="txtDescp" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>
                     <%--<asp:RegularExpressionValidator ID="revKPIMeasure" runat="server" 
@@ -116,4 +122,18 @@
                     
      
     </div>
+
+                <asp:Button ID="_editPopupButton" runat="server" Text="Edit Contact" Style="display: none" />
+                <asp:ModalPopupExtender ID="mpeTipsTricks" runat="server" BackgroundCssClass="modalBackground"
+                    RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"
+                    PopupControlID="_CongratsMessageDiv" OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
+                    BehaviorID="EditModalPopupMessage">
+                </asp:ModalPopupExtender>
+                <div class="_popupButtons" style="display: none">
+                    <input id="_okPopupButton" value="OK" type="button" />
+                    <input id="_cancelPopupButton" value="Cancel" type="button" />
+                </div>
+                <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none;">
+                    <uc:Tips ID="ucCongratsMessage" runat="server" />
+                </div>
 </asp:Content>

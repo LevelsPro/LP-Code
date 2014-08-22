@@ -285,6 +285,7 @@
     <Content Include="AdminPanel\TargetManagement.aspx" />
     <Content Include="AdminPanel\UserControls\uc_ComposeMessage.ascx" />
     <Content Include="AdminPanel\UserControls\uc_MessageDetails.ascx" />
+    <Content Include="AdminPanel\UserControls\uc_TipsTricks.ascx" />
     <Content Include="AdminPanel\WelcomeAdmin.aspx" />
     <Content Include="AdminPanel\EditPlayer.aspx" />
     <Content Include="ErrorPage.aspx" />
@@ -1052,6 +1053,13 @@
     </Compile>
     <Compile Include="AdminPanel\UserControls\uc_MessageDetails.ascx.designer.cs">
       <DependentUpon>uc_MessageDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\UserControls\uc_TipsTricks.ascx.cs">
+      <DependentUpon>uc_TipsTricks.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\UserControls\uc_TipsTricks.ascx.designer.cs">
+      <DependentUpon>uc_TipsTricks.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\WelcomeAdmin.aspx.cs">
       <DependentUpon>WelcomeAdmin.aspx</DependentUpon>

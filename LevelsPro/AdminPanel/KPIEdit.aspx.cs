@@ -246,5 +246,10 @@ namespace LevelsPro.AdminPanel
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
+
+        protected void btnHyperLink_Click(object sender, EventArgs e)
+        {
+            mpeTipsTricks.Show();
+        }
     }
 }
