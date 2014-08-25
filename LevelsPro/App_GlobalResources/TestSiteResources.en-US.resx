@@ -1224,15 +1224,15 @@
     <comment>Manage Contests</comment>
   </data>
   <data name="ManageGame" xml:space="preserve">
-    <value>Manage Game</value>
+    <value>Manage Games</value>
     <comment>Manage Game</comment>
   </data>
   <data name="ManageKPI" xml:space="preserve">
-    <value>Manage KPI</value>
+    <value>Manage KPIs</value>
     <comment>Manage KPI</comment>
   </data>
   <data name="ManageLevelGame" xml:space="preserve">
-    <value>Manage Level Game</value>
+    <value>Manage Level Games</value>
     <comment>Manage Level Game</comment>
   </data>
   <data name="ManageLevels" xml:space="preserve">
@@ -1244,7 +1244,7 @@
     <comment>Manage Players</comment>
   </data>
   <data name="ManageQuiz" xml:space="preserve">
-    <value>Manage Quiz</value>
+    <value>Manage Quizzes</value>
     <comment>Manage Quiz</comment>
   </data>
   <data name="ManageRewards" xml:space="preserve">

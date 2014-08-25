@@ -106,8 +106,6 @@
                         CssClass="edit-left"></asp:Label>
                     <asp:TextBox ID="txtNickName" runat="server" ValidationGroup="Insertion" MaxLength="50"
                         AutoCompleteType="None" autocomplete="False" CssClass="edit-right"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvNickName" runat="server" ControlToValidate="txtNickName"
-                        Display="Dynamic" ErrorMessage="Enter Nick Name" SetFocusOnError="True" ValidationGroup="Insertion">*</asp:RequiredFieldValidator>
                     <div class="clear">
                     </div>
                 </div>

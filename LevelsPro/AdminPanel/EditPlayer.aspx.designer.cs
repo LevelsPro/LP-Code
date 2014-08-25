@@ -229,15 +229,6 @@ namespace LevelsPro {
         protected global::System.Web.UI.WebControls.TextBox txtNickName;
         
         /// <summary>
-        /// rfvNickName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNickName;
-        
-        /// <summary>
         /// divPassword control.
         /// </summary>
         /// <remarks>
