@@ -104,7 +104,7 @@
                 <div class="strip">
                     <asp:Label ID="lblNickName" runat="server" Text="<%$ Resources:TestSiteResources, NickName %>"
                         CssClass="edit-left"></asp:Label>
-                    <asp:TextBox ID="txtNickName" runat="server" ValidationGroup="Insertion" MaxLength="50"
+                    <asp:TextBox ID="txtNickName" runat="server" MaxLength="50"
                         AutoCompleteType="None" autocomplete="False" CssClass="edit-right"></asp:TextBox>
                     <div class="clear">
                     </div>
