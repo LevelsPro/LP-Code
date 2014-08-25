@@ -127,7 +127,7 @@
                 <asp:ModalPopupExtender ID="mpeTipsTricks" runat="server" BackgroundCssClass="modalBackground"
                     RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"
                     PopupControlID="_CongratsMessageDiv" OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
-                    BehaviorID="EditModalPopupMessage">
+                    BehaviorID="TipsTricksModalPopupExtender">
                 </asp:ModalPopupExtender>
                 <div class="_popupButtons" style="display: none">
                     <input id="_okPopupButton" value="OK" type="button" />
