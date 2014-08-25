@@ -65,6 +65,7 @@
     <Compile Include="Delete\QuestionDeleteBLL.cs" />
     <Compile Include="Delete\QuestionLevelDeleteBLL.cs" />
     <Compile Include="Delete\QuizDeleteBLL.cs" />
+    <Compile Include="Delete\QuizLevelsDeleteBLL.cs" />
     <Compile Include="Delete\QuizScoreDeleteBLL.cs" />
     <Compile Include="Delete\RewardImageDeleteBLL.cs" />
     <Compile Include="Delete\SecurityAnswersDeleteBLL.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Insert\PostRepliedLikeInsertBLL.cs" />
     <Compile Include="Insert\PostReplyInsertBLL.cs" />
     <Compile Include="Insert\QuestionsInsertBLL.cs" />
+    <Compile Include="Insert\QuizLevelsInsertBLL.cs" />
     <Compile Include="Insert\QuizPlayLogBLL.cs" />
     <Compile Include="Insert\QuizScoreInsertBLL.cs" />
     <Compile Include="Insert\RewardImageInsertBLL.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Select\GetLifeLinesBLL.cs" />
     <Compile Include="Select\GetPopupShowed_LevelPerformanceBLL.cs" />
     <Compile Include="Select\GetRewardUserBLL.cs" />
+    <Compile Include="Select\QuizLevelsBLL.cs" />
     <Compile Include="Select\RolesLevelsViewBLL.cs" />
     <Compile Include="Select\DropdownViewBLL.cs" />
     <Compile Include="Select\GelAllMilestonesBLL.cs" />

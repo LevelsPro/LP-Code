@@ -2,29 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace DataAccess.Select
+namespace DataAccess.Delete
 {
-   
-    public class PlayerQuizViewDAL : DataAccessBase
+  public  class QuizLevelsDeleteDAL : DataAccessBase
     {
        private Common.Quiz _quiz;
-        private PlayersQuizQuestionsDataParameters _viewParameters;
+        private QuizLevelsDeleteDataParameters _deleteParameters;
 
-        public PlayerQuizViewDAL()
+        public QuizLevelsDeleteDAL()
         {
-            StoredProcedureName = StoredProcedure.Select.sp_GetQuiz_Player.ToString();
+            StoredProcedureName = StoredProcedure.Delete.sp_DeleteQuizLevels.ToString();
         }
-        public DataSet Update()
+        public void Delete()
         {
-            DataSet ds;
-            _viewParameters = new PlayersQuizQuestionsDataParameters(Quiz);
+            _deleteParameters = new QuizLevelsDeleteDataParameters(Quiz);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            ds = dbHelper.Run(base.ConnectionString, _viewParameters.Parameters);
-            return ds;
-
+            int retu = dbHelper.Run(Quiz.sqlTransaction, base.ConnectionString, _deleteParameters.Parameters);
+           // return dbHelper.Run(base.ConnectionString, _deleteParameters.Parameters);
         }
 
         public Common.Quiz Quiz
@@ -39,22 +35,20 @@ namespace DataAccess.Select
             }
         }
     }
-    public class PlayersQuizQuestionsDataParameters
+
+    public class QuizLevelsDeleteDataParameters
     {
         private Common.Quiz _quiz;
         private MySqlParameter[] _parameters;
 
-        public PlayersQuizQuestionsDataParameters(Common.Quiz quiz)
+        public QuizLevelsDeleteDataParameters(Common.Quiz quiz)
         {
             Quiz = quiz;
             Build();
         }
         public void Build()
         {
-            MySqlParameter[] parameters = { new MySqlParameter("?p_LevelID",Quiz.LevelID),
-                                                  new MySqlParameter("?p_RoleID",Quiz.RoleID)
-                                            };
-
+            MySqlParameter[] parameters = { new MySqlParameter("?p_QuizID", Quiz.QuizID) };
             Parameters = parameters;
         }
         public MySqlParameter[] Parameters

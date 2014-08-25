@@ -39,7 +39,7 @@ namespace DataAccess
             sp_GetQuizPlayLog,
             sp_UserQuizScore,
             sp_GetLevelperformance_PopupShowed,
-
+            sp_QuizLevels,
             sp_GelMilestonesDetail,
             sp_GetUserProgressDetail,
             sp_TeamPerformance,
@@ -119,7 +119,7 @@ namespace DataAccess
             sp_InsertLevelGameDLL,
 
             sp_InsertScore,
-
+            sp_InsertQuizLevels,
             sp_InsertQuestionLevels,
             sp_InsertQuizScore,
             sp_InsertCategory,
@@ -134,8 +134,8 @@ namespace DataAccess
             sp_DeleteAwardImage,
 
             sp_DeleteMessage,
-            
 
+            sp_DeleteQuizLevels,
 
             sp_DeleteTarget,
 

@@ -78,6 +78,7 @@
     <Compile Include="Delete\QuestionDeleteDAL.cs" />
     <Compile Include="Delete\QuestionLevelDeleteDAL.cs" />
     <Compile Include="Delete\QuizDeleteDAL.cs" />
+    <Compile Include="Delete\QuizLevelsDeleteDAL.cs" />
     <Compile Include="Delete\QuizScoreDeleteDAL.cs" />
     <Compile Include="Delete\RewardImageDeleteDAL.cs" />
     <Compile Include="Delete\RolesDeleteDAL.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Insert\PostRepliedLikeInsertDAL.cs" />
     <Compile Include="Insert\PostReplyInsertDAL.cs" />
     <Compile Include="Insert\QuestionsInsertDAL.cs" />
+    <Compile Include="Insert\QuizLevelsInsertDAL.cs" />
     <Compile Include="Insert\QuizPlayLogDAL.cs" />
     <Compile Include="Insert\QuizScoreInsertDAL.cs" />
     <Compile Include="Insert\RewardImageInsertDAL.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="Select\GetLifeLineDAL.cs" />
     <Compile Include="Select\GetPopupShowed_LevelPerformanceDAL.cs" />
     <Compile Include="Select\GetRewardUserDAL.cs" />
+    <Compile Include="Select\QuizLevelsDAL.cs" />
     <Compile Include="Select\RolesLevelsViewDAL.cs" />
     <Compile Include="Select\DropdownViewDAL.cs" />
     <Compile Include="Select\GetAllMilestonesDAL.cs" />

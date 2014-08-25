@@ -12,11 +12,15 @@ using System.Data;
 using BusinessLogic.Insert;
 using BusinessLogic.Update;
 using LevelsPro.App_Code;
+using MySql.Data.MySqlClient;
+using BusinessLogic.Delete;
 
 namespace LevelsPro.AdminPanel
 {
+    
     public partial class QuizEdit : AuthorizedPage
     {
+        static DataSet dss;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -29,12 +33,20 @@ namespace LevelsPro.AdminPanel
             {
                 LoadKPI();
 
+                if (Request.QueryString["mess"] != null && Request.QueryString["mess"].ToString() != "")
+                {
+                    lblmessage.Visible = true;
+                    lblmessage.Text = "Quiz info " + Resources.TestSiteResources.UpdateMessage;
+
+                }
+
                 if (Request.QueryString["quizid"] != null && Request.QueryString["quizid"].ToString() != "")
                 {
                     ViewState["quizid"] = Request.QueryString["quizid"];
                     
                     LoadData(Convert.ToInt32(ViewState["quizid"]));
                 }
+                loadDataList();
             }
         }
         #region show quiz for edit
@@ -184,6 +196,13 @@ namespace LevelsPro.AdminPanel
 
                 }
 
+                MySqlConnection scon = new MySqlConnection(ConfigurationManager.ConnectionStrings["SQLCONN"].ToString());
+                scon.Open();
+                MySqlTransaction sqlTrans = scon.BeginTransaction();
+                quiz.sqlTransaction = sqlTrans;
+                try
+                {
+
                 if (btnAddQuiz.Text == "Update" || btnAddQuiz.Text == "mettre à jour" || btnAddQuiz.Text == "actualizar")
                 {
                     if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
@@ -217,7 +236,7 @@ namespace LevelsPro.AdminPanel
                     {
                         insertquiz.Invoke();
                         
-                        Response.Redirect("QuizManagement.aspx",false);
+                        //Response.Redirect("QuizManagement.aspx",false);
                     }
                     catch (Exception ex)
                     {
@@ -232,6 +251,53 @@ namespace LevelsPro.AdminPanel
                         }
                     }
                 }
+               
+                QuizLevelsDeleteBLL del = new QuizLevelsDeleteBLL();
+                QuizLevelsInsertBLL qLevels = new QuizLevelsInsertBLL();
+
+                del.Quiz = quiz;
+                del.Invoke();
+
+                for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+                {
+                    if (dss.Tables[0].Rows[i]["Allow"].ToString() == "yes")
+                    {
+                        quiz.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
+                        quiz.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
+                        qLevels.Quiz = quiz;
+                        qLevels.Invoke();
+                    }
+
+                }
+                sqlTrans.Commit();
+
+                  if (btnAddQuiz.Text == "Update" || btnAddQuiz.Text == "mettre à jour" || btnAddQuiz.Text == "actualizar")
+                     {
+                         LoadData(int.Parse(quiz.QuizID.ToString()));
+                         lblmessage.Visible = true;
+                         lblmessage.Text = "Quiz info " + Resources.TestSiteResources.UpdateMessage;
+                         Response.Redirect("QuizEdit.aspx?mess=1" + "&quizid=" + ViewState["quizid"].ToString(), false);
+                         
+                     }
+                     else
+                     {
+                         lblmessage.Visible = true;
+                         lblmessage.Text = "Quiz info " + ' ' + Resources.TestSiteResources.SavedMessage;
+                         Response.Redirect("QuizManagement.aspx");
+                     }
+                     
+                    }
+                    catch (Exception )
+                    {
+                        sqlTrans.Rollback();
+                    }
+                    finally
+                    {
+                        
+                        
+                        sqlTrans.Dispose();
+                        scon.Close();
+                    }
             }
                         
         }
@@ -252,6 +318,88 @@ namespace LevelsPro.AdminPanel
         protected void btnAddImage_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void dlLevels_ItemCommand(object sender, DataListCommandEventArgs e)
+        {
+            DataList dlLevels = sender as DataList;
+            Button btnLevel = dlLevels.Items[e.Item.ItemIndex].FindControl("btnLevels") as Button;
+
+            for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+            {
+
+                if (dss.Tables[0].Rows[i]["Level_ID"].ToString() == e.CommandArgument.ToString().Trim())
+                {
+                    if (btnLevel.CssClass == "lvl-green")
+                    {
+                        dss.Tables[0].Rows[i]["Allow"] = null;
+                        btnLevel.CssClass = "lvl-white";
+                    }
+                    else
+                    {
+                        dss.Tables[0].Rows[i]["Allow"] = "yes";
+                        btnLevel.CssClass = "lvl-green";
+                    }
+                    break;
+                }
+
+            }
+
+        }
+
+        protected void dlRoles_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                DataList dlLevels = e.Item.FindControl("dlLevels") as DataList;
+                Literal ltRoleID = e.Item.FindControl("ltRoleID") as Literal;
+
+
+                DataView dv = dss.Tables[0].DefaultView;
+                dv.RowFilter = "Role_ID=" + Convert.ToInt32(ltRoleID.Text.Trim());
+                dlLevels.DataSource = dv.ToTable();
+                dlLevels.DataBind();
+
+
+                foreach (DataListItem item in dlLevels.Items)
+                {
+                    Button btnLevel = item.FindControl("btnLevels") as Button;
+
+                    if (dv.ToTable().Rows[item.ItemIndex]["Allow"].ToString().Trim() == "yes")
+                    {
+                        btnLevel.CssClass = "lvl-green";
+                    }
+                    else
+                    {
+                        btnLevel.CssClass = "lvl-white";
+
+                    }
+
+                }
+
+            }
+        }
+
+        private void loadDataList()
+        {
+            QuizLevelsBLL Rolelevel = new QuizLevelsBLL();
+            Quiz quiz = new Quiz();
+
+            if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
+            {
+                quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
+
+            }
+            else
+            {
+                quiz.QuizID = -1;
+            }
+            Rolelevel.Quiz = quiz;
+            Rolelevel.Invoke();
+            dss = new DataSet();
+            dss = Rolelevel.ResultSet;
+            dlRoles.DataSource = Rolelevel.ResultSet.Tables[0].DefaultView.ToTable(true, "Role_ID", "Role_Name");
+            dlRoles.DataBind();
         }
     }
 }

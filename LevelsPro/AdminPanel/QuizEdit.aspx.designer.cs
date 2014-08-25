@@ -301,6 +301,24 @@ namespace LevelsPro.AdminPanel {
         protected global::System.Web.UI.WebControls.Button btnAddImage;
         
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// dlRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataList dlRoles;
+        
+        /// <summary>
         /// btnAddQuiz control.
         /// </summary>
         /// <remarks>

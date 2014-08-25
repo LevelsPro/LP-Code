@@ -130,6 +130,8 @@ namespace LevelsPro.PlayerPanel
 
 
             Label lblReward = e.Item.FindControl("lblRewardName") as Label;
+            //LinkButton lbtnRedeem = e.Item.FindControl("lbtnRedeem") as LinkButton;
+            //lbtnRedeem.OnClientClick = "return confirm('Are you sure to delete Level.');";
 
             Points point = new Points();
             if (e.CommandName == "redeem")

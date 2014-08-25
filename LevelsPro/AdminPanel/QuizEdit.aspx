@@ -141,14 +141,74 @@
                 <div class="clear">
                 </div>
             </div>
-        </div>                                
-        <asp:Button ID="btnAddQuiz" runat="server" class="edit-left" CssClass="green-btn admin-edit fr"
+                                     
+       
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <div class="manager-cont mt10" id="scrollbar1">
+                            <div class="scrollbar" style="height: 450px;">
+                                <div class="track" style="height: 450px;">
+                                    <div class="thumb" style="top: 0px; height: 52px;">
+                                        <div class="end">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="viewport progadmin">
+                                <div class="overview" style="top: 0px;">
+                                    <asp:DataList ID="dlRoles" runat="server" Width="100%" RepeatDirection="Vertical"
+                                        RepeatColumns="1" OnItemDataBound="dlRoles_ItemDataBound">
+                                        <HeaderTemplate>
+                                            <div class="l33p hem">
+                                                <asp:Label ID="lblimg" runat="server" Text="<%$ Resources:TestSiteResources, Role %>"></asp:Label>
+                                            </div>
+                                            <div class="r66p hem">
+                                                <asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources, Levels1 %>"></asp:Label>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <%-- <table>
+                                <tr>
+                                    <td>--%>
+                                            <div class="l33p">
+                                                <asp:Literal ID="ltRoleID" runat="server" Text='<%# Eval("Role_ID") %>' Visible="false"></asp:Literal>
+                                                <asp:Literal ID="ltRole" runat="server" Text='<%# Eval("Role_Name") %>'></asp:Literal>
+                                            </div>
+                                            <%--</td>
+                                    <td>--%>
+                                            <div class="r66p">
+                                                <asp:DataList ID="dlLevels" runat="server" RepeatDirection="Horizontal" RepeatColumns="10"
+                                                    OnItemCommand="dlLevels_ItemCommand">
+                                                    <ItemTemplate>
+                                                        <asp:Literal ID="ltRoleID" runat="server" Text='<%# Eval("Role_ID") %>' Visible="false"></asp:Literal>
+                                                        <asp:Button ID="btnLevels" runat="server" class="lvl-white" Text='<%# Eval("Level_Position") %>'
+                                                            CommandName="LevelSet" CommandArgument='<%# Eval("Level_ID") %>' />
+                                                        </div>
+                                                        <div class="clear">
+                                                    </ItemTemplate>
+                                                </asp:DataList>
+                                            </div>
+                                            <%--</td>
+                                </tr>
+                            </table>--%>
+                                        </ItemTemplate>
+                                    </asp:DataList>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                  
+                </asp:UpdatePanel>
+                 <asp:Button ID="btnAddQuiz" runat="server" class="edit-left" CssClass="green-btn admin-edit fr"
             Text="<%$ Resources:TestSiteResources, AddQuiz %>" ValidationGroup="Insertion" onclick="btnAddQuiz_Click" />
         &nbsp;
         <asp:Button ID="btnCancel" runat="server" class="edit-left" CssClass="green-btn admin-edit fr mr10"
             Text="<%$ Resources:TestSiteResources, Cancel %>" OnClick="btnCancel_Click" />
         <div class="clear">
         </div>
-   
-
+          </div> 
 </asp:Content>
