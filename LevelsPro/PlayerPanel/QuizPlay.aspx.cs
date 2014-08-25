@@ -1726,9 +1726,15 @@ namespace LevelsPro.PlayerPanel
         public void GetRelatedKPI()
         {
             #region Getting KPI
+
+            Common.Quiz _quiz = new Quiz();
+            _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+            _quiz.LevelID = Convert.ToInt32(Session["CurLevel"]);
+
             PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
             try
             {
+                Quiz_Selection.Quiz = _quiz;
                 Quiz_Selection.Invoke();
             }
             catch (Exception ex)
@@ -1745,9 +1751,15 @@ namespace LevelsPro.PlayerPanel
 
         public void TotalScore()
         {
+
+            Common.Quiz _quiz = new Quiz();
+            _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+            _quiz.LevelID = Convert.ToInt32(Session["CurLevel"]);
+
             PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
             try
             {
+                Quiz_Selection.Quiz = _quiz;
                 Quiz_Selection.Invoke();
             }
             catch (Exception ex)

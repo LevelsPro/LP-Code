@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using BusinessLogic.Select;
 using System.Data;
 using LevelsPro.App_Code;
+using Common;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -36,10 +37,14 @@ namespace LevelsPro.PlayerPanel
         protected void LoadData()
         {
             ltlName.Text = Session["displayname"].ToString() + Resources.TestSiteResources.QuizResults;
+            Common.Quiz _quiz = new Quiz();
+            _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+            _quiz.LevelID = Convert.ToInt32(Session["CurLevel"]);
+
             PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
-            //Quiz_Selection.Quiz = _quiz;
             try
             {
+                Quiz_Selection.Quiz = _quiz;
                 Quiz_Selection.Invoke();
             }
             catch (Exception ex)
