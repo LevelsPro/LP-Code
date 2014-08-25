@@ -13,8 +13,8 @@
 </style>
 
 
-<div class="box forums-popup">
-    <div class="in-cont p-cont">
+
+     <div class="in-cont p-cont">
         <asp:UpdatePanel ID="upCompose" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                  <asp:Panel ID="pnlTipsTricks" runat="server">
@@ -47,4 +47,3 @@
         <asp:Button ID="btnCancel" runat="server" Text="<%$ Resources:TestSiteResources, Cancel %>" class="green">
         </asp:Button>
     </div>
-</div>

@@ -68,7 +68,7 @@
                <div class="lvl-desc edit-block mt50 wbg">
                     <asp:Label ID="lblKPIDesc" runat="server" class="edit-name fl" Text="<%$ Resources:TestSiteResources, Description %>"></asp:Label>
                     <asp:TextBox ID="txtDescp" class="edit-desc fl" runat="server" MaxLength="200" TextMode="MultiLine"></asp:TextBox>
-                    <asp:Button ID="btnHyperLink" CssClass="green-btn fr" Text="Tips & Tricks" 
+                    <asp:Button ID="btnHyperLink" CssClass="green-btn tips fr" Text="Tips & Tricks" 
                         runat="server" onclick="btnHyperLink_Click"/>
                     <asp:RequiredFieldValidator ID="rfvDescp" runat="server" ErrorMessage="Provide KPI Description"
                         ControlToValidate="txtDescp" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>
@@ -133,7 +133,9 @@
                     <input id="_okPopupButton" value="OK" type="button" />
                     <input id="_cancelPopupButton" value="Cancel" type="button" />
                 </div>
-                <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none;">
+                
+                
+                <div id="_CongratsMessageDiv" class="box forums-popup" style="display: none; width:50%;">
                     <uc:Tips ID="ucCongratsMessage" runat="server" />
                 </div>
 </asp:Content>

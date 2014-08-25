@@ -151,6 +151,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00c100', end
 	
 	}
 	
+.tips
+{
+  
+    width: 141px;
+    text-align: center;
+    padding: 3px 0;
+    margin-top: 9px;
+    font-size: 19px;
+    margin-right: 50px;
+    }
+	
 .profile .block1{
 	float:left;
 	width:75%;
