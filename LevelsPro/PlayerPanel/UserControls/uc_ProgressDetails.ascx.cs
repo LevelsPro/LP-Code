@@ -39,7 +39,19 @@ namespace LevelsPro.PlayerPanel.UserControls
                 lblheading.Text = dt.Rows[0]["KPIName"].ToString();
                 //pdesc.InnerText = dt.Rows[0]["KPIDesc"].ToString();
                 string descs = dt.Rows[0]["KPIDesc"].ToString();
+                String TipsDESC = dt.Rows[0]["TipsDesc"].ToString();
+                String TipsLink = dt.Rows[0]["TipsLink"].ToString();
 
+                if (TipsDESC != null && TipsDESC != "" && TipsLink != null && TipsLink != "")
+                {
+                    hpl.Text = TipsDESC;
+                    hpl.NavigateUrl = TipsLink;
+                }
+                else
+                {
+                    hpl.Visible = false;
+                }
+                /*
                 string[] arg = new string[2];
                 arg = descs.Split('^');
                 if (!arg.Equals(""))
@@ -58,6 +70,7 @@ namespace LevelsPro.PlayerPanel.UserControls
 
                     }
                 }
+                */
               
             }
         }

@@ -11,7 +11,33 @@ namespace LevelsPro.AdminPanel.UserControls
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+        }
 
+        public void LoadData()
+        {
+            if ((Session["TipsDESC"].ToString() != null || Session["TipsDESC"].ToString() != "")
+                && (Session["TipsLINK"].ToString() != null || Session["TipsLINK"].ToString() != ""))
+            {
+                txtReferal.Text = Session["TipsDESC"].ToString();
+                txtLink.Text = Session["TipsLINK"].ToString();
+            }
+            else
+            {
+                txtReferal.Text = "";
+                txtLink.Text = "";
+            }
+        }
+        protected void btnSend_Click(object sender, EventArgs e)
+        {
+            Session["TipsDESC"] = txtReferal.Text;
+            Session["TipsLINK"] = txtLink.Text;
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Session["TipsDESC"] = txtReferal.Text;
+            Session["TipsLINK"] = txtLink.Text;
         }
     }
 }

@@ -17,7 +17,8 @@ namespace Common
         SqlInt32 _siteid;
         SqlString _kpicategory;
         SqlString _kpidesc;
-
+        SqlString _kpiTipsDESC;
+        SqlString _kpiTipsLink;
 
         #endregion
 
@@ -66,6 +67,16 @@ namespace Common
         {
             get { return _kpidesc; }
             set { _kpidesc = value; }
+        }
+        public SqlString KPITipsDESC
+        {
+            get { return _kpiTipsDESC; }
+            set { _kpiTipsDESC = value; }
+        }
+        public SqlString KPITipsLINK
+        {
+            get { return _kpiTipsLink; }
+            set { _kpiTipsLink = value; }
         }
         #endregion
     }

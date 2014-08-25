@@ -48,10 +48,13 @@ namespace DataAccess.Insert
         public void Build()
         {
             MySqlParameter[] parameters = {new MySqlParameter("?p_KpiName",KPI.KPIName),
-                                         new MySqlParameter("?p_KpiMeasure",KPI.KPIMeasure),
-                                          new MySqlParameter("?p_KpiType",KPI.KPIType),
-                                          new MySqlParameter("?p_KpiCategory",KPI.KPICategory),
-                                          new MySqlParameter("?p_Descp",KPI.KPIDescription)};
+                                           new MySqlParameter("?p_KpiMeasure",KPI.KPIMeasure),
+                                           new MySqlParameter("?p_KpiType",KPI.KPIType),
+                                           new MySqlParameter("?p_KpiCategory",KPI.KPICategory),
+                                           new MySqlParameter("?p_Descp",KPI.KPIDescription),
+                                           new MySqlParameter("?p_KpiTipsDESC",KPI.KPITipsDESC),
+                                           new MySqlParameter("?p_KpiTipsLINK",KPI.KPITipsLINK)};
+                                            
             Parameters = parameters;
         }
         public MySqlParameter[] Parameters

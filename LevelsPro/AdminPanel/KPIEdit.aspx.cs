@@ -15,7 +15,7 @@ namespace LevelsPro.AdminPanel
 {
     public partial class KPIEdit : AuthorizedPage
     {
-
+        
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -65,6 +65,8 @@ namespace LevelsPro.AdminPanel
                     txtDescp.Text = dt.Rows[0]["KPI_Descp"].ToString();
                     ddlKPIType.SelectedValue = dt.Rows[0]["KPI_type"].ToString();
                     ddlCategory.SelectedValue = dt.Rows[0]["KPI_Category"].ToString();
+                    Session["TipsDESC"] = dt.Rows[0]["TipsDESC"].ToString();
+                    Session["TipsLINK"] = dt.Rows[0]["TipsLINK"].ToString();
                     if (dt.Rows[0]["Active"].ToString() == "1")
                     {
                         cbActive.Checked = true;
@@ -83,6 +85,8 @@ namespace LevelsPro.AdminPanel
                     cbActive.Enabled = false;
                     ddlKPIType.SelectedIndex = 0;
                     ddlCategory.SelectedIndex = 0;
+                    Session["TipsDESC"] = "";
+                    Session["TipsLINK"] = "";
 
                 }
             }
@@ -155,6 +159,8 @@ namespace LevelsPro.AdminPanel
                 kpi.KPIMeasure = txtKPIMeasure.Text.Trim();
                 kpi.KPIType = ddlKPIType.SelectedValue;
                 kpi.KPICategory = ddlCategory.SelectedValue;
+                kpi.KPITipsDESC = Session["TipsDESC"].ToString();
+                kpi.KPITipsLINK = Session["TipsLINK"].ToString();
             
 
 
@@ -249,6 +255,8 @@ namespace LevelsPro.AdminPanel
 
         protected void btnHyperLink_Click(object sender, EventArgs e)
         {
+            ucCongratsMessage.LoadData();
+
             mpeTipsTricks.Show();
         }
     }

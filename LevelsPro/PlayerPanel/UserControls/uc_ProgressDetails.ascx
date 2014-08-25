@@ -26,7 +26,6 @@
                 an extra $3.--%>
             </p>
              <p id="p1" runat="server">
-            For Further Reference go to that Link:
            <asp:HyperLink ID="hpl" runat="server" NavigateUrl="http://www.levelspro.com/"  Text="click" Target="_blank"></asp:HyperLink>
            </p>
             <%--asp:LinkButton ID="lbtnurl" runat="server" Text="Google" 

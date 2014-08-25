@@ -41,9 +41,12 @@
         </asp:UpdatePanel>
     </div>
     <div class="green-wrapper fl mc-canse m10px">
-        <asp:Button ID="btnSend" runat="server" Text="Save" class="green"></asp:Button>
+        <asp:Button ID="btnSend" runat="server" Text="Save" class="green" 
+            onclick="btnSend_Click"></asp:Button>
     </div>
     <div class="green-wrapper fr mc-canse m10px">
-        <asp:Button ID="btnCancel" runat="server" Text="<%$ Resources:TestSiteResources, Cancel %>" class="green">
+        <asp:Button ID="btnCancel" runat="server" 
+            Text="<%$ Resources:TestSiteResources, Cancel %>" class="green" 
+            onclick="btnCancel_Click">
         </asp:Button>
     </div>
