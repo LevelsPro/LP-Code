@@ -13,24 +13,6 @@ namespace LevelsPro.AdminPanel.UserControls {
     public partial class uc_TipsTricks {
         
         /// <summary>
-        /// upCompose control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upCompose;
-        
-        /// <summary>
-        /// pnlTipsTricks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlTipsTricks;
-        
-        /// <summary>
         /// lblReferalText control.
         /// </summary>
         /// <remarks>

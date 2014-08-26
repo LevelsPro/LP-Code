@@ -13,6 +13,42 @@ namespace LevelsPro.AdminPanel {
     public partial class KPIEdit {
         
         /// <summary>
+        /// _editPopupButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _editPopupButton;
+        
+        /// <summary>
+        /// mpeViewProgressDetailsDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeViewProgressDetailsDiv;
+        
+        /// <summary>
+        /// upViewProgressDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upViewProgressDetails;
+        
+        /// <summary>
+        /// ucViewProgressDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::LevelsPro.AdminPanel.UserControls.uc_TipsTricks ucViewProgressDetails;
+        
+        /// <summary>
         /// btnHome control.
         /// </summary>
         /// <remarks>
@@ -130,15 +166,6 @@ namespace LevelsPro.AdminPanel {
         protected global::System.Web.UI.WebControls.TextBox txtDescp;
         
         /// <summary>
-        /// btnHyperLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnHyperLink;
-        
-        /// <summary>
         /// rfvDescp control.
         /// </summary>
         /// <remarks>
@@ -146,6 +173,15 @@ namespace LevelsPro.AdminPanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescp;
+        
+        /// <summary>
+        /// btntips control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btntips;
         
         /// <summary>
         /// lblKPIType control.
@@ -236,32 +272,5 @@ namespace LevelsPro.AdminPanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
-        
-        /// <summary>
-        /// _editPopupButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button _editPopupButton;
-        
-        /// <summary>
-        /// mpeTipsTricks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeTipsTricks;
-        
-        /// <summary>
-        /// ucCongratsMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::LevelsPro.AdminPanel.UserControls.uc_TipsTricks ucCongratsMessage;
     }
 }

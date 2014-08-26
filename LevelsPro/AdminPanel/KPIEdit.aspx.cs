@@ -255,9 +255,17 @@ namespace LevelsPro.AdminPanel
 
         protected void btnHyperLink_Click(object sender, EventArgs e)
         {
-            ucCongratsMessage.LoadData();
 
-            mpeTipsTricks.Show();
+         // mpeTipsTricks.Show();
+         // ucCongratsMessage.LoadData();
+
+        }
+
+        protected void btntips_Click(object sender, EventArgs e)
+        {
+
+            mpeViewProgressDetailsDiv.Show();
+            ucViewProgressDetails.LoadData();
         }
     }
 }

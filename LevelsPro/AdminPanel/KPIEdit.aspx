@@ -1,7 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/Administrator.master" AutoEventWireup="true" CodeBehind="KPIEdit.aspx.cs" Inherits="LevelsPro.AdminPanel.KPIEdit" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/Administrator.master" AutoEventWireup="true" CodeBehind="KPIEdit.aspx.cs" Inherits="LevelsPro.AdminPanel.KPIEdit" EnableEventValidation="false" %>
 
-<%@ Register TagPrefix="uc" TagName="Tips" Src="~/AdminPanel/UserControls/uc_TipsTricks.ascx" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register TagPrefix="uc" TagName="ucViewProgressDetails" Src="~/AdminPanel/UserControls/uc_TipsTricks.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
  <script src="Scripts/jquery.min.js" type="text/javascript"></script>
@@ -27,6 +28,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
  
+ <asp:Button ID="_editPopupButton" runat="server" Text="Edit Contact" Style="display: none" />
+    <asp:ModalPopupExtender ID="mpeViewProgressDetailsDiv" runat="server" BackgroundCssClass="modalBackground"
+        RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"
+        PopupControlID="_ViewProgressDetailsDiv" OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
+        BehaviorID="EditModalPopupPost">
+    </asp:ModalPopupExtender>
+    <div class="_popupButtons" style="display: none">
+        <input id="_okPopupButton" value="OK" type="button" />
+        <input id="_cancelPopupButton" value="Cancel" type="button" />
+    </div>
+    <asp:UpdatePanel ID="upViewProgressDetails" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <div id="_ViewProgressDetailsDiv" class="box pd-popup" style="display: none;">
+                <uc:ucViewProgressDetails ID="ucViewProgressDetails" runat="server" />
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
+
+
  <div class="box top-b options-bar">
         <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, Back %>" PostBackUrl="~/AdminPanel/KPIManagement.aspx"
             CssClass="green-btn btn fl"></asp:Button>
@@ -68,10 +89,11 @@
                <div class="lvl-desc edit-block mt50 wbg">
                     <asp:Label ID="lblKPIDesc" runat="server" class="edit-name fl" Text="<%$ Resources:TestSiteResources, Description %>"></asp:Label>
                     <asp:TextBox ID="txtDescp" class="edit-desc fl" runat="server" MaxLength="200" TextMode="MultiLine"></asp:TextBox>
-                    <asp:Button ID="btnHyperLink" CssClass="green-btn tips fr" Text="Tips & Tricks" 
-                        runat="server" onclick="btnHyperLink_Click"/>
+                    
                     <asp:RequiredFieldValidator ID="rfvDescp" runat="server" ErrorMessage="Provide KPI Description"
                         ControlToValidate="txtDescp" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>
+                        <asp:Button ID="btntips" CssClass="green-btn tips fr" Text="Tips & Tricks" 
+                        runat="server" onclick="btntips_Click" />
                     <%--<asp:RegularExpressionValidator ID="revKPIMeasure" runat="server" 
                         ControlToValidate="txtKPIMeasure" Display="Dynamic" 
                         ErrorMessage="Enter only Alphabets" SetFocusOnError="True" 
@@ -123,19 +145,4 @@
      
     </div>
 
-                <asp:Button ID="_editPopupButton" runat="server" Text="Edit Contact" Style="display: none" />
-                <asp:ModalPopupExtender ID="mpeTipsTricks" runat="server" BackgroundCssClass="modalBackground"
-                    RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"
-                    PopupControlID="_CongratsMessageDiv" OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
-                    BehaviorID="TipsTricksModalPopupExtender">
-                </asp:ModalPopupExtender>
-                <div class="_popupButtons" style="display: none">
-                    <input id="_okPopupButton" value="OK" type="button" />
-                    <input id="_cancelPopupButton" value="Cancel" type="button" />
-                </div>
-                
-                
-                <div id="_CongratsMessageDiv" class="box forums-popup" style="display: none; width:50%;">
-                    <uc:Tips ID="ucCongratsMessage" runat="server" />
-                </div>
 </asp:Content>
