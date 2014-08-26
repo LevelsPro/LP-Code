@@ -244,6 +244,505 @@ namespace LevelsPro.UserControls
             //ModalPopupExtender mpe = this.Parent.FindControl("mpeSecurityQuestionsDiv") as ModalPopupExtender;
             //mpe.Hide();
             Response.Redirect("~/Index.aspx");            
+        }
+
+        protected void ddlQuestion1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlQuestion1.SelectedIndex > 0)
+            {
+                Session["Q1"] = ddlQuestion1.SelectedValue;
+
+                SecurityQuestionsViewBLL securityquestionsbll = new SecurityQuestionsViewBLL();
+                try
+                {
+                    securityquestionsbll.Invoke();
+                }
+                catch (Exception)
+                {
+                }
+
+
+                if (Convert.ToInt32(Session["Q2"]) > 0 && Convert.ToInt32(Session["Q3"]) > 0)
+                {
+                  //  int idcheck = Convert.ToInt32(ddlQuestion1.SelectedValue);
+
+                    ddlQuestion2.DataTextField = "Question_Text";
+                    ddlQuestion2.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals("") && Session["Q3"] != null && !Session["Q3"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    }
+                        ddlQuestion2.DataSource = dv2.ToTable();
+                        ddlQuestion2.DataBind();
+                        this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                        this.ddlQuestion2.SelectedIndex = 0;
+                        ddlQuestion2.SelectedValue = Session["Q2"].ToString();
+                    
+
+                }
+                else if (Convert.ToInt32(Session["Q2"]) > 0)
+                {
+                    ddlQuestion2.DataTextField = "Question_Text";
+                    ddlQuestion2.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]);
+                    }
+                        ddlQuestion2.DataSource = dv2.ToTable();
+                        ddlQuestion2.DataBind();
+                        this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                        this.ddlQuestion2.SelectedIndex = 0;
+                        ddlQuestion2.SelectedValue = Session["Q2"].ToString();
+                    
+                }
+                else
+                {
+
+                    ddlQuestion2.DataTextField = "Question_Text";
+                    ddlQuestion2.DataValueField = "Question_ID";
+
+                    DataView dv = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals(""))
+                    {
+                        dv.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]);
+                    }
+                    ddlQuestion2.DataSource = dv.ToTable();// dv.ToTable();
+                    // ddlQuestion2.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                    ddlQuestion2.DataBind();
+
+                    this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion2.SelectedIndex = 0;
+
+                }
+
+                if (Convert.ToInt32(Session["Q3"]) > 0 && Convert.ToInt32(Session["Q2"]) > 0)
+                {
+
+                    //int idcheck = Convert.ToInt32(ddlQuestion3.SelectedValue);
+
+                    ddlQuestion3.DataTextField = "Question_Text";
+                    ddlQuestion3.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals("") && Session["Q2"] != null && !Session["Q2"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q2"]);
+                    }
+                        ddlQuestion3.DataSource = dv2.ToTable();
+                        ddlQuestion3.DataBind();
+                        this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                        this.ddlQuestion3.SelectedIndex = 0;
+                        ddlQuestion3.SelectedValue = Session["Q3"].ToString();
+                    
+                }
+                else if (Convert.ToInt32(Session["Q3"]) > 0)
+                {
+                    ddlQuestion3.DataTextField = "Question_Text";
+                    ddlQuestion3.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]);
+                    }
+                    ddlQuestion3.DataSource = dv2.ToTable();
+                    ddlQuestion3.DataBind();
+                    this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion3.SelectedIndex = 0;
+                    ddlQuestion3.SelectedValue = Session["Q3"].ToString();
+                }
+                else
+                {
+                    ddlQuestion3.DataTextField = "Question_Text";
+                    ddlQuestion3.DataValueField = "Question_ID";
+
+
+                    DataView dv1 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals(""))
+                    {
+                        dv1.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"].ToString());
+                    }
+                    ddlQuestion3.DataSource = dv1.ToTable();
+                    //ddlQuestion3.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                    ddlQuestion3.DataBind();
+                    this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion3.SelectedIndex = 0;
+                }
+
+            }
+
+            else
+            {
+
+                SecurityQuestionsViewBLL securityquestionsbll = new SecurityQuestionsViewBLL();
+                try
+                {
+                    securityquestionsbll.Invoke();
+                }
+                catch (Exception)
+                {
+                }
+
+                ddlQuestion1.DataTextField = "Question_Text";
+                ddlQuestion1.DataValueField = "Question_ID";
+
+
+                DataView dv1 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                //dv1.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion3.SelectedValue) + " AND Question_ID <>" + Convert.ToInt32(ddlQuestion1.SelectedValue);
+                ddlQuestion1.DataSource = dv1.ToTable();
+                //ddlQuestion3.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                ddlQuestion1.DataBind();
+                this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                this.ddlQuestion1.SelectedIndex = 0;
+            }
+
+            ModalPopupExtender mpe = this.Parent.FindControl("mpeSecurityQuestionsDiv") as ModalPopupExtender;
+            mpe.Show();
+        }
+
+        protected void ddlQuestion2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (ddlQuestion2.SelectedIndex > 0 && Convert.ToInt32(Session["Q1"]) > 0)
+            {
+                Session["Q2"] = ddlQuestion2.SelectedValue;
+                SecurityQuestionsViewBLL securityquestionsbll = new SecurityQuestionsViewBLL();
+                try
+                {
+                    securityquestionsbll.Invoke();
+                }
+                catch (Exception)
+                {
+                }
+
+
+                if (Convert.ToInt32(Session["Q1"]) > 0 && Convert.ToInt32(Session["Q3"]) > 0)
+                {
+                   //int idcheck = Convert.ToInt32(ddlQuestion1.SelectedValue);
+
+                    ddlQuestion1.DataTextField = "Question_Text";
+                    ddlQuestion1.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q2"] != null && !Session["Q2"].Equals("") && Session["Q3"] != null && !Session["Q3"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q2"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    }
+                    ddlQuestion1.DataSource = dv2.ToTable();
+                    ddlQuestion1.DataBind();
+                    this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion1.SelectedIndex = 0;
+
+                    ddlQuestion1.SelectedValue = Session["Q1"].ToString();
+
+                    //ddlQuestion1.DataTextField = "Question_Text";
+                    //ddlQuestion1.DataValueField = "Question_ID";
+
+                    //DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    //dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion2.SelectedValue);
+
+                    //ddlQuestion1.DataSource = dv2.ToTable();
+                    //ddlQuestion1.DataBind();
+                    //ddlQuestion1.SelectedValue = idcheck.ToString();
+
+                }
+                else if (Convert.ToInt32(Session["Q1"]) > 0)
+                {
+                    ddlQuestion1.DataTextField = "Question_Text";
+                    ddlQuestion1.DataValueField = "Question_ID";
+
+                    DataView dv = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q2"] != null && !Session["Q2"].Equals(""))
+                    {
+                        dv.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q2"]);
+                    }
+                    ddlQuestion1.DataSource = dv.ToTable();
+                    ddlQuestion1.DataBind();
+                    this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion1.SelectedIndex = 0;
+                    ddlQuestion1.SelectedValue = Session["Q1"].ToString();
+
+
+                }
+                else
+                {
+
+                    ddlQuestion1.DataTextField = "Question_Text";
+                    ddlQuestion1.DataValueField = "Question_ID";
+
+                    DataView dv = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    dv.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q2"].ToString());
+                    ddlQuestion1.DataSource = dv.ToTable();// dv.ToTable();
+                    // ddlQuestion2.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                    ddlQuestion1.DataBind();
+
+                    this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion1.SelectedIndex = 0;
+
+                }
+
+                if (Convert.ToInt32(Session["Q3"]) > 0 && Convert.ToInt32(Session["Q1"]) > 0)
+                {
+
+                    //int idcheck = Convert.ToInt32(ddlQuestion3.SelectedValue);
+                    ddlQuestion3.DataTextField = "Question_Text";
+                    ddlQuestion3.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals("") && Session["Q2"] != null && !Session["Q2"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q2"]);
+                    }
+                    ddlQuestion3.DataSource = dv2.ToTable();
+                    ddlQuestion3.DataBind();
+                    this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion3.SelectedIndex = 0;
+                    ddlQuestion3.SelectedValue = Session["Q3"].ToString();
+
+
+                    //ddlQuestion3.DataTextField = "Question_Text";
+                    //ddlQuestion3.DataValueField = "Question_ID";
+
+                    //DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    //dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion2.SelectedValue) + " AND Question_ID <>" + Convert.ToInt32(ddlQuestion1.SelectedValue);
+                    //ddlQuestion3.DataSource = dv2.ToTable();
+                    //ddlQuestion3.DataBind();
+                    //ddlQuestion3.SelectedValue = idcheck.ToString();
+                }
+                else if (Convert.ToInt32(Session["Q3"]) > 0)
+                {
+
+                    ddlQuestion3.DataTextField = "Question_Text";
+                    ddlQuestion3.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals("") && Session["Q2"] != null && !Session["Q2"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q2"]);
+                    }
+                    ddlQuestion3.DataSource = dv2.ToTable();
+                    ddlQuestion3.DataBind();
+                    this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion3.SelectedIndex = 0;
+                    ddlQuestion3.SelectedValue = Session["Q3"].ToString();
+
+
+                }
+                else
+                {
+                    ddlQuestion3.DataTextField = "Question_Text";
+                    ddlQuestion3.DataValueField = "Question_ID";
+
+
+                    DataView dv1 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    dv1.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q2"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q1"]);
+                    ddlQuestion3.DataSource = dv1.ToTable();
+                    //ddlQuestion3.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                    ddlQuestion3.DataBind();
+                    this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion3.SelectedIndex = 0;
+                }
+
+            }
+            else
+            {
+
+                SecurityQuestionsViewBLL securityquestionsbll = new SecurityQuestionsViewBLL();
+                try
+                {
+                    securityquestionsbll.Invoke();
+                }
+                catch (Exception)
+                {
+                }
+
+                ddlQuestion2.DataTextField = "Question_Text";
+                ddlQuestion2.DataValueField = "Question_ID";
+
+
+                DataView dv1 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                //dv1.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion3.SelectedValue) + " AND Question_ID <>" + Convert.ToInt32(ddlQuestion1.SelectedValue);
+                ddlQuestion2.DataSource = dv1.ToTable();
+                //ddlQuestion3.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                ddlQuestion2.DataBind();
+                this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                this.ddlQuestion2.SelectedIndex = 0;
+            }
+            ModalPopupExtender mpe = this.Parent.FindControl("mpeSecurityQuestionsDiv") as ModalPopupExtender;
+            mpe.Show();
+
+        }
+
+        protected void ddlQuestion3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlQuestion3.SelectedIndex > 0 && Convert.ToInt32(Session["Q1"]) > 0 && Convert.ToInt32(Session["Q2"]) > 0)
+            {
+                Session["Q3"] = ddlQuestion3.SelectedValue;
+                SecurityQuestionsViewBLL securityquestionsbll = new SecurityQuestionsViewBLL();
+                try
+                {
+                    securityquestionsbll.Invoke();
+                }
+                catch (Exception)
+                {
+                }
+
+                if (Convert.ToInt32(Session["Q1"]) > 0 && Convert.ToInt32(Session["Q2"]) > 0)
+                {
+                   // int idcheck = Convert.ToInt32(ddlQuestion1.SelectedValue);
+
+                    ddlQuestion1.DataTextField = "Question_Text";
+                    ddlQuestion1.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q2"] != null && !Session["Q2"].Equals("") && Session["Q3"] != null && !Session["Q3"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q2"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    }
+                    ddlQuestion1.DataSource = dv2.ToTable();
+                    ddlQuestion1.DataBind();
+                    this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion1.SelectedIndex = 0;
+                    ddlQuestion1.SelectedValue = Session["Q1"].ToString();
+
+
+                    //ddlQuestion1.DataTextField = "Question_Text";
+                    //ddlQuestion1.DataValueField = "Question_ID";
+
+                    //DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    //dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion2.SelectedValue) + " AND Question_ID <>" + Convert.ToInt32(ddlQuestion3.SelectedValue);
+                    //ddlQuestion1.DataSource = dv2.ToTable();
+                    //ddlQuestion1.DataBind();
+                    //ddlQuestion1.SelectedValue = idcheck.ToString();
+
+                }
+                else if (Convert.ToInt32(Session["Q1"]) > 0)
+                {
+                    ddlQuestion1.DataTextField = "Question_Text";
+                    ddlQuestion1.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if ( Session["Q3"] != null && !Session["Q3"].Equals(""))
+                    {
+                        dv2.RowFilter ="Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    }
+                    ddlQuestion1.DataSource = dv2.ToTable();
+                    ddlQuestion1.DataBind();
+                    this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion1.SelectedIndex = 0;
+                    ddlQuestion1.SelectedValue = Session["Q1"].ToString();
+
+                }
+                else
+                {
+
+                    ddlQuestion1.DataTextField = "Question_Text";
+                    ddlQuestion1.DataValueField = "Question_ID";
+
+                    DataView dv = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    dv.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    ddlQuestion1.DataSource = dv.ToTable();// dv.ToTable();
+                    // ddlQuestion2.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                    ddlQuestion1.DataBind();
+
+                    this.ddlQuestion1.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion1.SelectedIndex = 0;
+
+                }
+
+                if (Convert.ToInt32(Session["Q2"]) > 0 && Convert.ToInt32(Session["Q1"]) > 0)
+                {
+
+                   // int idcheck = Convert.ToInt32(ddlQuestion2.SelectedValue);
+
+
+                    ddlQuestion2.DataTextField = "Question_Text";
+                    ddlQuestion2.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q1"] != null && !Session["Q1"].Equals("") && Session["Q3"] != null && !Session["Q3"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q1"]) + "AND Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    }
+                    ddlQuestion2.DataSource = dv2.ToTable();
+                    ddlQuestion2.DataBind();
+                    this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion2.SelectedIndex = 0;
+                    ddlQuestion2.SelectedValue = Session["Q2"].ToString();
+
+
+                    //ddlQuestion2.DataTextField = "Question_Text";
+                    //ddlQuestion2.DataValueField = "Question_ID";
+
+                    //DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    //dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion3.SelectedValue) + " AND Question_ID <>" + Convert.ToInt32(ddlQuestion1.SelectedValue);
+                    //ddlQuestion2.DataSource = dv2.ToTable();
+                    //ddlQuestion2.DataBind();
+                    //ddlQuestion2.SelectedValue = idcheck.ToString();
+                }
+                else if (Convert.ToInt32(Session["Q2"]) > 0)
+                {
+                    ddlQuestion2.DataTextField = "Question_Text";
+                    ddlQuestion2.DataValueField = "Question_ID";
+
+                    DataView dv2 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    if (Session["Q3"] != null && !Session["Q3"].Equals(""))
+                    {
+                        dv2.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    }
+                    ddlQuestion2.DataSource = dv2.ToTable();
+                    ddlQuestion2.DataBind();
+                    this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion2.SelectedIndex = 0;
+                    ddlQuestion2.SelectedValue = Session["Q2"].ToString();
+                }
+                else
+                {
+                    ddlQuestion2.DataTextField = "Question_Text";
+                    ddlQuestion2.DataValueField = "Question_ID";
+
+
+                    DataView dv1 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+                    dv1.RowFilter = "Question_ID <>" + Convert.ToInt32(Session["Q3"]);
+                    ddlQuestion2.DataSource = dv1.ToTable();
+                    //ddlQuestion3.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                    ddlQuestion2.DataBind();
+                    this.ddlQuestion2.Items.Insert(0, "--Select Question--");
+                    this.ddlQuestion2.SelectedIndex = 0;
+                }
+
+            }
+            else
+            {
+
+                SecurityQuestionsViewBLL securityquestionsbll = new SecurityQuestionsViewBLL();
+                try
+                {
+                    securityquestionsbll.Invoke();
+                }
+                catch (Exception)
+                {
+                }
+
+
+                ddlQuestion3.DataTextField = "Question_Text";
+                ddlQuestion3.DataValueField = "Question_ID";
+
+                DataView dv1 = securityquestionsbll.ResultSet.Tables[0].DefaultView;
+               // dv1.RowFilter = "Question_ID <>" + Convert.ToInt32(ddlQuestion2.SelectedValue) + " AND Question_ID <>" + Convert.ToInt32(ddlQuestion1.SelectedValue);
+                ddlQuestion3.DataSource = dv1.ToTable();
+                //ddlQuestion3.DataSource = securityquestionsbll.ResultSet;// dv.ToTable();
+                ddlQuestion3.DataBind();
+                this.ddlQuestion3.Items.Insert(0, "--Select Question--");
+                this.ddlQuestion3.SelectedIndex = 0;
+            }
+            ModalPopupExtender mpe = this.Parent.FindControl("mpeSecurityQuestionsDiv") as ModalPopupExtender;
+            mpe.Show();
+
         }       
     }
 }

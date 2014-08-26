@@ -164,7 +164,7 @@
     <div class="right-label fl">
         <%-- <select class="choose-answer">--%>
         <asp:DropDownList CssClass="choose-answer" ID="ddlQuestion1" runat="server" 
-            Width="95%">
+            Width="95%" AutoPostBack="true" onselectedindexchanged="ddlQuestion1_SelectedIndexChanged">
         </asp:DropDownList>
         <%-- </select>--%>
     </div>
@@ -184,7 +184,8 @@
     </div>
     <div class="right-label fl">
         <%--<select class="choose-answer">--%>
-        <asp:DropDownList CssClass="choose-answer" ID="ddlQuestion2" runat="server" Width="95%">
+        <asp:DropDownList CssClass="choose-answer" ID="ddlQuestion2" runat="server" 
+            Width="95%" AutoPostBack="true" onselectedindexchanged="ddlQuestion2_SelectedIndexChanged">
         </asp:DropDownList>           
             <%--<asp:CompareValidator
                 ID="CompareValidator1" ControlToValidate="ddlQuestion2" runat="server" 
@@ -207,7 +208,8 @@
     </div>
     <div class="right-label fl">
         <%--<select class="choose-answer">--%>
-        <asp:DropDownList CssClass="choose-answer" ID="ddlQuestion3" runat="server" Width="95%">
+        <asp:DropDownList CssClass="choose-answer" ID="ddlQuestion3" runat="server" 
+            Width="95%" AutoPostBack="true" onselectedindexchanged="ddlQuestion3_SelectedIndexChanged">
         </asp:DropDownList>
     <%--    <asp:RequiredFieldValidator ID="rfvQuestion3" runat="server" ErrorMessage="*" InitialValue="0"
             ValidationGroup="Question" ControlToValidate="ddlQuestion3"></asp:RequiredFieldValidator>--%>
