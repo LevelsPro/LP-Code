@@ -14,6 +14,8 @@ namespace LevelsPro.PlayerPanel.UserControls
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+                hpl.Visible = true;
+           
         }
 
         public void LoadTargetDescription(int targetid)

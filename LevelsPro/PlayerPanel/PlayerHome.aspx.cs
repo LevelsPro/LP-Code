@@ -814,7 +814,7 @@ namespace LevelsPro.PlayerPanel
                             if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
                             {
                                 string imagepath = dt1.Rows[0]["ImageName"].ToString();
-
+                                ReuseableItems.imgpath = path + imagepath;
                                 MapImage.Src = path + imagepath;
                             }
                             else

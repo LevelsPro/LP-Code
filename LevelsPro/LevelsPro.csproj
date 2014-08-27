@@ -727,6 +727,7 @@
     <Content Include="PlayerPanel\Scripts\fontResizer.js" />
     <Content Include="PlayerPanel\Scripts\jquery-1.6.1.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery-1.7.2.min.js" />
+    <Content Include="PlayerPanel\Scripts\jquery.ba-resize.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.tinyscrollbar.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.uniform.js" />
@@ -1351,6 +1352,7 @@
     <Compile Include="PlayerPanel\RedeemPoints.aspx.designer.cs">
       <DependentUpon>RedeemPoints.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PlayerPanel\ReuseableItems.cs" />
     <Compile Include="PlayerPanel\UserControls\uc_AwardCongratulations.ascx.cs">
       <DependentUpon>uc_AwardCongratulations.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

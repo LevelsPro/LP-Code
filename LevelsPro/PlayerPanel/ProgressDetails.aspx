@@ -11,6 +11,7 @@
     <title>Progress Details</title>
 
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+     <script src="Scripts/jquery.ba-resize.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     
     <script type="text/javascript">
@@ -102,7 +103,7 @@
            
             <div class="map">
                     <canvas id="myCanvas"> </canvas>
-                    <img  id="MapImage" runat="server"  class="my-map" width="925" height="550" />
+                    <img  id="MapImage" runat="server"  class="my-map" />
                    
                     <uc:Map ID="ucMap" runat="server" />
                     <%--<div class="orange-cir" style="top: 30%; left: 13%;">

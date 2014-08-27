@@ -14,11 +14,12 @@
 
 
 
+
      <div class="in-cont p-cont">
      
                     <asp:Label ID="lblReferalText" Text="Referal Text " runat="server" class="tr-in fl"></asp:Label>
                     <span class="tr-in fl">
-                        <asp:TextBox ID="txtReferal" runat="Server" class="opt" AutoPostBack="True">
+                        <asp:TextBox ID="txtReferal" runat="Server" class="opt" AutoCompleteType="Disabled" >
                         </asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvReferal" runat="server" ErrorMessage="*" ControlToValidate="txtReferal"
                             Font-Size="25px" ForeColor="Red" InitialValue="0" SetFocusOnError="true" ValidationGroup="Compose"
@@ -26,7 +27,7 @@
                     </span>
                      <asp:Label ID="lblLink" Text="Referal Link " runat="server" class="tr-in fl"></asp:Label>
                     <span class="tr-in fl">
-                        <asp:TextBox ID="txtLink" runat="Server" class="opt" AutoPostBack="True">
+                        <asp:TextBox ID="txtLink" runat="Server" class="opt" AutoCompleteType="Disabled">
                         </asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvLink" runat="server" ErrorMessage="*" ControlToValidate="txtLink"
                             Font-Size="25px" ForeColor="Red" InitialValue="0" SetFocusOnError="true" ValidationGroup="Compose"

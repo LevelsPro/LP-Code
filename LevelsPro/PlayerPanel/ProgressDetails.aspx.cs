@@ -67,22 +67,24 @@ namespace LevelsPro.PlayerPanel
                 }
                 if (Session["UserRoleID"] != null)
                 {
-                    DataView dv = level.ResultSet.Tables[0].DefaultView;
+                    //DataView dv = level.ResultSet.Tables[0].DefaultView;
 
-                    dv.RowFilter = "Level_ID=" + Convert.ToInt32(Session["CurLevel"]);
+                    //dv.RowFilter = "Level_ID=" + Convert.ToInt32(Session["CurLevel"]);
 
-                    DataTable dt1 = new DataTable();
-                    dt1 = dv.ToTable();
-                    if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
-                    {
-                        string imagepath = dt1.Rows[0]["ImageName"].ToString();
+                    //DataTable dt1 = new DataTable();
+                    //dt1 = dv.ToTable();
+                    //if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
+                    //{
+                    //    string imagepath = dt1.Rows[0]["ImageName"].ToString();
 
-                        MapImage.Src = path + imagepath;
-                    }
-                    else
-                    {
-                        MapImage.Src = "images/map.png";
-                    }
+                    //    MapImage.Src = path + imagepath;
+                    //}
+                    //else
+                    //{
+                    //    MapImage.Src = "images/map.png";
+                    //}
+
+                    MapImage.Src = ReuseableItems.imgpath;
                 }
 
 

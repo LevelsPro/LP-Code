@@ -193,7 +193,7 @@ namespace LevelsPro.PlayerPanel.UserControls
 
                     String MessageBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
                                         + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has successfully achieved Level " +
-                                        (Convert.ToInt32(Level.Substring(6)) - 1).ToString() + " at " + System.DateTime.Now.ToString();
+                                        (Convert.ToInt32(Level.Substring(6))).ToString() + " at " + System.DateTime.Now.ToString();
 
 
                     _message.MessageText = MessageBody;
@@ -217,7 +217,7 @@ namespace LevelsPro.PlayerPanel.UserControls
                 _message.MessageSubject = "Level achieved";
                 String Message = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
                                         + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has successfully achieved Level " +
-                                        (Convert.ToInt32(Level.Substring(6)) - 1).ToString() + " at " + System.DateTime.Now.ToString();
+                                        (Convert.ToInt32(Level.Substring(6))).ToString() + " at " + System.DateTime.Now.ToString();
 
                 _message.MessageText = Message;
                 try
@@ -286,7 +286,7 @@ namespace LevelsPro.PlayerPanel.UserControls
 
                     var client = new FacebookClient(access_token); //acess token which we tailored up in the code
 
-                    object objFB = client.Post("/me/feed", new { message = "You have successfully achieved Level: " + (Convert.ToInt32(Level.Substring(6))-1) + " (LevelsPro)" });
+                    object objFB = client.Post("/me/feed", new { message = "You have successfully achieved Level: " + (Convert.ToInt32(Level.Substring(6))) + " (LevelsPro)" });
                     //object objFB = client.Post("/me/feed", new { message = "You have successfully achieved: " + lblLevel.Text.Trim() + " (LevelsPro)" });
                     if (objFB != null)
                     {
