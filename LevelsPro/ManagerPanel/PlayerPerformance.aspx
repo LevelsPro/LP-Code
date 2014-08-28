@@ -2,6 +2,7 @@
     CodeBehind="PlayerPerformance.aspx.cs" Inherits="LevelsPro.ManagerPanel.PlayerPerformance" EnableEventValidation="false" %>
     <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
     <%@ Register TagPrefix="uc" TagName="ucComposeMessage" Src="~/ManagerPanel/UserControls/uc_ComposeMessagePlayer.ascx" %>
+    <%@ Register TagPrefix="uc" TagName="ucViewProgressDetails" Src="~/ManagerPanel/UserControls/uc_KpiUpdate.ascx" %>
    <%--  <%@ Register TagPrefix="uc" TagName="MessageDetails" Src="~/ManagerPanel/UserControls/uc_AssignAwards.ascx" %>--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
@@ -77,6 +78,9 @@
     <%--</style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
+       
     <div class="container">
         <div class="top-b">
             <div class="green-ar-wrapper fl">
@@ -199,8 +203,11 @@
                         <div class="viewport mo" style="height:300px">
                             <div class="overview">
                                 <asp:DataList ID="dlProgressDetail" runat="server" RepeatColumns="1" RepeatDirection="Horizontal"
-                                    RepeatLayout="Table" Width="100%" OnItemDataBound="dlProgressDetail_ItemDataBound" >
+                                    RepeatLayout="Table" Width="100%" 
+                                    OnItemDataBound="dlProgressDetail_ItemDataBound" 
+                                    onitemcommand="dlProgressDetail_ItemCommand" >
                                     <ItemTemplate>
+                                    <asp:LinkButton ID="lbtnView" runat="server" CommandName="ViewPopup" CommandArgument='<%# Eval("Target_ID") + ";" + Eval("score")  + "&" +Eval("Target_Value")  + "(" +Eval("KPI_name") + ")" +Eval("KPI_ID") + "^" +Eval("Points") %>' Font-Underline="false" ForeColor="Black">
                                         <div class="exp fl">
                                             <asp:Label ID="lblname" Text='<%# Eval("KPI_name")%>' runat="server"></asp:Label>
                                             <asp:Label ID="lblTargetValue" Text='<%# Eval("Target_Value")%>' runat="server" Visible="false"></asp:Label>
@@ -217,6 +224,7 @@
                                         </div>
                                         <div class="clear">
                                         </div>
+                                        </asp:LinkButton>
                                     </ItemTemplate>
                                     <ItemStyle CssClass="mo-cont" />
                                 </asp:DataList>
@@ -253,6 +261,21 @@
     </div>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional"><ContentTemplate>
  
+ <asp:Button ID="Button1" runat="server" Text="Edit Contact" Style="display: none" />
+    <asp:ModalPopupExtender ID="mpeViewProgressDetailsDiv" runat="server" BackgroundCssClass="modalBackground"
+        RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"
+        PopupControlID="_ViewProgressDetailsDiv" OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
+        BehaviorID="EditModalPopupPost">
+    </asp:ModalPopupExtender>
+    <div class="_popupButtons" style="display: none">
+        <input id="Button2" value="OK" type="button" />
+        <input id="Button3" value="Cancel" type="button" />
+    </div>
+   
+            <div id="_ViewProgressDetailsDiv" class="box pd-popup" style="display: none;">
+                <uc:ucViewProgressDetails ID="ucViewProgressDetails" runat="server" />
+            </div>
+
      <asp:Button ID="_editPopupButton" runat="server" Text="Edit Contact" Style="display: none" />
                     <asp:ModalPopupExtender ID="mpeComposeMessageDiv" runat="server" BackgroundCssClass="modalBackground"
                         RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"

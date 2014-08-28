@@ -516,6 +516,7 @@
     <Content Include="ManagerPanel\UserControls\uc_AssignAwards.ascx" />
     <Content Include="ManagerPanel\UserControls\uc_ComposeMessage.ascx" />
     <Content Include="ManagerPanel\UserControls\uc_ComposeMessagePlayer.ascx" />
+    <Content Include="ManagerPanel\UserControls\uc_KpiUpdate.ascx" />
     <Content Include="ManagerPanel\UserControls\uc_MessageDetails.ascx" />
     <Content Include="ManagerPanel\UserControls\uc_Profile.ascx" />
     <Content Include="PlayerPanel\ChangePassword.aspx" />
@@ -1226,6 +1227,13 @@
     <Compile Include="ManagerPanel\UserControls\uc_ComposeMessagePlayer.ascx.designer.cs">
       <DependentUpon>uc_ComposeMessagePlayer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="ManagerPanel\UserControls\uc_KpiUpdate.ascx.cs">
+      <DependentUpon>uc_KpiUpdate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManagerPanel\UserControls\uc_KpiUpdate.ascx.designer.cs">
+      <DependentUpon>uc_KpiUpdate.ascx</DependentUpon>
+    </Compile>
     <Compile Include="ManagerPanel\UserControls\uc_MessageDetails.ascx.cs">
       <DependentUpon>uc_MessageDetails.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1352,7 +1360,6 @@
     <Compile Include="PlayerPanel\RedeemPoints.aspx.designer.cs">
       <DependentUpon>RedeemPoints.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PlayerPanel\ReuseableItems.cs" />
     <Compile Include="PlayerPanel\UserControls\uc_AwardCongratulations.ascx.cs">
       <DependentUpon>uc_AwardCongratulations.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

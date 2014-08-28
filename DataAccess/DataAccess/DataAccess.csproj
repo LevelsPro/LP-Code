@@ -119,6 +119,7 @@
     <Compile Include="Insert\UserInsertDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\UserPointsReportDAL.cs" />
+    <Compile Include="ReuseableItems.cs" />
     <Compile Include="Select\AwardImagesViewDAL.cs" />
     <Compile Include="Select\AwardViewDAL.cs" />
     <Compile Include="Select\CategoryViewDAL.cs" />

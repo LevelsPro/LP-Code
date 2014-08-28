@@ -10,6 +10,7 @@ using LevelsPro.App_Code;
 using System.Data;
 using System.Configuration;
 using System.Web.UI.HtmlControls;
+using LevelsPro.PlayerPanel;
 
 namespace LevelsPro.ManagerPanel
 {
@@ -25,6 +26,7 @@ namespace LevelsPro.ManagerPanel
         {
             if (!IsPostBack)
             {
+                ReuseableItems.CheckForloadprogressfrompopup = 0;
                 if (Request.QueryString["Base"] != null && Request.QueryString["Base"].ToString() != "" && Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "" && Request.QueryString["likelihood"] != null && Request.QueryString["likelihood"].ToString() != "" && Request.QueryString["remaining"] != null && Request.QueryString["remaining"].ToString() != "")
                 {
                     Session["playerid"] = Convert.ToInt32(Request.QueryString["id"]);
@@ -54,11 +56,12 @@ namespace LevelsPro.ManagerPanel
                     //    System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
                     //    div1.Attributes["class"] = "level-cont-green";
                     //}
-              
 
 
 
+                    Session["ManagerAsscociateID"] = Request.QueryString["id"];
                     LoadData(Convert.ToInt32(Request.QueryString["id"]));
+
                     MessagesViewBLL messageview = new MessagesViewBLL();
 
                     try
@@ -119,10 +122,11 @@ namespace LevelsPro.ManagerPanel
             }
         }
 
-        protected void LoadData(int userid)
+      public void LoadData(int userid)
         {
+           
             UserImageViewBLL UserImage = new UserImageViewBLL();
-
+         
             Common.UserImage image = new Common.UserImage();
             string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
             if (Session["userid"] != null && Session["userid"].ToString() != "")
@@ -197,12 +201,27 @@ namespace LevelsPro.ManagerPanel
            
             if (ds != null && ds.Rows.Count > 0)
             {
+                if (ReuseableItems.CheckForloadprogressfrompopup == 1)
+                {
+                    ReuseableItems.CheckForloadprogressfrompopup = 0;
+                    lblLike.Text = "0 %";
+                }
+                 
+                else
+                {
+                    decimal percentage = 0;
+                    percentage = Convert.ToDecimal(ds.Rows[0]["Likelihood"].ToString());
+                    lblLike.Text = percentage.ToString("0") + "%";
+                }
+                lblHours.Text = ds.Rows[0]["remainingHours"].ToString();
             //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
             //    dv.RowFilter = "PlayerStatus = 'red'";
                 lblPlayerName1.Text=ds.Rows[0]["PlayerName"].ToString();
+                ReuseableItems.userfullpointsdmanager =Convert.ToInt32(ds.Rows[0]["U_Points"].ToString());
                 Session["playernamemanager"] = lblPlayerName1.Text;
                 lblLevel1.Text = ds.Rows[0]["Role_Name"].ToString() + "- Level " + ds.Rows[0]["Level_Position"].ToString();
                 level=Convert.ToInt32(ds.Rows[0]["Level_ID"]);
+                Session["levelidmanager"] = level;
                 MainColor.Attributes["class"] = "level-cont-" + ds.Rows[0]["PlayerStatus"].ToString().ToLower();
             }
 
@@ -348,6 +367,44 @@ namespace LevelsPro.ManagerPanel
            // mpeViewMessageDetailsDiv.Show();
 
             Response.Redirect("AssignAward.aspx");
+        }
+
+        protected void dlProgressDetail_ItemCommand(object source, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "ViewPopup")
+            {
+                Session["chkmangerkpi"] = 1;
+                string[] arg = new string[2];
+                arg = e.CommandArgument.ToString().Split(';');
+                //Session["LevelID"] = arg[0];
+                //Session["LevelPosition"] = arg[1];
+                //int score = Convert.ToInt32(arg[1]);
+                ReuseableItems.userkpistargetidmanager = Convert.ToInt32(arg[0]);
+
+                string[] arg1 = new string[2];
+                arg1 = arg[1].ToString().Split('&');
+                ReuseableItems.userkpiscoremanager = Convert.ToInt32(arg1[0]);
+
+
+                string[] arg2 = new string[2];
+                arg2 = arg1[1].ToString().Split('(');
+                ReuseableItems.userkpitargetmanager = Convert.ToInt32(arg2[0]);
+
+                string[] arg3 = new string[2];
+                arg3 = arg2[1].ToString().Split(')');
+                ReuseableItems.userkpitextmanager =arg3[0];
+
+                string[] arg4 = new string[2];
+                arg4 = arg3[1].ToString().Split('^');
+                ReuseableItems.userkpiidmanager =Convert.ToInt32(arg4[0]);
+
+                ReuseableItems.usertargetpointsdmanager=Convert.ToInt32(arg4[1]);
+
+              //  mpeComposeMessageDiv.Hide();
+
+                mpeViewProgressDetailsDiv.Show();
+               ucViewProgressDetails.LoadData();
+            }
         }
     }
 }
