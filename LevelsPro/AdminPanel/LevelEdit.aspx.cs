@@ -540,7 +540,8 @@ namespace LevelsPro.AdminPanel
 
                     lblmessage.Text = "Provide Game ,you are in and Heading to values";
                 }
-                if (ViewState["Image"] != null || !ViewState["Image"].Equals(""))
+
+                if (ViewState["Image"] != null)
                 {
                     hplView.Visible = true;
                     hplView.NavigateUrl = path + ViewState["Image"].ToString();

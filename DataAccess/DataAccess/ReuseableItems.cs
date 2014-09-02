@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -16,6 +17,12 @@ namespace LevelsPro.PlayerPanel
         public static int userfullpointsdmanager;
         public static string userkpitextmanager;
         public static int CheckForloadprogressfrompopup;
+        public static int PlayerPoints_PlayerPanel;
+        public static int PlayerCurrentLevelID_PlayerPanel;
+        public static int PlayerCurrentLevelPosition_PlayerPanel;
+        public static string PlayerLevelImage;
+        public static DataTable AllLevelsPlayer;
+        public static DataSet GetAutomaticAward;
       
     }
 }

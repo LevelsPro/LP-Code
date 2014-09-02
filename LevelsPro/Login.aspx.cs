@@ -10,6 +10,7 @@ using BusinessLogic.Select;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
+using LevelsPro.PlayerPanel;
 namespace LevelsPro
 {
     public partial class Login : AuthorizedPage
@@ -105,8 +106,15 @@ namespace LevelsPro
             else if (ds.Tables[0].Rows[0]["U_Password"].ToString() == pwd)
             {
                 Sysrole = ds.Tables[0].Rows[0]["U_SysRole"].ToString();
+                if(Sysrole.Equals("Player"))
+                {
+                    ReuseableItems.PlayerPoints_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["U_Points"].ToString());
+                    ReuseableItems.PlayerCurrentLevelID_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["current_level"].ToString());
+                    ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["Level_Position"].ToString());
+                    ReuseableItems.PlayerLevelImage = ds.Tables[0].Rows[0]["ImageName"].ToString();
+                    ReuseableItems.AllLevelsPlayer = ds.Tables[1];
 
-
+                }
                 Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                 Session["rolename"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                // Session["Role_ID"] = ds.Tables[0].Rows[0]["Role_ID"];
