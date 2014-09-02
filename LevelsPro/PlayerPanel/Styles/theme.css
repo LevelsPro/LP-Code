@@ -2779,9 +2779,10 @@ select.up-login{
 	}
 	
 .dest-img-h{
-	width:390px;
+	width:520px;
 	margin-right:15px;
 	height:67px;
+	margin-top:13px;
 	}
 	
 .dest-img-h .cont{
@@ -2819,7 +2820,7 @@ select.up-login{
 	}
 	
 .quiz-game .dest-img-h .cont{
-	background:url(../images/et1.png) top left repeat-x;
+	background:url(../images/et4.png) top left repeat-x;
 	}
 	
 .transactions{
