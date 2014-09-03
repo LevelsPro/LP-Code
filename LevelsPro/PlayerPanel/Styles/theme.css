@@ -2080,6 +2080,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 .qs-game-ny{
 	border:2px solid #00fc09;
 	}
+	
+.qs-game-important{
+	border:2px solid #ff7b10;
+	}
+	
+.qs-game-important .qs-mid{
+	color:#ff7b10 !important;
+	
+	}
 
 .qs-game-done{
 	border:2px solid #8a7fa0;
