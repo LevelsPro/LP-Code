@@ -33,6 +33,7 @@ namespace LevelsPro.AdminPanel
         private void BindGridwithDummy()
         {
             DataTable dt = new DataTable();
+            //Employee ID
             dt.Columns.Add(new System.Data.DataColumn("UserID", typeof(String)));
             dt.Columns.Add(new System.Data.DataColumn("KPIID", typeof(String)));
             dt.Columns.Add(new System.Data.DataColumn("Score", typeof(String)));

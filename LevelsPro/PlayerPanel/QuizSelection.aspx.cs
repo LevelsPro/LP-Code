@@ -24,6 +24,7 @@ namespace LevelsPro.PlayerPanel
         public DataView dv_New;
         public DataView dvLog;
         public DataSet dtLog;
+        public DataTable dtMandatoryQuizes;
         public int TimeCheck_counter;
         protected override void OnInit(EventArgs e)
         {
@@ -72,7 +73,8 @@ namespace LevelsPro.PlayerPanel
             {
             }
             DataView dv = Quiz_Selection.ResultSet.Tables[0].DefaultView;
-            
+            dtMandatoryQuizes = Quiz_Selection.ResultSet.Tables[4];
+
             dv_New = Quiz_Selection.ResultSet.Tables[3].DefaultView;
            // dv_New.RowFilter = "LevelID = " + Convert.ToInt32(Session["CurLevel"]);
             dt_New = Quiz_Selection.ResultSet.Tables[1];
@@ -245,7 +247,18 @@ namespace LevelsPro.PlayerPanel
                                 {
                                     AlreadyPlayed.Visible = false;
                                     Playing.Visible = true;
-                                    ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
+                                    for (int i = 0; i < dtMandatoryQuizes.Rows.Count; i++)
+                                    {
+                                        if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
+                                        {
+                                            ItemContainer.Attributes["class"] = "qs-item qs-game-important";
+                                        }
+                                        else
+                                        {
+                                            ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
+                                        }
+                                    }
+                                        
                                 }
                                 //  ItemContainer.Attributes.CssStyle = "qs-item qs-game-done";
 
@@ -254,7 +267,17 @@ namespace LevelsPro.PlayerPanel
                             {
                                 AlreadyPlayed.Visible = false;
                                 Playing.Visible = true;
-                                ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
+                                for (int i = 0; i < dtMandatoryQuizes.Rows.Count; i++)
+                                {
+                                    if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
+                                    {
+                                        ItemContainer.Attributes["class"] = "qs-item qs-game-important";
+                                    }
+                                    else
+                                    {
+                                        ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
+                                    }
+                                }
                                 //ItemContainerPlayed.Visible = false;
                             }
                     }

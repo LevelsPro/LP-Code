@@ -790,6 +790,7 @@ namespace LevelsPro.PlayerPanel
 
         public void Confirm()
         {
+            ViewState["QuestionScore"] = 0;
             btnCnfrm.Visible = false;
             btnNext.Visible = true;
             explain.Visible = true;
@@ -866,6 +867,7 @@ namespace LevelsPro.PlayerPanel
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
                     _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                     _quiz.IsCorrect = 1;
@@ -977,6 +979,7 @@ namespace LevelsPro.PlayerPanel
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
                     _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                     _quiz.IsCorrect = 1;
@@ -1080,6 +1083,7 @@ namespace LevelsPro.PlayerPanel
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
                     _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                     _quiz.IsCorrect = 1;
@@ -1183,6 +1187,7 @@ namespace LevelsPro.PlayerPanel
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
                     _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                     _quiz.IsCorrect = 1;
@@ -1330,7 +1335,7 @@ namespace LevelsPro.PlayerPanel
 
             Confirm();
 
-            UpdatingTargetScore();
+            UpdatingTargetScore(Convert.ToInt32(ViewState["QuestionScore"]));
         }
 
         protected void btnHome_Click(object sender, System.EventArgs e)
@@ -1543,11 +1548,11 @@ namespace LevelsPro.PlayerPanel
             #endregion
         }
 
-        public void UpdatingTargetScore()
+        public void UpdatingTargetScore(int QuestionScore)
         {
             #region Updating Target Score with Quiz Score
 
-            TotalScore();
+            //TotalScore();
 
             int UserID = Convert.ToInt32(Session["userid"]);
             int LevelID = Convert.ToInt32(ViewState["CurrenLevel"]);
@@ -1577,78 +1582,79 @@ namespace LevelsPro.PlayerPanel
             for (int i = 0; i < dtTarget.Rows.Count; i++)
             {
                 int TargetText = Convert.ToInt32(dtTarget.Rows[i]["KPI_ID"].ToString());
-
+              
 
                 if (Convert.ToInt32(ViewState["LinkedKPIID"]).Equals(TargetText))
                 {
                     int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
+                    
 
-                    if (Convert.ToInt32(ViewState["TotalPlayerScore"]) < TargetValue)
+                    if (QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"])  < TargetValue)
                     {
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
-                        user.Score = Convert.ToInt32(ViewState["TotalPlayerScore"]);
+                        user.Score = QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]);// QuestionScore
 
                         break;
                     }
-                    else if (Convert.ToInt32(ViewState["TotalPlayerScore"]) == TargetValue)
-                    {
-                        user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
-                        user.Score = Convert.ToInt32(ViewState["TotalPlayerScore"]);
+                    //else if (QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]) == TargetValue)
+                    //{
+                    //    user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
+                    //    user.Score = QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]); // QuestionScore
 
-                        #region KPI Score Acheived
-                        PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
-                        targetprogress.User = user;
+                    //    #region KPI Score Acheived
+                    //    PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
+                    //    targetprogress.User = user;
 
-                        try
-                        {
-                            targetprogress.Invoke();
-                        }
-                        catch (Exception ex)
-                        {
-                        }
-                        DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
-                        dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
-                        DataTable dT = new DataTable();
-                        dT = dv.ToTable();
+                    //    try
+                    //    {
+                    //        targetprogress.Invoke();
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //    }
+                    //    DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
+                    //    dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
+                    //    DataTable dT = new DataTable();
+                    //    dT = dv.ToTable();
 
-                        if (dT != null && dT.Rows.Count > 0)
-                        {
-                            foreach (DataRow dr in dT.Rows)
-                            {
+                    //    if (dT != null && dT.Rows.Count > 0)
+                    //    {
+                    //        foreach (DataRow dr in dT.Rows)
+                    //        {
 
 
-                                UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                                //Common.User user_targetpoints = new Common.User();
+                    //            UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
+                    //            //Common.User user_targetpoints = new Common.User();
 
-                                //user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
-                                user.TargetID = Convert.ToInt32(dr["Target_ID"]);
+                    //            //user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
+                    //            user.TargetID = Convert.ToInt32(dr["Target_ID"]);
 
-                                popup.User = user;
-                                try
-                                {
-                                    popup.Invoke();
-                                }
-                                catch (Exception ex)
-                                {
-                                }
+                    //            popup.User = user;
+                    //            try
+                    //            {
+                    //                popup.Invoke();
+                    //            }
+                    //            catch (Exception ex)
+                    //            {
+                    //            }
 
-                                if (UserPoints != null && UserPoints != "")
-                                {
-                                    UserPoints = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
-                                }
-                                else
-                                {
-                                    UserPoints = dr["Points"].ToString();
-                                }
+                    //            if (UserPoints != null && UserPoints != "")
+                    //            {
+                    //                UserPoints = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
+                    //            }
+                    //            else
+                    //            {
+                    //                UserPoints = dr["Points"].ToString();
+                    //            }
 
-                            }
+                    //        }
 
-                        }
-                        #endregion
+                    //    }
+                    //    #endregion
 
-                        break;
-                    }
-                    else if (Convert.ToInt32(ViewState["TotalPlayerScore"]) > TargetValue)
+                    //    break;
+                    //}
+                    else if (QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]) >= TargetValue)
                     {
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                         user.Score = TargetValue;
@@ -1744,38 +1750,49 @@ namespace LevelsPro.PlayerPanel
             dv_New.RowFilter = "QuizID =" + Convert.ToInt32(Request.QueryString["quizid"]);
             DataTable dtQuiz = dv_New.ToTable();
 
-            if (dtQuiz.Rows.Count > 0 && dtQuiz.Rows.Count == 1) { if (dtQuiz.Rows[0]["KPI_ID"].ToString().Equals("") || dtQuiz.Rows[0]["KPI_ID"].ToString().Equals(null)) { ViewState["LinkedKPIID"] = 0; } else { ViewState["LinkedKPIID"] = Convert.ToInt32(dtQuiz.Rows[0]["KPI_ID"]); } }
+            
+
+            if (dtQuiz.Rows.Count > 0 && dtQuiz.Rows.Count == 1) { if (dtQuiz.Rows[0]["KPI_ID"].ToString().Equals("") || dtQuiz.Rows[0]["KPI_ID"].ToString().Equals(null)) { ViewState["LinkedKPIID"] = 0; }
+            else 
+            { 
+                ViewState["LinkedKPIID"] = Convert.ToInt32(dtQuiz.Rows[0]["KPI_ID"]);
+                DataView dv_TargetScore = Quiz_Selection.ResultSet.Tables[5].DefaultView;
+                dv_TargetScore.RowFilter = "User_ID =" + Convert.ToInt32(Session["userid"]) + " Type_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
+                DataTable dt_TargetScore = dv_TargetScore.ToTable();
+                ViewState["TargetCurrentScore"] = dt_TargetScore.Rows[0]["Score"].ToString();
+            } 
+            }
 
             #endregion
         }
 
-        public void TotalScore()
-        {
+        //public void TotalScore()
+        //{
 
-            Common.Quiz _quiz = new Quiz();
-            _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
-            _quiz.LevelID = Convert.ToInt32(Session["CurLevel"]);
+        //    Common.Quiz _quiz = new Quiz();
+        //    _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+        //    _quiz.LevelID = Convert.ToInt32(Session["CurLevel"]);
 
-            PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
-            try
-            {
-                Quiz_Selection.Quiz = _quiz;
-                Quiz_Selection.Invoke();
-            }
-            catch (Exception ex)
-            {
-            }
-            DataView dv = Quiz_Selection.ResultSet.Tables[0].DefaultView;
-            dv.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND QuizID =" +
-                                                    Convert.ToInt32(Request.QueryString["quizid"]);
+        //    PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
+        //    try
+        //    {
+        //        Quiz_Selection.Quiz = _quiz;
+        //        Quiz_Selection.Invoke();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //    DataView dv = Quiz_Selection.ResultSet.Tables[0].DefaultView;
+        //    dv.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND QuizID =" +
+        //                                            Convert.ToInt32(Request.QueryString["quizid"]);
             
-            DataRow[] drs = dv.ToTable().Select("QuizPoints = max(QuizPoints)");
+        //    DataRow[] drs = dv.ToTable().Select("QuizPoints = max(QuizPoints)");
 
-            if (drs.Length > 0)
-            {
-                ViewState["TotalPlayerScore"] = Convert.ToInt32(drs[0]["QuizPoints"].ToString());
-            }
-        }
+        //    if (drs.Length > 0)
+        //    {
+        //        ViewState["TotalPlayerScore"] = Convert.ToInt32(drs[0]["QuizPoints"].ToString());
+        //    }
+        //}
 
         public void NewNumber()
         {
