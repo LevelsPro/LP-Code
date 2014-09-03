@@ -1569,7 +1569,7 @@ namespace LevelsPro.PlayerPanel
             }
 
             DataView dvTarget = Target.ResultSet.Tables[0].DefaultView;
-            dvTarget.RowFilter = "Level_ID = " + LevelID;
+            dvTarget.RowFilter = "Level_ID = " + LevelID + "AND Role_ID = " + Convert.ToInt32(Session["UserRoleID"]);
 
             DataTable dtTarget = dvTarget.ToTable();
 
@@ -1757,7 +1757,7 @@ namespace LevelsPro.PlayerPanel
             { 
                 ViewState["LinkedKPIID"] = Convert.ToInt32(dtQuiz.Rows[0]["KPI_ID"]);
                 DataView dv_TargetScore = Quiz_Selection.ResultSet.Tables[5].DefaultView;
-                dv_TargetScore.RowFilter = "User_ID =" + Convert.ToInt32(Session["userid"]) + " Type_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
+                dv_TargetScore.RowFilter = "User_ID =" + Convert.ToInt32(Session["userid"]) + "AND Type_ID =" + Convert.ToInt32(ViewState["LinkedKPIID"]);
                 DataTable dt_TargetScore = dv_TargetScore.ToTable();
                 ViewState["TargetCurrentScore"] = dt_TargetScore.Rows[0]["Score"].ToString();
             } 
@@ -1794,6 +1794,7 @@ namespace LevelsPro.PlayerPanel
         //    }
         //}
 
+        #region Quiz Internal Playing Rules & Events
         public void NewNumber()
         {
             MyNumber = a.Next(1, 5);
@@ -2120,7 +2121,8 @@ namespace LevelsPro.PlayerPanel
 
                 }
             }
-            
+
         }
+        #endregion
     }
 }
