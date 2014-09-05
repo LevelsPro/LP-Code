@@ -1593,72 +1593,14 @@ namespace LevelsPro.PlayerPanel
                     {
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                         user.Score = QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]);// QuestionScore
-
+                        ViewState["TargetCurrentScore"] = QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]);
                         break;
                     }
-                    //else if (QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]) == TargetValue)
-                    //{
-                    //    user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
-                    //    user.Score = QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]); // QuestionScore
-
-                    //    #region KPI Score Acheived
-                    //    PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
-                    //    targetprogress.User = user;
-
-                    //    try
-                    //    {
-                    //        targetprogress.Invoke();
-                    //    }
-                    //    catch (Exception ex)
-                    //    {
-                    //    }
-                    //    DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
-                    //    dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
-                    //    DataTable dT = new DataTable();
-                    //    dT = dv.ToTable();
-
-                    //    if (dT != null && dT.Rows.Count > 0)
-                    //    {
-                    //        foreach (DataRow dr in dT.Rows)
-                    //        {
-
-
-                    //            UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                    //            //Common.User user_targetpoints = new Common.User();
-
-                    //            //user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
-                    //            user.TargetID = Convert.ToInt32(dr["Target_ID"]);
-
-                    //            popup.User = user;
-                    //            try
-                    //            {
-                    //                popup.Invoke();
-                    //            }
-                    //            catch (Exception ex)
-                    //            {
-                    //            }
-
-                    //            if (UserPoints != null && UserPoints != "")
-                    //            {
-                    //                UserPoints = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
-                    //            }
-                    //            else
-                    //            {
-                    //                UserPoints = dr["Points"].ToString();
-                    //            }
-
-                    //        }
-
-                    //    }
-                    //    #endregion
-
-                    //    break;
-                    //}
                     else if (QuestionScore + Convert.ToInt32(ViewState["TargetCurrentScore"]) >= TargetValue)
                     {
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                         user.Score = TargetValue;
-
+                        ViewState["TargetCurrentScore"] = TargetValue;
                         #region KPI Score Acheived
                         PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
                         targetprogress.User = user;
