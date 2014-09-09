@@ -53,6 +53,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BusinessLogic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BusinessLogic\BusinessLogic\bin\Release\BusinessLogic.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dlls\MySql.Data.dll</HintPath>
@@ -71,6 +75,12 @@
     <Compile Include="DataBaseHelper.cs" />
     <Compile Include="Delete\AssignAwardDeleteDAL.cs" />
     <Compile Include="Delete\AwardImageDeleteDAL.cs" />
+    <Compile Include="Delete\MatchScoreDeleteDAL.cs" />
+    <Compile Include="Delete\DataSetLevelDeleteDAL.cs" />
+    <Compile Include="Delete\DataSetDeleteDAL.cs" />
+    <Compile Include="Delete\RoundDeleteDAL.cs" />
+    <Compile Include="Delete\DataElementDeleteDAL.cs" />
+    <Compile Include="Delete\MatchDeleteDAL.cs" />
     <Compile Include="Delete\KPIDeleteDAL.cs" />
     <Compile Include="Delete\LevelsDeleteDAL.cs" />
     <Compile Include="Delete\level_TargetDeleteDAL.cs" />
@@ -89,7 +99,15 @@
     <Compile Include="Insert\BulkInsertQuizQuestionsDAL.cs" />
     <Compile Include="Insert\CategoryInsertDAL.cs" />
     <Compile Include="Insert\ContestInsertDAL.cs" />
+    <Compile Include="Insert\BulkInsertMatchDataSetsDAL.cs" />
+    <Compile Include="Insert\MatchScoreInsertDAL.cs" />
+    <Compile Include="Insert\MatchPlayLogDAL.cs" />
+    <Compile Include="Insert\DataSetLevelsInsertDAL.cs" />
+    <Compile Include="Insert\DataSetsInsertDAL.cs" />
+    <Compile Include="Insert\RoundInsertDAL.cs" />
+    <Compile Include="Insert\DataElementInsertDAL.cs" />
     <Compile Include="Insert\LifeLineInsertDAL.cs" />
+    <Compile Include="Insert\MatchInsertDAL.cs" />
     <Compile Include="Insert\QuestionLevelsInsertDAL.cs" />
     <Compile Include="Insert\QuizInsertDAL.cs" />
     <Compile Include="Insert\KPIInsertDAL.cs" />
@@ -129,6 +147,17 @@
     <Compile Include="Select\CheckUserNameDAL.cs" />
     <Compile Include="Select\ContestPlayersScoreDAL.cs" />
     <Compile Include="Select\ContestViewDAL.cs" />
+    <Compile Include="Select\GetGamesPlayLogDAL.cs" />
+    <Compile Include="Select\MatchViewDAL.cs" />
+    <Compile Include="Select\PlayerGamesViewDAL.cs" />
+    <Compile Include="Select\PlayerMatchDataSetsViewDAL.cs" />
+    <Compile Include="Select\GetMatchPlayLogDAL.cs" />
+    <Compile Include="Select\PlayerMatchViewDAL.cs" />
+    <Compile Include="Select\RolesLevelsDataSetViewDAL.cs" />
+    <Compile Include="Select\DataSetLevelsViewDAL.cs" />
+    <Compile Include="Select\DataSetViewDAL.cs" />
+    <Compile Include="Select\RoundViewDAL.cs" />
+    <Compile Include="Select\DataElementViewDAL.cs" />
     <Compile Include="Select\GetFullLevelTableDAL.cs" />
     <Compile Include="Select\GetLifeLineDAL.cs" />
     <Compile Include="Select\GetPopupShowed_LevelPerformanceDAL.cs" />
@@ -188,7 +217,11 @@
     <Compile Include="Update\AwardUpdateDAL.cs" />
     <Compile Include="Update\CategoryUpdateDAL.cs" />
     <Compile Include="Update\ContestUpdateDAL.cs" />
+    <Compile Include="Update\DataSetUpdateDAL.cs" />
+    <Compile Include="Update\RoundUpdateDAL.cs" />
+    <Compile Include="Update\DataElementUpdateDAL.cs" />
     <Compile Include="Update\LoginUpdateDAL.cs" />
+    <Compile Include="Update\MatchUpdateDAL.cs" />
     <Compile Include="Update\PasswordResetUpdateDAL.cs" />
     <Compile Include="Update\QuizUpdateDAL.cs" />
     <Compile Include="Update\KPIUpdateDAL.cs" />

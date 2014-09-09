@@ -50,15 +50,20 @@ namespace LevelsPro.PlayerPanel
 
         public void LoadData()
         {
-             Common.Quiz _quiz = new Quiz();
-             _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+            Common.Quiz _quiz = new Quiz();
+            _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+
+            Common.Match _match = new Match();
+            _match.RoleID = Convert.ToInt32(Session["UserRoleID"]);
+            _match.LevelID = Convert.ToInt32(Session["CurLevel"]);
 
             // _quiz.UserID = Convert.ToInt32(Session["userid"]);
             //_quiz.RoleID = Int32.Parse(Session["userid"].ToString());
-           _quiz.LevelID= Convert.ToInt32(Session["CurLevel"]);
-            PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
+            _quiz.LevelID= Convert.ToInt32(Session["CurLevel"]);
+            PlayerQuizViewBLL QuizSelection = new PlayerQuizViewBLL();
+            PlayerGamesViewBLL Games_Selection = new PlayerGamesViewBLL();
 
-            GetQuizPlayLogBLL Log = new GetQuizPlayLogBLL();
+            GetGamesPlayLogBLL Log = new GetGamesPlayLogBLL();
             Log.Invoke();
             dtLog = Log.ResultSet;
             dvLog = dtLog.Tables[0].DefaultView;
@@ -66,18 +71,19 @@ namespace LevelsPro.PlayerPanel
             //Quiz_Selection.Quiz = _quiz;
             try
             {
-                Quiz_Selection.Quiz = _quiz;
-                Quiz_Selection.Invoke();
+                QuizSelection.Quiz = _quiz;
+                Games_Selection.Match = _match;
+                Games_Selection.Invoke();
             }
             catch (Exception ex)
             {
             }
-            DataView dv = Quiz_Selection.ResultSet.Tables[0].DefaultView;
-            dtMandatoryQuizes = Quiz_Selection.ResultSet.Tables[4];
+            DataView dv = Games_Selection.ResultSet.Tables[0].DefaultView;
+            dtMandatoryQuizes = Games_Selection.ResultSet.Tables[4];
 
-            dv_New = Quiz_Selection.ResultSet.Tables[3].DefaultView;
+            dv_New = Games_Selection.ResultSet.Tables[3].DefaultView;
            // dv_New.RowFilter = "LevelID = " + Convert.ToInt32(Session["CurLevel"]);
-            dt_New = Quiz_Selection.ResultSet.Tables[1];
+            dt_New = Games_Selection.ResultSet.Tables[1];
             dt = dv.ToTable();
             
             dt.Columns.Add("QuizTime", typeof(DateTime));
@@ -140,9 +146,13 @@ namespace LevelsPro.PlayerPanel
             if (e.CommandName.Equals("StartGame"))
             {
                 mes.Visible = false;
-                String QuizID = e.CommandArgument.ToString();
+                String QuizID = e.CommandArgument.ToString().Split('-')[0];
+                String Type = e.CommandArgument.ToString().Split('-')[1];
                 //Session["QuizID"] = QuizID;
-                Response.Redirect("QuizPlay.aspx?quizid=" + QuizID);
+                if (Type == "Quiz")
+                    Response.Redirect("QuizPlay.aspx?quizid=" + QuizID);
+                else
+                    Response.Redirect("MatchPlay.aspx?matchid=" + QuizID);
             }
 
         }
@@ -178,6 +188,7 @@ namespace LevelsPro.PlayerPanel
                 Literal ltUserBest = e.Item.FindControl("ltUserBest") as Literal;
                 Literal ltTopScore = e.Item.FindControl("ltTopScore") as Literal;
                 Literal ltQuizID = e.Item.FindControl("ltQuizID") as Literal;
+                Literal ltGameType = e.Item.FindControl("ltType") as Literal;
                 Literal ltLimitPlayable = e.Item.FindControl("ltPlayableLimit") as Literal;
                 HtmlGenericControl AlreadyPlayed = e.Item.FindControl("Played") as HtmlGenericControl;
                 HtmlGenericControl Playing = e.Item.FindControl("Play") as HtmlGenericControl;

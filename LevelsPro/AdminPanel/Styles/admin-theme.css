@@ -802,6 +802,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#06163b', end
 	width:100% !important;
 	}
 	
+.overview {
+    text-align: center;
+    padding-top: 10px;
+    display: inline-block;
+    width: 100%;
+}
 .red-cont .red-heading{
 	font-size:22px;
 	font-weight:normal;
@@ -1051,6 +1057,7 @@ input.qq-admin-s{
 	padding:12px 7px;
 	position:relative;
 	border-bottom:1px solid #b0b0b0;
+	text-align: left;
 	}
 	
 .strip .lt{
@@ -2567,6 +2574,7 @@ a.view{width:10%; float:right; font-size:20px; padding-right:16px;}
 	border:1px solid #b0b0b0;
 	background:#FFF;
 	border-bottom:none;
+	text-align: center;
 	}
 	
 	.top-b{

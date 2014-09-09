@@ -51,39 +51,37 @@
                    </div>
                     <div class="viewport msgs2">
                         <div class="overview">
-                            <asp:DataList ID="dlGame" runat="server" Width="100%" OnItemCommand="dlGame_ItemCommand"
-                                OnItemDataBound="dlGame_ItemDataBound" >
+                            <asp:DataList ID="dlGame" runat="server" Width="100%" OnItemCommand="dlGame_ItemCommand" OnItemDataBound="dlGame_ItemDataBound" >
                                 <ItemTemplate>
                                     <div class="qs-item qs-game-ny" runat="server" id="dlDiv" >
-                                    <asp:Image ID="imgQuiz" ImageUrl='<%# Eval("QuizImageThumbnail").ToString().Trim() != "" ?  "../" + ConfigurationSettings.AppSettings["QuizThumbPath"].ToString() + Eval("QuizImageThumbnail") :"Images/placeholder.png" %>' Width="73" Height="72" CssClass="fl"
-                                        runat="server" />
-                                    <div class="qs-mid">
-                                        <span class="sh">
-                                            <asp:Literal ID="ltQuizID" runat="server" Text='<%# Eval("QuizID")%>' Visible="false" />
-                                            <asp:Literal ID="ltQuizName" runat="server" Text='<%# Eval("QuizName")%>' /></span><br />
-                                             <asp:Literal ID="ltPlayableLimit" runat="server" Text='<%# Eval("TimesPlayablePerDay")%>' Visible="false" />
-                                      <asp:Label ID="lblQuiz1" runat="server" Text="<%$ Resources:TestSiteResources, YourBest %>" ></asp:Label> 
-                                        <asp:Literal ID="ltUserBest" runat="server" />
-                                        <br />
-                                        <asp:Label ID="lblQuiz" runat="server" Text="<%$ Resources:TestSiteResources, TopScore %>" ></asp:Label> 
-                                        
-                                        <asp:Literal ID="ltTopScore" runat="server" />
-                                    </div>
-                                    <div class="already-played" runat ="server" visible="false" id="Played">
-                                        <asp:Literal ID="ltDone" runat="server" Text="<%$ Resources:TestSiteResources, youAlreadyPlayed %>"/>
-                                    </div>
-                                    <div class="green-wrapper fr play-game" runat ="server" id="Play" visible="true">
-                                        <asp:Button ID="btnStartQuiz" runat="server" CommandName="StartGame" CommandArgument='<%# Eval("QuizID")%>'
-                                            Text="<%$ Resources:TestSiteResources, PlayGame %>" CssClass="green" />
-                                    </div>
-                                    <div class="clear">
-                                    </div>
+                                        <asp:Image ID="imgQuiz" ImageUrl='<%# Eval("QuizImageThumbnail").ToString().Trim() != "" ?  "../" + ConfigurationSettings.AppSettings[string.Concat(Eval("GameType"), "ThumbPath")].ToString() + Eval("QuizImageThumbnail") :"Images/placeholder.png" %>' Width="73" Height="72" CssClass="fl" runat="server" />
+                                        <div class="qs-mid">
+                                            <span class="sh">
+                                                <asp:Literal ID="ltQuizID" runat="server" Text='<%# Eval("QuizID")%>' Visible="false" />
+                                                <asp:Literal ID="ltType" runat="server" Text='<%# Eval("GameType")%>' Visible="false" />
+                                                <asp:Literal ID="ltQuizName" runat="server" Text='<%# Eval("QuizName")%>' />
+                                            </span>
+                                            <br />
+                                            <asp:Literal ID="ltPlayableLimit" runat="server" Text='<%# Eval("TimesPlayablePerDay")%>' Visible="false" />
+                                            <asp:Label ID="lblQuiz1" runat="server" Text="<%$ Resources:TestSiteResources, YourBest %>" ></asp:Label> 
+                                            <asp:Literal ID="ltUserBest" runat="server" />
+                                            <br />
+                                            <asp:Label ID="lblQuiz" runat="server" Text="<%$ Resources:TestSiteResources, TopScore %>" ></asp:Label> 
+                                            <asp:Literal ID="ltTopScore" runat="server" />
+                                        </div>
+                                        <div class="already-played" runat ="server" visible="false" id="Played">
+                                            <asp:Literal ID="ltDone" runat="server" Text="<%$ Resources:TestSiteResources, youAlreadyPlayed %>"/>
+                                        </div>
+                                        <div class="green-wrapper fr play-game" runat ="server" id="Play" visible="true">
+                                            <asp:Button ID="btnStartQuiz" runat="server" CommandName="StartGame" CommandArgument='<%# string.Concat(Eval("QuizID"), "-", Eval("GameType"))%>' Text="<%$ Resources:TestSiteResources, PlayGame %>" CssClass="green" />
+                                        </div>
+                                        <div class="clear">
+                                        </div>
                                     </div>
                                 </ItemTemplate>                                
                             </asp:DataList>
                         </div>
                     </div>
-                     
                 </div>
             </div>
         </div>

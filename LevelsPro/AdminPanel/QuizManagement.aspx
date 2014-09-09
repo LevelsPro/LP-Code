@@ -75,9 +75,9 @@
             </div>
         </div>
          <div class="adminprog-cont crt-reward">
-                        <asp:Button ID="btnNewQuiz" class="green-btn  create-reward" Text="<%$ Resources:TestSiteResources, CreateQuiz %>" runat="server"
-                            OnClick="btnNewQuiz_Click" />
-                    </div>
+            <asp:Button ID="btnNewQuiz" class="green-btn  create-reward" Text="<%$ Resources:TestSiteResources, CreateQuiz %>" runat="server"
+                OnClick="btnNewQuiz_Click" />
+        </div>
         <div class="clear">
         </div>
     </div>

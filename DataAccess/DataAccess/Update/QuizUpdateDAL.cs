@@ -6,18 +6,17 @@ using MySql.Data.MySqlClient;
 
 namespace DataAccess.Update
 {
-  public  class QuizUpdateDAL : DataAccessBase
+    public class QuizUpdateDAL : DataAccessBase
     {
-      private Common.Quiz _quiz;
+        private Common.Quiz _quiz;
         private GameUpdateDataParameters _insertParameters;
 
         public QuizUpdateDAL()
         {
             StoredProcedureName = StoredProcedure.Update.sp_UpdateQuiz.ToString();
         }
-         public void Update()
+        public void Update()
         {
-
             _insertParameters = new GameUpdateDataParameters(Quiz);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
             dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
