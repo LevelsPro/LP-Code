@@ -119,17 +119,20 @@
                             CssClass="edit-left"></asp:Label>
                         <asp:TextBox ID="txtNickName" runat="server" ValidationGroup="Insertion" MaxLength="20"
                             CssClass="edit-right"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvNickName" runat="server" ControlToValidate="txtNickName"
+                        <%--<asp:RequiredFieldValidator ID="rfvNickName" runat="server" ControlToValidate="txtNickName"
                             Display="Dynamic" ErrorMessage="Enter Nick Name" SetFocusOnError="True" ValidationGroup="Insertion"
-                            ToolTip="Enter Nick Name" Font-Size="36px" ForeColor="Red">*</asp:RequiredFieldValidator>
+                            ToolTip="Enter Nick Name" Font-Size="36px" ForeColor="Red">*</asp:RequiredFieldValidator>--%>
                         <div class="clear">
                         </div>
                     </div>
+                    <asp:UpdatePanel ID="upRadiobutton" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
                     <div class="strip ">
                         <asp:Label ID="lblDisplayName" runat="server" Text="<%$ Resources:TestSiteResources, DisplayName %>"
                             CssClass="edit-left"></asp:Label>
                         <asp:RadioButtonList ID="rblName" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow"
-                            CssClass="edit-right">
+                            CssClass="edit-right" 
+                            onselectedindexchanged="rblName_SelectedIndexChanged" AutoPostBack="true">
                             <asp:ListItem Text="<%$ Resources:TestSiteResources, FullName %>" Value="Full" Selected="True"
                                 style="font-size: 24px" />
                             <asp:ListItem Text="<%$ Resources:TestSiteResources, NickNameR %>" Value="Nick" style="font-size: 24px" />
@@ -137,6 +140,8 @@
                         <div class="clear">
                         </div>
                     </div>
+                    </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
             </div>
             <%--<div class="box twob">

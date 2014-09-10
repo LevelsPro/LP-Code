@@ -216,19 +216,17 @@
                     </div>
                     <div class="banner">
                        <div style="color: White;">
-                            
-                               <%-- <asp:LinkButton ID="lkbChang" runat="server" 
+
+                                <asp:LinkButton ID="lkbChang" runat="server" 
                                     Text="<%$ Resources:TestSiteResources, ChangePassword %>" 
                                     onclick="lkbChang_Click" ForeColor="White"></asp:LinkButton>
-                            |--%>
+                            |
                             <%--                            <asp:LinkButton ID="lnkbtnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
                                 OnClick="lnkbtnLogout_Click" ForeColor="White" PostBackUrl="~/Login.aspx"></asp:LinkButton>--%>
                             <div class="green-wrapper edit anch-btn">
                                     <asp:LinkButton ID="lnkbtnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
                                         CssClass="green" Width="70px" OnClick="lnkbtnLogout_Click1">LinkButton</asp:LinkButton>
 
-
-                            </a>
                         </div>
                         </div>
                         <div class="acme-inc">
@@ -297,13 +295,7 @@
                     <div class="sec-left tm">
                         <div class="box rel lm awpoints">
                             <uc:Awards ID="ViewAwards" runat="server" />
-                            <%--<span>
-                                <img src="images/1.png" /></span> <span>
-                                    <img src="images/2.png" /></span> <span>
-                                        <img src="images/3.png" /></span> <span>
-                                            <img src="images/4.png" /></span> <span>
-                                                <img src="images/3.png" /></span> <span>
-                                                    <img src="images/4.png" /></span>--%>
+                           
                             <div class="clear">
                             </div>
                             <div class="total">
@@ -324,27 +316,7 @@
                                 <canvas id="myCanvas"> </canvas>
                                 <img  id="MapImage" runat="server"  class="my-map" />
                                 <uc:Map ID="ucMap" runat="server" />
-                                <%--<div class="orange-cir mcr" style="top: 30%; left: 13%;">
-                                    1</div>
-                                <div class="orange-cir mcr" style="top: 37%; left: 24%;">
-                                    2</div>
-                                <div class="orange-cir mcr" style="top: 30%; left: 43%;">
-                                    3</div>
-                                <div class="pic-holder" style="top: 0%; left: 42%;">
-                                    <img src="images/avatar.png" />
-                                </div>
-                                <div class="blue-cir mcr" style="top: 43%; left: 53%;">
-                                    4</div>
-                                <div class="blue-cir mcr" style="top: 24%; left: 57%;">
-                                    5</div>
-                                <div class="blue-cir mcr" style="top: 44%; left: 64%;">
-                                    6</div>
-                                <div class="blue-cir mcr" style="top: 30%; left: 76%;">
-                                    7</div>
-                                <div class="blue-cir mcr" style="top: 80%; left: 80%;">
-                                    8</div>
-                                <div class="title">
-                                    Heading to Paris</div>--%>
+                              
                             </div>
                             <div class="mainbox tm mlm13px mrm10btm">
                                 <div class="green-wrapper fl pag">
@@ -371,69 +343,7 @@
                     </div>
                     <div class="clear">
                     </div>
-                  <%--  <div class="tm box-l">
-                        <div class="box twobb b1">
-                            <uc:Contests ID="ucContests" runat="server" />
-                            <%--<div class="sm-h">
-                                You are currently in 3 contests.</div>
-                            <div class="fl-wrapper over-cont">
-                                <div class="strip">
-                                    <img src="images/Impact_main_v2_5_05.png" width="56" height="35" class="msg-l" />
-                                    <div class="msg-r">
-                                        <span class="lt">Highest Quiz Score</span><br />
-                                        <span class="st">Your rank: 13</span>
-                                    </div>
-                                    <div class="clear">
-                                    </div>
-                                </div>
-                                <div class="strip">
-                                    <img src="images/Impact_main_v2_5_08.png" width="56" height="35" class="msg-l" />
-                                    <div class="msg-r">
-                                        <span class="lt">Highest Quiz Score</span><br />
-                                        <span class="st">Your rank: 13</span>
-                                    </div>
-                                    <div class="clear">
-                                    </div>
-                                </div>
-                                <div class="strip">
-                                    <img src="images/Impact_main_v2_5_10.png" width="56" height="35" class="msg-l" />
-                                    <div class="msg-r">
-                                        <span class="lt">Highest Quiz Score</span><br />
-                                        <span class="st">Your rank: 13</span>
-                                    </div>
-                                    <div class="clear">
-                                    </div>
-                                </div>
-                            </div>--%>
-                   <%--     </div>
-                    </div>--%>
-                
-                   <%-- <div class="tm box-r">
-                        <div class="box twobb b2">
-                            <div class="rflwr m0a">
-                                <div class="green-wrapper vf">
-                                    <asp:Button ID="btnViewForums" runat="server" Text="<%$ Resources:TestSiteResources, VisittheForums %>"
-                                        CssClass="green" OnClick="btnViewForums_Click" />
-                                </div>
-                                <div class="sm-h">
-                                    You are tagged in 3 messages.</div>
-                                <div class="fl-wrapper over-cont rflwr">
-                                    <div class="strip">
-                                        <span class="lt">100 customers per week</span><br />
-                                        <span class="st">Last post: FrankT 2:23:00 Apr 5, 2013</span>
-                                    </div>
-                                    <div class="strip">
-                                        <span class="lt">Perfect attendance - April 2013</span><br />
-                                        <span class="st">Last post: JustinL 1:23:00 Apr 5, 2013</span>
-                                    </div>
-                                    <div class="strip ">
-                                        <span class="lt">Shelf stocking [ Group contest ]</span><br />
-                                        <span class="st">Last post: JakeP 11:43:00 Apr 1, 2013</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>--%>
+                 
                     <div class="clear">
                     </div>
                 </div>
@@ -461,51 +371,7 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    
-
-
-     
- <%--<script type="text/javascript">
-
-     $(document).ready(function () {
-
-         function anAlert() {
-             alert('Please see alert after page load');
-
-         }
-
-     });
-    </script>--%>
-
-   <%-- <script type="text/javascript">
-
-        anAlert();
-
-        function anAlert() {
-            alert('Please see alert after page load');
-
-        }
-    </script>--%>
-    <%--<script type="text/javascript">
-        $(function () {
-            $(window).fontResizer({
-                elements: [{ elem: ".block1", size: 32 },
-                 { elem: ".txt2", size: 35 },
-                 { elem: ".txt1", size: 35 },
-				 { elem: ".filling", size: 35 },
-				 { elem: ".star", size: 29 },
-				 { elem: ".noti", size: 20 },
-				 { elem: ".pag, .pal", size: 32 },
-				 { elem: ".total, .sm-h", size: 20 },
-				 { elem: ".lt, .msg-noti", size: 18 },
-				 { elem: ".st", size: 14 }
-				 ]
-
-    , baseWidth: 1280
-    , startResize: true
-            });
-        });
-    </script>--%>
             </div>
             </div>
 </asp:Content>
+

@@ -20,32 +20,34 @@ namespace LevelsPro.UserControls
 {
     public partial class uc_ChangePassword : System.Web.UI.UserControl
     {
-        static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
+        //static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
         protected void Page_Load(object sender, EventArgs e)
         {
             
         }
 
-        public static string Encrypt(string originalString)
-        {
+        //public static string Encrypt(string originalString)
+        //{
 
-            var cryptoProvider = new DESCryptoServiceProvider();
-            var memoryStream = new MemoryStream();
-            var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
-                CryptoStreamMode.Write);
-            var writer = new StreamWriter(cryptoStream);
-            writer.Write(originalString);
-            writer.Flush();
-            cryptoStream.FlushFinalBlock();
-            writer.Flush();
-            return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
-        }
+        //    var cryptoProvider = new DESCryptoServiceProvider();
+        //    var memoryStream = new MemoryStream();
+        //    var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
+        //        CryptoStreamMode.Write);
+        //    var writer = new StreamWriter(cryptoStream);
+        //    writer.Write(originalString);
+        //    writer.Flush();
+        //    cryptoStream.FlushFinalBlock();
+        //    writer.Flush();
+        //    return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+        //}
 
         protected void btnChangePass_Click(object sender, EventArgs e)
         {
             lblMeassage.Visible = false;   
+           //  bool PasswordVerification = false; 
+           //PasswordVerification= PasswordEncrypt.ValidatePassword(txtPassword.Text, Session["password"].ToString());
             ModalPopupExtender mpe = this.Parent.FindControl("mpeChangePassDiv") as ModalPopupExtender;
-            if (Encrypt(txtOldPass.Text) == Session["password"].ToString())
+            if (txtOldPass.Text == Session["password"].ToString())
             {
                     MySqlConnection scon = new MySqlConnection(ConfigurationManager.ConnectionStrings["SQLCONN"].ToString());
                     scon.Open();
@@ -56,12 +58,13 @@ namespace LevelsPro.UserControls
                         Common.User _updateuser = new Common.User();
 
                         _updateuser.UserID = Convert.ToInt32(Session["userid"]);
-                        _updateuser.UserPassword =Encrypt(txtNewPass.Text);
+                      //  _updateuser.UserPassword =Encrypt(txtNewPass.Text);
+                        _updateuser.UserPassword = PasswordEncrypt.CreateHash(txtNewPass.Text);
                         _updateuser.sqlTransaction = sqlTrans;   
                      
                         updateUser.User = _updateuser;
                         updateUser.Invoke();
-                        Session["password"] =Encrypt(txtNewPass.Text);
+                        Session["password"] = PasswordEncrypt.CreateHash(txtNewPass.Text);
                         sqlTrans.Commit();
                     }
                     catch (Exception)

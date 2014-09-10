@@ -1701,7 +1701,15 @@ namespace LevelsPro.PlayerPanel
                 DataView dv_TargetScore = Quiz_Selection.ResultSet.Tables[5].DefaultView;
                 dv_TargetScore.RowFilter = "User_ID =" + Convert.ToInt32(Session["userid"]) + "AND Type_ID =" + Convert.ToInt32(ViewState["LinkedKPIID"]);
                 DataTable dt_TargetScore = dv_TargetScore.ToTable();
-                ViewState["TargetCurrentScore"] = dt_TargetScore.Rows[0]["Score"].ToString();
+                if (dt_TargetScore.Rows.Count > 0)
+                {
+                        ViewState["TargetCurrentScore"] = dt_TargetScore.Rows[0]["Score"].ToString();
+                    
+                }
+                else
+                {
+                    ViewState["TargetCurrentScore"] = 0;
+                }
             } 
             }
 

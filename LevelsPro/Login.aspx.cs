@@ -11,12 +11,16 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text;
 using LevelsPro.PlayerPanel;
+using log4net;
 namespace LevelsPro
 {
     public partial class Login : AuthorizedPage
     {
         // Comments for GitHUb
-        static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
+       // static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
+        private static readonly ILog log = LogManager.GetLogger(
+  System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected void Page_Load(object sender, EventArgs e)
         {            
             if (Session["MyUICulture"] != null && Session["MyCulture"] != null)
@@ -56,32 +60,41 @@ namespace LevelsPro
             base.OnInit(e);
         }       
         
-      public static string Encrypt(string originalString)
-       {
+    //  public static string Encrypt(string originalString)
+    //   {
 
-    var cryptoProvider = new DESCryptoServiceProvider();
-    var memoryStream = new MemoryStream();
-    var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
-        CryptoStreamMode.Write);
-    var writer = new StreamWriter(cryptoStream);
-    writer.Write(originalString);
-    writer.Flush();
-    cryptoStream.FlushFinalBlock();
-    writer.Flush();
-    return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
-    }
+    //var cryptoProvider = new DESCryptoServiceProvider();
+    //var memoryStream = new MemoryStream();
+    //var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
+    //    CryptoStreamMode.Write);
+    //var writer = new StreamWriter(cryptoStream);
+    //writer.Write(originalString);
+    //writer.Flush();
+    //cryptoStream.FlushFinalBlock();
+    //writer.Flush();
+    //return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+    //}
 
 
         protected void btnSignin_Click(object sender, EventArgs e)
         {
+            try
+            {
             string user, pwd, Sysrole;
             user = txtUser.Text.Trim();
-            pwd = Encrypt(txtPassword.Text);
+            pwd = txtPassword.Text;
+           // pwd=PasswordEncrypt.CreateHash(pwd);
+            //string passw="1000:6/Rsa4P4vpJ1k2Uy3Vm67WbgpoOA/IK1:NoJ7+NXVtKbC0Nm56zWsC+UeFgsE47lo";
+          //  bool pd = PasswordEncrypt.ValidatePassword(txtPassword.Text, passw);
+           // pwd = Encrypt(txtPassword.Text);
            // pwd = txtPassword.Text;
 
             DataSet ds = new DataSet();
 
-            ds = UserData(user);
+           
+                
+                ds = UserData(user);
+           
 
             if (ds.Tables[0].Rows.Count == 0)
             {
@@ -94,6 +107,7 @@ namespace LevelsPro
             Session["language"] = ddlLanguage.SelectedItem.Text;
             Session["userid"] = ds.Tables[0].Rows[0]["UserID"];
             Session["username"] = user;
+            
 
             if (ds.Tables[0].Rows[0]["U_Password"].ToString().Equals(""))
             {
@@ -103,7 +117,12 @@ namespace LevelsPro
                 Session["password"] = null;
                 mpeSetNewPassword.Show();
             }
-            else if (ds.Tables[0].Rows[0]["U_Password"].ToString() == pwd)
+            bool PasswordVerification = false; 
+            if (!ds.Tables[0].Rows[0]["U_Password"].ToString().Equals(""))
+                {
+                    PasswordVerification = PasswordEncrypt.ValidatePassword(txtPassword.Text, ds.Tables[0].Rows[0]["U_Password"].ToString());
+                }
+             if (PasswordVerification == true)
             {
                 Sysrole = ds.Tables[0].Rows[0]["U_SysRole"].ToString();
                 if(Sysrole.Equals("Player"))
@@ -157,7 +176,7 @@ namespace LevelsPro
                 }
                 else if (Sysrole.Equals("Player"))
                 {
-                    Response.Redirect("~/PlayerPanel/PlayerHome.aspx?" + DateTime.Now.Ticks);
+                    Response.Redirect("~/PlayerPanel/PlayerHome.aspx?" + DateTime.Now.Ticks,false);
                 }
                 else
                 {
@@ -170,6 +189,14 @@ namespace LevelsPro
                 lblError.Text = "Invalid user name or password.";
                 txtPassword.Focus();
                 return;
+            }
+            }
+            catch (Exception ex)
+            {
+                if (log.IsErrorEnabled)
+                {
+                    log.Error("Login error of User"+ Session["username"].ToString()+" :" + ex.Message);
+                }
             }
         }
 

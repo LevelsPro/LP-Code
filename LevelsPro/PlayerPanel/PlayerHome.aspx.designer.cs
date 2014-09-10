@@ -94,6 +94,15 @@ namespace LevelsPro.PlayerPanel {
         protected global::LevelsPro.UserControls.uc_ChangePassword ucChangePassword;
         
         /// <summary>
+        /// lkbChang control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lkbChang;
+        
+        /// <summary>
         /// lnkbtnLogout control.
         /// </summary>
         /// <remarks>

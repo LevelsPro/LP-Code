@@ -19,7 +19,7 @@ namespace LevelsPro.UserControls
 {
     public partial class uc_SetPassword : System.Web.UI.UserControl
     {
-        static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
+      //  static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -29,20 +29,20 @@ namespace LevelsPro.UserControls
         //{
         //    Session["UserIDForgot"] = UserID;
         //}       
-        public static string Encrypt(string originalString)
-        {
+        //public static string Encrypt(string originalString)
+        //{
 
-            var cryptoProvider = new DESCryptoServiceProvider();
-            var memoryStream = new MemoryStream();
-            var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
-                CryptoStreamMode.Write);
-            var writer = new StreamWriter(cryptoStream);
-            writer.Write(originalString);
-            writer.Flush();
-            cryptoStream.FlushFinalBlock();
-            writer.Flush();
-            return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
-        }
+        //    var cryptoProvider = new DESCryptoServiceProvider();
+        //    var memoryStream = new MemoryStream();
+        //    var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
+        //        CryptoStreamMode.Write);
+        //    var writer = new StreamWriter(cryptoStream);
+        //    writer.Write(originalString);
+        //    writer.Flush();
+        //    cryptoStream.FlushFinalBlock();
+        //    writer.Flush();
+        //    return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+        //}
 
         protected void btnSubmit_Click1(object sender, EventArgs e)
         {
@@ -53,7 +53,7 @@ namespace LevelsPro.UserControls
                 if (Session["useridForgot"] == null)
                 {
                     //Session["Newpassword"] = txtPassword.Text;
-                    Session["password"] =Encrypt(txtPassword.Text);
+                    Session["password"] = PasswordEncrypt.CreateHash(txtPassword.Text);
                     mpeSetNewPass.Hide();
 
                     Quiz _quiz = new Quiz();
@@ -93,7 +93,7 @@ namespace LevelsPro.UserControls
                         Common.User _updateuser = new Common.User();
 
                         _updateuser.UserID = Convert.ToInt32(Session["useridForgot"]);
-                        _updateuser.UserPassword =Encrypt(txtPassword.Text);
+                        _updateuser.UserPassword = PasswordEncrypt.CreateHash(txtPassword.Text);
                         _updateuser.sqlTransaction = sqlTrans;   
                      
                         updateUser.User = _updateuser;

@@ -26,9 +26,12 @@ namespace LevelsPro.PlayerPanel
         // private WebAuthorizer auth; // twitter Authorizer
         protected void Page_Load(object sender, EventArgs e)
         {
+      
+        
             //string Thumbpath = "";
             try
             {
+           
                 string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
                 string path = ConfigurationManager.AppSettings["RolePath"].ToString();
 

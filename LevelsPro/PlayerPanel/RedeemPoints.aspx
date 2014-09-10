@@ -109,7 +109,7 @@
                                         <%# Eval("Reward_Descp")%></div>
                                     <div class="btn-holder">
 
-                                    <asp:LinkButton ID="lbtnRedeem" runat="server" Font-Overline="false" OnClientClick='<%# Eval("Reward_Name", "return confirm(\"Are you want to redeem {0} .For further Details contact your manager.\");") %>' CommandName="redeem" CommandArgument='<%# Eval("Reward_Cost") %>'>
+                                    <asp:LinkButton ID="lbtnRedeem" runat="server" Font-Overline="false" OnClientClick='<%# Eval("Reward_Name", "return confirm(\"Are you sure you want to redeem the {0} .For further Details contact your manager.\");") %>' CommandName="redeem" CommandArgument='<%# Eval("Reward_Cost") %>'>
                                         <div class="rdmption-btn" id="divscore" runat="server">                                       
                                             <%--<img src="images/arrow-redmp.png" width="23" height="31" alt="arrow" class="arrow" />--%>
                                             <img src="Images/star.png" class="btn-star" alt="star" />

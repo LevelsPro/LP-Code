@@ -166,13 +166,13 @@ namespace LevelsPro.PlayerPanel {
         protected global::System.Web.UI.WebControls.TextBox txtNickName;
         
         /// <summary>
-        /// rfvNickName control.
+        /// upRadiobutton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNickName;
+        protected global::System.Web.UI.UpdatePanel upRadiobutton;
         
         /// <summary>
         /// lblDisplayName control.
