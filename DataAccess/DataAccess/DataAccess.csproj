@@ -57,6 +57,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BusinessLogic\BusinessLogic\bin\Release\BusinessLogic.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\dlls\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dlls\MySql.Data.dll</HintPath>
