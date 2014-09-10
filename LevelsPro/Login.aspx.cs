@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text;
 using LevelsPro.PlayerPanel;
+using DataAccess;
 using log4net;
 namespace LevelsPro
 {
@@ -59,8 +60,7 @@ namespace LevelsPro
         {
             base.OnInit(e);
         }       
-        
-<<<<<<< HEAD
+
     //  public static string Encrypt(string originalString)
     //   {
 
@@ -75,22 +75,22 @@ namespace LevelsPro
     //writer.Flush();
     //return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
     //}
-=======
-        public static string Encrypt(string originalString)
-        {
 
-            var cryptoProvider = new DESCryptoServiceProvider();
-            var memoryStream = new MemoryStream();
-            var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
-            CryptoStreamMode.Write);
-            var writer = new StreamWriter(cryptoStream);
-            writer.Write(originalString);
-            writer.Flush();
-            cryptoStream.FlushFinalBlock();
-            writer.Flush();
-            return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
-        }
->>>>>>> origin/master
+        //public static string Encrypt(string originalString)
+        //{
+
+        //    var cryptoProvider = new DESCryptoServiceProvider();
+        //    var memoryStream = new MemoryStream();
+        //    var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
+        //    CryptoStreamMode.Write);
+        //    var writer = new StreamWriter(cryptoStream);
+        //    writer.Write(originalString);
+        //    writer.Flush();
+        //    cryptoStream.FlushFinalBlock();
+        //    writer.Flush();
+        //    return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+        //}
+
 
 
         protected void btnSignin_Click(object sender, EventArgs e)
