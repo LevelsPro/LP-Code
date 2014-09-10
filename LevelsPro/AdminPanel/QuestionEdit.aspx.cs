@@ -180,9 +180,6 @@ namespace LevelsPro.AdminPanel
                 }             
                 quiz.SiteID = Convert.ToInt32(ddlLocation.SelectedValue);
 
-
-
-               
                 if (fuQuestionImage.HasFile)
                 {
                     string s = fuQuestionImage.FileName;
@@ -236,27 +233,16 @@ namespace LevelsPro.AdminPanel
                                 QuestionsUpdateBLL updategame = new QuestionsUpdateBLL();
                                 quiz.QuestionID = Convert.ToInt32(ViewState["questionid"]);
                                 
-
-                                
-                                
                                 updategame.Quiz = quiz;
-                               
-                                   
-                                    updategame.Invoke();
-                                  
+                                updategame.Invoke();                                  
                             }
                         }
                         else
                         {
-
-                            
                             QuestionsInsertBLL insertquiz = new QuestionsInsertBLL();
                            
                             insertquiz.Quiz = quiz;
-                              insertquiz.Invoke();
-                              
-
-                            
+                            insertquiz.Invoke();
                         }
 
                      QuestionLevelDeleteBLL del = new QuestionLevelDeleteBLL();
@@ -277,17 +263,13 @@ namespace LevelsPro.AdminPanel
 
                      }
                      sqlTrans.Commit();
-
                    
-                     
-
                      if (btnAddQuestion.Text == "Update" || btnAddQuestion.Text == "mettre à jour" || btnAddQuestion.Text == "actualizar")
                      {
                          LoadData(int.Parse(quiz.QuestionID.ToString()));
                          lblMessage.Visible = true;
                          lblMessage.Text = "Question info " + Resources.TestSiteResources.UpdateMessage;
-                         Response.Redirect("QuestionEdit.aspx?mess=1" + "&questionid=" + ViewState["questionid"].ToString() + "&quizid=" + ViewState["quizid"].ToString(), false);
-                         
+                         Response.Redirect("QuestionEdit.aspx?mess=1" + "&questionid=" + ViewState["questionid"].ToString() + "&quizid=" + ViewState["quizid"].ToString(), false);                         
                      }
                      else
                      {
@@ -308,13 +290,6 @@ namespace LevelsPro.AdminPanel
                         sqlTrans.Dispose();
                         scon.Close();
                     }
-
-
-
-                    
-
-
-
                 }
             }
         }

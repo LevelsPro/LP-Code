@@ -38,6 +38,11 @@ namespace Common
             get { return _contestname; }
             set { _contestname = value; }
         }
+        public SqlInt32 ContestDUR
+        {
+            get { return _contestdur; }
+            set { _contestdur = value; }
+        }
         public SqlInt32? RoleID
         {
             get { return _roleid; }

@@ -60,6 +60,12 @@
   <ItemGroup>
     <Compile Include="Delete\AssignAwardDeleteBLL.cs" />
     <Compile Include="Delete\AwardImageDeleteBLL.cs" />
+    <Compile Include="Delete\MatchScoreDeleteBLL.cs" />
+    <Compile Include="Delete\DataSetDeleteBLL.cs" />
+    <Compile Include="Delete\DataSetLevelDeleteBLL.cs" />
+    <Compile Include="Delete\RoundDeleteBLL.cs" />
+    <Compile Include="Delete\DataElementDeleteBLL.cs" />
+    <Compile Include="Delete\MatchDeleteBLL.cs" />
     <Compile Include="Delete\level_TargetDeleteBLL.cs" />
     <Compile Include="Delete\MessageDeleteBLL.cs" />
     <Compile Include="Delete\QuestionDeleteBLL.cs" />
@@ -73,6 +79,14 @@
     <Compile Include="Insert\AwardImageInsertBLL.cs" />
     <Compile Include="Insert\BulkInsertQuizQuestionsBLL.cs" />
     <Compile Include="Insert\CategoryInsertBLL.cs" />
+    <Compile Include="Insert\BulkInsertMatchDataSetsBLL.cs" />
+    <Compile Include="Insert\MatchScoreInsertBLL.cs" />
+    <Compile Include="Insert\MatchPlayLogBLL.cs" />
+    <Compile Include="Insert\DataSetLevelsInsertBLL.cs" />
+    <Compile Include="Insert\DataSetsInsertBLL.cs" />
+    <Compile Include="Insert\RoundInsertBLL.cs" />
+    <Compile Include="Insert\DataElementInsertBLL.cs" />
+    <Compile Include="Insert\MatchInsertBLL.cs" />
     <Compile Include="Insert\LifeLineInsertBLL.cs" />
     <Compile Include="Insert\QuestionLevelsInsertBLL.cs" />
     <Compile Include="Insert\QuizInsertBLL.cs" />
@@ -117,6 +131,17 @@
     <Compile Include="Select\CheckUserNameBLL.cs" />
     <Compile Include="Select\ContestPlayersScoreBLL.cs" />
     <Compile Include="Select\ContestViewBLL.cs" />
+    <Compile Include="Select\GetGamesPlayLogBLL.cs" />
+    <Compile Include="Select\PlayerGamesViewBLL.cs" />
+    <Compile Include="Select\GetMatchPlayLogBLL.cs" />
+    <Compile Include="Select\PlayerMatchDataSetsViewBLL.cs" />
+    <Compile Include="Select\PlayerMatchViewBLL.cs" />
+    <Compile Include="Select\RolesLevelsDataSetViewBLL.cs" />
+    <Compile Include="Select\DataSetsLevelsViewBLL.cs" />
+    <Compile Include="Select\DataSetsViewBLL.cs" />
+    <Compile Include="Select\RoundViewBLL.cs" />
+    <Compile Include="Select\DataElementViewBLL.cs" />
+    <Compile Include="Select\MatchViewBLL.cs" />
     <Compile Include="Select\GetFullLevelTableBLL.cs" />
     <Compile Include="Select\GetLifeLinesBLL.cs" />
     <Compile Include="Select\GetPopupShowed_LevelPerformanceBLL.cs" />
@@ -173,6 +198,10 @@
     <Compile Include="Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Update\CategoryUpdateBLL.cs" />
+    <Compile Include="Update\DataSetsUpdateBLL.cs" />
+    <Compile Include="Update\RoundUpdateBLL.cs" />
+    <Compile Include="Update\DataElementUpdateBLL.cs" />
+    <Compile Include="Update\MatchUpdateBLL.cs" />
     <Compile Include="Update\LoginUpdateBLL.cs" />
     <Compile Include="Update\PasswordResetUpdateBLL.cs" />
     <Compile Include="Update\QuizUpdateBLL.cs" />

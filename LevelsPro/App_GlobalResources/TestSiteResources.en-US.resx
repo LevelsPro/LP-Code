@@ -1495,4 +1495,203 @@
     <value>You Scored</value>
     <comment>YouScored</comment>
   </data>
+  <data name="ManageMatchingGames" xml:space="preserve">
+    <value>Manage Matching</value>
+    <comment>Matching Games Button</comment>
+  </data>
+  <data name="ManageMatch" xml:space="preserve">
+    <value>Matching Game Setup</value>
+  </data>
+  <data name="MatchManagement" xml:space="preserve">
+    <value>Matching Game Setup</value>
+    <comment>Match Management :</comment>
+  </data>
+  <data name="CreateMatch" xml:space="preserve">
+    <value>Create New Game</value>
+    <comment>CreateMatch</comment>
+  </data>
+  <data name="MatchName" xml:space="preserve">
+    <value>Name of Game</value>
+    <comment>MatchName</comment>
+  </data>
+  <data name="MaxPlaysPerDay" xml:space="preserve">
+    <value>Maximun plays per day</value>
+    <comment>MaxPlaysPerDay</comment>
+  </data>
+  <data name="NoOfDataSet" xml:space="preserve">
+    <value>Number of Data Elements per Data Set (2,3, or 4)</value>
+    <comment>NoOfDataSet</comment>
+  </data>
+  <data name="NoOfRounds" xml:space="preserve">
+    <value>Number of Rounds (1 -5)</value>
+    <comment>NoOfRounds</comment>
+  </data>
+  <data name="PointsForCompletion" xml:space="preserve">
+    <value>Bonus Poinsts for Completion (May be 0)</value>
+    <comment>PointsForCompletion</comment>
+  </data>
+  <data name="PointsPerRound" xml:space="preserve">
+    <value>Number of Points per Round</value>
+    <comment>PointsPerRound</comment>
+  </data>
+  <data name="TimePerRound" xml:space="preserve">
+    <value>Time per Round (in seconds)</value>
+    <comment>TimePerRound</comment>
+  </data>
+  <data name="CreateMatchDataSet" xml:space="preserve">
+    <value>Add Data Element</value>
+    <comment>AddDataElement</comment>
+  </data>
+  <data name="CreateMatchRound" xml:space="preserve">
+    <value>Add Round</value>
+    <comment>CreateMatchRound</comment>
+  </data>
+  <data name="DataElementDefinition" xml:space="preserve">
+    <value>Data Element Definition</value>
+    <comment>DataElementDefinition</comment>
+  </data>
+  <data name="MatchRounds" xml:space="preserve">
+    <value>Game Setup - add as many rounds as you want.</value>
+    <comment>MatchRounds</comment>
+  </data>
+  <data name="ElementName" xml:space="preserve">
+    <value>Element Name</value>
+    <comment>ElementName</comment>
+  </data>
+  <data name="MatchID" xml:space="preserve">
+    <value>Match ID</value>
+    <comment>MatchID</comment>
+  </data>
+  <data name="AddMatch" xml:space="preserve">
+    <value>Add Matching</value>
+    <comment>AddMatch</comment>
+  </data>
+  <data name="AddMatchDataSet" xml:space="preserve">
+    <value>Add Data Set</value>
+    <comment>AddMatchDataSet</comment>
+  </data>
+  <data name="NoOfDataSets" xml:space="preserve">
+    <value>Number of Datasets</value>
+    <comment>NoOfDataSets</comment>
+  </data>
+  <data name="RoundName" xml:space="preserve">
+    <value>Name</value>
+    <comment>RoundName</comment>
+  </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Round Number</value>
+    <comment>RoundNumber</comment>
+  </data>
+  <data name="AddMatchRound" xml:space="preserve">
+    <value>Add Round</value>
+    <comment>AddMatchRound</comment>
+  </data>
+  <data name="AddMatchDataElement" xml:space="preserve">
+    <value>Add Data Element</value>
+    <comment>AddMatchDataElement</comment>
+  </data>
+  <data name="DataSets" xml:space="preserve">
+    <value>Data Sets</value>
+    <comment>DataSets</comment>
+  </data>
+  <data name="AddDataElement" xml:space="preserve">
+    <value>Add Data Element</value>
+    <comment>AddDataElement</comment>
+  </data>
+  <data name="AddRound" xml:space="preserve">
+    <value>Add Round</value>
+    <comment>Add Round</comment>
+  </data>
+  <data name="DeleteDataElement" xml:space="preserve">
+    <value>Delete Data Element</value>
+    <comment>DeleteDataElement</comment>
+  </data>
+  <data name="DeleteRound" xml:space="preserve">
+    <value>Delete Round</value>
+    <comment>DeleteRound</comment>
+  </data>
+  <data name="EditDataElement" xml:space="preserve">
+    <value>Edit Data Element</value>
+    <comment>EditDataElement</comment>
+  </data>
+  <data name="EditMatch" xml:space="preserve">
+    <value>Edit Match</value>
+    <comment>EditMatch</comment>
+  </data>
+  <data name="EditRound" xml:space="preserve">
+    <value>Edit Round</value>
+    <comment>EditRound</comment>
+  </data>
+  <data name="AddDataSet" xml:space="preserve">
+    <value>Add Data Set</value>
+    <comment>AddDataSet</comment>
+  </data>
+  <data name="ManageDataSets" xml:space="preserve">
+    <value>Manage Data Sets</value>
+    <comment>ManageDataSets</comment>
+  </data>
+  <data name="IsPicture" xml:space="preserve">
+    <value>Is Picture</value>
+    <comment>IsPicture</comment>
+  </data>
+  <data name="DataSet" xml:space="preserve">
+    <value>Data Set</value>
+    <comment>DataSet</comment>
+  </data>
+  <data name="PlayAMatch" xml:space="preserve">
+    <value>Play a Match</value>
+    <comment>PlayAMatch</comment>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Matching</value>
+    <comment>Match</comment>
+  </data>
+  <data name="MatchGames" xml:space="preserve">
+    <value>Matching Games</value>
+    <comment>MatchGames</comment>
+  </data>
+  <data name="ShowHint" xml:space="preserve">
+    <value>Show Hint</value>
+    <comment>ShowHint</comment>
+  </data>
+  <data name="NextRound" xml:space="preserve">
+    <value>Next Round</value>
+    <comment>NextRound</comment>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+    <comment>Continue</comment>
+  </data>
+  <data name="CongratulationsRound" xml:space="preserve">
+    <value>Congratulations! You completed the Round</value>
+    <comment>Congratulations</comment>
+  </data>
+  <data name="CongratulationsGame" xml:space="preserve">
+    <value>Congratulations! You have completed the game</value>
+    <comment>CongratulationsGame</comment>
+  </data>
+  <data name="OutOfTime" xml:space="preserve">
+    <value>Sorry, you ran out of time.</value>
+    <comment>OutOfTime</comment>
+  </data>
+  <data name="PointsScored" xml:space="preserve">
+    <value>You have scored POINTCOUNT points.</value>
+    <comment>PointsScored</comment>
+  </data>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Try Again?</value>
+    <comment>TryAgain</comment>
+  </data>
+  <data name="youAlreadyPlayedMatch" xml:space="preserve">
+    <value>You have already played this game the allowed number of times today. Please play again tomorrow.</value>
+    <comment>You’ve already played this game today.</comment>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Quit</value>
+    <comment>Quit</comment>
+  </data>
+  <data name="ViewCorrectAnswers" xml:space="preserve">
+    <value>View Correct Answers</value>
+    <comment>ViewCorrectAnswers</comment>
+  </data>
 </root>

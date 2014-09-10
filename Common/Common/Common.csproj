@@ -58,6 +58,7 @@
     <Compile Include="LevelGame.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="LifeLine.cs" />
+    <Compile Include="Match.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="PostRepliedLike.cs" />

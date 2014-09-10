@@ -82,6 +82,12 @@
     <Content Include="AdminPanel\AwardManagement.aspx" />
     <Content Include="AdminPanel\ChangePassword.aspx" />
     <Content Include="AdminPanel\ContestManagement.aspx" />
+    <Content Include="AdminPanel\DataSetEdit.aspx" />
+    <Content Include="AdminPanel\DataSetManagement.aspx" />
+    <Content Include="AdminPanel\RoundEdit.aspx" />
+    <Content Include="AdminPanel\DataElementEdit.aspx" />
+    <Content Include="AdminPanel\MatchEdit.aspx" />
+    <Content Include="AdminPanel\MatchManagement.aspx" />
     <Content Include="AdminPanel\Images\arrow-down.png" />
     <Content Include="AdminPanel\Images\img-32-large.png" />
     <Content Include="AdminPanel\Images\img-32.png" />
@@ -320,6 +326,70 @@
     <Content Include="Images\loading-small.gif" />
     <Content Include="Images\login-btn.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\Match\DataSetImages\078eb40e-4355-4156-a205-c4b7cca7d1be.png" />
+    <Content Include="Images\Match\DataSetImages\13d571c9-5a67-4578-9931-04672c6d84e4.jpg" />
+    <Content Include="Images\Match\DataSetImages\15353545-7c1a-463f-a86b-2b66f90f70b7.png" />
+    <Content Include="Images\Match\DataSetImages\195cfb0b-371c-47b8-80ae-aee53f7034ed.png" />
+    <Content Include="Images\Match\DataSetImages\1a022874-fa3d-4fbe-b3fe-c23c6daad601.png" />
+    <Content Include="Images\Match\DataSetImages\451983d6-869f-4b90-a85c-ee4e269bfff7.png" />
+    <Content Include="Images\Match\DataSetImages\5aa30479-56ea-44de-ae4d-9bb4fcea649f.jpg" />
+    <Content Include="Images\Match\DataSetImages\69391731-6084-4599-8b64-9faa3319839b.png" />
+    <Content Include="Images\Match\DataSetImages\7008303e-e34d-4ad6-b60e-5576d51de1c1.jpg" />
+    <Content Include="Images\Match\DataSetImages\7f397b69-d6d3-488e-aa40-b7942d01594e.jpg" />
+    <Content Include="Images\Match\DataSetImages\8a1b9c55-7c70-41fe-8854-27c8916fef5e.jpg" />
+    <Content Include="Images\Match\DataSetImages\8c9d6662-c71e-42a8-9482-6811f2cc8b41.jpg" />
+    <Content Include="Images\Match\DataSetImages\90f4ebf8-cf4f-4bec-8ab3-392fd96a93fd.jpg" />
+    <Content Include="Images\Match\DataSetImages\96941e60-35ab-4c2b-b33f-75948b5bf558.jpg" />
+    <Content Include="Images\Match\DataSetImages\a0f2fc37-3df1-40e4-aa02-5912013835e7.png" />
+    <Content Include="Images\Match\DataSetImages\a513faeb-3152-4e56-9a0e-4301491bff28.jpg" />
+    <Content Include="Images\Match\DataSetImages\b59f0f76-5be7-4412-be2f-9b6d36b46dd4.jpg" />
+    <Content Include="Images\Match\DataSetImages\bbca6a49-aaaf-4d75-a371-6dbc734293f5.png" />
+    <Content Include="Images\Match\DataSetImages\c6dc9735-0d89-4d60-bdbc-11987000de7a.jpg" />
+    <Content Include="Images\Match\DataSetImages\d7989dce-a52e-40fb-b431-802630202c6a.jpg" />
+    <Content Include="Images\Match\DataSetImages\e0133c21-e462-4bd4-b87b-d0f0ff5e50d1.jpg" />
+    <Content Include="Images\Match\DataSetImages\e234fc3e-0b38-4532-9ce4-6e96f1c2a1d0.jpg" />
+    <Content Include="Images\Match\DataSetImages\f1bd7287-2772-4200-8172-72ba1d22febc.jpg" />
+    <Content Include="Images\Match\DataSetImages\feb0b129-f8e3-4a85-b674-ef2a62c517b8.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\078eb40e-4355-4156-a205-c4b7cca7d1be.png" />
+    <Content Include="Images\Match\DataSetThumbNails\13d571c9-5a67-4578-9931-04672c6d84e4.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\15353545-7c1a-463f-a86b-2b66f90f70b7.png" />
+    <Content Include="Images\Match\DataSetThumbNails\195cfb0b-371c-47b8-80ae-aee53f7034ed.png" />
+    <Content Include="Images\Match\DataSetThumbNails\1a022874-fa3d-4fbe-b3fe-c23c6daad601.png" />
+    <Content Include="Images\Match\DataSetThumbNails\451983d6-869f-4b90-a85c-ee4e269bfff7.png" />
+    <Content Include="Images\Match\DataSetThumbNails\5aa30479-56ea-44de-ae4d-9bb4fcea649f.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\69391731-6084-4599-8b64-9faa3319839b.png" />
+    <Content Include="Images\Match\DataSetThumbNails\7008303e-e34d-4ad6-b60e-5576d51de1c1.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\7f397b69-d6d3-488e-aa40-b7942d01594e.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\8a1b9c55-7c70-41fe-8854-27c8916fef5e.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\8c9d6662-c71e-42a8-9482-6811f2cc8b41.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\90f4ebf8-cf4f-4bec-8ab3-392fd96a93fd.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\96941e60-35ab-4c2b-b33f-75948b5bf558.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\a0f2fc37-3df1-40e4-aa02-5912013835e7.png" />
+    <Content Include="Images\Match\DataSetThumbNails\a513faeb-3152-4e56-9a0e-4301491bff28.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\b59f0f76-5be7-4412-be2f-9b6d36b46dd4.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\bbca6a49-aaaf-4d75-a371-6dbc734293f5.png" />
+    <Content Include="Images\Match\DataSetThumbNails\c6dc9735-0d89-4d60-bdbc-11987000de7a.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\d7989dce-a52e-40fb-b431-802630202c6a.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\e0133c21-e462-4bd4-b87b-d0f0ff5e50d1.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\e234fc3e-0b38-4532-9ce4-6e96f1c2a1d0.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\f1bd7287-2772-4200-8172-72ba1d22febc.jpg" />
+    <Content Include="Images\Match\DataSetThumbNails\feb0b129-f8e3-4a85-b674-ef2a62c517b8.jpg" />
+    <Content Include="Images\Match\MatchImages\15353545-7c1a-463f-a86b-2b66f90f70b7.png" />
+    <Content Include="Images\Match\MatchImages\1a022874-fa3d-4fbe-b3fe-c23c6daad601.png" />
+    <Content Include="Images\Match\MatchImages\1c14e2d7-b400-44f0-90a9-8c915f38a7b8.png" />
+    <Content Include="Images\Match\MatchImages\2053dcb2-75a1-4c1b-8c62-4178343022d2.jpg" />
+    <Content Include="Images\Match\MatchImages\34af0afa-97f6-4b99-ac8f-e6690ed93143.jpg" />
+    <Content Include="Images\Match\MatchImages\403128d5-027a-4f2a-bdf4-6ccc6ead57b5.png" />
+    <Content Include="Images\Match\MatchImages\451983d6-869f-4b90-a85c-ee4e269bfff7.png" />
+    <Content Include="Images\Match\MatchImages\96648e1e-4e50-49f5-a29e-bc90b61c7fd1.png" />
+    <Content Include="Images\Match\MatchThumbNails\15353545-7c1a-463f-a86b-2b66f90f70b7.png" />
+    <Content Include="Images\Match\MatchThumbNails\1a022874-fa3d-4fbe-b3fe-c23c6daad601.png" />
+    <Content Include="Images\Match\MatchThumbNails\1c14e2d7-b400-44f0-90a9-8c915f38a7b8.png" />
+    <Content Include="Images\Match\MatchThumbNails\2053dcb2-75a1-4c1b-8c62-4178343022d2.jpg" />
+    <Content Include="Images\Match\MatchThumbNails\34af0afa-97f6-4b99-ac8f-e6690ed93143.jpg" />
+    <Content Include="Images\Match\MatchThumbNails\403128d5-027a-4f2a-bdf4-6ccc6ead57b5.png" />
+    <Content Include="Images\Match\MatchThumbNails\451983d6-869f-4b90-a85c-ee4e269bfff7.png" />
+    <Content Include="Images\Match\MatchThumbNails\96648e1e-4e50-49f5-a29e-bc90b61c7fd1.png" />
     <Content Include="Images\next-bg.png" />
     <Content Include="Images\No_Image_Wide.png" />
     <Content Include="Images\points-left.png" />
@@ -525,6 +595,27 @@
     <Content Include="ManagerPanel\UserControls\uc_Profile.ascx" />
     <Content Include="PlayerPanel\ChangePassword.aspx" />
     <Content Include="PlayerPanel\ContestDetails.aspx" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-icons_222222_256x240.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-icons_228ef1_256x240.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-icons_ef8c08_256x240.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-icons_ffd27a_256x240.png" />
+    <Content Include="PlayerPanel\Images\jquery-ui\ui-icons_ffffff_256x240.png" />
+    <Content Include="PlayerPanel\Images\match-dataelement-bg-footer.png" />
+    <Content Include="PlayerPanel\Images\match-dataelement-bg-middle.png" />
+    <Content Include="PlayerPanel\Images\match-dataelement-bg-top.png" />
+    <Content Include="PlayerPanel\Images\qbtns-disabled-bg-white.png" />
+    <Content Include="PlayerPanel\Images\qbtns-disabled-blue-bg.png" />
+    <Content Include="PlayerPanel\MatchPlay.aspx" />
+    <Content Include="PlayerPanel\MatchSelection.aspx" />
     <Content Include="PlayerPanel\ForumDetails.aspx" />
     <Content Include="PlayerPanel\ForumPostDetails.aspx" />
     <Content Include="PlayerPanel\Images\ans-bg.png" />
@@ -732,6 +823,7 @@
     <Content Include="PlayerPanel\Scripts\fontResizer.js" />
     <Content Include="PlayerPanel\Scripts\jquery-1.6.1.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery-1.7.2.min.js" />
+    <Content Include="PlayerPanel\Scripts\jquery-ui.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.ba-resize.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.tinyscrollbar.min.js" />
@@ -739,6 +831,7 @@
     <Content Include="PlayerPanel\Scripts\jquery.uniform.min.js" />
     <Content Include="PlayerPanel\Scripts\test-function.js" />
     <Content Include="PlayerPanel\Styles\horizontal-website.css" />
+    <Content Include="PlayerPanel\Styles\jquery-ui.min.css" />
     <Content Include="PlayerPanel\Styles\map-test.css" />
     <Content Include="PlayerPanel\Styles\theme-2.css" />
     <Content Include="PlayerPanel\Styles\theme-3.css" />
@@ -868,6 +961,48 @@
     </Compile>
     <Compile Include="AdminPanel\ContestManagement.aspx.designer.cs">
       <DependentUpon>ContestManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\DataSetEdit.aspx.cs">
+      <DependentUpon>DataSetEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\DataSetEdit.aspx.designer.cs">
+      <DependentUpon>DataSetEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\DataSetManagement.aspx.cs">
+      <DependentUpon>DataSetManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\DataSetManagement.aspx.designer.cs">
+      <DependentUpon>DataSetManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\RoundEdit.aspx.cs">
+      <DependentUpon>RoundEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\RoundEdit.aspx.designer.cs">
+      <DependentUpon>RoundEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\DataElementEdit.aspx.cs">
+      <DependentUpon>DataElementEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\DataElementEdit.aspx.designer.cs">
+      <DependentUpon>DataElementEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\MatchEdit.aspx.cs">
+      <DependentUpon>MatchEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\MatchEdit.aspx.designer.cs">
+      <DependentUpon>MatchEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\MatchManagement.aspx.cs">
+      <DependentUpon>MatchManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\MatchManagement.aspx.designer.cs">
+      <DependentUpon>MatchManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\QuestionEdit.aspx.cs">
       <DependentUpon>QuestionEdit.aspx</DependentUpon>
@@ -1267,6 +1402,20 @@
     <Compile Include="PlayerPanel\ContestDetails.aspx.designer.cs">
       <DependentUpon>ContestDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PlayerPanel\MatchPlay.aspx.cs">
+      <DependentUpon>MatchPlay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlayerPanel\MatchPlay.aspx.designer.cs">
+      <DependentUpon>MatchPlay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PlayerPanel\MatchSelection.aspx.cs">
+      <DependentUpon>MatchSelection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlayerPanel\MatchSelection.aspx.designer.cs">
+      <DependentUpon>MatchSelection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PlayerPanel\ForumDetails.aspx.cs">
       <DependentUpon>ForumDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1281,6 +1430,7 @@
     <Compile Include="PlayerPanel\ForumPostDetails.aspx.designer.cs">
       <DependentUpon>ForumPostDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PlayerPanel\PlayerMatchDataSetsViewBLL.cs" />
     <Compile Include="PlayerPanel\QuizResult.aspx.cs">
       <DependentUpon>QuizResult.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1594,7 +1744,6 @@
     <Folder Include="Images\Role\RoleImages\" />
     <Folder Include="Images\Role\RoleThumbnails\" />
     <Folder Include="ManagerPanel\Reports\" />
-    <Folder Include="PlayerPanel\Images\New Folder\" />
     <Folder Include="PlayerPanel\Reports\" />
   </ItemGroup>
   <ItemGroup>

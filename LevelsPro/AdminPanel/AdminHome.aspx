@@ -53,7 +53,8 @@
         <asp:Button ID="btnManageLevelGame" runat="server" Text="<%$ Resources:TestSiteResources, ManageLevelGame %>" CssClass="green-btn mp-btns" PostBackUrl="~/AdminPanel/LevelGameManagement.aspx" />
         <asp:Button ID="btnAPI" runat="server" Text="<%$ Resources:TestSiteResources, APIImportSheet %>" CssClass="green-btn mp-btns" PostBackUrl="~/AdminPanel/APIExportSheet.aspx" />
        <%-- <asp:Button ID="Button1" runat="server" Enabled="true" Text="<%$ Resources:TestSiteResources, ManageGame %>" CssClass="green-btn mp-btns" PostBackUrl="" /> --%>
-        <asp:Button ID="btnManageGames" runat="server" Enabled="true" Text="<%$ Resources:TestSiteResources, ManageQuiz %>" CssClass="green-btn mp-btns" PostBackUrl="~/AdminPanel/QuizManagement.aspx" />       
+        <asp:Button ID="btnManageGames" runat="server" Enabled="true" Text="<%$ Resources:TestSiteResources, ManageQuiz %>" CssClass="green-btn mp-btns" PostBackUrl="~/AdminPanel/QuizManagement.aspx" />
+        <asp:Button ID="btnManageMatch" runat="server" Enabled="true" Text="<%$ Resources:TestSiteResources, ManageMatch %>" CssClass="green-btn mp-btns" PostBackUrl="~/AdminPanel/MatchManagement.aspx" />
         <%--<asp:Button ID="btnAssignAwards" runat="server" Text="Assign Award" CssClass="green-btn mp-btns" PostBackUrl="~/AdminPanel/AssignAwards.aspx" />--%>        
         <%--<asp:Button ID="btnManageAppearance" runat="server" Enabled="false" Text="Manage Appearance" CssClass="green-btn mp-btns" />--%>        
     </div>

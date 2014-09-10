@@ -10,7 +10,7 @@ namespace DataAccess.Select
    
     public class PlayerQuizViewDAL : DataAccessBase
     {
-       private Common.Quiz _quiz;
+        private Common.Quiz _quiz;
         private PlayersQuizQuestionsDataParameters _viewParameters;
 
         public PlayerQuizViewDAL()

@@ -16,7 +16,7 @@ namespace DataAccess
             sp_GetReward,
             sp_GetAward,
             sp_GetContest,
-            sp_GetTarget,            
+            sp_GetTarget,
             sp_GetUser,
             sp_GetAwardDetails,
             sp_GetImage,
@@ -31,7 +31,7 @@ namespace DataAccess
             sp_CheckSecurityAnswer,
             sp_GetUserInfoByEmail,
             sp_CheckPassword,
-            sp_GetSites_ddl,           
+            sp_GetSites_ddl,
             sp_CheckPasswordNull,
             sp_GetUsers_Manager,
             sp_GetTotalPlayerScore,
@@ -46,47 +46,45 @@ namespace DataAccess
             sp_GetMapDetail,
             sp_GetLevelPerformance,
             sp_GetTargetDescription,
-
-        
-
-
-
             sp_GetPlayerLevelPercent,
-
             sp_GetAllSites,
             sp_GetSecurityQuestions,
-
             sp_GetManualAssignedAwards,
-
             sp_GetPostTypes,
             sp_GetPosts,
             sp_GetPostDetails,
             sp_GetPostByID,
             sp_QuizData,
             sp_GetUsersByRole,
-
             sp_GetRepliedLikeStatus,
             sp_GetGame,
             sp_GetMessages,
             sp_GetRewardImages,
             sp_GetAwardImages,
             sp_GetUserTargetScoreAdmin,
-
             sp_GetUserAwardScore,
-
             sp_GetAutomaticAwards,
             sp_GetLevelGame,
             sp_GetLevelGameDDL,
-
             sp_GetQuiz,
             sp_GetQuizQuestions,
-
             sp_GetQuestionLevels,
             sp_GetQuiz_Player,
             sp_GetQuizQuestion_Player,
             sp_RolesLevels,
             sp_GetCategory,
-            sp_GetRewardUser
+            sp_GetRewardUser,
+            sp_GetMatch,
+            sp_GetDataSet,
+            sp_GetRound,
+            sp_GetDataElement,
+            sp_GetDataSetLevels,
+            sp_RolesLevelsMatchDataSet,
+            sp_GetMatch_Player,
+            sp_GetMatchPlayLog,
+            sp_GetMatchDataSet_Player,
+            sp_GetGames_Player,
+            sp_GetGamesPlayLog
         }
         public enum Insert
         {
@@ -105,7 +103,6 @@ namespace DataAccess
             sp_InsertUserAwards,
             sp_InsertQuizPlayLog,
             sp_InsertSite,
-
             sp_InsertPost,
             sp_insertPostReply,
             sp_instertRepliedLike,
@@ -117,13 +114,19 @@ namespace DataAccess
             sp_InsertAwardImage,
             sp_InsertLevelGame,
             sp_InsertLevelGameDLL,
-
             sp_InsertScore,
             sp_InsertQuizLevels,
             sp_InsertQuestionLevels,
             sp_InsertQuizScore,
             sp_InsertCategory,
-            sp_InsertScoreAuto
+            sp_InsertScoreAuto,
+            sp_InsertMatch,
+            sp_InsertRound,
+            sp_InsertDataElement,
+            sp_InsertDataSet,
+            sp_InsertDataSetLevels,
+            sp_InsertMatchPlayLog,
+            sp_InsertMatchScore
         }
         public enum Delete
         {
@@ -132,19 +135,21 @@ namespace DataAccess
             sp_DeleteUserImage,
             sp_DeleteRewardImage,
             sp_DeleteAwardImage,
-
             sp_DeleteMessage,
-
             sp_DeleteQuizLevels,
-
             sp_DeleteTarget,
-
             sp_DeleteQuiz,
             sp_DeleteQuestion,
-            sp_DeleteUserScore
-            , sp_DeleteQuestionLevel,
+            sp_DeleteUserScore,
+            sp_DeleteQuestionLevel,
             sp_DeleteAssignAward,
-            sp_DeleteSecurityAnswers
+            sp_DeleteSecurityAnswers,
+            sp_DeleteMatch,
+            sp_DeleteRound,
+            sp_DeleteDataElement,
+            sp_DeleteDataSet,
+            sp_DeleteDataSetLevel,
+            sp_DeleteMatchUserScore
         }
         public enum Update
         {
@@ -180,7 +185,11 @@ namespace DataAccess
             sp_UpdateLevelGameDDL,
             sp_UpdateLoginTime,
             sp_UpdateCategory,
-            sp_PasswordRequest
+            sp_PasswordRequest,
+            sp_UpdateMatch,
+            sp_UpdateDataSet,
+            sp_UpdateRound,
+            sp_UpdateDataElement
         }
         public enum Report
         {
