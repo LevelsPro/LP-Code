@@ -194,6 +194,7 @@ namespace LevelsPro.PlayerPanel
                 HtmlGenericControl Playing = e.Item.FindControl("Play") as HtmlGenericControl;
                 HtmlGenericControl ItemContainer = e.Item.FindControl("dlDiv") as HtmlGenericControl;
 
+                Session["ltLimitPlayable"] = ltLimitPlayable.Text.ToString();
                 DataView dvSelect = dt.DefaultView;
                 DataView dvTimeCheck = dt_New.DefaultView;
 
