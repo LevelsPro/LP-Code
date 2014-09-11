@@ -869,6 +869,7 @@ namespace LevelsPro.AdminPanel
             ddlKPI.SelectedValue = "0";
             txtTargetValue.Text = "";
             txtPoints.Text = "";
+            btnUpdate.Text = "Update";
         }
 
 

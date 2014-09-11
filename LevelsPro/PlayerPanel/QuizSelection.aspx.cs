@@ -24,7 +24,7 @@ namespace LevelsPro.PlayerPanel
         public DataView dv_New;
         public DataView dvLog;
         public DataSet dtLog;
-        public DataTable dtMandatoryQuizes;
+        public DataTable dtMandatoryQuizes; // for to check which quizes are mandatory .. and to highlight them
         public int TimeCheck_counter;
         protected override void OnInit(EventArgs e)
         {
@@ -35,22 +35,21 @@ namespace LevelsPro.PlayerPanel
         {
             if (!(Page.IsPostBack))
             {
-                if (Request.QueryString["check"] != null && Request.QueryString["check"].ToString() != "")
+                if (Request.QueryString["check"] != null && Request.QueryString["check"].ToString() != "") // return check if there is no question for this role and level left
                 {
-                    mes.Visible = true;
-                    //mes.Text = Resources.TestSiteResources.MessageNoQ;
+                    mes.Visible = true; //show message
                     mes.Text = "There are no Questions Left in this Quiz for your level";
                 }
-                LoadData();
+                LoadData(); // load all data and also verify all checks of quiz
                 TimeCheck_counter = 0;
             }
 
-            lblUserName.Text = Session["displayname"].ToString() + Resources.TestSiteResources.Quiz;
+            lblUserName.Text = Session["displayname"].ToString() + Resources.TestSiteResources.Quiz; //name of user with quiz
         }
 
         public void LoadData()
         {
-            Common.Quiz _quiz = new Quiz();
+            Common.Quiz _quiz = new Quiz(); // common quiz class for quiz related tables to get all properties
             _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
 
             Common.Match _match = new Match();
@@ -72,6 +71,7 @@ namespace LevelsPro.PlayerPanel
             try
             {
                 QuizSelection.Quiz = _quiz;
+               // QuizSelection.Invoke();
                 Games_Selection.Match = _match;
                 Games_Selection.Invoke();
             }
@@ -226,14 +226,14 @@ namespace LevelsPro.PlayerPanel
                     ltTopScore.Text = drsTop[0]["QuizPoints"].ToString() + " " + drsTop[0]["FullName"].ToString();
                 }
 
-                if (dvTimeCheck.ToTable().Rows.Count>0)
-                {
-                    foreach (DataRow dr in dvTimeCheck.ToTable().Rows)
-                    {
-                        DateTime Date = Convert.ToDateTime(dr["QuizTime"].ToString());
-                        String DateString = Date.ToShortDateString();
-
-                        dvLog.RowFilter = "QuizID =" + Convert.ToInt32(dr["QuizID"].ToString()) + " AND UserID = " + Convert.ToInt32(dr["UserID"].ToString()); //+ " AND QuizTime = " + DateString
+                //if (dvTimeCheck.ToTable().Rows.Count>0)
+                //{
+                //    foreach (DataRow dr in dvTimeCheck.ToTable().Rows)
+                //    {
+                       // DateTime Date = Convert.ToDateTime(dr["QuizTime"].ToString()); //assign quiz date to datetime
+                       // String DateString = Date.ToShortDateString();
+                        String DateString = System.DateTime.Now.ToShortDateString();
+                        dvLog.RowFilter = "QuizID =" + Convert.ToInt32(ltQuizID.Text.Trim()) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
 
                         
                         DataTable dtPlayLog = dvLog.ToTable();
@@ -263,6 +263,7 @@ namespace LevelsPro.PlayerPanel
                                         if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
                                         {
                                             ItemContainer.Attributes["class"] = "qs-item qs-game-important";
+                                            break;
                                         }
                                         else
                                         {
@@ -283,6 +284,7 @@ namespace LevelsPro.PlayerPanel
                                     if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
                                     {
                                         ItemContainer.Attributes["class"] = "qs-item qs-game-important";
+                                        break;
                                     }
                                     else
                                     {
@@ -321,8 +323,8 @@ namespace LevelsPro.PlayerPanel
                 //}
                  */
                 #endregion
-            }
-        }
+            
+        
 
         
     }

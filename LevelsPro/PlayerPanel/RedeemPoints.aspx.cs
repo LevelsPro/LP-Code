@@ -130,7 +130,7 @@ namespace LevelsPro.PlayerPanel
 
 
             Label lblReward = e.Item.FindControl("lblRewardName") as Label;
-            //LinkButton lbtnRedeem = e.Item.FindControl("lbtnRedeem") as LinkButton;
+            LinkButton lbtnRedeem = e.Item.FindControl("lbtnRedeem") as LinkButton;
             //lbtnRedeem.OnClientClick = "return confirm('Are you sure to delete Level.');";
 
             Points point = new Points();
@@ -247,6 +247,7 @@ namespace LevelsPro.PlayerPanel
                         //LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
                         // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
                         HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
+                        lbtnRedeem.OnClientClick = "return false;" ;
                         Div.Attributes["class"] = "locked-btn rdmption-btn";
                         chkbtn.Enabled = false;
                     }
@@ -523,6 +524,7 @@ namespace LevelsPro.PlayerPanel
                         // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]); 
                         HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
                         Div.Attributes["class"] = "locked-btn rdmption-btn";
+                        chkbtn.OnClientClick = "return false;";
                         chkbtn.Enabled = false;
                         // HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
                         //Div.Style.Add("class", "locked-btn rdmption-btn");
@@ -576,6 +578,7 @@ namespace LevelsPro.PlayerPanel
                     //divscore.Attributes["class"] = "classOfYourChoice";
                     HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
                     Div.Attributes["class"] = "locked-btn rdmption-btn";
+                    chkbtn.OnClientClick = "return false;";
                     //Div.Style.Add("class", "locked-btn rdmption-btn");
                     }
                     else
@@ -598,6 +601,7 @@ namespace LevelsPro.PlayerPanel
                             // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
                             HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
                             Div.Attributes["class"] = "locked-btn rdmption-btn";
+                            chkbtn.OnClientClick = "return false;";
                             chkbtn.Enabled = false;
                         }
                         //for (int j = 0; j < dtpoints.Rows.Count; j++)
