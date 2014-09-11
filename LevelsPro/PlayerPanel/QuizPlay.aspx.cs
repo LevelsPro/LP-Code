@@ -208,298 +208,294 @@ namespace LevelsPro.PlayerPanel
             DataView dvQuizPoints = quiz.ResultSet.Tables[1].DefaultView;
             dv.RowFilter = "SiteID =" + Convert.ToInt32(Session["siteid"]) + " OR SiteID = 0";
             dt = dv.ToTable(); // contains all questions
-                    
+                
                 GetGamesPlayLogBLL Log = new GetGamesPlayLogBLL();
-                Log.Invoke();
-                dtLog = Log.ResultSet;
-                dvLog = dtLog.Tables[0].DefaultView;
-                String DateString = System.DateTime.Now.ToShortDateString();
-                dvLog.RowFilter = "QuizID =" + Convert.ToInt32(Request.QueryString["quizid"]) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
-
-
-                DataTable dtPlayLog = dvLog.ToTable();
-
-                int Playcount = 0;
-                for (int i = 0; i < dtPlayLog.Rows.Count; i++)
+                try
                 {
-                    if (dtPlayLog.Rows[i]["QuizTime"].ToString().Equals(DateString))
+                    Log.Invoke();
+                    dtLog = Log.ResultSet;
+                    dvLog = dtLog.Tables[0].DefaultView;
+                    String DateString = System.DateTime.Now.ToShortDateString();
+                    dvLog.RowFilter = "QuizID =" + Convert.ToInt32(Request.QueryString["quizid"]) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
+
+
+                    DataTable dtPlayLog = dvLog.ToTable();
+
+                    int Playcount = 0;
+                    for (int i = 0; i < dtPlayLog.Rows.Count; i++)
                     {
-                        Playcount = Playcount + 1;
+                        if (dtPlayLog.Rows[i]["QuizTime"].ToString().Equals(DateString))
+                        {
+                            Playcount = Playcount + 1;
+                        }
                     }
-                }
 
-                if (DateString.Equals(System.DateTime.Now.ToShortDateString()))
-                {
-                    if (Playcount >= Convert.ToInt32(dt.Rows[0]["LimitGame"]))
+                    if (DateString.Equals(System.DateTime.Now.ToShortDateString()))
                     {
-                        PlayAvailable = false;
+                        if (Playcount >= Convert.ToInt32(dt.Rows[0]["LimitGame"]))
+                        {
+                            PlayAvailable = false;
+                        }
+                        else
+                        {
+                            PlayAvailable = true;
+
+                        }
+
                     }
                     else
                     {
                         PlayAvailable = true;
-
                     }
 
-                }
-                else
-                {
-                    PlayAvailable = true;
-                }
-
-                if (PlayAvailable.Equals(true))
-                {
-                    DataTable dtQuizPoints = new DataTable();
-                    dvQuizPoints.RowFilter = "UserID = " + Convert.ToInt32(Session["userid"]) + " AND QuizId = " + Convert.ToInt32(Request.QueryString["quizid"]);
-
-                    dtQuizPoints = dvQuizPoints.ToTable();
-                    if (dt != null && dt.Rows.Count > 0 && dtQuizPoints != null && dtQuizPoints.Rows.Count > 0)
+                    if (PlayAvailable.Equals(true))
                     {
-                        int cont = dt.Rows.Count;
-                        for (int k = 0; k < cont; k++)
+                        DataTable dtQuizPoints = new DataTable();
+                        dvQuizPoints.RowFilter = "UserID = " + Convert.ToInt32(Session["userid"]) + " AND QuizId = " + Convert.ToInt32(Request.QueryString["quizid"]);
+
+                        dtQuizPoints = dvQuizPoints.ToTable();
+                        if (dt != null && dt.Rows.Count > 0 && dtQuizPoints != null && dtQuizPoints.Rows.Count > 0)
                         {
-                            if (cont != -1 && k != -1)
+                            int cont = dt.Rows.Count;
+                            for (int k = 0; k < cont; k++)
                             {
-                                if (Convert.ToInt32(dt1.Rows[0]["LevelID"]) == Convert.ToInt32(dt.Rows[k]["LevelID"]))
+                                if (cont != -1 && k != -1)
                                 {
+                                    if (Convert.ToInt32(dt1.Rows[0]["LevelID"]) == Convert.ToInt32(dt.Rows[k]["LevelID"]))
+                                    {
 
 
+                                    }
+                                    else
+                                    {
+                                        dt.Rows.RemoveAt(k);
+                                        dt.AcceptChanges();
+                                        k--;
+                                        cont--;
+
+                                    }
+                                }
+                            }
+
+                            //--------- Randomized Question Logic -----------------//
+
+
+
+                            //-----------------------------------------------------//
+
+
+                            //int count = dt.Rows.Count;
+                            //for (int i = 0; i < count; i++)
+                            //{
+
+                            //    for (int j = 0; j < dtQuizPoints.Rows.Count; j++)
+                            //    {
+                            //        if (i == -1 && count !=0)
+                            //        { i = 0; }
+                            //      if(i !=-1)
+                            //      {
+                            //        if (dt.Rows[i]["QuestionID"].Equals(dtQuizPoints.Rows[j]["QuestionID"]))
+                            //        {
+                            //            dt.Rows[i].Delete();
+                            //            dt.AcceptChanges();
+                            //            count--;
+                            //            i--;
+                            //            break;
+
+                            //        }
+                            //          }
+
+                            //    }
+
+
+                            //}
+
+                            if (dt != null && dt.Rows.Count > 0)
+                            {
+
+                                if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
+                                {
+                                    QuestionLimit = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
                                 }
                                 else
                                 {
-                                    dt.Rows.RemoveAt(k);
-                                    dt.AcceptChanges();
-                                    k--;
-                                    cont--;
-
+                                    QuestionLimit = dt.Rows.Count;
                                 }
-                            }
-                        }
 
-                        //--------- Randomized Question Logic -----------------//
+                                RandomQuestionMaking();
 
+                                if (counter < QuestionLimit)
+                                {
+                                    NewNumber();
+                                    ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
+                                    if (MyNumber == 1)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                    }
 
+                                    else if (MyNumber == 2)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                    }
 
-                        //-----------------------------------------------------//
+                                    else if (MyNumber == 3)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                    }
 
-
-                        //int count = dt.Rows.Count;
-                        //for (int i = 0; i < count; i++)
-                        //{
-
-                        //    for (int j = 0; j < dtQuizPoints.Rows.Count; j++)
-                        //    {
-                        //        if (i == -1 && count !=0)
-                        //        { i = 0; }
-                        //      if(i !=-1)
-                        //      {
-                        //        if (dt.Rows[i]["QuestionID"].Equals(dtQuizPoints.Rows[j]["QuestionID"]))
-                        //        {
-                        //            dt.Rows[i].Delete();
-                        //            dt.AcceptChanges();
-                        //            count--;
-                        //            i--;
-                        //            break;
-
-                        //        }
-                        //          }
-
-                        //    }
-
-
-                        //}
-
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-
-                            if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
-                            {
-                                QuestionLimit = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
+                                    else if (MyNumber == 4)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                    }
+                                    lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
+                                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
+                                }
+                                ////by atizaz//
+                                //lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
+                                //ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
+                                //hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
+                                ///////////////
                             }
                             else
                             {
-                                QuestionLimit = dt.Rows.Count;
+                                Response.Redirect("QuizSelection.aspx?check=1");
                             }
 
-                            RandomQuestionMaking();
 
-                            if (counter < QuestionLimit)
+
+
+                        }
+                        else if (dt != null && dt.Rows.Count > 0)
+                        {
+                            int cont = dt.Rows.Count;
+                            for (int k = 0; k < cont; k++)
                             {
-                                NewNumber();
-                                ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
-                                if (MyNumber == 1)
+                                if (cont != -1 && k != -1)
                                 {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                    if (Convert.ToInt32(dt1.Rows[0]["LevelID"]) == Convert.ToInt32(dt.Rows[k]["LevelID"]))
+                                    {
+
+
+                                    }
+                                    else
+                                    {
+                                        dt.Rows.RemoveAt(k);
+                                        dt.AcceptChanges();
+                                        k--;
+                                        cont--;
+
+                                    }
                                 }
 
-                                else if (MyNumber == 2)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                }
-
-                                else if (MyNumber == 3)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                }
-
-                                else if (MyNumber == 4)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                }
-                                lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
-                                imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
                             }
-                            ////by atizaz//
-                            //lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                            //ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                            //hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
-                            ///////////////
+                            if (dt.Rows.Count > 0)
+                            {
+                                if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
+                                {
+                                    QuestionLimit = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
+                                }
+                                else
+                                {
+                                    QuestionLimit = dt.Rows.Count;
+                                }
+                                RandomQuestionMaking();
+
+
+
+                                if (counter < QuestionLimit)
+                                {
+                                    NewNumber();
+                                    ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
+                                    if (MyNumber == 1)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                    }
+
+                                    else if (MyNumber == 2)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                    }
+
+                                    else if (MyNumber == 3)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                    }
+
+                                    else if (MyNumber == 4)
+                                    {
+                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                    }
+                                    lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
+                                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
+                                }
+                                //lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
+                                //ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
+                                //hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
+                            }
+                        }
+                        //by atizaz//
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
+                            ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
+                            hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
+                            //
+                            counters = 0;
+                            scoreTemp = 0;
+                            values = 0;
+                            timeSec = 0;
+                            score = 0;
+                            deduction = 0;
+
+                            timeSec = int.Parse(lblTimeQuestion.Text);
+                            score = int.Parse(ltScore.Text);
+                            deduction = int.Parse(hdDeductionTime.Value);
+                            sec = timeSec;
+                            //scoreTemp = score / (timeSec - deduction);
+                            scoreTemp = score / (timeSec);
+                            values = 100 - (100 / timeSec);
+                            TimerQuestion.Enabled = true;
                         }
                         else
                         {
                             Response.Redirect("QuizSelection.aspx?check=1");
-                        }
-
-
-
-
-                    }
-                    else if (dt != null && dt.Rows.Count > 0)
-                    {
-                        int cont = dt.Rows.Count;
-                        for (int k = 0; k < cont; k++)
-                        {
-                            if (cont != -1 && k != -1)
-                            {
-                                if (Convert.ToInt32(dt1.Rows[0]["LevelID"]) == Convert.ToInt32(dt.Rows[k]["LevelID"]))
-                                {
-
-
-                                }
-                                else
-                                {
-                                    dt.Rows.RemoveAt(k);
-                                    dt.AcceptChanges();
-                                    k--;
-                                    cont--;
-
-                                }
-                            }
 
                         }
-                        if (dt.Rows.Count > 0)
-                        {
-                            if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
-                            {
-                                QuestionLimit = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
-                            }
-                            else
-                            {
-                                QuestionLimit = dt.Rows.Count;
-                            }
-                            RandomQuestionMaking();
-
-
-
-                            if (counter < QuestionLimit)
-                            {
-                                NewNumber();
-                                ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
-                                if (MyNumber == 1)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                }
-
-                                else if (MyNumber == 2)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                }
-
-                                else if (MyNumber == 3)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                }
-
-                                else if (MyNumber == 4)
-                                {
-                                    btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                    btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                    btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                    btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                }
-                                lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
-                                imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
-                            }
-                            //lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                            //ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                            //hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
-                        }
-                    }
-                    //by atizaz//
-                    if (dt != null && dt.Rows.Count > 0)
-                    {
-                        lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                        ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                        hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
-                        //
-                        counters = 0;
-                        scoreTemp = 0;
-                        values = 0;
-                        timeSec = 0;
-                        score = 0;
-                        deduction = 0;
-
-                        timeSec = int.Parse(lblTimeQuestion.Text);
-                        score = int.Parse(ltScore.Text);
-                        deduction = int.Parse(hdDeductionTime.Value);
-                        sec = timeSec;
-                        //scoreTemp = score / (timeSec - deduction);
-                        scoreTemp = score / (timeSec);
-                        values = 100 - (100 / timeSec);
-                        TimerQuestion.Enabled = true;
                     }
                     else
                     {
-                        Response.Redirect("QuizSelection.aspx?check=1");
-                        
+                        Response.Write("<script>alert('Your Playable Limit is reached, you cannot play this game for today');</script>");
+                        string jScript = "<script>window.close();</script>";
+                        ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Response.Write("<script>alert('Your Playable Limit is reached, you cannot play this game for today');</script>");
-                    string jScript = "<script>window.close();</script>";
-                    ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
                 }
-
-            //
-            /////////////
-
-
-           
-
-
-
-            // DataTable dt1 = dt.Rows[0];
 
         }
 
