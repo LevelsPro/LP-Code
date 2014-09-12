@@ -99,9 +99,26 @@ namespace LevelsPro.PlayerPanel
                     }
                 }
             }
-
-           // dv.RowFilter = "Distinct QuizID"; // = " + Convert.ToInt32(Session["userid"])
             DataTable dtQuiz = dv_New.ToTable();
+            //For Sorting the DataList, with Mandatory and Non Mandatory Games
+
+            for (int i = 0; i < dtQuiz.Rows.Count; i++) // Placing 1 in the Mandatory Column whenever QuizID matches from ResultSet 3 and 4 of the SP
+            {
+                for (int j = 0; j < dtMandatoryQuizes.Rows.Count; j++)
+                {
+                    if (dtQuiz.Rows[i]["QuizID"].ToString().Equals(dtMandatoryQuizes.Rows[j]["QuizID"].ToString()))
+                    {
+                        dtQuiz.Rows[i]["Mandatory"] = "1";
+                    }
+                }
+            }
+
+            DataView SortdtQuiz = dtQuiz.DefaultView;
+            SortdtQuiz.Sort = "Mandatory DESC";
+            dtQuiz = SortdtQuiz.ToTable();
+                //----------------------------------------------------------------
+
+
 
             dlGame.DataSource = dtQuiz;
             dlGame.DataBind();
@@ -181,6 +198,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void dlGame_ItemDataBound(object sender, DataListItemEventArgs e)
         {
+            
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 Button btn = e.Item.FindControl("btnStartQuiz") as Button;
