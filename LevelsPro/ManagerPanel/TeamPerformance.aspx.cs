@@ -8,6 +8,7 @@ using BusinessLogic.Select;
 using System.Data;
 using LevelsPro.App_Code;
 using System.Configuration;
+using LevelsPro.PlayerPanel;
 
 namespace LevelsPro.ManagerPanel
 {
@@ -138,6 +139,8 @@ namespace LevelsPro.ManagerPanel
                 Label lbllike = e.Item.FindControl("lbllike") as Label;
                 Label lblRemain = e.Item.FindControl("lblRemain") as Label;
                 Label lblBase = e.Item.FindControl("lblBase") as Label;
+                Label lbllevelid = e.Item.FindControl("lbllevelid") as Label;
+                ReuseableItems.PlayerCurrentLevelID_PlayerPanel = Convert.ToInt32(lbllevelid.Text.ToString());
                 //int Likess = Convert.ToInt32(lbllike.Text);
                 int remain=0;
                 int BaseHours=0;

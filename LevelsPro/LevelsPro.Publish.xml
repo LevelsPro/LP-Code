@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="G:\Data_dps\LevelsPro_NewDeployment\Published_9-12-14" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+  <publishProfile publishUrl="G:\Data_dps\LevelsPro_NewDeployment\Published_9-15-14" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="PlayerPanel/Images/congrats-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Images/Match/MatchThumbNails/34af0afa-97f6-4b99-ac8f-e6690ed93143.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/mail-icon.png" publishTime="09/04/2014 18:57:59" />
@@ -243,12 +243,12 @@
     <file relUrl="ManagerPanel/Images/body-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/AssignAwards.aspx" publishTime="09/04/2014 18:57:56" />
     <file relUrl="ManagerPanel/Images/profile-right.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="bin/LevelsPro.pdb" publishTime="09/12/2014 16:48:32" />
+    <file relUrl="bin/LevelsPro.pdb" publishTime="09/15/2014 16:10:12" />
     <file relUrl="PlayerPanel/Images/leve-9.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/4.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/big-bar-ptrn.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/profile-left-1.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="ManagerPanel/TeamPerformance.aspx" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="ManagerPanel/TeamPerformance.aspx" publishTime="09/15/2014 15:57:36" />
     <file relUrl="AdminPanel/Images/avatar.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/play-a-game.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/cards-hand.png" publishTime="09/04/2014 18:57:57" />
@@ -272,7 +272,7 @@
     <file relUrl="ManagerPanel/Images/pic-holder.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Login.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/TargetManagement.aspx" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="bin/LevelsPro.dll" publishTime="09/12/2014 16:48:32" />
+    <file relUrl="bin/LevelsPro.dll" publishTime="09/15/2014 16:10:12" />
     <file relUrl="AdminPanel/Images/c5.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/Match/DataSetThumbNails/d7989dce-a52e-40fb-b431-802630202c6a.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/like-btn.png" publishTime="09/04/2014 18:57:59" />
@@ -399,7 +399,7 @@
     <file relUrl="ManagerPanel/ChangePassword.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/jenny-avatar.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/upload-photo_spanish.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="ManagerPanel/PlayerPerformance.aspx" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="ManagerPanel/PlayerPerformance.aspx" publishTime="09/15/2014 16:10:11" />
     <file relUrl="PlayerPanel/Images/post-on-twitter.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/PlayerManagement.aspx" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/quiz-selection-bg.png" publishTime="09/04/2014 18:57:58" />

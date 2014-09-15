@@ -180,8 +180,37 @@ namespace LevelsPro.ManagerPanel
                 Image1.ImageUrl = Thumbpath + dtcImage1.Rows[0]["Player_Thumbnail"].ToString();
             }
 
-            TeamPerformanceBLL team = new TeamPerformanceBLL();
+
+            TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
             Common.User user = new Common.User();
+
+            user.UserID = userid;
+           user.CurrentLevel= ReuseableItems.PlayerCurrentLevelID_PlayerPanel;
+           // user.CurrentLevel = level;
+            progress.User = user;
+            //user.UserID = Convert.ToInt32(user);
+
+            try
+            {
+                progress.Invoke();
+            }
+            catch (Exception ex)
+            {
+            }
+            if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
+            {
+                if (progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString().Equals("0"))
+                {
+                    dlProgressDetail.DataSource = progress.ResultSet.Tables[0];
+                    dlProgressDetail.DataBind();
+                    // lblPlayerName.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
+                    //lblLevel.Text = Resources.TestSiteResources.Challengesfor + ' ' progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); 
+                    //lblLevel.Text = Resources.TestSiteResources.Challengesfor +' '+ progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); //PlayerName
+                    //lblPlayerName.Text = Resources.TestSiteResources.PlayerName +' '+ progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString(); //PlayerName
+               
+
+            TeamPerformanceBLL team = new TeamPerformanceBLL();
+           // Common.User user = new Common.User();
 
             user.ManagerID = Convert.ToInt32(Session["userid"]);
 
@@ -225,30 +254,26 @@ namespace LevelsPro.ManagerPanel
                 MainColor.Attributes["class"] = "level-cont-" + ds.Rows[0]["PlayerStatus"].ToString().ToLower();
             }
 
-            TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
-           
+                }
+                else
+                {
+                   // progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString();
 
-            user.UserID = userid;
-            user.CurrentLevel = level;
-            progress.User = user;
-            //user.UserID = Convert.ToInt32(user);
 
-            try
-            {
-                progress.Invoke();
-            }
-            catch (Exception ex)
-            {
-            }
-            if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
-            {
-
-                dlProgressDetail.DataSource = progress.ResultSet.Tables[0];
-                dlProgressDetail.DataBind();
-               // lblPlayerName.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
-                //lblLevel.Text = Resources.TestSiteResources.Challengesfor + ' ' progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); 
-                //lblLevel.Text = Resources.TestSiteResources.Challengesfor +' '+ progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); //PlayerName
-                //lblPlayerName.Text = Resources.TestSiteResources.PlayerName +' '+ progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString(); //PlayerName
+                    lblHours.Text = progress.ResultSet.Tables[0].Rows[0]["BaseHours"].ToString();
+                    lblLike.Text = "100 %";
+                    //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
+                    //    dv.RowFilter = "PlayerStatus = 'red'";
+                    lblPlayerName1.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
+                    ReuseableItems.userfullpointsdmanager = Convert.ToInt32(progress.ResultSet.Tables[0].Rows[0]["Points"]);
+                    Session["playernamemanager"] = lblPlayerName1.Text;
+                    lblLevel1.Text = progress.ResultSet.Tables[0].Rows[0]["Role_Name"].ToString() + "- Level " + progress.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString();
+                    //level = Convert.ToInt32(ds.Rows[0]["Level_ID"]);
+                    Session["levelidmanager"] = ReuseableItems.PlayerCurrentLevelID_PlayerPanel;
+                    MainColor.Attributes["class"] = "level-cont-" + "Green".ToLower(); ;
+                    dlProgressDetail.DataSource = null;
+                    dlProgressDetail.DataBind();
+                }
             }
         }
 

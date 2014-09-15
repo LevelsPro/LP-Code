@@ -208,6 +208,7 @@
                                             <asp:Label ID="lbllike" runat="server" Visible="false" Text='<%# Eval("Likelihood")%>'></asp:Label>
                                             <asp:Label ID="lblRemain" runat="server" Visible="false" Text='<%# Eval("remainingHours")%>'></asp:Label>
                                             <asp:Label ID="lblBase" runat="server" Visible="false" Text='<%# Eval("BaseHours")%>'></asp:Label>
+                                                <asp:Label ID="lbllevelid" runat="server" Visible="false" Text='<%# Eval("Level_ID")%>'></asp:Label>
                                             <div class='level-cont-<%# Eval("PlayerStatus").ToString().ToLower() %>'>
                                                 <asp:Image ID="imgPlayer" runat="server" ImageUrl='<%# Eval("Player_Thumbnail").ToString().Trim() != "" ? ConfigurationManager.AppSettings["PlayersThumbPath"].ToString() + Eval("Player_Thumbnail") : "Images/imagesNo.jpeg"  %>'                                                 
                                                     CssClass="lvl-img" Width="75px" Height="75px" />
