@@ -150,56 +150,79 @@ namespace LevelsPro.PlayerPanel
                     }
                     if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
                     {
-                        dlProgressDetail.DataSource = progress.ResultSet.Tables[0];
-                        dlProgressDetail.DataBind();
-                        if (progress.ResultSet.Tables[0].Rows[0]["CurrentlyIn"].ToString() == "")
+                        if (progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString().Equals("0"))
                         {
-                            lblLevelName.Text = Resources.TestSiteResources.InitialStage;
+
+                            dlProgressDetail.DataSource = progress.ResultSet.Tables[0];
+                            dlProgressDetail.DataBind();
+                            if (progress.ResultSet.Tables[0].Rows[0]["CurrentlyIn"].ToString().Equals(""))
+                            {
+                                lblLevelName.Text = Resources.TestSiteResources.InitialStage;
+                            }
+                            else
+                            {
+                                lblLevelName.Text = progress.ResultSet.Tables[0].Rows[0]["CurrentlyIn"].ToString();
+                            }
+                            if (!progress.ResultSet.Tables[0].Rows[0]["Reach"].ToString().Equals(""))
+                            {
+                                lblNextLevelName.Text = progress.ResultSet.Tables[0].Rows[0]["Reach"].ToString();
+                            }
+
+                            if (!progress.ResultSet.Tables[0].Rows[0]["Bonus"].ToString().Equals(""))
+                            {
+                                lblbonus.Text = progress.ResultSet.Tables[0].Rows[0]["Bonus"].ToString();
+                            }
+
+                            if (!progress.ResultSet.Tables[0].Rows[0]["TargetDate"].ToString().Equals(""))
+                            {
+                                lblTargetDate.Text = Convert.ToDateTime(progress.ResultSet.Tables[0].Rows[0]["TargetDate"]).ToString("MMMM dd,yyyy");
+                            }
+                            decimal percentage = 0;
+                            decimal totalPercentage = 0;
+
+                            foreach (DataRow dr in progress.ResultSet.Tables[0].Rows)
+                            {
+                                percentage += Convert.ToDecimal(dr["current_percentage"]);
+                            }
+
+                            totalPercentage = percentage / progress.ResultSet.Tables[0].Rows.Count;
+
+                            lblPerformance.Text = totalPercentage.ToString("0") + "%";
                         }
+
                         else
                         {
-                            lblLevelName.Text = progress.ResultSet.Tables[0].Rows[0]["CurrentlyIn"].ToString();
-                        }
-                        if (progress.ResultSet.Tables[0].Rows[0]["Reach"].ToString() != "")
-                        {
-                            lblNextLevelName.Text = progress.ResultSet.Tables[0].Rows[0]["Reach"].ToString();
-                        }
-                        if (progress.ResultSet.Tables[0].Rows[0]["TargetDate"].ToString() != "")
-                        {
-                            lblTargetDate.Text = Convert.ToDateTime(progress.ResultSet.Tables[0].Rows[0]["TargetDate"]).ToString("MMMM dd,yyyy");
-                        }
-                        if (progress.ResultSet.Tables[0].Rows[0]["Bonus"].ToString() != "")
-                        {
-                            lblbonus.Text = progress.ResultSet.Tables[0].Rows[0]["Bonus"].ToString();
+                            if (progress.ResultSet.Tables[0].Rows[0]["CurrentlyIn"].ToString().Equals(""))
+                            {
+                                lblLevelName.Text = Resources.TestSiteResources.InitialStage;
+                            }
+                            else
+                            {
+                                lblLevelName.Text = progress.ResultSet.Tables[0].Rows[0]["CurrentlyIn"].ToString();
+                            }
+                            if (!progress.ResultSet.Tables[0].Rows[0]["Reach"].ToString().Equals(""))
+                            {
+                                lblNextLevelName.Text = progress.ResultSet.Tables[0].Rows[0]["Reach"].ToString();
+                            }
+
+                            if (!progress.ResultSet.Tables[0].Rows[0]["Bonus"].ToString().Equals(""))
+                            {
+                                lblbonus.Text = progress.ResultSet.Tables[0].Rows[0]["Bonus"].ToString();
+                            }
+
+                            lblPerformance.Text = "0%";
                         }
 
-                        decimal percentage = 0;
-                        decimal totalPercentage = 0;
-
-                        foreach (DataRow dr in progress.ResultSet.Tables[0].Rows)
-                        {
-                            percentage += Convert.ToDecimal(dr["current_percentage"]);
-                        }
-
-                        totalPercentage = percentage / progress.ResultSet.Tables[0].Rows.Count;
-
-                        lblPerformance.Text = totalPercentage.ToString("0")+"%";
                     }
                     else
                     {
                         lblPerformance.Text = "0%";
+                        lblLevel.Text = Resources.TestSiteResources.Level0;
                     }
 
                 }
-                else
-                {
-                    lblPerformance.Text = "0%";
-                    lblLevel.Text = Resources.TestSiteResources.Level0;
-                }
-
             }
         }
-
 
 
         protected void dlProgressDetail_ItemDataBound(object sender, DataListItemEventArgs e)

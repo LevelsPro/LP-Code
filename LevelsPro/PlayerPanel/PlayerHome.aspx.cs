@@ -563,21 +563,27 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
                                 {
-                                    decimal percentage = 0;
-                                    decimal totalPercentage = 0;
-
-                                    foreach (DataRow dr in progress.ResultSet.Tables[0].Rows)
+                                    if (progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString().Equals("0"))
                                     {
-                                        percentage += Convert.ToDecimal(dr["current_percentage"]);
+                                        decimal percentage = 0;
+                                        decimal totalPercentage = 0;
+
+                                        foreach (DataRow dr in progress.ResultSet.Tables[0].Rows)
+                                        {
+                                            percentage += Convert.ToDecimal(dr["current_percentage"]);
+                                        }
+
+                                        totalPercentage = percentage / progress.ResultSet.Tables[0].Rows.Count;
+
+                                        lblPerformance.Text = totalPercentage.ToString("0") + "%";
+                                    }
+                                    else
+                                    {
+                                        lblPerformance.Text = "0%";
                                     }
 
-                                    totalPercentage = percentage / progress.ResultSet.Tables[0].Rows.Count;
-
-                                    lblPerformance.Text = totalPercentage.ToString("0") + "%";
-
-
-                                    #region Commented Old level up Code
-                                    //PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();                                        
+                                        #region Commented Old level up Code
+                                        //PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();                                        
 
                                         //user.UserID = Convert.ToInt32(Session["userid"]);
                                         //user.CurrentLevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["current_level"]);//
@@ -624,11 +630,11 @@ namespace LevelsPro.PlayerPanel
                                         //            Page_Load(null, null);                                                    
                                         //        }
                                         //    }
-                                    //}
+                                        //}
 
-                                    #endregion
+                                        #endregion
 
-                                    #region Display of multiple popups (by Haseeb)
+                                        #region Display of multiple popups (by Haseeb)
 
                                         GetPopupShowed_LevelPerformanceBLL Popup = new GetPopupShowed_LevelPerformanceBLL();
                                         DataSet dSpopUp = new DataSet();
@@ -647,7 +653,7 @@ namespace LevelsPro.PlayerPanel
                                         dVpopUp.RowFilter = "user_id = " + Convert.ToInt32(Session["userid"]) + "And level_achieved = 1 AND popup_showed = 0";
                                         DataTable dTpopUp = dVpopUp.ToTable();
 
-                                       
+
                                         //for (int i = 0; i < dTpopUp.Rows.Count; i++)
                                         //{
                                         if (dTpopUp.Rows.Count > 0)
@@ -695,9 +701,9 @@ namespace LevelsPro.PlayerPanel
                                                 }
                                             }
                                         }
-                                      //  }
+                                        //  }
                                         //}
-                                           
+
 
                                         //if (userlevel.ResultSet.Tables[0].Rows[0]["popup_showed"].ToString().ToLower() == "0")
                                         //{
@@ -705,68 +711,69 @@ namespace LevelsPro.PlayerPanel
                                         //    mpeCongratsMessageDiv.Show();
                                         //}
 
-                                    #endregion
+                                        #endregion
 
 
-                                    #region Commented Old Level up Code
-                                    //        else
-                                    //        {                                        
-                                    //            PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();                                        
+                                        #region Commented Old Level up Code
+                                        //        else
+                                        //        {                                        
+                                        //            PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();                                        
 
-                                    //            user.UserID = Convert.ToInt32(Session["userid"]);
-                                    //            user.CurrentLevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["current_level"]);//
-                                    //            targetprogress.User = user;                                        
+                                        //            user.UserID = Convert.ToInt32(Session["userid"]);
+                                        //            user.CurrentLevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["current_level"]);//
+                                        //            targetprogress.User = user;                                        
 
-                                    //            try
-                                    //            {
-                                    //                targetprogress.Invoke();                                            
-                                    //            }
-                                    //            catch (Exception ex)
-                                    //            {
-                                    //            }
-                                    //            if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
-                                    //            {
-                                    //                foreach (DataRow dr in targetprogress.ResultSet.Tables[0].Rows)
-                                    //                {
-                                    //                    if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString() == "")
-                                    //                    {
-                                    //                        UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                                    //                        Common.User user_targetpoints = new Common.User();
+                                        //            try
+                                        //            {
+                                        //                targetprogress.Invoke();                                            
+                                        //            }
+                                        //            catch (Exception ex)
+                                        //            {
+                                        //            }
+                                        //            if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
+                                        //            {
+                                        //                foreach (DataRow dr in targetprogress.ResultSet.Tables[0].Rows)
+                                        //                {
+                                        //                    if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString() == "")
+                                        //                    {
+                                        //                        UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
+                                        //                        Common.User user_targetpoints = new Common.User();
 
-                                    //                        user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
-                                    //                        user.TargetID = Convert.ToInt32(dr["Target_ID"]);
+                                        //                        user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
+                                        //                        user.TargetID = Convert.ToInt32(dr["Target_ID"]);
 
-                                    //                        popup.User = user;
-                                    //                        try
-                                    //                        {
-                                    //                            popup.Invoke();
-                                    //                        }
-                                    //                        catch (Exception ex)
-                                    //                        {
-                                    //                        }
+                                        //                        popup.User = user;
+                                        //                        try
+                                        //                        {
+                                        //                            popup.Invoke();
+                                        //                        }
+                                        //                        catch (Exception ex)
+                                        //                        {
+                                        //                        }
 
-                                    //                        if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
-                                    //                        {
-                                    //                            Session["U_Points"] = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
-                                    //                        }
-                                    //                        else
-                                    //                        {
-                                    //                            Session["U_Points"] = dr["Points"].ToString();
-                                    //                        }
+                                        //                        if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
+                                        //                        {
+                                        //                            Session["U_Points"] = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
+                                        //                        }
+                                        //                        else
+                                        //                        {
+                                        //                            Session["U_Points"] = dr["Points"].ToString();
+                                        //                        }
 
-                                    //                        Page_Load(null, null);                                                    
-                                    //                    }
-                                    //                }
-                                    //            }
-                                    //        }
+                                        //                        Page_Load(null, null);                                                    
+                                        //                    }
+                                        //                }
+                                        //            }
+                                        //        }
 
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        lblPerformance.Text = "0%";
-                                    //    }
-                                    #endregion
-                                }
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        lblPerformance.Text = "0%";
+                                        //    }
+                                        #endregion
+                                    }
+                                
 
                             }
                             else
