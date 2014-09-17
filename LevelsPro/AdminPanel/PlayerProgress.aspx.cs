@@ -373,7 +373,7 @@ namespace LevelsPro.AdminPanel
                             {
                                 foreach (DataRow dr in targetprogress.ResultSet.Tables[0].Rows)
                                 {
-                                    if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString() == "")
+                                    if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString().Equals(""))
                                     {
 
                                         UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
@@ -391,7 +391,7 @@ namespace LevelsPro.AdminPanel
                                         {
                                         }
 
-                                        if (UserPoints != null && UserPoints != "")
+                                        if (UserPoints != null && !UserPoints.Equals(""))
                                         {
                                             UserPoints = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
                                         }
@@ -420,7 +420,7 @@ namespace LevelsPro.AdminPanel
                                 {
                                 }
 
-                                if (UserPoints != null && UserPoints != "")
+                                if (UserPoints != null && !UserPoints.Equals(""))
                                 {
                                     UserPoints = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["Bonus"].ToString())).ToString();
                                 }

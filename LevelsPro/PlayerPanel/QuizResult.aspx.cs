@@ -65,11 +65,26 @@ namespace LevelsPro.PlayerPanel
         }
         protected void btnHome_Click(object sender, System.EventArgs e)
         {
-            Response.Redirect("PlayerHome.aspx");
+            if ((Session["TipsLinkage"] != null || Session["TipsLinkage"] != "") && Session["TipsLinkage"].Equals("true"))
+            {
+                string jScript = "<script>window.close();</script>";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
+            }
+            else
+            {
+                Response.Redirect("PlayerHome.aspx");
+            }
         }
 
         protected void btnLogout_Click(object sender, System.EventArgs e)
         {
+            if ((Session["TipsLinkage"] != null || Session["TipsLinkage"] != "") && Session["TipsLinkage"].Equals("true"))
+            {
+                string jScript = "<script>window.close();</script>";
+                  ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
+            }
+            else
+            {
             LoginUpdateBLL loginuser = new LoginUpdateBLL();
             Common.User user = new Common.User();
             user.UserID = Convert.ToInt32(Session["userid"]);
@@ -83,6 +98,7 @@ namespace LevelsPro.PlayerPanel
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
+            }
         }
 
         protected void dlResult_ItemDataBound(object sender, DataListItemEventArgs e)
@@ -103,7 +119,15 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnDone_Click(object sender, EventArgs e)
         {
-            Response.Redirect("QuizSelection.aspx");
+            if (Session["TipsLinkage"] != null && Session["TipsLinkage"].Equals("true"))
+            {
+                string jScript = "<script>window.close();</script>";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
+            }
+            else
+            {
+                Response.Redirect("QuizSelection.aspx");
+            }
         }
     }
 }

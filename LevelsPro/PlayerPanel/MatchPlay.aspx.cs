@@ -685,7 +685,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             foreach (DataRow dr in targetprogress.ResultSet.Tables[0].Rows)
                             {
-                                if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString() == "")
+                                if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString().Equals(""))
                                 {
 
                                     UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();

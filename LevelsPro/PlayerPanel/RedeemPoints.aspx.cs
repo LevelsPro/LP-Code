@@ -50,13 +50,24 @@ namespace LevelsPro.PlayerPanel
             //}
             if (!IsPostBack)
             {
+
+
                 if (Session["userid"] != null && Session["userid"].ToString() != "")
                 {
                     lblName.Text = Session["displayname"].ToString() + " - " + Resources.TestSiteResources.RedeemPoints;
                     ViewProfile.LoadData();
                 }
 
+
+
                 LoadData();
+
+                if (Session["Redeemed"] != null && Session["Redeemed"].Equals(1))
+                {
+                    Session["Redeemed"] = 0;
+                    Response.Write("<script>alert('Congratulations, you have redeem a reward " + Session["RedeemedRewardName"].ToString() + " ');</script>");
+
+                }
             }
         }
 
@@ -346,6 +357,9 @@ namespace LevelsPro.PlayerPanel
 
 
             }
+
+            Session["RedeemedRewardName"] = lblReward.Text;
+            Session["Redeemed"] = 1;
 
             if (Session["ManagerEmail"] != null && Session["ManagerEmail"].ToString() != "")
             {

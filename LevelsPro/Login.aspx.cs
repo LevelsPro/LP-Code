@@ -153,6 +153,7 @@ namespace LevelsPro
                 }
                 Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                 Session["rolename"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
+                Session["TipsLinkage"] ="false";
                // Session["Role_ID"] = ds.Tables[0].Rows[0]["Role_ID"];
                 Session["UserRoleID"] = ds.Tables[0].Rows[0]["U_RolesID"];
                 Session["role"] = Sysrole;

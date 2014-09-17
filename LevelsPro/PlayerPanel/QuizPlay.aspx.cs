@@ -1389,24 +1389,40 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnHome_Click(object sender, System.EventArgs e)
         {
-            Response.Redirect("PlayerHome.aspx");
+            if ((Session["TipsLinkage"] != null || Session["TipsLinkage"] != "") && Session["TipsLinkage"].Equals("true"))
+            {
+                string jScript = "<script>window.close();</script>";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
+            }
+            else
+            {
+                Response.Redirect("PlayerHome.aspx");
+            }
         }
 
         protected void btnLogout_Click(object sender, System.EventArgs e)
         {
-            LoginUpdateBLL loginuser = new LoginUpdateBLL();
-            User user = new User();
-            user.UserID = Convert.ToInt32(Session["userid"]);
-            loginuser.Users = user;
-            try
+            if ((Session["TipsLinkage"] != null || Session["TipsLinkage"] != "") && Session["TipsLinkage"].Equals("true"))
             {
-                loginuser.Invoke();
+                string jScript = "<script>window.close();</script>";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
             }
-            catch (Exception ex)
+            else
             {
+                LoginUpdateBLL loginuser = new LoginUpdateBLL();
+                User user = new User();
+                user.UserID = Convert.ToInt32(Session["userid"]);
+                loginuser.Users = user;
+                try
+                {
+                    loginuser.Invoke();
+                }
+                catch (Exception ex)
+                {
+                }
+                Session.Abandon();
+                Response.Redirect("~/Index.aspx");
             }
-            Session.Abandon();
-            Response.Redirect("~/Index.aspx");
         }
 
         protected void btnNext_Click(object sender, EventArgs e)

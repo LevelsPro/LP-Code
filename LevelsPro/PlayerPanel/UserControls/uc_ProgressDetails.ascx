@@ -17,6 +17,7 @@
             <h2><asp:Label ID="lblheading" runat="server"></asp:Label>
                 <%--Process 20 credit card applications--%></h2>
             <p id="pdesc" runat="server">
+            <asp:Label ID="lbldesc" runat="server" Text="" ></asp:Label>
               <%--  Getting customers to use our own “AcmeCard” is a great way to build loyalty and
                 to increase customer spend. Whenever you are serving a customer, don’t forget to
                 ask them “Will this be on your AcmeCard today?”. If they say no, remind them that

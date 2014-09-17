@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="G:\Data_dps\LevelsPro_NewDeployment\Published_9-15-14" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+  <publishProfile publishUrl="G:\Data_dps\LevelsPro_NewDeployment\Published_9-17-14" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="PlayerPanel/Images/congrats-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Images/Match/MatchThumbNails/34af0afa-97f6-4b99-ac8f-e6690ed93143.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/mail-icon.png" publishTime="09/04/2014 18:57:59" />
@@ -21,12 +21,14 @@
     <file relUrl="AdminPanel/Images/question-img-1.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/ProgressDetails.aspx" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Styles/uniform.default.css" publishTime="09/04/2014 18:58:00" />
+    <file relUrl="PlayerPanel/Images/c4.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="ManagerPanel/Scripts/canvas-draw.js" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/jquery-ui/ui-bg_diagonals-thick_20_666666_40x40.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="ManagerPanel/ManagerProfile.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/admin-4.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="PlayerPanel/UserControls/uc_ProgressDetails.ascx" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="PlayerPanel/UserControls/uc_ProgressDetails.ascx" publishTime="09/17/2014 12:36:47" />
     <file relUrl="PlayerPanel/Images/c3.png" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="ErrorPage404.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/2.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/leve-15.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/3.png" publishTime="09/04/2014 18:57:58" />
@@ -40,7 +42,7 @@
     <file relUrl="PlayerPanel/Images/profile-right-1.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/pic-holder.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/tick-icon.png" publishTime="09/04/2014 18:57:57" />
-    <file relUrl="Images/Match/DataSetImages/b59f0f76-5be7-4412-be2f-9b6d36b46dd4.jpg" publishTime="09/10/2014 13:37:55" />
+    <file relUrl="PlayerPanel/QuizPlay.aspx" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Images/Match/DataSetImages/69391731-6084-4599-8b64-9faa3319839b.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/quiz-cross.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/star_yellow_2.png" publishTime="09/04/2014 18:57:59" />
@@ -51,7 +53,6 @@
     <file relUrl="ManagerPanel/Images/rank-2.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/avatar-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Styles/uniform.default.css" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="AdminPanel/Images/star_yellow_3.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Styles/horizontal-website.css" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/play-a-game.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="ManagerPanel/Images/c1.png" publishTime="09/04/2014 18:57:58" />
@@ -65,13 +66,12 @@
     <file relUrl="PlayerPanel/Images/star_yellow_7.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/ContestManagement.aspx" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/next-bg.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="ManagerPanel/Images/qbtns-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/arrow-right-grey.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/ChangePassword.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/tick-icon.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/arrow-spr-right.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/rank-3.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="AdminPanel/Images/mail-icon.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="AdminPanel/Images/star.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/preferred-parking.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="ManagerPanel/Images/slide-circle.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/filled-pbg.png" publishTime="09/04/2014 18:57:58" />
@@ -112,8 +112,8 @@
     <file relUrl="PlayerPanel/Images/next-question.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/4.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/points-bg.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="bin/Common.dll" publishTime="09/12/2014 16:48:16" />
-    <file relUrl="AdminPanel/Administrator.master" publishTime="09/04/2014 18:57:56" />
+    <file relUrl="bin/Common.dll" publishTime="09/16/2014 22:39:49" />
+    <file relUrl="AdminPanel/Administrator.master" publishTime="09/17/2014 13:14:59" />
     <file relUrl="PlayerPanel/Images/green-right.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Scripts/fontResizer.js" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/leve-5.png" publishTime="09/04/2014 18:57:59" />
@@ -126,7 +126,7 @@
     <file relUrl="PlayerPanel/Images/placeholder.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/bg-scrollbar-trackend-x.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/Fb.jpeg" publishTime="09/04/2014 18:57:57" />
-    <file relUrl="AdminPanel/Images/rank-1.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="AdminPanel/Images/admin-3.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/logo.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/confirm-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/star_yellow_8.png" publishTime="09/04/2014 18:57:57" />
@@ -159,15 +159,14 @@
     <file relUrl="PlayerPanel/Images/first-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/popup-main-bg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/2.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="PlayerPanel/Images/5percent.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Scripts/jquery.tinyscrollbar.min.js" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/PlayerProfile.aspx" publishTime="09/10/2014 13:37:53" />
     <file relUrl="AdminPanel/EditPlayer.aspx" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/urcombobg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Scripts/jquery.tinyscrollbar.min.js" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="bin/DataAccess.pdb" publishTime="09/12/2014 16:48:22" />
-    <file relUrl="PlayerPanel/Images/upload-photo.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="AdminPanel/Images/star.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="bin/DataAccess.pdb" publishTime="09/16/2014 22:39:49" />
+    <file relUrl="ManagerPanel/Images/logo.png" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="AdminPanel/Images/rank-1.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/ViewAwards.aspx" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/map.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Images/qq-right-bg.png" publishTime="09/04/2014 18:57:58" />
@@ -243,7 +242,7 @@
     <file relUrl="ManagerPanel/Images/body-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/AssignAwards.aspx" publishTime="09/04/2014 18:57:56" />
     <file relUrl="ManagerPanel/Images/profile-right.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="bin/LevelsPro.pdb" publishTime="09/15/2014 16:10:12" />
+    <file relUrl="bin/LevelsPro.pdb" publishTime="09/17/2014 13:02:07" />
     <file relUrl="PlayerPanel/Images/leve-9.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/4.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/big-bar-ptrn.png" publishTime="09/04/2014 18:57:58" />
@@ -272,17 +271,16 @@
     <file relUrl="ManagerPanel/Images/pic-holder.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Login.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/TargetManagement.aspx" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="bin/LevelsPro.dll" publishTime="09/15/2014 16:10:12" />
+    <file relUrl="bin/LevelsPro.dll" publishTime="09/17/2014 13:02:07" />
     <file relUrl="AdminPanel/Images/c5.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/Match/DataSetThumbNails/d7989dce-a52e-40fb-b431-802630202c6a.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/like-btn.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/previous-bg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/Match/DataSetImages/7f397b69-d6d3-488e-aa40-b7942d01594e.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="Styles/admin-theme.css" publishTime="09/04/2014 18:58:00" />
-    <file relUrl="Web.config" publishTime="09/12/2014 16:48:50" />
+    <file relUrl="Web.config" publishTime="09/16/2014 22:53:41" />
     <file relUrl="ManagerPanel/Images/rank-3.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/ts-canvas.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="Images/Match/MatchThumbNails/451983d6-869f-4b90-a85c-ee4e269bfff7.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/awards.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/acme-inc.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/fr-img-3.png" publishTime="09/04/2014 18:57:59" />
@@ -292,7 +290,7 @@
     <file relUrl="PlayerPanel/Images/qbody.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="ManagerPanel/Scripts/jquery.tinyscrollbar.min.js" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/mail-icon.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="AdminPanel/Images/star-orng.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="Images/qbtns-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="App_GlobalResources/TestSiteResources.en-US.resx" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/star_yellow_2.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/jquery-ui/ui-icons_ef8c08_256x240.png" publishTime="09/10/2014 13:37:55" />
@@ -305,7 +303,6 @@
     <file relUrl="PlayerPanel/Images/bg-scrollbar-trackend-y.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="ManagerPanel/Styles/theme.css" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Scripts/jquery.min.js" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="AdminPanel/Images/admin-3.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/green-right.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/Match/MatchImages/1c14e2d7-b400-44f0-90a9-8c915f38a7b8.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Web.config" publishTime="09/04/2014 18:57:58" />
@@ -329,6 +326,7 @@
     <file relUrl="Images/dots.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/jquery-ui/ui-bg_highlight-soft_75_ffe45c_1x100.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="ManagerPanel/Images/big-bar-right.png" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="PlayerPanel/Styles/uniform.default.css" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/et1.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/jquery-ui/ui-icons_228ef1_256x240.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/sold-1$M.png" publishTime="09/04/2014 18:57:57" />
@@ -381,6 +379,7 @@
     <file relUrl="ManagerPanel/Images/et5.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/Match/DataSetThumbNails/13d571c9-5a67-4578-9931-04672c6d84e4.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/qbtns-yellow-bg.png" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="PlayerPanel/Images/arrow-right-grey.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/slide-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/star_yellow_8.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/question-img-1.png" publishTime="09/04/2014 18:57:59" />
@@ -439,8 +438,7 @@
     <file relUrl="PlayerPanel/ViewContestAwards.aspx" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/lock-transparent.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/points-lock-bg.png" publishTime="09/04/2014 18:57:57" />
-    <file relUrl="Images/qbtns-bg.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="ManagerPanel/Images/logo.png" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="AdminPanel/Images/star_yellow_3.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/Match/DataSetThumbNails/7008303e-e34d-4ad6-b60e-5576d51de1c1.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="ManagerPanel/UserControls/uc_AssignAwards.ascx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/logo.png" publishTime="09/04/2014 18:57:58" />
@@ -491,13 +489,14 @@
     <file relUrl="SessionExpired.aspx" publishTime="09/04/2014 18:58:00" />
     <file relUrl="AdminPanel/SiteManagement.aspx" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/ok-qg.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="PlayerPanel/Images/arrow-right-grey.png" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="AdminPanel/Images/cm-bg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/Match/DataSetThumbNails/5aa30479-56ea-44de-ae4d-9bb4fcea649f.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/upload-photo_french.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/ok-qg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/Match/DataSetImages/1a022874-fa3d-4fbe-b3fe-c23c6daad601.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="ManagerPanel/Images/star-small.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/previous-bg.png" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="Images/Match/DataSetImages/b59f0f76-5be7-4412-be2f-9b6d36b46dd4.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="ManagerPanel/Images/green-left.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/et2.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/dots.png" publishTime="09/04/2014 18:57:58" />
@@ -514,6 +513,8 @@
     <file relUrl="PlayerPanel/UserControls/uc_Contests.ascx" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Images/Match/DataSetImages/f1bd7287-2772-4200-8172-72ba1d22febc.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/preferred-parking.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="AdminPanel/Images/star-orng.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="PlayerPanel/Images/upload-photo.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/sprite.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/star_yellow_4.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/map.png" publishTime="09/04/2014 18:57:57" />
@@ -523,8 +524,7 @@
     <file relUrl="Images/profile-left.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/forgot-pw.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/body-bg.png" publishTime="09/04/2014 18:57:57" />
-    <file relUrl="bin/BusinessLogic.pdb" publishTime="09/12/2014 16:48:25" />
-    <file relUrl="AdminPanel/Images/cm-bg.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="bin/BusinessLogic.pdb" publishTime="09/16/2014 22:39:50" />
     <file relUrl="ManagerPanel/Scripts/test-function.js" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/Match/DataSetImages/c6dc9735-0d89-4d60-bdbc-11987000de7a.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="ManagerPanel/Images/ten-dollar.png" publishTime="09/04/2014 18:57:58" />
@@ -556,8 +556,8 @@
     <file relUrl="Images/bg-scrollbar-track-y.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/APIExportSheet.aspx" publishTime="09/04/2014 18:57:56" />
     <file relUrl="Images/Match/DataSetThumbNails/f1bd7287-2772-4200-8172-72ba1d22febc.jpg" publishTime="09/10/2014 13:37:55" />
-    <file relUrl="bin/BusinessLogic.dll" publishTime="09/12/2014 16:48:25" />
-    <file relUrl="ErrorPage404.aspx" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="bin/BusinessLogic.dll" publishTime="09/16/2014 22:39:50" />
+    <file relUrl="PlayerPanel/Images/jquery-ui/ui-bg_glass_100_f6f6f6_1x400.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/visit-forums.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/et3.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/ts-canvas.png" publishTime="09/04/2014 18:57:58" />
@@ -651,7 +651,6 @@
     <file relUrl="ManagerPanel/Images/like-btn.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Unauthorized.aspx" publishTime="09/04/2014 18:58:00" />
     <file relUrl="AdminPanel/RewardManagement.aspx" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="AdminPanel/Images/sa-left.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/last-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/level-3.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="App_GlobalResources/TestSiteResources.fr-FR.resx" publishTime="09/10/2014 13:37:55" />
@@ -686,7 +685,7 @@
     <file relUrl="AdminPanel/DataSetManagement.aspx" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/worked-1year.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="PlayerPanel/Images/right-arrow.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="bin/DataAccess.dll" publishTime="09/12/2014 16:48:22" />
+    <file relUrl="bin/DataAccess.dll" publishTime="09/16/2014 22:39:50" />
     <file relUrl="PlayerPanel/Images/ts-canvas.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="Images/Match/DataSetImages/8a1b9c55-7c70-41fe-8854-27c8916fef5e.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="PlayerPanel/Images/c2.png" publishTime="09/04/2014 18:57:59" />
@@ -711,12 +710,12 @@
     <file relUrl="ManagerPanel/Images/banner-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/like-btn.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/admin-1.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="PlayerPanel/QuizPlay.aspx" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="PlayerPanel/Images/5percent.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/RedeemPoints.aspx" publishTime="09/12/2014 11:42:44" />
     <file relUrl="AdminPanel/Images/arrow-left.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Styles/theme-2.css" publishTime="09/04/2014 18:58:00" />
     <file relUrl="ManagerPanel/Images/last-bg.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="bin/Common.pdb" publishTime="09/12/2014 16:48:15" />
+    <file relUrl="bin/Common.pdb" publishTime="09/16/2014 22:39:49" />
     <file relUrl="AdminPanel/DataSetEdit.aspx" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/LevelManagements.aspx" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/popup-main-bg.png" publishTime="09/04/2014 18:57:58" />
@@ -733,7 +732,7 @@
     <file relUrl="Images/previous-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/arrow-gr-down.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/leve-7.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="PlayerPanel/Styles/uniform.default.css" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="ManagerPanel/Images/jenny-2.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/del-img.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="AdminPanel/Images/qbtns-bg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Scripts/test-function.js" publishTime="09/04/2014 18:58:00" />
@@ -750,6 +749,7 @@
     <file relUrl="ManagerPanel/Images/welcome-abroad.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/imagesNo.jpeg" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/btns-bg.png" publishTime="09/04/2014 18:57:57" />
+    <file relUrl="AdminPanel/Images/mail-icon.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/Fb.jpeg" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/Images/up-arrow.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/upload-photo.png" publishTime="09/04/2014 18:57:58" />
@@ -778,7 +778,7 @@
     <file relUrl="PlayerPanel/Images/qbtns-correct-bg.png" publishTime="09/04/2014 18:57:59" />
     <file relUrl="ManagerPanel/Images/jay-l.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="Images/green-left.png" publishTime="09/04/2014 18:57:58" />
-    <file relUrl="PlayerPanel/Images/jquery-ui/ui-bg_glass_100_f6f6f6_1x400.png" publishTime="09/10/2014 13:37:55" />
+    <file relUrl="Images/Match/MatchThumbNails/451983d6-869f-4b90-a85c-ee4e269bfff7.png" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/title-bg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="AdminPanel/Images/alert.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/Images/et3.png" publishTime="09/04/2014 18:57:59" />
@@ -797,7 +797,7 @@
     <file relUrl="AdminPanel/Images/points-red-bg.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="ManagerPanel/Images/points-bg.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="PlayerPanel/Images/sa-right.png" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="ManagerPanel/Images/jenny-2.png" publishTime="09/04/2014 18:57:58" />
+    <file relUrl="AdminPanel/Images/sa-left.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="Images/banner-bg-2.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="ManagerPanel/Images/close.png" publishTime="09/04/2014 18:57:58" />
     <file relUrl="AdminPanel/RewardEdit.aspx" publishTime="09/04/2014 18:57:58" />
@@ -845,6 +845,6 @@
     <file relUrl="Images/Match/DataSetThumbNails/e234fc3e-0b38-4532-9ce4-6e96f1c2a1d0.jpg" publishTime="09/10/2014 13:37:55" />
     <file relUrl="AdminPanel/Images/fl-right.png" publishTime="09/04/2014 18:57:57" />
     <file relUrl="PlayerPanel/UserControls/uc_Congratulations.ascx" publishTime="09/04/2014 18:57:59" />
-    <file relUrl="PlayerPanel/Images/c4.png" publishTime="09/04/2014 18:57:59" />
+    <file relUrl="ManagerPanel/Images/qbtns-bg.png" publishTime="09/04/2014 18:57:58" />
   </publishProfile>
 </publishData>
