@@ -463,7 +463,7 @@
                                         </LayoutTemplate>
                                         <ItemTemplate>
                                             <li>
-                                                <asp:Image ID="imgDataSet" dataid='<%# Eval("DataSetID")%>' datarel='<%# Eval("DataSetElementsData").ToString().Trim()%>' ImageUrl='<%# Eval("DataSetImageThumbnail").ToString().Trim() != "" ?  "../" + ConfigurationSettings.AppSettings["DataSetThumbPath"].ToString() + Eval("DataSetImageThumbnail") :"Images/placeholder.png" %>' Width="73" Height="72" CssClass="fl" runat="server" />
+                                                <asp:Image ID="imgDataSet" dataid='<%# Eval("DataSetID")%>' datarel='<%# Eval("DataSetElementsData").ToString().Trim()%>' ImageUrl='<%# Eval("DataSetImageThumbnail").ToString().Trim() != "" ?  "../" + ConfigurationSettings.AppSettings["DataSetThumbPath"].ToString() + Eval("DataSetImageThumbnail") :"Images/placeholder.png" %>' CssClass="fl" runat="server" />
                                             </li>
                                         </ItemTemplate>
                                         <EmptyDataTemplate>
