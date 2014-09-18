@@ -298,8 +298,8 @@
     <Content Include="AdminPanel\UserControls\uc_TipsTricks.ascx" />
     <Content Include="AdminPanel\WelcomeAdmin.aspx" />
     <Content Include="AdminPanel\EditPlayer.aspx" />
-    <Content Include="ErrorPage.aspx" />
-    <Content Include="ErrorPage404.aspx" />
+    <Content Include="ErrorPages\DefaultErrorPage.aspx" />
+    <Content Include="ErrorPages\ErrorPage404.aspx" />
     <Content Include="Images\acme-inc.png" />
     <Content Include="Images\banner-bg-2.png" />
     <Content Include="Images\banner-bg.png" />
@@ -313,6 +313,9 @@
     <Content Include="Images\cm-bg.png" />
     <Content Include="Images\dots.png" />
     <Content Include="Images\down-arrow.png" />
+    <Content Include="Images\Errors\404Image.png" />
+    <Content Include="Images\Errors\Default-PowerCon.png" />
+    <Content Include="Images\Errors\DefaultError.png" />
     <Content Include="Images\filled-bg.png" />
     <Content Include="Images\first-bg.png" />
     <Content Include="Images\fl-left.png" />
@@ -813,8 +816,6 @@
     <Content Include="PlayerPanel\Messages.aspx" />
     <Content Include="PlayerPanel\PlayerForums.aspx" />
     <Content Include="PlayerPanel\PlayerHome.aspx" />
-    <Content Include="PlayerPanel\ErrorPage.aspx" />
-    <Content Include="PlayerPanel\ErrorPage404.aspx" />
     <Content Include="PlayerPanel\PlayerProfile.aspx" />
     <Content Include="PlayerPanel\ProgressDetails.aspx" />
     <Content Include="PlayerPanel\QuizPlay.aspx" />
@@ -878,6 +879,8 @@
     <Content Include="SessionExpired.aspx" />
     <Content Include="Styles\admin-theme.css" />
     <Content Include="Styles\admin-website.css" />
+    <Content Include="Styles\Def-Error-Style.css" />
+    <Content Include="Styles\Error-404-Style.css" />
     <Content Include="Styles\horizontal-website.css" />
     <Content Include="Styles\lightbox.css" />
     <Content Include="Styles\Site.css" />
@@ -1238,18 +1241,25 @@
     <Compile Include="AdminPanel\EditPlayer.aspx.designer.cs">
       <DependentUpon>EditPlayer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ErrorPage.aspx.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    <Compile Include="ErrorPages\DefaultErrorPage.aspx.cs">
+      <DependentUpon>DefaultErrorPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ErrorPage.aspx.designer.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    <Compile Include="ErrorPages\DefaultErrorPage.aspx.designer.cs">
+      <DependentUpon>DefaultErrorPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ErrorPage404.aspx.cs">
+    <Compile Include="ErrorPages\Error.Master.cs">
+      <DependentUpon>Error.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPages\Error.Master.designer.cs">
+      <DependentUpon>Error.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPages\ErrorPage404.aspx.cs">
       <DependentUpon>ErrorPage404.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ErrorPage404.aspx.designer.cs">
+    <Compile Include="ErrorPages\ErrorPage404.aspx.designer.cs">
       <DependentUpon>ErrorPage404.aspx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
@@ -1466,20 +1476,6 @@
     </Compile>
     <Compile Include="PlayerPanel\PlayerHome.aspx.designer.cs">
       <DependentUpon>PlayerHome.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PlayerPanel\ErrorPage.aspx.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PlayerPanel\ErrorPage.aspx.designer.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PlayerPanel\ErrorPage404.aspx.cs">
-      <DependentUpon>ErrorPage404.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PlayerPanel\ErrorPage404.aspx.designer.cs">
-      <DependentUpon>ErrorPage404.aspx</DependentUpon>
     </Compile>
     <Compile Include="PlayerPanel\Player.master.cs">
       <DependentUpon>Player.master</DependentUpon>
@@ -1734,6 +1730,7 @@
     <Compile Include="UserControls\uc_SetPassword.ascx.designer.cs">
       <DependentUpon>uc_SetPassword.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Util\ExceptionUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminPanel\Reports\" />
@@ -1817,6 +1814,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ErrorPages\Error.Master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

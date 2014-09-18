@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LevelsPro.Player {
+namespace LevelsPro.ErrorPages {
     
     
-    public partial class ErrorPage {
+    public partial class ErrorPage404 {
     }
 }

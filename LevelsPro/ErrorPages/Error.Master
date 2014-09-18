@@ -1,0 +1,38 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Error.master.cs" Inherits="LevelsPro.ErrorPages.Error" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../Styles/admin-theme.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/admin-website.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="top-banner">
+        <div class="logo">
+            <img src="../images/logo.png" />
+        </div>
+        <div class="banner">
+            <div class="txt1">
+                Acme Inc.
+            </div>
+            <div class="txt2">
+                Around the World
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+       </div>
+<asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <form id="form1" runat="server">
+  
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

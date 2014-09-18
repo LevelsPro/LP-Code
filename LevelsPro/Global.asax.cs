@@ -25,11 +25,26 @@ namespace LevelsPro
 
         }
 
-        void Application_Error(object sender, EventArgs e)
-        {
-            // Code that runs when an unhandled error occurs
-
-        }
+        //void Application_Error(object sender, EventArgs e)
+        //{
+            
+        //    Exception exp = Server.GetLastError();
+        //    if (exp is HttpUnhandledException)
+        //    {
+        //        HttpUnhandledException exc = exp as HttpUnhandledException;
+        //        if (exc.Message.Contains("404"))
+        //        {
+        //            Server.Transfer("~/ErrorPages/ErrorPage404.aspx", true);
+        //        }
+        //        else
+        //        {
+        //            Server.Transfer("~/ErrorPages/DefaultErrorPage.aspx", true);
+        //        }
+        //    }
+        //    else if (exp.Message.Contains("File"))
+        //    { }
+        //    Server.ClearError();
+        //}
 
         void Session_Start(object sender, EventArgs e)
         {

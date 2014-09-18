@@ -1,0 +1,330 @@
+/*=====================================================================================
+  Name:       Blackmoon
+  Started:    July 22, 2011
+=======================================================================================*/
+
+
+
+/*=====================================================================================
+======================================= STARTER =======================================
+=======================================================================================
+  Reset
+=======================================================================================*/
+a, abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p, pre, q, samp, section, small, span, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, ul, var, video { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; }
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary { display: block; }
+a, ins, del { text-decoration: none; }
+blockquote, q { quotes:none; }
+ul, ol { list-style: none; }
+table { border-spacing: 0; border-collapse: collapse; }
+caption, th { text-align: left; }
+blockquote:before, blockquote:after, q:after, q:before { content: ""; }
+/*=====================================================================================
+  Basic Styles
+=======================================================================================*/
+html, body { height: 100%; overflow: hidden; }
+#pagewrap { height: 100%; overflow: auto; position: relative; z-index: 2; }
+body { background: #caaf90; color: #4f3a23; font-family: "Lucida Granda", "Lucida Sans Unicode", "Helvetica", "Arial", sans-serif; font-size: 12px; text-shadow: 0 1px 1px rgba(255,255,255,0.1); overflow-x: hidden; }
+.error404 { background-image: none; }
+hr { display: none; }
+b, strong { font-weight: bold; }
+em { font-style: italic; }
+del { text-decoration: line-through; }
+address, cite, dfn { font-style: normal; }
+abbr, acronym { border-bottom: 1px dotted #999; cursor: help; }
+input, textarea, select { font-family: "Lucida Granda", "Lucida Sans Unicode", "Helvetica", "Arial", sans-serif; font-size: 12px; }
+label { cursor: pointer; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+img { -ms-interpolation-mode: bicubic; vertical-align: middle; }
+a, a:visited { color: #cb4b04; text-decoration: none; font-weight: bold; border-bottom: 1px dotted #b69985; }
+a:hover, a:active { color: #ffea00; outline: 0; background: #b69985; border-bottom: 0;  }
+p { line-height: 16px; }
+::-moz-selection { background: #ffea00; color: #000; text-shadow: none; }
+::selection { background: #ffea00; color: #000; text-shadow: none; }
+@font-face {
+	font-family: 'OliJoRegular';
+	src: url('../fonts/olijo-bold-webfont.eot');
+	src: url('../fonts/olijo-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/olijo-bold-webfont.woff') format('woff'),
+		url('../fonts/olijo-bold-webfont.ttf') format('truetype'),
+		url('../fonts/olijo-bold-webfont.svg#OliJoRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+h2,
+#sidebar h3,
+.page-title,
+.subheader { font-weight: normal; font-family: "OliJoRegular", "Georgia", "Times", "Times New Roman", serif; color: #9c4628; margin-bottom: 7px; font-size: 21px; }
+#games h2 { margin-left: -1px;  }
+.page-title { margin-bottom: 15px; border-bottom: 1px solid #d2b6a3; padding-bottom: 5px; font-size: 28px; }
+h2 strong { display: block; font-size: 31px; font-weight: normal; line-height: 45px; }
+/*=====================================================================================
+  Accessibility
+=======================================================================================*/
+.accessibility { position: absolute; top: -999em; left: -999em; height: 1px; width: 1px; }
+/*=====================================================================================
+  Clearfix
+=======================================================================================*/
+.cols:after,
+.post header:after,
+.game .buttons:after,
+#footer:after,
+.comment:after,
+.people:after,
+.inner-wrapper:after,
+.post-text:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; font-size: 0; }
+
+
+
+/*=====================================================================================
+======================================= STYLING =======================================
+=======================================================================================
+  Layout
+=======================================================================================*/
+.container { width: 758px; margin: 0 auto; position: relative; z-index: 4; }
+#header { height: 244px; position: relative; width: 100%; }
+.wrapper { position: relative; padding: 16px 20px 20px 20px; background: url(../images/bg-wrapper.png) left top repeat-y; width: 718px; }
+body.home .wrapper { display: none; }
+	.wrapper .top { background: url(../images/border-wrapper.png) left top no-repeat; position: absolute; top: -8px; left: 4px; width: 758px; height: 8px; }
+	.wrapper .bottom { background: url(../images/border-wrapper.png) left bottom no-repeat; position: absolute; bottom: -8px; left: 4px; width: 758px; height: 8px; }
+#content {}
+.two-column { float: left; display: inline; width: 426px; margin-left: 10px; }
+#sidebar { float: right; display: inline; width: 231px; }
+	.left-one { float: left !important; }
+	.right-one { float: right; margin-left: 0; width: 470px;  }
+#footer { clear: both; margin: 8px 8px 8px 8px; height: 60px; }
+body.home #footer { display: none; }
+
+.inner-wrapper { width: 982px; margin: 0 auto; }
+
+#parallax { position: absolute; overflow: hidden; width: 2800px; height: 942px; z-index: 1; left: 50%; margin-left: -1400px; top: 0; } 
+.bg1 { background: url(../images/bg1.png) center top no-repeat; width: 2950px; height: 942px; z-index: 1; position: absolute; }
+.bg2 { background: url(../images/bg5.png) center top no-repeat; width: 2960px; height: 952px; z-index: 2; position: absolute; }
+.bg3 { background: url(../images/bg4.png) center top no-repeat; width: 2970px; height: 962px; z-index: 3; position: absolute; }
+.bg4 { background: url(../images/bg3.png) center top no-repeat; width: 2980px; height: 972px; z-index: 3; position: absolute; }
+.bg5 { background: url(../images/bg2.png) center top no-repeat; width: 2990px; height: 982px; z-index: 3; position: absolute; }
+.bg6 { background: url(../images/bg6.png) 75% 0 no-repeat; width: 4070px; height: 1100px; z-index: 3; margin-left: 100px; position: absolute; }
+/* body.home .bg1,
+body.home .bg2,
+body.home .bg3,
+body.home .bg4,
+body.home .bg5,
+body.home .bg6 { display: none; } */
+
+.error404 #parallax,
+.error404 #header { display: none;  }
+
+/*=====================================================================================
+  Header
+=======================================================================================*/
+body.home .site-name a { display: none; }
+.site-name a { position: absolute; top: 26px; left: 50%; margin-left: -94px; width: 188px; height: 108px; text-indent: -9999em; background: url(../images/logo.png) left top no-repeat; border: 0 !important;}
+
+
+
+
+/*=====================================================================================
+  Navigation
+=======================================================================================*/
+#header nav { position: absolute; top: 158px; left: 83px; }
+body.home #header nav li { top: -220px; }
+#header nav li { float: left; display: inline; width: 188px; height: 54px;  margin-right: 14px; position: relative; }
+#header nav li a { float: left; width: 188px; height: 54px; text-indent: -9999em; background: url(../images/nav.png); border-bottom: 0; }
+	#menu-item-40 a { background-position: 0 0; }
+		#menu-item-40 a:hover { background-position: 0 -54px; }
+	#menu-item-39 a { background-position: -188px 0 !important; }
+		#menu-item-39 a:hover { background-position: -188px -54px !important; }
+	#menu-item-38 a { background-position: -376px 0 !important; }
+		#menu-item-38 a:hover { background-position: -376px -54px !important; }
+
+
+/*=====================================================================================
+  Content
+=======================================================================================*/
+#about { float: left; display: inline; width: 228px; margin-right: 12px; }
+#blog { float: left; display: inline; width: 110px; }
+#games { float: right; display: inline; width: 447px; }
+
+
+
+.btn-download { border-bottom: 0 !important; text-align: center; display: block; width: 447px; height: 34px; line-height: 34px; color: #ffea00 !important; background: url(../images/btn-download.png) left top no-repeat !important; }
+.btn-download small { font-weight: normal; }
+	.btn-download:hover,
+	#games a:hover .btn-download { background-position: bottom left !important; color: #333333 !important; }
+.btn-buy { border-bottom: 0 !important; text-align: center; display: block; width: 426px; height: 34px; line-height: 34px; color: #ffea00 !important; background: url(../images/btn-buy.png) left top no-repeat !important; margin-bottom: 15px; }
+.btn-buy small { font-weight: normal; }
+	.btn-buy:hover { background-position: bottom left !important; color: #333333 !important; }
+.btn-search { border-bottom: 0 !important; text-align: center; display: block; width: 231px; height: 34px; line-height: 34px; color: #ffea00; background: url(../images/btn-search.png) left top no-repeat !important; margin-bottom: 15px; border: 0; padding: 0; margin: 0; cursor: pointer; font-size: 12px; font-weight: bold;}
+	.btn-search:hover { background-position: bottom left !important; color: #333333; }
+.btn-game { border-bottom: 0 !important; text-align: center; display: block; width: 290px; height: 34px; line-height: 34px; color: #ffea00 !important; background: url(../images/btn-game.png) left top no-repeat !important; margin-bottom: 15px; }
+.btn-game small { font-weight: normal; }
+	.btn-game:hover { background-position: bottom left !important; color: #333333 !important; }
+	
+.btn { border-bottom: 0 !important; text-align: center; display: block; width: 426px; height: 34px; line-height: 34px; color: #ffea00 !important; background: url(../images/btn-buy.png) left top no-repeat !important; margin-bottom: 15px; }
+.btn small { font-weight: normal; }
+	.btn:hover { background-position: bottom left !important; color: #333333 !important; }
+		
+		
+
+.social { margin-bottom: 20px;  }
+.social li { padding-left: 40px; line-height: 45px; font-weight: bold; color: #957b5e; }
+	.social li.email { background: url(../images/ico-mail.png) 0 50% no-repeat; }
+	.social li.phone { background: url(../images/ico-phone.png) 6px 50% no-repeat; color: #4f3a23; }
+	.social li.twitter { background: url(../images/ico-twitter.png) 0 50% no-repeat; }
+	.social li.skype { background: url(../images/ico-skype.png) 0 50% no-repeat; }
+	.social li.facebook { background: url(../images/ico-facebook.png) 9px 50% no-repeat; }
+	.social li.vimeo { background: url(../images/ico-vimeo.png) 2px 50% no-repeat; }
+	.social li.dribbble { background: url(../images/ico-dribbble.png) 1px 50% no-repeat; }
+	
+
+
+.people li { width: 55px; height: 55px; float: left; padding-left: 0 !important; line-height: 1 !important; font-weight: normal; }
+
+
+
+#blog li { padding-bottom: 12px; background: url(../images/border-separator.png) left bottom repeat-x;  margin-bottom: 10px; }
+	#blog li:last-child { padding-bottom: 0; border-bottom: 0; margin-bottom: 0;  }
+#blog li img { border: 5px solid #f5ede3; }
+#blog h3 { color: #4b351d; margin-bottom: 4px; line-height: 15px; }
+#blog a:hover h3 { color: #cb4b04; }
+#blog a:hover img { border-color: #A28265; }
+
+
+
+#games li { padding-bottom: 8px; background: url(../images/border-separator.png) left bottom repeat-x; margin-bottom: 10px; }
+	#games li:last-child { padding-bottom: 0; border-bottom: 0; margin-bottom: 0; background: transparent; }
+#games img { border: 5px solid #f5ede3; display: block; margin-bottom: 5px; }
+	#games a:hover img { border-color: #A28265; }
+#games h4 { line-height: 1; margin-bottom: 5px; padding-top: 3px; color: #cb4b04; }
+#games a { border-bottom: 0;  }
+#games a:hover h4 { color: #cb4b04; }
+
+.post a { color: #cb4b04; border-bottom: 1px dotted #b69985; }
+	.post a:hover { color: #ffea00; border-bottom: 0; background: #b69985; }
+.post { margin-bottom: 5px; }
+.post h1,
+.post h2 { color: #9c4628; font-size: 22px; font-family: "OliJoRegular", "Georgia", "Times", "Times New Roman", serif; display: inline-block; margin-bottom: 0; }
+.post h2 a { color: #9c4628; padding-bottom: 2px 0; display: inline-block; border-bottom: 1px dotted #d2b6a3; }
+	.post h2 a:hover { color: #333333; background: #ffea00; border-bottom: 1px solid #333333; }
+.post time { float: left; display: inline; background: url(../images/bg-date.png) top center no-repeat; width: 40px; text-align: center; }
+	.post .month { color: #E4D8C3; font: 11px Georgia, serif; line-height: 18px; font-variant: small-caps; display: block; }
+	.post .day { color: #5F4E43; font-size: 17px; line-height: 20px; display: block; }
+	.post .year { font-size: 11px; display: block; }
+.post header div { float: right; display: inline; width: 365px; }
+.post .categories { display: block; padding-bottom: 3px; padding-top: 2px;  }
+	.post .categories a:hover { color: #ffea00; background: #b69985; }
+.post p { margin-bottom: 15px;  }
+.post p.more { text-align: right; padding-top: 15px; }
+.post-text { position: relative; }
+.post-text p.more { position: absolute; right: 0; bottom: 12px; margin-bottom: 0; }
+
+.post img { border: 5px solid #f5ede3;  }
+.meta { background: #d2b6a3; color: #705042; padding: 0 10px; line-height: 27px; height: 25px;  margin-bottom: 10px; clear: both;  }
+.meta a { font-weight: normal; color: #705042; border-bottom: 0; background: transparent !important; }
+.post-thumbnail { float: left; margin-right: 10px; margin-bottom: 10px; }
+.cboxElement { outline: none; }
+
+
+
+.game { width: 605px; margin: 0 auto 10px auto;  }
+.game h2 { font-family: "Lucida Granda", "Lucida Sans Unicode", "Helvetica", "Arial", sans-serif; font-size: 12px; margin-bottom: 3px;  }
+.game img { display: block; border: 5px solid #f5ede3;  }
+.game a:hover img { border-color: #A28265; }
+.game .buttons a { float: right; display: inline; }
+.game .buttons a:first-child { float: left; }
+
+
+address { font-style: italic; margin-bottom: 20px; margin-top: -2px; }
+address strong { font-style: normal; display: block; }
+form.contact legend,
+.reqtxt,
+.emailreqtxt,
+.linklove { display: none; }
+form.contact li { margin-bottom: 5px;  }
+form.contact label { display: block; color: #957b5e; font-weight: bold; margin-bottom: 1px; }
+form.contact input[type="text"] { width: 450px; padding: 0 10px; border: 1px solid #e5c4a9; background: #fff; height: 28px; 
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; 
+}
+form.contact textarea { width: 450px; padding: 5px 10px; border: 1px solid #e5c4a9; background: #fff; height: 170px; 
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; 
+}
+form.contact .cf-sb { text-align: right;  }
+form.contact .sendbutton { text-align: center; display: inline-block; width: 231px; height: 34px; line-height: 34px; color: #ffea00 !important; background: url(../images/btn-search.png) left top no-repeat;border: 0; padding: 0; margin: 0; font-weight: bold;}
+	form.contact .sendbutton:hover { background-position: bottom left; color: #333333 !important; }
+	
+	
+
+.error404 h2 { font-size: 44px; line-height: 52px; margin-left: 83px; margin-top: 80px; }
+.error404 img { display: block; width: 435px; margin: 0 auto; }
+
+
+.comment { background: #f5ede3; border: 1px solid #d2b6a4; margin-bottom: 10px; padding: 20px; }
+.comment .author { float: left; display: inline; width: 82px; }
+.comment .author img { border: 1px solid #dfd1c8; display: block; }
+.comment time { display: block; padding: 5px 0 0 0; color: #77675b; font-size: 11px; }
+.comment .username { display: block; margin-bottom: 5px; }
+.comment .username a { font-weight: normal; border-bottom: 1px dotted #d3b6a4; color: #ec6106; }
+.comment .body { float: right; display: inline; width: 256px; padding: 10px; position: relative; border: 1px solid #dfd1c8; min-height: 80px; height: auto !important; height: 80px; background: #ffffff; margin-top: 5px; 
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; 
+}
+.comment .body .arrow { position: absolute; left: -12px; top: 35px; display: block; width: 12px; height: 12px; background: url(../images/arrow-comment.png) left top no-repeat; }
+
+
+#reply-title { font-weight: normal; margin-bottom: 8px; }
+#respond form { background: #d2b6a3; padding: 3px 15px 15px 15px; }
+#respond label { display: block; font-weight: bold; color: #957b5e; margin-bottom: 2px; }
+#respond input[type="text"] { height: 28px; padding: 0 8px; background: #fff; border: 0; width: 380px; 
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; 
+}
+#respond textarea { height: 170px; padding: 5px 8px; background: #fff; border: 0; width: 380px;  
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; 
+}
+#respond p { padding-bottom: 8px; }
+#respond .comment-notes,
+#respond .form-allowed-tags,
+#respond .required { display: none;  }
+
+
+
+a:hover img { border-color: #A28265; }
+
+
+.wp-pagenavi { text-align: center; padding-top: 20px; }
+.wp-pagenavi * { border-color: #BFA385 !important; }
+.wp-pagenavi .current { background: #bfa385 !important; color: #FFEA00 !important; }
+
+
+
+/*=====================================================================================
+  Sidebar
+=======================================================================================*/
+.widget { margin-bottom: 15px; }
+.widget .regular li { border-bottom: 1px solid #bfa385; }
+.widget img { border: 5px solid #f5ede3; }
+
+.widget input[type="text"] { width: 213px; border: 1px solid #e5c4a9; height: 28px; padding: 0 8px; background: #fff; margin-bottom: 5px; 
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; 
+}
+#sidebar .regular a { border-bottom: 0; display: block; padding-left: 10px; line-height: 23px; }
+.widget a:hover h4 { color: #9c4628; }
+
+
+/*=====================================================================================
+  Footer
+=======================================================================================*/
+#footer p { line-height: 24px; font-weight: bold; color: #896e4e; margin-top: 4px;  }
+#footer a { color: #896e4e; }
+	#footer a:hover { color: #ffea00; }
+#footer .left { float: left; display: inline; width: 20%; }
+#footer .right { float: right; display: inline; width: 80%; text-align: right; }
+#footer span { display: inline-block; padding-left: 33px; }
+#footer .snowdog { background: url(../images/ico-snowdog.png) left center no-repeat; padding-left: 30px; margin-right: 10px; }
+#footer .blackmoon { background: url(../images/ico-blackmoon.png) left center no-repeat; }
+
+
+.switch { background: red; display: inline-block; width: 30px; height: 30px; position: fixed; top: 50px; right: 50px; z-index: 999999; }
+.switch.active { background: green; }
+
+
+
+
