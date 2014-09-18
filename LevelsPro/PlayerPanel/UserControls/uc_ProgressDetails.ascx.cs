@@ -49,13 +49,15 @@ namespace LevelsPro.PlayerPanel.UserControls
                 string descs = dt.Rows[0]["KPIDesc"].ToString();
                 String TipsDESC = dt.Rows[0]["TipsDesc"].ToString();
                 String TipsLink = dt.Rows[0]["TipsLink"].ToString();
+
+                lbldesc.Text = descs;
+
                 bool QuizPart = false;
 
                 if (TipsDESC != null && TipsDESC != "" && TipsLink != null && TipsLink != "")
                 {
                     hpl.Text = TipsDESC;
                     hpl.NavigateUrl = TipsLink;
-                    lbldesc.Text = descs;
                 }
                 else
                 {

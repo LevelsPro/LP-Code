@@ -125,7 +125,6 @@ namespace LevelsPro.ManagerPanel.UserControls
                 if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     nextlevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["next_level"]);
-                    ReuseableItems.PlayerCurrentLevelID_PlayerPanel = nextlevel;
                     TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
                     progress.User = user;
                     try
@@ -149,6 +148,8 @@ namespace LevelsPro.ManagerPanel.UserControls
 
                         if (totalPercentage >= 100)
                         {
+
+                            ReuseableItems.PlayerCurrentLevelID_PlayerPanel = nextlevel;
                             PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
                             targetprogress.User = user;
 

@@ -11,7 +11,7 @@
 <%@ Register TagPrefix="uc" TagName="AwardCongrats" Src="~/PlayerPanel/UserControls/uc_AwardCongratulations.ascx" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-z
+
 <script type="text/javascript">
 
     
@@ -37,6 +37,7 @@ z
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
      <script src="Scripts/jquery.ba-resize.min.js" type="text/javascript"></script>
     <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <%-- <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />--%>
     <%--<link href="Styles/theme-2.css" rel="stylesheet" type="text/css" />
 <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />--%>
@@ -50,6 +51,8 @@ z
         });
 	</script>--%>
    
+  
+
     <script type="text/javascript">
         $.fn.digits = function () {
             return this.each(function () {
@@ -147,7 +150,6 @@ z
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
             <div class="container">
-
                 <asp:Button ID="_editPopupButton" runat="server" Text="Edit Contact" Style="display: none" />
                 <asp:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="modalBackground"
                     RepositionMode="None" TargetControlID="_editPopupButton" ClientIDMode="AutoID"

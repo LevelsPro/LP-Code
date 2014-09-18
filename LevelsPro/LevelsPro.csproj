@@ -824,6 +824,7 @@
     <Content Include="PlayerPanel\Scripts\fontResizer.js" />
     <Content Include="PlayerPanel\Scripts\jquery-1.6.1.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery-1.7.2.min.js" />
+    <Content Include="PlayerPanel\Scripts\jquery-latest.js" />
     <Content Include="PlayerPanel\Scripts\jquery-ui.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.ba-resize.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.min.js" />
@@ -862,7 +863,6 @@
     <Content Include="PlayerPanel\ViewManagerAwards.aspx" />
     <Content Include="PlayerPanel\ViewMilestones.aspx" />
     <Content Include="PlayerPanel\ViewPerformanceAwards.aspx" />
-    <Content Include="PlayerPanel\WebForm1.aspx" />
     <Content Include="PlayerPanel\Welcome.aspx" />
     <Content Include="Scripts\canvas-draw.js" />
     <Content Include="Scripts\fontResizer.js" />
@@ -1672,13 +1672,6 @@
     </Compile>
     <Compile Include="PlayerPanel\ViewPerformanceAwards.aspx.designer.cs">
       <DependentUpon>ViewPerformanceAwards.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PlayerPanel\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PlayerPanel\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="PlayerPanel\Welcome.aspx.cs">
       <DependentUpon>Welcome.aspx</DependentUpon>
