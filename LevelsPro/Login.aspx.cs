@@ -157,6 +157,7 @@ namespace LevelsPro
                // Session["Role_ID"] = ds.Tables[0].Rows[0]["Role_ID"];
                 Session["UserRoleID"] = ds.Tables[0].Rows[0]["U_RolesID"];
                 Session["role"] = Sysrole;
+                Session["checkforlogout"] = 0;
 
                 if (ds.Tables[0].Rows[0]["Display_Name"].ToString() == "1")
                 {

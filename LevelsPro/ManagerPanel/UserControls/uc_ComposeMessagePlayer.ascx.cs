@@ -31,6 +31,7 @@ namespace LevelsPro.ManagerPanel.UserControls
                 //((Messages)this.Page).LoadUnReadData();
                 ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeComposeMessageDiv");
                 mpe.Hide();
+                Response.Redirect("PlayerPerformance.aspx?id=" + Convert.ToInt32(Session["ManagerAsscociateID"]));
             }
             catch (Exception ex)
             {
