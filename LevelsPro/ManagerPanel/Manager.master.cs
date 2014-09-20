@@ -94,7 +94,7 @@ namespace LevelsPro.ManagerPanel
             base.OnPreRender(e);
             this.PageHead.Controls.Add(new LiteralControl(
                 String.Format("<meta http-equiv='refresh' content='{0};url={1}'>",
-                SessionLengthMinutes * 180, SessionExpireDestinationUrl)));
+                SessionLengthMinutes * 60, SessionExpireDestinationUrl)));
         }
     }
 }
