@@ -1058,7 +1058,9 @@ input.qq-admin-s{
 	position:relative;
 	border-bottom:1px solid #b0b0b0;
 	text-align: left;
-	}
+    top: -1px;
+    left: 0px;
+}
 	
 .strip .lt{
 	color:#000;

@@ -80,6 +80,7 @@
     <Content Include="AdminPanel\AssignAwards.aspx" />
     <Content Include="AdminPanel\AwardEdit.aspx" />
     <Content Include="AdminPanel\AwardManagement.aspx" />
+    <Content Include="AdminPanel\BannerConfiguration.aspx" />
     <Content Include="AdminPanel\ChangePassword.aspx" />
     <Content Include="AdminPanel\ContestManagement.aspx" />
     <Content Include="AdminPanel\DataSetEdit.aspx" />
@@ -951,6 +952,13 @@
     </Compile>
     <Compile Include="AdminPanel\AwardManagement.aspx.designer.cs">
       <DependentUpon>AwardManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\BannerConfiguration.aspx.cs">
+      <DependentUpon>BannerConfiguration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\BannerConfiguration.aspx.designer.cs">
+      <DependentUpon>BannerConfiguration.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
