@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LevelsPro.Util;
 
 namespace LevelsPro.ErrorPages
 {
@@ -18,7 +19,7 @@ namespace LevelsPro.ErrorPages
             switch(role)
             {
                 case "player":
-                    string source = "../PlayerPanel/Messages.aspx";
+                    string source = ExceptionUtility.GetRedirectionURL(Session);;
                     Response.AppendHeader("Refresh", "5;url=" + source);
                 break;
             }

@@ -15,6 +15,7 @@ namespace LevelsPro.Util
         private const string PLAYER = "player";
         private const string ADMIN = "admin";
         private const string MANAGER = "manager";
+        private const string DefaultErrorPage = "~/ErrorPages/DefaultErrorPage.aspx";
         private static bool LoginError;
         private static string LoginErrorMessage;
         private static Dictionary<string, string> playerRedirectionLookup;
@@ -49,7 +50,8 @@ namespace LevelsPro.Util
                 {"/PlayerPanel/RedeemPoints.aspx","/PlayerPanel/PlayerHome.aspx"},
                 {"/PlayerPanel/ProgressDetails.aspx","/PlayerPanel/PlayerHome.aspx"},
                 {"/PlayerPanel/ContestDetails.aspx","/PlayerPanel/PlayerHome.aspx"},
-                {"/PlayerPanel/ForumDetails.aspx","/PlayerPanel/PlayerHome.aspx"}
+                {"/PlayerPanel/ForumDetails.aspx","/PlayerPanel/PlayerHome.aspx"},
+                {"/PlayerPanel/PlayerProfile.aspx","/PlayerPanel/PlayerHome.aspx"}
             };
 
             linkExceptionCount = new Dictionary<string, int>();
@@ -82,7 +84,7 @@ namespace LevelsPro.Util
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
  
-                            if (ExceptionCount(sourcePage) > 3)
+                            if (ExceptionCount(sourcePage) > 2)
                             {
                                 SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
                                 RemoveExceptionEntry(sourcePage);
@@ -90,7 +92,7 @@ namespace LevelsPro.Util
                             }
                             else
                             {
-                                WebMessageBoxUtil.Show(ErrorMessageUtility.genericMessage);
+                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
                                 server.Transfer(sourcePage,false);
                             }
                         }
@@ -108,15 +110,16 @@ namespace LevelsPro.Util
                     {
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
-                            if (ExceptionCount(sourcePage) > 3)
+                            if (ExceptionCount(sourcePage) > 2)
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
                                 RemoveExceptionEntry(sourcePage);
-                                response.Redirect(ProvideRedirectionURL(sourcePage),false);
+                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage),session);
+                                response.Redirect(DefaultErrorPage,false);
                             }
                             else
                             {
-                                WebMessageBoxUtil.Show(ErrorMessageUtility.genericMessage);
+                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
                                 server.Transfer(sourcePage, false);
                             }
                         }
@@ -124,7 +127,8 @@ namespace LevelsPro.Util
                         {
                             SetErrorMessage(session, ErrorMessageUtility.genericMessage);
                             RemoveExceptionEntry(sourcePage);
-                            response.Redirect(ProvideRedirectionURL(sourcePage),false);
+                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage), session);
+                            response.Redirect(DefaultErrorPage,false);
                         }
 
                     }
@@ -170,7 +174,18 @@ namespace LevelsPro.Util
             LoginError = false;
             LoginErrorMessage = string.Empty;
         }
-               
+
+        internal static string GetRedirectionURL(HttpSessionState session)
+        {
+            string url=string.Empty;
+            if(session["Is_Error"]!=null)
+            {
+                url = session["RED-URL"].ToString();
+                session["Is_Error"] = "False";
+                session["RED-URL"] = string.Empty;
+            }
+            return url;
+        }
         #endregion
 
         #region Utility Methods
@@ -217,7 +232,13 @@ namespace LevelsPro.Util
                 
             }
         }
-       
+
+        private static void SetRemoteRedirectionURL(string destPage, HttpSessionState session)
+        {
+            session["Is_Error"] = "True";
+            session["RED-URL"] = destPage;
+        }
+        
         private static int ExceptionCount(string sourcePage)
         {
             int count = 0;
@@ -253,9 +274,10 @@ namespace LevelsPro.Util
 
         private static void SetErrorMessage(HttpSessionState session, string message)
         {
-            session["Error"] = "True";
-            session["Message"] = message;
+            session["Is_Error"] = "True";
+            session["Error_Message"] = message;
         }
+
 
         private static void SetLoginErrorMessage( string message)
         {

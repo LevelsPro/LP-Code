@@ -18,7 +18,14 @@ namespace LevelsPro.PlayerPanel
         {
             System.Uri url = Request.Url;
             pageURL = url.AbsolutePath.ToString();
-            LoadData();
+            try
+            {
+                LoadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
             ExceptionUtility.CheckForErrorMessage(Session);
         }
         protected override void OnInit(EventArgs e)

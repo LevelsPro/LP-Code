@@ -40,7 +40,14 @@ namespace LevelsPro.PlayerPanel
                     //mes.Text = Resources.TestSiteResources.MessageNoQ;
                     mes.Text = "There are no Data Sets Left in this Match for your level";
                 }
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 TimeCheck_counter = 0;
             }
 

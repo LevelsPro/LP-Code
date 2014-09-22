@@ -193,9 +193,14 @@ namespace LevelsPro.PlayerPanel
                     dt = new DataTable();
                     dt_DataSets = new DataTable();
                     ltScore.Text = "0";
-
-                    LoadData(counter);
-
+                    try
+                    {
+                        LoadData(counter);
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                     lblTimeDataSet.Text = ViewState["TimePerRound"].ToString();
                     ltScore.Text = ViewState["PointsPerRound"].ToString();
 
@@ -465,7 +470,14 @@ namespace LevelsPro.PlayerPanel
         public void Next()
         {
             counter = counter + 1;
-            LoadData(counter);
+            try
+            {
+                LoadData(counter);
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
             ltlDataSetNumber.Text = "Round # " + ViewState["CurrentRound"].ToString() + " of " + ViewState["NoOfRounds"].ToString() + " - " + ViewState["RoundName"].ToString(); // need to look into this
 
             lblTimeDataSet.Text = ViewState["TimePerRound"].ToString();
@@ -1283,9 +1295,14 @@ namespace LevelsPro.PlayerPanel
                 dt_DataSets = new DataTable();
                 ltScore.Text = "0";
                 litWriteCode.Text = "";
-
-                LoadData(counter);
-
+                try
+                {
+                    LoadData(counter);
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 lblTimeDataSet.Text = ViewState["TimePerRound"].ToString();
                 ltScore.Text = ViewState["PointsPerRound"].ToString();
                 lblSorry.CssClass = "noVisible";

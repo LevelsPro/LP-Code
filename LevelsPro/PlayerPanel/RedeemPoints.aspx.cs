@@ -61,9 +61,14 @@ namespace LevelsPro.PlayerPanel
                 }
 
 
-
-                LoadData();
-
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 if (Session["Redeemed"] != null && Session["Redeemed"].Equals(1))
                 {
                     Session["Redeemed"] = 0;
@@ -477,9 +482,15 @@ namespace LevelsPro.PlayerPanel
             }
 
 
-
-            LoadData();
-            Response.Redirect("RedeemPoints.aspx");
+            try
+            {
+                LoadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+                Response.Redirect("RedeemPoints.aspx");
             // Response.Redirect("RedeemPoints.aspx");
 
 

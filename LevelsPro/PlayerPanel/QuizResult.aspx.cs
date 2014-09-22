@@ -32,9 +32,15 @@ namespace LevelsPro.PlayerPanel
                 {
                     ViewState["quizid"] = Request.QueryString["check"].ToString();
                 }
-                
-               
-                LoadData();
+
+               try
+               {
+                   LoadData();
+               }
+               catch (Exception exp)
+               {
+                   throw exp;
+               }
                 
             }
             ExceptionUtility.CheckForErrorMessage(Session);

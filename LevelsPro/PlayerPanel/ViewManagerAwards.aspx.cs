@@ -24,7 +24,14 @@ namespace LevelsPro.PlayerPanel
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 Button2.Visible = false;
                 Button3.Visible = false;
                 Button4.Visible = false;

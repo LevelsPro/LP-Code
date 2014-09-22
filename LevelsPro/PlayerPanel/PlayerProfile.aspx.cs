@@ -13,6 +13,7 @@ using LevelsPro.App_Code;
 using BusinessLogic.Delete;
 using System.Configuration;
 using System.IO;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -20,6 +21,7 @@ namespace LevelsPro.PlayerPanel
     {
         static int previousid = 0;
         static int currentid = 0;
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -31,6 +33,8 @@ namespace LevelsPro.PlayerPanel
 
             if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                 {
                     if (Session["MyCulture"].ToString() == "es-ES")
@@ -48,13 +52,37 @@ namespace LevelsPro.PlayerPanel
                         imgUpload.ImageUrl = "Images/upload-photo.png";
                     }
                 }
-
-                LoadData(Convert.ToInt32(Session["userid"]));
-
+                try
+                {
+                    LoadData(Convert.ToInt32(Session["userid"]));
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
 
                 //    done.Value = "1";
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         protected void LoadData(int UserID)
         {
             string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
@@ -77,6 +105,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dv = User.ResultSet.Tables[0].DefaultView;
@@ -116,6 +145,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
@@ -185,6 +215,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
 
@@ -206,6 +237,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 int previous = Convert.ToInt32(previousid);
                 _userimage.UserIDImage = previous;
@@ -221,13 +253,20 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 txtFirstName.Text = "";
                 txtLastName.Text = "";
                 txtNickName.Text = "";
-
-                LoadData(UserID);
+                try
+                {
+                    LoadData(UserID);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
                 Response.Redirect("PlayerHome.aspx");
             }
         }
@@ -251,6 +290,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }               
 
                 DataView dvImage1 = UserImages.ResultSet.Tables[0].DefaultView;
@@ -297,7 +337,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
             }
         }
@@ -314,6 +354,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
@@ -354,6 +395,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                     }                    
                 }

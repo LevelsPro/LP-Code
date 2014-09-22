@@ -91,8 +91,14 @@ namespace LevelsPro.PlayerPanel
                     MapImage.Src = ReuseableItems.imgpath;
                 }
 
-
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
             ExceptionUtility.CheckForErrorMessage(Session);
             //if(Convert.ToInt32(Session["check"])==1)

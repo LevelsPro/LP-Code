@@ -30,7 +30,14 @@ namespace LevelsPro.PlayerPanel
                 pageURL = url.AbsolutePath.ToString();
                 if (Session["userid"] != null && Session["userid"].ToString() != "")
                 {
-                    ViewProfile.LoadData();
+                    try
+                    {
+                        ViewProfile.LoadData();
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                     lblName.Text = Session["displayname"].ToString() + " - Contest";
                 }
 

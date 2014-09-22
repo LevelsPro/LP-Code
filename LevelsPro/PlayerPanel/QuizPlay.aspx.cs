@@ -87,7 +87,14 @@ namespace LevelsPro.PlayerPanel
                     ltScore.Text = "0";
                     check = 0;
                     checkSeconds = 0;
-                    LoadData();
+                    try
+                    {
+                        LoadData();
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                     ReduceChoicesCounter = 0;
                     ReplaceQuestionCounter = 0;
                     AddSecondsCounter = 0;

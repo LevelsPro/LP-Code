@@ -47,7 +47,15 @@ namespace LevelsPro.PlayerPanel
                     mes.Visible = true; //show message
                     mes.Text = "There are no Questions Left in this Quiz for your level";
                 }
-                LoadData(); // load all data and also verify all checks of quiz
+                
+                try
+                {
+                    LoadData(); // load all data and also verify all checks of quiz
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 TimeCheck_counter = 0;
             }
 
@@ -96,8 +104,8 @@ namespace LevelsPro.PlayerPanel
             try
             {
                 QuizSelection.Quiz = _quiz;
-               // QuizSelection.Invoke();
-                Games_Selection.Match = _match;
+                QuizSelection.Invoke();
+                //Games_Selection.Match = _match;
                 Games_Selection.Invoke();
             }
             catch (Exception ex)
