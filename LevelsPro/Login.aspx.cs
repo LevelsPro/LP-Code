@@ -13,6 +13,7 @@ using System.Text;
 using LevelsPro.PlayerPanel;
 using DataAccess;
 using log4net;
+using LevelsPro.Util;
 namespace LevelsPro
 {
     public partial class Login : AuthorizedPage
@@ -23,7 +24,8 @@ namespace LevelsPro
   System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Page_Load(object sender, EventArgs e)
-        {            
+        {
+            ExceptionUtility.CheckForLoginErrorMessage();
             if (Session["MyUICulture"] != null && Session["MyCulture"] != null)
             {
                 if (Session["MyUICulture"].ToString() == "en-US")
@@ -53,7 +55,8 @@ namespace LevelsPro
             }
 
             lblError.Visible = false;
-            
+
+        
 
         }
         protected override void OnInit(EventArgs e)

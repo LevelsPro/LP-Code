@@ -9,11 +9,13 @@ using Common;
 using BusinessLogic.Select;
 using LevelsPro.App_Code;
 using BusinessLogic.Update;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class ContestDetails : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -24,6 +26,8 @@ namespace LevelsPro.PlayerPanel
         {
             if (!Page.IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Session["userid"] != null && Session["userid"].ToString() != "")
                 {
                     ViewProfile.LoadData();
@@ -35,6 +39,24 @@ namespace LevelsPro.PlayerPanel
                     Load_ContestDetails(Convert.ToInt32(Session["ContestID"]));
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void Load_ContestDetails(int ContestID)
@@ -115,6 +137,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");

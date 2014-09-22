@@ -1723,7 +1723,9 @@
     <Compile Include="UserControls\uc_SetPassword.ascx.designer.cs">
       <DependentUpon>uc_SetPassword.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Util\ErrorMessageUtility.cs" />
     <Compile Include="Util\ExceptionUtility.cs" />
+    <Compile Include="Util\RedirectionStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminPanel\Reports\" />

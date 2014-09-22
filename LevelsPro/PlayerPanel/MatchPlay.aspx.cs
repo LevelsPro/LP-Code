@@ -16,6 +16,7 @@ using BusinessLogic.Delete;
 using LevelsPro.App_Code;
 using System.Web.Services;
 using System.Xml;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -51,7 +52,7 @@ namespace LevelsPro.PlayerPanel
         public string cssClassW34 = "";
 
         private bool RoundResult = false;
-
+        private static string pageURL;
         
         protected override void OnInit(EventArgs e)
         {
@@ -62,6 +63,8 @@ namespace LevelsPro.PlayerPanel
         {
             if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 #region Current Match
                 MatchViewBLL getmatch = new MatchViewBLL();
                 Match _gmatch = new Match();
@@ -73,6 +76,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dvMatch = getmatch.ResultSet.Tables[0].DefaultView;
                 dtMatch = new DataTable();
@@ -98,6 +102,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dv = Match_Selection.ResultSet.Tables[0].DefaultView;
 
@@ -210,11 +215,31 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                 }
+                
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+        
         protected void LoadData( int CurrentRound)
         {
             GetRelatedKPI();
@@ -230,6 +255,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             DataView dv1 = levelid.ResultSet.Tables[0].DefaultView;
@@ -257,6 +283,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvRound = getround.ResultSet.Tables[0].DefaultView;
             DataTable dtRound = new DataTable();
@@ -293,6 +320,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             DataView dv = match.ResultSet.Tables[0].DefaultView;
@@ -465,6 +493,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             LevelUp();
         }
@@ -488,6 +517,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             MatchPlayLogEntry = true;
@@ -517,6 +547,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             #region MatchPlayLog Entry
@@ -536,6 +567,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             MatchPlayLogEntry = true;
@@ -561,6 +593,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             #region MatchPlayLog Entry
@@ -580,6 +613,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             MatchPlayLogEntry = true;
@@ -595,6 +629,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
@@ -626,6 +661,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvPoints = scorePoints.Sum.Tables[0].DefaultView;
             DataTable dt = dvPoints.ToTable();
@@ -643,6 +679,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
@@ -656,6 +693,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
@@ -680,6 +718,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
                         {
@@ -701,6 +740,7 @@ namespace LevelsPro.PlayerPanel
                                     }
                                     catch (Exception ex)
                                     {
+                                        throw ex;
                                     }
 
                                     
@@ -723,6 +763,7 @@ namespace LevelsPro.PlayerPanel
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
 
                             
@@ -741,6 +782,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
 
                         int Level = 0;
@@ -758,7 +800,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
-
+                            throw ex;
                         }
 
                         dVNext.RowFilter = "user_id = " + Convert.ToInt32(Session["userid"]) + "AND current_level = " + Level;
@@ -803,6 +845,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             DataView dvTarget = Target.ResultSet.Tables[0].DefaultView;
@@ -847,6 +890,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                         dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
@@ -872,6 +916,7 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
 
                                 if (UserPoints != null && UserPoints != "")
@@ -905,6 +950,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                         dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
@@ -930,6 +976,7 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
 
                                 if (UserPoints != null && UserPoints != "")
@@ -959,7 +1006,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
 
             #endregion
@@ -975,6 +1022,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv_New = Match_Selection.ResultSet.Tables[3].DefaultView;
             dv_New.RowFilter = "MatchID =" + Convert.ToInt32(Request.QueryString["matchid"]);
@@ -1004,6 +1052,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = Match_Selection.ResultSet.Tables[0].DefaultView;
             dv.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND MatchID =" +
@@ -1078,6 +1127,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             #region MatchPlayLog Entry
@@ -1097,6 +1147,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             MatchPlayLogEntry = true;
@@ -1113,6 +1164,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvMatch = getmatch.ResultSet.Tables[0].DefaultView;
             dtMatch = new DataTable();
@@ -1138,6 +1190,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = Match_Selection.ResultSet.Tables[0].DefaultView;
 
@@ -1254,6 +1307,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "myscript", "callScript()", true);
                 upMatch.Update();

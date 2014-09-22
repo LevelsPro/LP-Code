@@ -10,11 +10,13 @@ using BusinessLogic.Select;
 using System.Data;
 using LevelsPro.App_Code;
 using Common;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class QuizResult : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -24,6 +26,8 @@ namespace LevelsPro.PlayerPanel
         {
             if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                if (Request.QueryString["check"] != null && Request.QueryString["check"].ToString() != "")
                 {
                     ViewState["quizid"] = Request.QueryString["check"].ToString();
@@ -31,8 +35,25 @@ namespace LevelsPro.PlayerPanel
                 
                
                 LoadData();
-
+                
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
         protected void LoadData()
         {
@@ -49,6 +70,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = Quiz_Selection.ResultSet.Tables[2].DefaultView;
             dv.RowFilter = "UserID = " + Convert.ToInt32(Session["userid"]) +" AND QuizID= " + Convert.ToInt32(ViewState["quizid"]);
@@ -95,6 +117,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");

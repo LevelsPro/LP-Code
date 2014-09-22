@@ -18,24 +18,28 @@ using LinqToTwitter;
 using BusinessLogic.Select;
 using BusinessLogic.Insert;
 using BusinessLogic.Update;
+using LevelsPro.Util;
+using Common.Utils;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class PlayerHome : AuthorizedPage
     {
-        private string usr, pwd, role;
+        private string usr, pwd, role,pageURL;
         // private WebAuthorizer auth; // twitter Authorizer
         protected void Page_Load(object sender, EventArgs e)
         {
       
         
             //string Thumbpath = "";
-            try
-            {
            
+            {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                
                 string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
                 string path = ConfigurationManager.AppSettings["RolePath"].ToString();
-
+                
                 MessagesViewBLL messageview = new MessagesViewBLL();
 
                 try
@@ -44,6 +48,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
@@ -226,6 +231,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dvImage1 = UserImage.ResultSet.Tables[0].DefaultView;
                 dvImage1.RowFilter = "U_Current=1";
@@ -401,6 +407,7 @@ namespace LevelsPro.PlayerPanel
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
 
                            ReuseableItems.GetAutomaticAward = award.ResultSet;
@@ -427,6 +434,7 @@ namespace LevelsPro.PlayerPanel
                                     }
                                     catch (Exception ex)
                                     {
+                                        throw ex;
                                     }
 
 
@@ -561,6 +569,7 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
                                 if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
                                 {
@@ -647,6 +656,7 @@ namespace LevelsPro.PlayerPanel
                                         }
                                         catch (Exception ex)
                                         {
+                                            throw ex;
                                         }
 
 
@@ -902,14 +912,26 @@ namespace LevelsPro.PlayerPanel
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                //lblFullName.Text = " Page Error: " + ex.Message + ex.Source + ex.StackTrace + ex.InnerException;
-                //lblUserRole.Text = "userid" + Session["userid"].ToString() + "role:" + Session["role"].ToString() + "roleid : " + Session["UserRoleID"].ToString();               
-            }
+            ExceptionUtility.CheckForErrorMessage(Session);
 
         }
-        
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+          // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
 
         protected override void OnInit(EventArgs e)
         {
@@ -1124,6 +1146,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");

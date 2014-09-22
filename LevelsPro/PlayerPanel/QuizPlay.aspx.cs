@@ -14,6 +14,7 @@ using BusinessLogic.Update;
 using BusinessLogic.Insert;
 using BusinessLogic.Delete;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 
 namespace LevelsPro.PlayerPanel
@@ -62,6 +63,7 @@ namespace LevelsPro.PlayerPanel
         static Decimal scoreTemp = 0;
         static Decimal values = 0;
         static bool PlayAvailable = false;
+        private static string pageURL;
         //
         protected override void OnInit(EventArgs e)
         {
@@ -72,8 +74,9 @@ namespace LevelsPro.PlayerPanel
         {
             if (!(Page.IsPostBack))
             {
-                
-                
+
+                    System.Uri url = Request.Url;
+                    pageURL = url.AbsolutePath.ToString();
                     cntans1 = 0;
                     cntans2 = 0;
                     cntans3 = 0;
@@ -115,6 +118,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     GetLifeLinesBLL LifeLine = new GetLifeLinesBLL();
@@ -127,6 +131,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     DataView dvLifeLine = dsLifeLine.Tables[0].DefaultView;
@@ -159,10 +164,27 @@ namespace LevelsPro.PlayerPanel
                             }
                         }
                     }
-                
 
+                    
                 }
-            
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void LoadData()
@@ -179,6 +201,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             
             DataView dv1 = levelid.ResultSet.Tables[0].DefaultView;
@@ -203,6 +226,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = quiz.ResultSet.Tables[0].DefaultView;
             DataView dvQuizPoints = quiz.ResultSet.Tables[1].DefaultView;
@@ -495,6 +519,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
         }
@@ -870,6 +895,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
 
@@ -928,6 +954,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                  
@@ -959,6 +986,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
 
                         
@@ -984,6 +1012,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
 
 
@@ -1009,6 +1038,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1040,6 +1070,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                     //ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
                     //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
@@ -1067,6 +1098,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1090,6 +1122,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1113,6 +1146,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1144,6 +1178,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                    // ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
                     //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
@@ -1171,6 +1206,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1194,6 +1230,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1217,6 +1254,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1248,6 +1286,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                     //ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
                     //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
@@ -1276,6 +1315,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();  
@@ -1299,6 +1339,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1322,6 +1363,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
                         //dtScore.AcceptChanges();
@@ -1376,6 +1418,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 QuizPlayLogEntry = true;
@@ -1419,6 +1462,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 Session.Abandon();
                 Response.Redirect("~/Index.aspx");
@@ -1455,6 +1499,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvPoints = scorePoints.Sum.Tables[0].DefaultView;
             DataTable dt = dvPoints.ToTable();
@@ -1472,6 +1517,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
@@ -1484,6 +1530,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
@@ -1508,6 +1555,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
                         {
@@ -1529,6 +1577,7 @@ namespace LevelsPro.PlayerPanel
                                     }
                                     catch (Exception ex)
                                     {
+                                        throw ex;
                                     }
 
                                     
@@ -1551,6 +1600,7 @@ namespace LevelsPro.PlayerPanel
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
 
                             
@@ -1569,6 +1619,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
 
                         int Level = 0;
@@ -1586,7 +1637,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
-
+                            throw ex;
                         }
 
                         dVNext.RowFilter = "user_id = " + Convert.ToInt32(Session["userid"]) + "AND current_level = " + Level;
@@ -1631,6 +1682,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             DataView dvTarget = Target.ResultSet.Tables[0].DefaultView;
@@ -1676,6 +1728,7 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                         DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                         dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
@@ -1701,6 +1754,7 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
 
                                 if (UserPoints != null && UserPoints != "")
@@ -1730,7 +1784,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
 
             #endregion
@@ -1752,6 +1806,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv_New = Quiz_Selection.ResultSet.Tables[3].DefaultView;
             dv_New.RowFilter = "QuizID =" + Convert.ToInt32(Request.QueryString["quizid"]);
@@ -1982,6 +2037,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 #endregion
             }
@@ -2041,6 +2097,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                     #endregion
 
@@ -2130,6 +2187,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                     #endregion
 

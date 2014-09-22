@@ -13,11 +13,13 @@ using System.Web.UI.HtmlControls;
 using System.Net.Mail;
 using LevelsPro.App_Code;
 using BusinessLogic.Update;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class RedeemPoints : AuthorizedPage
     {
+        private static string pageURL;
         protected void Page_Load(object sender, EventArgs e)
         {
             Points point = new Points();
@@ -69,7 +71,26 @@ namespace LevelsPro.PlayerPanel
 
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
 
         protected void LoadData()
         {
@@ -81,6 +102,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = reward.ResultSet.Tables[0].DefaultView;
             dv.RowFilter = "Active=1";
@@ -165,6 +187,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             PointsViewBLL check = new PointsViewBLL();
             try
@@ -173,6 +196,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             RewardViewBLL reward = new RewardViewBLL();
 
@@ -183,6 +207,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvreward = reward.ResultSet.Tables[0].DefaultView;
             DataTable dtreward = new DataTable();
@@ -237,6 +262,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
 
@@ -398,6 +424,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             MessagesInsertBLL _messageInsert = new MessagesInsertBLL();
@@ -421,6 +448,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
             }
@@ -445,6 +473,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
 
@@ -467,6 +496,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             RewardViewBLL reward = new RewardViewBLL();
 
@@ -476,6 +506,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvreward = reward.ResultSet.Tables[0].DefaultView;
             DataTable dtreward = new DataTable();
@@ -659,6 +690,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             Session.Abandon();

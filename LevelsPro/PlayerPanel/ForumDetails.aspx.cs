@@ -9,6 +9,7 @@ using Common;
 using BusinessLogic.Insert;
 using System.Data;
 using BusinessLogic.Update;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -22,12 +23,15 @@ namespace LevelsPro.PlayerPanel
         Posts _posts = new Posts();
         PostRepliedLike _repliedLike = new PostRepliedLike();
         PostRepliedLike _repliedLike2 = new PostRepliedLike();
+        private static string pageURL;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 try
                 {
+                    System.Uri url = Request.Url;
+                    pageURL = url.AbsolutePath.ToString();
                     if (Session["userid"] != null && Session["userid"].ToString() != "")
                     {
                         lblName.Text = Session["displayname"].ToString() + " - Forums";
@@ -45,8 +49,27 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void btnReply_Click(object sender, EventArgs e)
@@ -70,6 +93,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch(Exception ex)
             {
+                throw ex;
             }
         }
 
@@ -97,6 +121,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
@@ -128,6 +153,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch(Exception e)
             {
+                throw e;
             }
             return true;
         }
@@ -156,6 +182,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
     }

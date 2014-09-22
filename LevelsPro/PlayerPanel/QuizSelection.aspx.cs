@@ -14,6 +14,7 @@ using System.Web.UI.HtmlControls;
 using System.Net.Mail;
 using BusinessLogic.Update;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -26,15 +27,21 @@ namespace LevelsPro.PlayerPanel
         public DataSet dtLog;
         public DataTable dtMandatoryQuizes; // for to check which quizes are mandatory .. and to highlight them
         public int TimeCheck_counter;
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
         }
+        
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+               
                 if (Request.QueryString["check"] != null && Request.QueryString["check"].ToString() != "") // return check if there is no question for this role and level left
                 {
                     mes.Visible = true; //show message
@@ -45,6 +52,24 @@ namespace LevelsPro.PlayerPanel
             }
 
             lblUserName.Text = Session["displayname"].ToString() + Resources.TestSiteResources.Quiz; //name of user with quiz
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void LoadData()
@@ -77,6 +102,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = Games_Selection.ResultSet.Tables[0].DefaultView;
             dtMandatoryQuizes = Games_Selection.ResultSet.Tables[4];
@@ -191,6 +217,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");

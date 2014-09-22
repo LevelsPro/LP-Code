@@ -10,11 +10,13 @@ using Common;
 using LevelsPro.App_Code;
 using System.Configuration;
 using BusinessLogic.Update;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class ViewMilestones : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -25,12 +27,32 @@ namespace LevelsPro.PlayerPanel
         {
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 LoadData();
                 Button2.Visible = false;
                 Button3.Visible = false;
                 Button4.Visible = false;
                 btnMyAwards.Enabled = true;
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void LoadData()
@@ -61,7 +83,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
                 if (auto.ResultSet != null && auto.ResultSet.Tables.Count > 0 && auto.ResultSet.Tables[1] != null && auto.ResultSet.Tables[1].Rows.Count > 0)
                 {
@@ -209,6 +231,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");

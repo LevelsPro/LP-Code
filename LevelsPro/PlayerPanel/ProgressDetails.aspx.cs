@@ -10,11 +10,13 @@ using LevelsPro.App_Code;
 using System.Data;
 using System.Configuration;
 using BusinessLogic.Update;
+using LevelsPro.Util;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class ProgressDetails : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -52,7 +54,8 @@ namespace LevelsPro.PlayerPanel
                 //{
                 //    MapImage.Src = "images/map.png";
                 //}
-
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 LevelsViewBLL level = new LevelsViewBLL();
                 Common.Roles role = new Roles();
                 role.RoleID = Convert.ToInt32(Session["UserRoleID"]);
@@ -63,6 +66,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                     //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
                 }
                 if (Session["UserRoleID"] != null)
@@ -90,6 +94,7 @@ namespace LevelsPro.PlayerPanel
 
                 LoadData();
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
             //if(Convert.ToInt32(Session["check"])==1)
             //{
             //    Session["check"] = 0;
@@ -99,6 +104,23 @@ namespace LevelsPro.PlayerPanel
             //   ClientScript.RegisterStartupScript(this.Page.GetType(), "", "window.open('"+URL+"');", true);
              
             //}
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void LoadData()
@@ -121,6 +143,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
@@ -147,6 +170,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
                     if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
                     {
@@ -278,6 +302,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
