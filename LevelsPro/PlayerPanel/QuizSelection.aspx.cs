@@ -105,7 +105,7 @@ namespace LevelsPro.PlayerPanel
             {
                 QuizSelection.Quiz = _quiz;
                 QuizSelection.Invoke();
-                //Games_Selection.Match = _match;
+                Games_Selection.Match = _match;
                 Games_Selection.Invoke();
             }
             catch (Exception ex)
