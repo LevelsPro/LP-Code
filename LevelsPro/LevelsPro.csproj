@@ -278,8 +278,6 @@
     <Content Include="AdminPanel\RewardManagement.aspx" />
     <Content Include="AdminPanel\RoleEdit.aspx" />
     <Content Include="AdminPanel\RoleManagement.aspx" />
-    <Content Include="AdminPanel\ErrorPage.aspx" />
-    <Content Include="AdminPanel\ErrorPage404.aspx" />
     <Content Include="AdminPanel\Scripts\canvas-draw.js" />
     <Content Include="AdminPanel\Scripts\fontResizer.js" />
     <Content Include="AdminPanel\Scripts\jquery-1.7.2.min.js" />
@@ -419,8 +417,6 @@
     <Content Include="Login.aspx" />
     <Content Include="ManagerPanel\AssignAward.aspx" />
     <Content Include="ManagerPanel\ChangePassword.aspx" />
-    <Content Include="ManagerPanel\ErrorPage.aspx" />
-    <Content Include="ManagerPanel\ErrorPage404.aspx" />
     <Content Include="ManagerPanel\Images\1.png" />
     <Content Include="ManagerPanel\Images\2.png" />
     <Content Include="ManagerPanel\Images\3.png" />
@@ -1156,20 +1152,6 @@
     <Compile Include="AdminPanel\RoleManagement.aspx.designer.cs">
       <DependentUpon>RoleManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AdminPanel\ErrorPage.aspx.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminPanel\ErrorPage.aspx.designer.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AdminPanel\ErrorPage404.aspx.cs">
-      <DependentUpon>ErrorPage404.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminPanel\ErrorPage404.aspx.designer.cs">
-      <DependentUpon>ErrorPage404.aspx</DependentUpon>
-    </Compile>
     <Compile Include="AdminPanel\SiteEdit.aspx.cs">
       <DependentUpon>SiteEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1300,20 +1282,6 @@
     </Compile>
     <Compile Include="ManagerPanel\ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ManagerPanel\ErrorPage.aspx.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ManagerPanel\ErrorPage.aspx.designer.cs">
-      <DependentUpon>ErrorPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ManagerPanel\ErrorPage404.aspx.cs">
-      <DependentUpon>ErrorPage404.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ManagerPanel\ErrorPage404.aspx.designer.cs">
-      <DependentUpon>ErrorPage404.aspx</DependentUpon>
     </Compile>
     <Compile Include="ManagerPanel\Manager.master.cs">
       <DependentUpon>Manager.master</DependentUpon>

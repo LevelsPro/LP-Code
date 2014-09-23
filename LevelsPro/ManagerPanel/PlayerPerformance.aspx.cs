@@ -11,11 +11,13 @@ using System.Data;
 using System.Configuration;
 using System.Web.UI.HtmlControls;
 using LevelsPro.PlayerPanel;
+using LevelsPro.Util;
 
 namespace LevelsPro.ManagerPanel
 {
     public partial class PlayerPerformance : AuthorizedPage
     {
+        private static string pageURL; 
         int level = 0;
         protected override void OnInit(EventArgs e)
         {
@@ -26,6 +28,8 @@ namespace LevelsPro.ManagerPanel
         {
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 ReuseableItems.CheckForloadprogressfrompopup = 0;
                 if (Request.QueryString["Base"] != null && Request.QueryString["Base"].ToString() != "" && Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "" && Request.QueryString["likelihood"] != null && Request.QueryString["likelihood"].ToString() != "" && Request.QueryString["remaining"] != null && Request.QueryString["remaining"].ToString() != "")
                 {
@@ -60,8 +64,14 @@ namespace LevelsPro.ManagerPanel
 
 
                     Session["ManagerAsscociateID"] = Request.QueryString["id"];
-                    LoadData(Convert.ToInt32(Request.QueryString["id"]));
-
+                    try
+                    {
+                        LoadData(Convert.ToInt32(Request.QueryString["id"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                     MessagesViewBLL messageview = new MessagesViewBLL();
 
                     try
@@ -70,6 +80,7 @@ namespace LevelsPro.ManagerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
@@ -90,7 +101,14 @@ namespace LevelsPro.ManagerPanel
                 }
                 else
                 {
-                    LoadData(Convert.ToInt32(Request.QueryString["id"]));
+                    try
+                    {
+                        LoadData(Convert.ToInt32(Request.QueryString["id"]));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                     MessagesViewBLL messageview = new MessagesViewBLL();
 
                     try
@@ -99,6 +117,7 @@ namespace LevelsPro.ManagerPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
@@ -120,8 +139,25 @@ namespace LevelsPro.ManagerPanel
 
                
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
       public void LoadData(int userid)
         {
            
@@ -148,6 +184,7 @@ namespace LevelsPro.ManagerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dvImage1 = UserImage.ResultSet.Tables[0].DefaultView;
                 dvImage1.RowFilter = "U_Current=1";
@@ -170,6 +207,7 @@ namespace LevelsPro.ManagerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
             dvImage.RowFilter = "U_Current=1";
@@ -196,6 +234,7 @@ namespace LevelsPro.ManagerPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
             {
@@ -222,7 +261,7 @@ namespace LevelsPro.ManagerPanel
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             DataView dv=team.ResultSet.Tables[0].DefaultView;
             dv.RowFilter="UserID =" +Convert.ToInt32(Request.QueryString["id"]);

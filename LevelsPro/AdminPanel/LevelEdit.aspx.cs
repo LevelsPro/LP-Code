@@ -13,6 +13,7 @@ using BusinessLogic.Delete;
 using LevelsPro.App_Code;
 using System.Configuration;
 using System.IO;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
@@ -22,6 +23,7 @@ namespace LevelsPro.AdminPanel
         {
             base.OnInit(e);
         }
+        private static string pageURL; 
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -42,13 +44,15 @@ namespace LevelsPro.AdminPanel
 
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Request.QueryString["levelid"] != null && Request.QueryString["levelid"].ToString() != "")
+                {
                 {
                     ViewState["levelid"] = Request.QueryString["levelid"];
                 }
 
                 if (Request.QueryString["roleid"] != null && Request.QueryString["roleid"].ToString() != "")
-                {
                     ViewState["roleid"] = Request.QueryString["roleid"];
                 }
 
@@ -62,13 +66,37 @@ namespace LevelsPro.AdminPanel
 
                   
                 }
+                try
+                {
+                    LoadGames();
 
-                LoadGames();
-            
 
-                LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
+                    LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
 
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
@@ -99,6 +127,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlGame.DataTextField = "GameName";
@@ -124,6 +153,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlYouIn.DataTextField = "GameDropdownName";
@@ -162,6 +192,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlHeadingTo.DataTextField = "GameDropdownName";
@@ -202,6 +233,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = Target.ResultSet.Tables[0].DefaultView;
 
@@ -225,8 +257,9 @@ namespace LevelsPro.AdminPanel
                 {
                     level.Invoke();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dvlevel = level.ResultSet.Tables[0].DefaultView;
@@ -342,8 +375,9 @@ namespace LevelsPro.AdminPanel
                     {
                         level.Invoke();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     if (level.ResultSet != null && level.ResultSet.Tables.Count > 0 && level.ResultSet.Tables[0] != null && level.ResultSet.Tables[0].Rows.Count > 0)
@@ -374,6 +408,7 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
 
@@ -612,9 +647,14 @@ namespace LevelsPro.AdminPanel
                                 }
                                 lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.SavedMessage;//"Level has been saved successfully";                                
                                 btnUpdate.Text = Resources.TestSiteResources.Update;
-
-                                LoadData(Convert.ToInt32(ViewState["roleid"]), LevelID);
-
+                                try
+                                {
+                                    LoadData(Convert.ToInt32(ViewState["roleid"]), LevelID);
+                                }
+                                catch (Exception exp)
+                                {
+                                    throw exp;
+                                }
 
                                 Target target = new Target();
                                 target.TargetValue = Convert.ToInt32(txtTargetValue.Text.Trim());
@@ -653,7 +693,7 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                               
+                                throw ex;
                             }                            
                         }
                         if (!ViewState["levelid"].Equals("") || ViewState["levelid"] != null || !ViewState["roleid"].Equals("") || ViewState["roleid"] != null)
@@ -699,7 +739,7 @@ namespace LevelsPro.AdminPanel
                         {
                             
                         }
-                        
+                        throw ex;
                     }
                 }
         }
@@ -720,6 +760,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
            
             ddlKPI.DataTextField = "KPI_name";
@@ -760,12 +801,19 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
-
+                        throw ex;
                     }
                 }
 
             }
-            LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
+            try
+            {
+                LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
         #endregion
 
@@ -788,8 +836,9 @@ namespace LevelsPro.AdminPanel
                 {
                     level.Invoke();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 if (level.ResultSet != null && level.ResultSet.Tables.Count > 0 && level.ResultSet.Tables[0] != null && level.ResultSet.Tables[0].Rows.Count > 0)
@@ -800,7 +849,14 @@ namespace LevelsPro.AdminPanel
                         if (level_id == Convert.ToInt32(level.ResultSet.Tables[0].Rows[i]["Level_ID"]))
                         {
                             previouslevel_id = Convert.ToInt32(level.ResultSet.Tables[0].Rows[i - 1]["Level_ID"]);
-                            LoadData(Convert.ToInt32(ViewState["roleid"]), previouslevel_id);
+                            try
+                            {
+                                LoadData(Convert.ToInt32(ViewState["roleid"]), previouslevel_id);
+                            }
+                            catch (Exception exp)
+                            {
+                                throw exp;
+                            }
                             ViewState["levelid"] = previouslevel_id;
                         }
                     }
@@ -828,8 +884,9 @@ namespace LevelsPro.AdminPanel
                 {
                     level.Invoke();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 if (level.ResultSet != null && level.ResultSet.Tables.Count > 0 && level.ResultSet.Tables[0] != null && level.ResultSet.Tables[0].Rows.Count > 0)
@@ -842,7 +899,14 @@ namespace LevelsPro.AdminPanel
                             if ( i+1 < level.ResultSet.Tables[0].Rows.Count)
                             {
                                 nextlevel_id = Convert.ToInt32(level.ResultSet.Tables[0].Rows[i + 1]["Level_ID"]);
-                                LoadData(Convert.ToInt32(ViewState["roleid"]), nextlevel_id);
+                                try
+                                {
+                                    LoadData(Convert.ToInt32(ViewState["roleid"]), nextlevel_id);
+                                }
+                                catch (Exception exp)
+                                {
+                                    throw exp;
+                                }
                                 ViewState["levelid"] = nextlevel_id;
                             }
                         }

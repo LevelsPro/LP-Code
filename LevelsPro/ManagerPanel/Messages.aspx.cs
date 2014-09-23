@@ -10,11 +10,13 @@ using BusinessLogic.Update;
 using System.Configuration;
 using BusinessLogic.Delete;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.ManagerPanel
 {
     public partial class Messages : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -24,9 +26,18 @@ namespace LevelsPro.ManagerPanel
         {
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Session["userid"] != null && Session["userid"].ToString() != "")
                 {
-                    ViewProfile.LoadData();
+                    try
+                    {
+                        ViewProfile.LoadData();
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                     lblName.Text = Session["displayname"].ToString() + " - " + Resources.TestSiteResources.Messages;
                 }
 
@@ -34,6 +45,24 @@ namespace LevelsPro.ManagerPanel
                 //btnShowUnRead_Click(null, null);
                 btnShowAll_Click(null, null);
             }
+            ExceptionUtility.CheckForErrorMessage(Session); 
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void LoadData()
@@ -53,6 +82,7 @@ namespace LevelsPro.ManagerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dv = messageview.ResultSet.Tables[0].DefaultView;
@@ -88,7 +118,14 @@ namespace LevelsPro.ManagerPanel
             }
             else
             {
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
             mpeComposeMessageDiv.Show();
         }
@@ -108,10 +145,11 @@ namespace LevelsPro.ManagerPanel
 
                 try
                 {
-                    messageview.Invoke();
+                    //messageview.Invoke();
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dv = messageview.ResultSet.Tables[0].DefaultView;
@@ -136,7 +174,14 @@ namespace LevelsPro.ManagerPanel
 
         protected void btnShowAll_Click(object sender, EventArgs e)
         {
-            LoadData();
+            try
+            {
+                LoadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
             hfShowAll.Value = "1";
         }
 
@@ -157,6 +202,7 @@ namespace LevelsPro.ManagerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 if (hfShowAll.Value == "0")
                 {
@@ -166,9 +212,15 @@ namespace LevelsPro.ManagerPanel
                 {
                     btnShowAll_Click(null, null);
                 }
-
-                mpeViewMessageDetailsDiv.Show();
-                ucViewMessageDetails.loadData(MessageID);
+                try
+                {
+                    mpeViewMessageDetailsDiv.Show();
+                    ucViewMessageDetails.loadData(MessageID);
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 //else
                 //{
                 //    LoadData();
@@ -189,9 +241,9 @@ namespace LevelsPro.ManagerPanel
                     msgBLL.Invoke();
                     btnShowAll_Click(null, null);
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    throw ex;
                 }
             }
         }

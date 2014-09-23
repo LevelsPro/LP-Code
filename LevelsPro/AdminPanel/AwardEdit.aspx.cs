@@ -13,11 +13,13 @@ using System.Configuration;
 using BusinessLogic.Delete;
 using System.IO;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class AwardEdit : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -31,6 +33,8 @@ namespace LevelsPro.AdminPanel
             lblmessage.Visible = false;
             if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 #region language check for images
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                 {
@@ -54,12 +58,36 @@ namespace LevelsPro.AdminPanel
                     ViewState["awardid"] = Request.QueryString["awardid"];
                     LoadImagesData(Convert.ToInt32(ViewState["awardid"]));
                 }
-                LoadCategory();
-                LoadKPI();
-                LoadData();
-
+                try
+                {
+                    LoadCategory();
+                    LoadKPI();
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+        
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         #region load all awards from db code
@@ -84,6 +112,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dv = award.ResultSet.Tables[0].DefaultView;
 
@@ -166,6 +195,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlKPI.DataTextField = "KPI_name";
@@ -174,10 +204,15 @@ namespace LevelsPro.AdminPanel
             DataView dv = kpi.ResultSet.Tables[0].DefaultView;
 
             dv.RowFilter = "Active=1";
-
-            ddlKPI.DataSource = dv.ToTable();
-            ddlKPI.DataBind();
-
+            try
+            {
+                ddlKPI.DataSource = dv.ToTable();
+                ddlKPI.DataBind();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
             ListItem li = new ListItem("Select", "0");
             ddlKPI.Items.Insert(0, li);
         }
@@ -197,7 +232,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
 
             if (dropdown.ResultSet != null && dropdown.ResultSet.Tables.Count > 0 && dropdown.ResultSet.Tables[0] != null && dropdown.ResultSet.Tables[0].Rows.Count > 0)
@@ -321,8 +356,7 @@ namespace LevelsPro.AdminPanel
                 else if (btnAddAward.Text == "Add" || btnAddAward.Text == "Ajouter" || btnAddAward.Text == "añadir")
                     {
                         pnlImg.Visible = false;
-                    
-                        
+                          
 
                         AwardInsertBLL insertAward = new AwardInsertBLL();
                         insertAward.Award = award;
@@ -354,6 +388,7 @@ namespace LevelsPro.AdminPanel
                                     }
                                     catch (Exception ex)
                                     {
+                                        throw ex;
                                     }
                                 }
                             }
@@ -376,7 +411,14 @@ namespace LevelsPro.AdminPanel
                         
 
                     }
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 btnAddAward.Text =Resources.TestSiteResources.Add;
                 txtAwardName.Text = "";
           
@@ -432,6 +474,7 @@ namespace LevelsPro.AdminPanel
                 return true;
             return false;
         }
+
         #region image upload and save code
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
@@ -470,6 +513,7 @@ namespace LevelsPro.AdminPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                     }                    
                 }
@@ -504,6 +548,7 @@ namespace LevelsPro.AdminPanel
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                     }
                 }
@@ -533,6 +578,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dvImage = awardimage.ResultSet.Tables[0].DefaultView;
@@ -598,6 +644,7 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     DataView dvImage = awardimage.ResultSet.Tables[0].DefaultView;
@@ -667,9 +714,9 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
-                  }
+              }
                 else
                 {
                     int ID = Convert.ToInt32(e.CommandArgument);

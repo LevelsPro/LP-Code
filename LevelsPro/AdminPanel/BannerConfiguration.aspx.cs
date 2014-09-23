@@ -6,14 +6,18 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Configuration;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class BannerConfiguration : System.Web.UI.Page
     {
+        private static string pageURL;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
@@ -32,6 +36,23 @@ namespace LevelsPro.AdminPanel
             if (strArr.Contains(extension))
                 return true;
             return false;
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void btnAddQuiz_Click(object sender, EventArgs e)
@@ -89,6 +110,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
 

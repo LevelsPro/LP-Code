@@ -9,20 +9,50 @@ using System.Data;
 using Common;
 using BusinessLogic.Insert;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class AssignAwards :AuthorizedPage
     {
+        private static string pageURL;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                LoadPlayers();
-                LoadAwards();
-                LoadData();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
+                {
+                    LoadPlayers();
+                    LoadAwards();
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -39,15 +69,21 @@ namespace LevelsPro.AdminPanel
                 Awards.AwardDate = DateTime.Now;
                 Awards.Manual = 1;
                 Awards.AwardedBy = Convert.ToInt32(Session["Userid"]);
+                try
+                {
+                    UserAwardInsertBLL insert = new UserAwardInsertBLL();
+                    insert.Award = Awards;
+                    insert.Invoke();
 
-                UserAwardInsertBLL insert = new UserAwardInsertBLL();
-                insert.Award = Awards;
-                insert.Invoke();
+                    lblmessage.Visible = true;
+                    lblmessage.Text = Resources.TestSiteResources.AssignedAward;
 
-                lblmessage.Visible = true;
-                lblmessage.Text = Resources.TestSiteResources.AssignedAward;
-
-                LoadData();
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
             catch (Exception ex)
             {
@@ -81,6 +117,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             dsPlayer = player.ResultSet;
 
@@ -88,10 +125,15 @@ namespace LevelsPro.AdminPanel
             ddlPalyer.DataValueField = "UserID";
 
             DataView dv = dsPlayer.Tables[0].DefaultView;
-
-            ddlPalyer.DataSource = dv.ToTable();
-            ddlPalyer.DataBind();
-
+            try
+            {
+                ddlPalyer.DataSource = dv.ToTable();
+                ddlPalyer.DataBind();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
             ListItem li = new ListItem("Select", "0");
             ddlPalyer.Items.Insert(0, li);
         }
@@ -108,6 +150,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             dsAwards = award.ResultSet;
 
@@ -132,7 +175,14 @@ namespace LevelsPro.AdminPanel
         protected void gvAwards_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvAwards.PageIndex = e.NewPageIndex;
-            LoadData();
+            try
+            {
+                LoadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
 
 
@@ -144,9 +194,9 @@ namespace LevelsPro.AdminPanel
             {
                 manual.Invoke();
             }
-            catch
-            { 
-                
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
             if (manual.ResultSet != null && manual.ResultSet.Tables.Count > 0 && manual.ResultSet.Tables[0] != null && manual.ResultSet.Tables[0].Rows.Count > 0)

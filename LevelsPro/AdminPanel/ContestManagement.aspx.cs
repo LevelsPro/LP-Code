@@ -11,25 +11,55 @@ using BusinessLogic.Update;
 using BusinessLogic.Insert;
 using System.Drawing;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class ContestManagement : AuthorizedPage
     {
+        private static string pageURL;
         protected void Page_Load(object sender, EventArgs e)
         {
 
             lblmessage.Visible = false;
             if (!(Page.IsPostBack))
             {
-                Page.DataBind();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
+                {
+                    Page.DataBind();
 
-                LoadRoles();
-                LoadData();
-                LoadSites();
-                LoadKPI();
+                    LoadRoles();
+                    LoadData();
+                    LoadSites();
+                    LoadKPI();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+        
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -45,6 +75,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlKPI.DataTextField = "KPI_name";
@@ -70,6 +101,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlSite.DataTextField = "site_name";
@@ -97,6 +129,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             //gvContest.DataSource = contest.ResultSet;
             //gvContest.DataBind();
@@ -113,6 +146,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlRole.DataTextField = "Role_Name";
@@ -232,6 +266,7 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     DataView dv = ContestObj.ResultSet.Tables[0].DefaultView;
@@ -404,7 +439,14 @@ namespace LevelsPro.AdminPanel
                 cbActive.Checked = false;
                 trActive.Visible = false;
                 hplView.Visible = false;
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
         }
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -428,7 +470,14 @@ namespace LevelsPro.AdminPanel
             txtEndDate.Text = "";
             trActive.Visible = false;
             hplView.Visible = false;
-            LoadData();
+            try
+            {
+                LoadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
 
         protected void gvContest_RowDataBound(object sender, GridViewRowEventArgs e)

@@ -10,21 +10,39 @@ using Common;
 using BusinessLogic.Insert;
 using System.Data;
 using BusinessLogic.Select;
+using LevelsPro.Util;
 
 namespace LevelsPro.ManagerPanel
 {
     public partial class AssignAward : System.Web.UI.Page
     {
+        private static string pageURL; 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             if (!IsPostBack)
             {
-                LoadAwards();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
+                {
+                    LoadAwards();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 if (Session["playerid"] != null && Session["playerid"].ToString() != "")
                 {
                     ViewState["playerid"] = Session["playerid"];
-                    LoadData(Convert.ToInt32(ViewState["playerid"]));
+                    try
+                    {
+                        LoadData(Convert.ToInt32(ViewState["playerid"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                     Label2.Text = Resources.TestSiteResources.AssignAward1 + " to " + Session["playernamemanager"].ToString();
                 }
                 //if (Session["playerid"] != null && Session["playerid"].ToString() != "")
@@ -34,8 +52,26 @@ namespace LevelsPro.ManagerPanel
                 //}
 
             }
-                
+            ExceptionUtility.CheckForErrorMessage(Session); 
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         protected void LoadData(int UserID)
         {
 
@@ -51,9 +87,9 @@ namespace LevelsPro.ManagerPanel
                 {
                     manual.Invoke();
                 }
-                catch
+                catch(Exception exp)
                 {
-
+                    throw exp;
                 }
 
                 if (manual.ResultSet != null && manual.ResultSet.Tables.Count > 0 && manual.ResultSet.Tables[0] != null && manual.ResultSet.Tables[0].Rows.Count > 0)
@@ -74,10 +110,12 @@ namespace LevelsPro.ManagerPanel
             DataSet dsAwards = new DataSet();
             try
             {
-                award.Invoke();
+                
+                //award.Invoke();
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             dsAwards = award.ResultSet;
 
@@ -119,8 +157,14 @@ namespace LevelsPro.ManagerPanel
 
                     //ddlAward.SelectedValue = "0";
 
-
-                    LoadData(Convert.ToInt32(ViewState["playerid"]));
+                    try
+                    {
+                        LoadData(Convert.ToInt32(ViewState["playerid"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                 }
             }
             catch (Exception ex)
@@ -169,9 +213,16 @@ namespace LevelsPro.ManagerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
-
-                LoadData(Convert.ToInt32(ViewState["playerid"]));
+                try
+                {
+                    LoadData(Convert.ToInt32(ViewState["playerid"]));
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
         }
 

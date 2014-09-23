@@ -13,6 +13,7 @@ using BusinessLogic.Select;
 using BusinessLogic.Delete;
 using System.Configuration;
 using System.IO;
+using LevelsPro.Util;
 
 namespace LevelsPro
 {
@@ -23,7 +24,7 @@ namespace LevelsPro
         static int previouslevel = 1;
         static int previousid = 0;
         static int currentid = 0;
-
+        private static string pageURL;
 
         protected string TypedPassword
         {
@@ -87,6 +88,8 @@ namespace LevelsPro
 
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 #region language check for images
 
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
@@ -105,13 +108,19 @@ namespace LevelsPro
                     }
                 }
                 #endregion
+                try
+                {
+                    LoadRoles();
+                    LoadGeneralRoles();
 
-                LoadRoles();
-                LoadGeneralRoles();
-
-                LoadSites();
-                LoadManagers();
-                LoadLevel(0);
+                    LoadSites();
+                    LoadManagers();
+                    LoadLevel(0);
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
 
                 txtPoints.Enabled = false;
                 txtPoints.Text = "0";
@@ -125,7 +134,14 @@ namespace LevelsPro
                     txtWorkedHours.Visible = true;
                     ltHeading.Text =Resources.TestSiteResources.EditPlayer;
                     ViewState["userid"] = Request.QueryString["userid"];
-                    LoadData(Convert.ToInt32(ViewState["userid"]));
+                    try
+                    {
+                        LoadData(Convert.ToInt32(ViewState["userid"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                 }
                 else
                 {
@@ -136,6 +152,7 @@ namespace LevelsPro
                     ltHeading.Text = Resources.TestSiteResources.AddPlayer;
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
         #region insert and update user information
         protected void btnInsertInfo_Click(object sender, EventArgs e)
@@ -328,6 +345,7 @@ namespace LevelsPro
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
                             int previous = Convert.ToInt32(previousid);
                             _userimage.UserIDImage = previous;
@@ -343,13 +361,21 @@ namespace LevelsPro
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
 
 
 
                             lblmessage.Visible = true;
                             lblmessage.Text = Resources.TestSiteResources.Player + ' ' + Resources.TestSiteResources.UpdateMessage;
-                            LoadData(Convert.ToInt32(ViewState["userid"]));
+                            try
+                            {
+                                LoadData(Convert.ToInt32(ViewState["userid"]));
+                            }
+                            catch (Exception exp)
+                            {
+                                throw exp;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -394,6 +420,24 @@ namespace LevelsPro
             }
         }
         #endregion
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         protected void btnCancelInfo_Click(object sender, EventArgs e)
         {
 
@@ -418,6 +462,7 @@ namespace LevelsPro
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 dsPlayer = player.ResultSet;
                 DataView dvPlayer = player.ResultSet.Tables[0].DefaultView;
@@ -496,6 +541,7 @@ namespace LevelsPro
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
@@ -529,6 +575,7 @@ namespace LevelsPro
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlRole.DataTextField = "Role_Name";
@@ -560,7 +607,7 @@ namespace LevelsPro
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
 
             
@@ -588,8 +635,9 @@ namespace LevelsPro
             {
                 level.Invoke();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
 
             DataView dv = level.ResultSet.Tables[0].DefaultView;
@@ -616,6 +664,7 @@ namespace LevelsPro
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlManager.DataTextField = "U_Name";
@@ -644,6 +693,7 @@ namespace LevelsPro
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlSite.DataTextField = "site_name";
@@ -666,7 +716,14 @@ namespace LevelsPro
         {
             if (ddlRole.SelectedIndex > 0)
             {
-                LoadLevel(Convert.ToInt32(ddlRole.SelectedValue));
+                try
+                {
+                    LoadLevel(Convert.ToInt32(ddlRole.SelectedValue));
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
         }
 
@@ -708,6 +765,7 @@ namespace LevelsPro
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }                   
 
                     DataView dvImage1 = UserImages.ResultSet.Tables[0].DefaultView;
@@ -755,7 +813,7 @@ namespace LevelsPro
                     }
                     catch (Exception ex)
                     {
-
+                        throw ex;
                     }
                 }
             }
@@ -846,6 +904,7 @@ namespace LevelsPro
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
                     }                    
                 }

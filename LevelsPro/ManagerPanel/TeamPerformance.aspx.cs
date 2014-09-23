@@ -9,11 +9,13 @@ using System.Data;
 using LevelsPro.App_Code;
 using System.Configuration;
 using LevelsPro.PlayerPanel;
+using LevelsPro.Util;
 
 namespace LevelsPro.ManagerPanel
 {
     public partial class TeamPerformance : AuthorizedPage
     {
+        private static string pageURL; 
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -23,7 +25,16 @@ namespace LevelsPro.ManagerPanel
         {
             if (!IsPostBack)
             {
-                LoadData();  
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
 
                 MessagesViewBLL messageview = new MessagesViewBLL();
 
@@ -33,6 +44,7 @@ namespace LevelsPro.ManagerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
@@ -51,6 +63,24 @@ namespace LevelsPro.ManagerPanel
 
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         private void LoadData()
@@ -76,6 +106,7 @@ namespace LevelsPro.ManagerPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dvImage1 = UserImage.ResultSet.Tables[0].DefaultView;
                 dvImage1.RowFilter = "U_Current=1";
@@ -98,8 +129,8 @@ namespace LevelsPro.ManagerPanel
                     team.Invoke();
                 }
                 catch (Exception ex)
-                { 
-                    
+                {
+                    throw ex;
                 }
 
                 DataSet ds = team.ResultSet;

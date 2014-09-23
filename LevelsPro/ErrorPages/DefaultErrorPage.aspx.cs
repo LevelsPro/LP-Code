@@ -19,9 +19,11 @@ namespace LevelsPro.ErrorPages
             switch(role)
             {
                 case "player":
+                case "manager":
                     string source = ExceptionUtility.GetRedirectionURL(Session);;
                     Response.AppendHeader("Refresh", "5;url=" + source);
                 break;
+                
             }
         }
     }

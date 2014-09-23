@@ -19,7 +19,8 @@ namespace LevelsPro.Util
         private static bool LoginError;
         private static string LoginErrorMessage;
         private static Dictionary<string, string> playerRedirectionLookup;
-        
+        private static Dictionary<string, string> ManagerRedirectionLookup;
+        private static Dictionary<string, string> AdminRedirectionLookup;
         //this dictionary will be used to keep track of a bad link,
         //in case of continous failures, different redirection strategy will be used.
         private static Dictionary<string, int> linkExceptionCount;
@@ -54,6 +55,31 @@ namespace LevelsPro.Util
                 {"/PlayerPanel/PlayerProfile.aspx","/PlayerPanel/PlayerHome.aspx"}
             };
 
+            ManagerRedirectionLookup = new Dictionary<string, string>()
+            {
+                {"/ManagerPanel/TeamPerformance.aspx","~/Index.aspx"},
+                {"/ManagerPanel/AssignAward.aspx","/ManagerPanel/TeamPerformance.aspx"},
+                {"/ManagerPanel/ManagerProfile.aspx","/ManagerPanel/TeamPerformance.aspx"},
+                {"/ManagerPanel/Messages.aspx","/ManagerPanel/TeamPerformance.aspx"},
+                {"/ManagerPanel/PlayerPerformance.aspx","/ManagerPanel/TeamPerformance.aspx"}
+            };
+
+            AdminRedirectionLookup = new Dictionary<string, string>() 
+            {
+                {"/AdminPanel/AdminHome","~/Index.aspx"},
+                {"/AdminPanel/AssignAwards.aspx","/AdminPanel/PlayerManagement.aspx"},
+                {"/AdminPanel/AwardEdit.aspx","/AdminPanel/AwardManagement.aspx"},
+                {"/AdminPanel/AwardManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/ContestManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/EditPlayer.aspx","/AdminPanel/PlayerManagement.aspx"},
+                {"/AdminPanel/KPIEdit.aspx","/AdminPanel/KPIManagement.aspx"},
+                {"/AdminPanel/KPIManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/LevelEdit.aspx","/AdminPanel/LevelManagement.aspx"},
+                {"/AdminPanel/LevelGameEdit.aspx","/AdminPanel/LevelGameManagement.aspx"},
+                {"/AdminPanel/LevelGameManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/BannerConfiguration.aspx","/AdminPanel/AdminHome.aspx"}
+
+            };
             linkExceptionCount = new Dictionary<string, int>();
         }
         #endregion
@@ -114,7 +140,7 @@ namespace LevelsPro.Util
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
                                 RemoveExceptionEntry(sourcePage);
-                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage),session);
+                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage,role.ToLower()),session);
                                 response.Redirect(DefaultErrorPage,false);
                             }
                             else
@@ -127,7 +153,7 @@ namespace LevelsPro.Util
                         {
                             SetErrorMessage(session, ErrorMessageUtility.genericMessage);
                             RemoveExceptionEntry(sourcePage);
-                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage), session);
+                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                             response.Redirect(DefaultErrorPage,false);
                         }
 
@@ -137,11 +163,113 @@ namespace LevelsPro.Util
                 #endregion
                 else if (role.ToLower().Equals(MANAGER))
                 {
-                    // add code for managers
+                    if (sourcePage.ToLower().Contains("performance"))
+                    {
+                        if (redirectionStrategy == RedirectionStrategy.local)
+                        {
+
+                            if (ExceptionCount(sourcePage) > 2)
+                            {
+                                SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
+                                RemoveExceptionEntry(sourcePage);
+                                LogoutManager(sourcePage,session, response);
+                            }
+                            else
+                            {
+                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                server.Transfer(sourcePage, false);
+                            }
+                        }
+                        else
+                        {
+                            SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
+                            RemoveExceptionEntry(sourcePage);
+                            LogoutManager(sourcePage, session, response);
+                        }
+                    }
+                    #region rest of pages
+                    else
+                    {
+                        if (redirectionStrategy == RedirectionStrategy.local)
+                        {
+                            if (ExceptionCount(sourcePage) > 2)
+                            {
+                                SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
+                                RemoveExceptionEntry(sourcePage);
+                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                                response.Redirect(DefaultErrorPage, false);
+                            }
+                            else
+                            {
+                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                server.Transfer(sourcePage, false);
+                            }
+                        }
+                        else
+                        {
+                            SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                            RemoveExceptionEntry(sourcePage);
+                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                            response.Redirect(DefaultErrorPage, false);
+                        }
+
+                    }
+                    #endregion
                 }
                 else if (role.ToLower().Equals(ADMIN))
                 {
-                    // add code for admins
+                    if (sourcePage.ToLower().Contains("home"))
+                    {
+                        if (redirectionStrategy == RedirectionStrategy.local)
+                        {
+
+                            if (ExceptionCount(sourcePage) > 2)
+                            {
+                                SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
+                                RemoveExceptionEntry(sourcePage);
+                                LogoutAdmin(sourcePage, session, response);
+                            }
+                            else
+                            {
+                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                server.Transfer(sourcePage, false);
+                            }
+                        }
+                        else
+                        {
+                            SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
+                            RemoveExceptionEntry(sourcePage);
+                            LogoutAdmin(sourcePage, session, response);
+                        }
+                    }
+                    #region rest of pages
+                    else
+                    {
+                        if (redirectionStrategy == RedirectionStrategy.local)
+                        {
+                            if (ExceptionCount(sourcePage) > 2)
+                            {
+                                SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
+                                RemoveExceptionEntry(sourcePage);
+                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                                response.Redirect(DefaultErrorPage, false);
+                            }
+                            else
+                            {
+                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                server.Transfer(sourcePage, false);
+                            }
+                        }
+                        else
+                        {
+                            SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                            RemoveExceptionEntry(sourcePage);
+                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                            response.Redirect(DefaultErrorPage, false);
+                        }
+
+                    }
+                    #endregion
                 }
             }
             else
@@ -189,12 +317,30 @@ namespace LevelsPro.Util
         #endregion
 
         #region Utility Methods
-        private static string ProvideRedirectionURL(string sourcePage)
+        private static string ProvideRedirectionURL(string sourcePage,string role)
         {
             string url=null;
-            if (playerRedirectionLookup.ContainsKey(sourcePage))
+            if (role.ToLower().Equals(PLAYER))
             {
-                url = playerRedirectionLookup[sourcePage];
+                if (playerRedirectionLookup.ContainsKey(sourcePage))
+                {
+                    url = playerRedirectionLookup[sourcePage];
+                }
+            }
+            else if (role.ToLower().Equals(MANAGER))
+            {
+                if (ManagerRedirectionLookup.ContainsKey(sourcePage))
+                {
+                    url = ManagerRedirectionLookup[sourcePage];
+                }
+            }
+            else if (role.ToLower().Equals(ADMIN))
+            {
+                if (AdminRedirectionLookup.ContainsKey(sourcePage))
+                {
+                    url = AdminRedirectionLookup[sourcePage];
+                }
+                // add code for admins
             }
             return url;
         }
@@ -264,7 +410,19 @@ namespace LevelsPro.Util
             }
             session.Abandon();
 
-            response.Redirect(ProvideRedirectionURL(sourcePage),false);
+            response.Redirect(ProvideRedirectionURL(sourcePage,PLAYER),false);
+        }
+
+        private static void LogoutManager(string sourcePage,HttpSessionState session, HttpResponse response)
+        {
+            session.Abandon();
+            response.Redirect(ProvideRedirectionURL(sourcePage,MANAGER),false);
+        }
+
+        private static void LogoutAdmin(string sourcePage, HttpSessionState session, HttpResponse response)
+        {
+            session.Abandon();
+            response.Redirect(ProvideRedirectionURL(sourcePage, MANAGER), false);
         }
 
         private static void LogError(Exception exp)
@@ -272,6 +430,7 @@ namespace LevelsPro.Util
             // need to add task for this later
         }
 
+        
         private static void SetErrorMessage(HttpSessionState session, string message)
         {
             session["Is_Error"] = "True";
