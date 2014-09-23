@@ -58,22 +58,31 @@ namespace LevelsPro.AdminPanel {
         protected global::System.Web.UI.WebControls.Label lblLogoImage;
         
         /// <summary>
-        /// txtQuizName control.
+        /// fpLogoImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuizName;
+        protected global::System.Web.UI.WebControls.FileUpload fpLogoImage;
         
         /// <summary>
-        /// rfvQuizName control.
+        /// rfvLogoImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvQuizName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLogoImage;
+        
+        /// <summary>
+        /// lblLogoCond control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLogoCond;
         
         /// <summary>
         /// lblTextImage control.
@@ -85,22 +94,31 @@ namespace LevelsPro.AdminPanel {
         protected global::System.Web.UI.WebControls.Label lblTextImage;
         
         /// <summary>
-        /// txtNoOfQuestions control.
+        /// fpTextImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNoOfQuestions;
+        protected global::System.Web.UI.WebControls.FileUpload fpTextImage;
         
         /// <summary>
-        /// rfvNoOfQuestions control.
+        /// rfvTextImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNoOfQuestions;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTextImage;
+        
+        /// <summary>
+        /// lblTextCond control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTextCond;
         
         /// <summary>
         /// lblBannerImage control.
@@ -112,30 +130,48 @@ namespace LevelsPro.AdminPanel {
         protected global::System.Web.UI.WebControls.Label lblBannerImage;
         
         /// <summary>
-        /// txtNoOfTimesPerDay control.
+        /// fpBannerImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNoOfTimesPerDay;
+        protected global::System.Web.UI.WebControls.FileUpload fpBannerImage;
         
         /// <summary>
-        /// rfvNoOfTimesPerDay control.
+        /// rfvBannerImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNoOfTimesPerDay;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBannerImage;
         
         /// <summary>
-        /// revNoOfTimesPerDay control.
+        /// lblBennerCond control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revNoOfTimesPerDay;
+        protected global::System.Web.UI.WebControls.Label lblBennerCond;
+        
+        /// <summary>
+        /// btnAddQuiz control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddQuiz;
+        
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel;
     }
 }

@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/Administrator.master" AutoEventWireup="true" CodeBehind="BannerConfiguration.aspx.cs" Inherits="LevelsPro.AdminPanel.BannerConfiguration" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         $('#scrollbar1').tinyscrollbar();
     });
@@ -9,28 +9,15 @@
         var passwordControl = document.getElementById(id);
         passwordControl.setAttribute("autocomplete", "off");
     }
-    function readURL(input) {
+</script>
 
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                /*$('#<%=hdImage.ClientID%>').val(e.target.result)*/
-                $('#imgQuiz').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="box top-b options-bar">
         <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, Back %>" PostBackUrl="~/AdminPanel/AdminHome.aspx"
             CssClass="green-btn btn fl"></asp:Button>
         <div class="user-nt fl er">
-            <asp:Label ID="lblHeading" runat="server" Text="Banner Configuration Settings"></asp:Label></div>
+            <asp:Label ID="lblHeading" runat="server" Text="Banner Settings"></asp:Label></div>
 
         <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
             CssClass="green-btn btn fr" onclick="btnLogout_Click"></asp:Button>
@@ -46,37 +33,46 @@
             <div class="strip">
                 <asp:Label ID="lblLogoImage" runat="server" class="edit-left32" Text="Logo Image : "></asp:Label>
                 <span class="edit-right32 tl">
-                <asp:TextBox ID="txtQuizName" runat="server"  class="qq-admin" MaxLength="100"
-                    ValidationGroup="Insertion" AutoCompleteType="Disabled" onfocus="disableautocompletion(this.id);"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvQuizName" runat="server" ErrorMessage="Provide Quiz Name"
-                    ControlToValidate="txtQuizName" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>    </span>            
+                
+                <asp:FileUpload ID="fpLogoImage" runat="server" ValidationGroup="Insertion"/>
+                <asp:RequiredFieldValidator ID="rfvLogoImage" runat="server" ErrorMessage="Provide Logo Image"
+                    ControlToValidate="fpLogoImage" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>  
+                <asp:Label ID="lblLogoCond" runat="server" class="edit-left32" Text="(Size = 128*128 px)"></asp:Label>              
+                </span>                
                 <div class="clear">
                 </div>
             </div>
             <div class="strip">
                 <asp:Label ID="lblTextImage" runat="server" class="edit-left32" Text="Text Image : "></asp:Label>
                  <span class="edit-right32 tl">
-                <asp:TextBox ID="txtNoOfQuestions" runat="server" class="qq-admin" ValidationGroup="Insertion"
-                    MaxLength="200" AutoCompleteType="Disabled" onfocus="disableautocompletion(this.id);"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvNoOfQuestions" runat="server" ErrorMessage="Provide No. of Questions"
-                    ControlToValidate="txtNoOfQuestions" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator> </span>               
+                <asp:FileUpload ID="fpTextImage" runat="server" ValidationGroup="Insertion"/>
+                <asp:RequiredFieldValidator ID="rfvTextImage" runat="server" ErrorMessage="Provide Text Image"
+                    ControlToValidate="fpTextImage" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator> 
+                <asp:Label ID="lblTextCond" runat="server" class="edit-left32" Text="(Size = 320*70 px)"></asp:Label>                              
+                </span>
                 <div class="clear">
                 </div>
             </div>
             <div class="strip">
                 <asp:Label ID="lblBannerImage" runat="server" class="edit-left32" Text="Banner Image : "></asp:Label>
                  <span class="edit-right32 tl">
-                <asp:TextBox ID="txtNoOfTimesPerDay" runat="server" class="qq-admin" ValidationGroup="Insertion"
-                    MaxLength="10" AutoCompleteType="Disabled" onfocus="disableautocompletion(this.id);"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvNoOfTimesPerDay" runat="server" ErrorMessage="Provide No. of Questions Per Day"
-                    ControlToValidate="txtNoOfTimesPerDay" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>                
-                <asp:RegularExpressionValidator ID="revNoOfTimesPerDay" runat="server" ControlToValidate="txtNoOfTimesPerDay"
-                    Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
-                    ValidationGroup="Insertion">Enter numbers only.</asp:RegularExpressionValidator>   </span>             
+                <asp:FileUpload ID="fpBannerImage" runat="server" ValidationGroup="Insertion"/>
+                <asp:RequiredFieldValidator ID="rfvBannerImage" runat="server" ErrorMessage="Provide Banner Background Image"
+                    ControlToValidate="fpBannerImage" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>                
+                <asp:Label ID="lblBennerCond" runat="server" class="edit-left32" Text="(Size = 3790*128 px)"></asp:Label>                  
+                </span>
                 <div class="clear">
                 </div>
             </div>
             </div>
+            <asp:Button ID="btnAddQuiz" runat="server" class="edit-left" CssClass="green-btn admin-edit fr"
+            Text="Add" ValidationGroup="Insertion" onclick="btnAddQuiz_Click"/>
+        &nbsp;
+        <asp:Button ID="btnCancel" runat="server" class="edit-left" CssClass="green-btn admin-edit fr mr10"
+            Text="<%$ Resources:TestSiteResources, Cancel %>" 
+            onclick="btnCancel_Click"/>
+        <div class="clear">
+        </div>
             </div>
 
 
