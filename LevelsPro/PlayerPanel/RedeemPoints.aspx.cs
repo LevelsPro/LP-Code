@@ -20,39 +20,22 @@ namespace LevelsPro.PlayerPanel
     public partial class RedeemPoints : AuthorizedPage
     {
         private static string pageURL;
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            Points point = new Points();
-            point.UserID = Convert.ToInt32(Session["userid"]);
-            //UserPointsReportBLL _usersum = new UserPointsReportBLL();
-            //try
-            //{
-            //    _usersum.Points = point;
-            //    _usersum.Invoke();
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-            //DataView dv = _usersum.Sum.Tables[0].DefaultView;
-            //DataTable dt = dv.ToTable();
-            //if (dt != null && dt.Rows.Count > 0 && dt.Rows[0][0].ToString() != "")
-            //{
-            //    if (dt.Rows[1][0].ToString().Trim() != "")
-            //    {
-            //        //lblScore.Text = (Convert.ToInt32(dt.Rows[0][0]) + Convert.ToInt32(dt.Rows[1][0])).ToString();
-            //    }
-            //    else
-            //    {
-            //        //lblScore.Text = Convert.ToInt32(dt.Rows[0][0]).ToString();
-            //    }
-            //}
-            //else
-            //{
-            //    //lblScore.Text = "0";
-            //}
-            if (!IsPostBack)
+           
+            if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
 
+
+                Points point = new Points();
+                point.UserID = Convert.ToInt32(Session["userid"]);
 
                 if (Session["userid"] != null && Session["userid"].ToString() != "")
                 {
@@ -187,7 +170,7 @@ namespace LevelsPro.PlayerPanel
             PointsInsertBLL points = new PointsInsertBLL();
             try
             {
-                points.Points = point;
+               points.Points = point;
                 points.Invoke();
             }
             catch (Exception ex)
@@ -257,6 +240,7 @@ namespace LevelsPro.PlayerPanel
             //    //lblScore.Text = "0";
             //}
             int sum = Convert.ToInt32(Session["U_Points"]) - Convert.ToInt32(e.CommandArgument.ToString());
+            ReuseableItems.PlayerPoints_PlayerPanel = sum;
             Session["U_Points"] = sum;
             point.RedeemPoints = sum;
             UserPointsReportBLL _usersum = new UserPointsReportBLL();
@@ -707,10 +691,6 @@ namespace LevelsPro.PlayerPanel
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-
-        }
+      
     }
 }

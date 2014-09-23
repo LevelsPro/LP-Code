@@ -986,7 +986,7 @@ namespace LevelsPro.PlayerPanel
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
 
-                        insertpoints.Quiz = _quiz;
+                       insertpoints.Quiz = _quiz;
                         try
                         {
                             insertpoints.Invoke();
@@ -1012,7 +1012,7 @@ namespace LevelsPro.PlayerPanel
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
 
-                        insertpoints.Quiz = _quiz;
+                       insertpoints.Quiz = _quiz;
                         try
                         {
                             insertpoints.Invoke();
@@ -1038,7 +1038,7 @@ namespace LevelsPro.PlayerPanel
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
 
-                        insertpoints.Quiz = _quiz;
+                       insertpoints.Quiz = _quiz;
                         try
                         {
                             insertpoints.Invoke();

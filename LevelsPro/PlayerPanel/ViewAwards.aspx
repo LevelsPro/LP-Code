@@ -62,55 +62,37 @@
         <div class="body-cont">
             <uc:Profile ID="ViewProfile" runat="server" />
             <div class="box brd mt10 m10px p10px">
-
-            <table align="center">
-            
-                <tr>
-                
-                    <td> <div class="orange-wrapper fl maw m10px">
-                    <%--<asp:Button ID="btnMyAwards" runat="server" Text="<%$ Resources:TestSiteResources, MyAwardsB %>"  class="orange"></asp:Button>--%>
+                     <div class="orange-wrapper fl maw m10px">
                     <asp:Button ID="btnMyAwards" runat="server" Text="<%$ Resources:TestSiteResources, MyAwardsB %>"
                         CssClass="orange" OnClick="btnMyAwards_Click" />
-                </div></td>
-                    <td>
+                </div>
+                    
                         <div class="green-wrapper fl maw m10px">
                     <asp:Button ID="btnMilestones" runat="server" Text="<%$ Resources:TestSiteResources, MilestonesB %>"
                         PostBackUrl="~/PlayerPanel/ViewMilestones.aspx" class="green"></asp:Button>
                 </div>
-                    </td>
-                    <td>
+                    
                     <div class="green-wrapper fl maw m10px"><asp:Button ID="btnManagerAwards" runat="server" Text="<%$ Resources:TestSiteResources, Manager %> "
                         class="green" PostBackUrl="~/PlayerPanel/ViewManagerAwards.aspx"></asp:Button></div>
-                    </td>
+                    
 
-                    <td>
+                    
                     <div class="green-wrapper fl maw m10px"><asp:Button ID="Button2" runat="server" Text="<%$ Resources:TestSiteResources, Levels %> "
                         class="green" PostBackUrl="~/PlayerPanel/ViewLevelAwards.aspx"></asp:Button></div>
-                    </td>
-                    <td>
+                   
+                    
                     <div class="green-wrapper fl maw m10px"><asp:Button ID="Button3" runat="server" Text="<%$ Resources:TestSiteResources, Performance %> "
                         class="green" PostBackUrl="~/PlayerPanel/ViewPerformanceAwards.aspx"></asp:Button></div>
 
-                    </td>
+                    
 
-                    <td>
+                  
                     
                          <div class="green-wrapper fl maw m10px"><asp:Button ID="Button4" runat="server" Text="<%$ Resources:TestSiteResources, Contest %> "
                         class="green" PostBackUrl="~/PlayerPanel/ViewContestAwards.aspx"></asp:Button></div>
-
-                    </td>
-                
-                </tr>
-
-            </table>
-
-               
-                
-                
-               
-                
-               
-                
+                         <div class="clear">
+                </div>
+  
             </div>
             <div class="manager-cont fl-wrapper" id="scrollbar1">
                 <div class="scrollbar">
