@@ -145,7 +145,7 @@ namespace LevelsPro.ManagerPanel
 
                 try
                 {
-                    //messageview.Invoke();
+                    messageview.Invoke();
                 }
                 catch (Exception ex)
                 {
@@ -221,10 +221,6 @@ namespace LevelsPro.ManagerPanel
                 {
                     throw exp;
                 }
-                //else
-                //{
-                //    LoadData();
-                //}
             }
             else if (e.CommandName == "DeleteMsg")
             {
@@ -267,35 +263,7 @@ namespace LevelsPro.ManagerPanel
                     ibtnDelete.Visible = false;
                 }
             }
-            //if (Session["userid"] != null && Session["userid"].ToString() != "")
-            //{                
-            //    // ViewProfile.LoadData();
-            //    //lblName.Text = Session["displayname"].ToString() + " - Messages";
-            //    int mid = Convert.ToInt32(((System.Data.DataRowView)(e.Item.DataItem)).Row.ItemArray[0]);
-
-
-            //    MessagesViewBLL messageview = new MessagesViewBLL();
-
-            //    try
-            //    {
-            //        messageview.Invoke();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //    }
-
-            //    DataView dv = messageview.ResultSet.Tables[0].DefaultView;
-
-            //    dv.RowFilter = "IsReply= 1 AND RepliedMessageID=" + mid;
-
-            //    DataTable dt = dv.ToTable();
-
-            //    if (dt != null && dt.Rows.Count > 0)
-            //    {
-            //        dlMessages.DataSource = dt;
-            //        dlMessages.DataBind();
-            //    }
-            //}
+           
         }
     }
 }

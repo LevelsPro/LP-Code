@@ -17,8 +17,9 @@ namespace LevelsPro.ManagerPanel
 {
     public partial class PlayerPerformance : AuthorizedPage
     {
-        private static string pageURL; 
+        private static string pageURL;
         int level = 0;
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -158,7 +159,8 @@ namespace LevelsPro.ManagerPanel
             // Clear the error from the server.
             Server.ClearError();
         }
-      public void LoadData(int userid)
+        
+        public void LoadData(int userid)
         {
            
             UserImageViewBLL UserImage = new UserImageViewBLL();
@@ -329,27 +331,8 @@ namespace LevelsPro.ManagerPanel
 
         protected void dlProgressDetail_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            //Common.User user = new Common.User();
-            //TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
-
-
-            //user.UserID = Convert.ToInt32(Request.QueryString["id"]);
-            //user.CurrentLevel = level;
-            //progress.User = user;
-            ////user.UserID = Convert.ToInt32(user);
-
-            //try
-            //{
-            //    progress.Invoke();
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-
-            //DataTable dt = progress.ResultSet.Tables[0];
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{
-
+            try
+            {
                 Label lblCurrent = e.Item.FindControl("lblCurrent") as Label;
                 Label lblStatus = e.Item.FindControl("lblStatus") as Label;
                 Label lblTargetValue = e.Item.FindControl("lblTargetValue") as Label;
@@ -359,50 +342,13 @@ namespace LevelsPro.ManagerPanel
 
                 HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
                 span.Attributes["class"] = "navy-bar";
-                span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";     
+                span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
-                //if (lblStatus.Text.ToLower() == "yellow")
-                //{
-                //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
-                //    span.Attributes["class"] = "yellow-bar";
-                //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";                    
-                //}
-                //else if (lblStatus.Text.ToLower() == "red")
-                //{
-                //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
-                //    span.Attributes["class"] = "red-bar";
-                //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";                    
-                //}
-                //else
-                //{
-                //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
-                //    span.Attributes["class"] = "green-bar";
-                //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";                   
-                //}
-
-
-
-
-            //if (lblStatus.Text.ToLower() == "yellow")
-            //{
-            //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
-            //    span.Attributes["class"] = "yellow-bar";
-            //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
-            //}
-            //else if (lblStatus.Text.ToLower() == "red")
-            //{
-            //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
-            //    span.Attributes["class"] = "red-bar";
-            //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
-            //}
-            //else
-            //{
-            //    HtmlGenericControl span = (HtmlGenericControl)e.Item.FindControl("lblclass");
-            //    span.Attributes["class"] = "green-bar";
-            //    span.Attributes["style"] = "width:" + lblCurrent.Text.Trim() + "%";
-            //}
-
-            //}
         }
 
         protected void btnEditProfile_Click(object sender, EventArgs e)
@@ -417,57 +363,61 @@ namespace LevelsPro.ManagerPanel
 
         protected void btnMes_Click(object sender, EventArgs e)
         {
-            //if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "")
-            //{
-            //    Response.Redirect("~/ManagerPanel/Messages.aspx?playerid=" + Convert.ToInt32(Request.QueryString["id"]), false);
-            //}
-            //Session["playerid"] = Convert.ToInt32(Request.QueryString["id"]);
             mpeComposeMessageDiv.Show();
 
         }
 
         protected void btnawrd_Click(object sender, EventArgs e)
         {
-           // mpeViewMessageDetailsDiv.Show();
-
-            Response.Redirect("AssignAward.aspx");
+           Response.Redirect("AssignAward.aspx");
         }
 
         protected void dlProgressDetail_ItemCommand(object source, DataListCommandEventArgs e)
         {
-            if (e.CommandName == "ViewPopup")
+            try
             {
-                Session["chkmangerkpi"] = 1;
-                string[] arg = new string[2];
-                arg = e.CommandArgument.ToString().Split(';');
-                //Session["LevelID"] = arg[0];
-                //Session["LevelPosition"] = arg[1];
-                //int score = Convert.ToInt32(arg[1]);
-                ReuseableItems.userkpistargetidmanager = Convert.ToInt32(arg[0]);
+                #region Checking Item Command
+                if (e.CommandName == "ViewPopup")
+                {
+                    Session["chkmangerkpi"] = 1;
+                    string[] arg = new string[2];
+                    arg = e.CommandArgument.ToString().Split(';');
+                    ReuseableItems.userkpistargetidmanager = Convert.ToInt32(arg[0]);
 
-                string[] arg1 = new string[2];
-                arg1 = arg[1].ToString().Split('&');
-                ReuseableItems.userkpiscoremanager = Convert.ToInt32(arg1[0]);
+                    string[] arg1 = new string[2];
+                    arg1 = arg[1].ToString().Split('&');
+                    ReuseableItems.userkpiscoremanager = Convert.ToInt32(arg1[0]);
 
 
-                string[] arg2 = new string[2];
-                arg2 = arg1[1].ToString().Split('(');
-                ReuseableItems.userkpitargetmanager = Convert.ToInt32(arg2[0]);
+                    string[] arg2 = new string[2];
+                    arg2 = arg1[1].ToString().Split('(');
+                    ReuseableItems.userkpitargetmanager = Convert.ToInt32(arg2[0]);
 
-                string[] arg3 = new string[2];
-                arg3 = arg2[1].ToString().Split(')');
-                ReuseableItems.userkpitextmanager =arg3[0];
+                    string[] arg3 = new string[2];
+                    arg3 = arg2[1].ToString().Split(')');
+                    ReuseableItems.userkpitextmanager = arg3[0];
 
-                string[] arg4 = new string[2];
-                arg4 = arg3[1].ToString().Split('^');
-                ReuseableItems.userkpiidmanager =Convert.ToInt32(arg4[0]);
+                    string[] arg4 = new string[2];
+                    arg4 = arg3[1].ToString().Split('^');
+                    ReuseableItems.userkpiidmanager = Convert.ToInt32(arg4[0]);
 
-                ReuseableItems.usertargetpointsdmanager=Convert.ToInt32(arg4[1]);
+                    ReuseableItems.usertargetpointsdmanager = Convert.ToInt32(arg4[1]);
+                    try
+                    {
+                        mpeViewProgressDetailsDiv.Show();
+                        ucViewProgressDetails.LoadData();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
 
-              //  mpeComposeMessageDiv.Hide();
-
-                mpeViewProgressDetailsDiv.Show();
-               ucViewProgressDetails.LoadData();
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
