@@ -67,154 +67,10 @@ namespace LevelsPro.PlayerPanel
 
                 }
 
-                #region Commented Facebook
-                //if (Request.QueryString["from"] != null && Request.QueryString["from"].ToString() == "sharebutton") // Needed for facebook share (Hassan)
-                //{
-                //    ibtnFacebook_Click(null, null);
-                //}
-
-                //#region Twitter
-                //IOAuthCredentials credentials = new SessionStateCredentials();
-
-
-                //if (credentials.ConsumerKey == null || credentials.ConsumerSecret == null)
-                //{
-
-                //    credentials.ConsumerKey = ConfigurationManager.AppSettings["twitterConsumerKey"];
-                //    credentials.ConsumerSecret = ConfigurationManager.AppSettings["twitterConsumerSecret"];
-                //    //credentials.OAuthToken = ConfigurationManager.AppSettings["twitterOAuthToken"];
-                //    //credentials.AccessToken = ConfigurationManager.AppSettings["twitterAccessToken"];
-                //}
-
-                //auth = new WebAuthorizer
-                //{
-                //    Credentials = credentials,
-                //    PerformRedirect = authUrl => Response.Redirect(authUrl)
-                //};
-
-
-                //if (!IsPostBack)
-                //{
-                //    auth.CompleteAuthorization(Request.Url);
-                //    //auth.PerformRedirect(objUri.AbsoluteUri);                
-                //}
-
-                //if (Request.QueryString["fromtwitter"] != null && Request.QueryString["fromtwitter"].ToString() == "1") // Needed for Twitter tweet (Hassan)
-                //{
-
-                //    if (auth.IsAuthorized)
-                //    {
-                //        TweetLevel();
-                //    }
-                //}
-                //#endregion
-
-
-
-                /////////////////////////////////////////////by atizaz////////////////
-
-
-
-
-
-
-
-                ////if (Request.QueryString["fromtwitter"] != null && Request.QueryString["fromtwitter"].ToString() == "1") // Needed for Twitter tweet (Hassan)
-                ////{
-                ////    ibtnTwitter_Click(null, null);
-                ////}
-
-                #endregion
-
-                //RolesViewBLL roles = new RolesViewBLL();
-                //try
-                //{
-                //    roles.Invoke();
-                //}
-                //catch (Exception ex)
-                //{
-                //    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
-                //}
-                //if (Session["UserRoleID"] != null)
-                //{
-                //    DataView dv = roles.ResultSet.Tables[0].DefaultView;
-
-                //    dv.RowFilter = "Role_ID=" + Convert.ToInt32(Session["UserRoleID"]);
-
-                //    DataTable dt1 = new DataTable();
-                //    dt1 = dv.ToTable();
-                //    if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
-                //    {
-                //        string imagepath = dt1.Rows[0]["ImageName"].ToString();
-
-                //        MapImage.Src = path + imagepath;
-                //    }
-                //    else
-                //    {
-                //        MapImage.Src = "images/map.png";
-                //    }
-                //}
-
-                //Points point = new Points();
-                //point.UserID = Convert.ToInt32(Session["userid"]);
-                //PlayerPointsViewBLL score = new PlayerPointsViewBLL();
-                //try
-                //{
-                //    score.Points = point;
-                //    score.Invoke();
-                //}
-                //catch (Exception ex)
-                //{
-                //}
-                //DataView dvPoints = score.Sum.Tables[0].DefaultView;
-                //DataTable dt = dvPoints.ToTable();
-
-                //if (dt != null && dt.Rows.Count > 0 && dt.Rows[0]["U_Points"] != null && dt.Rows[0]["U_Points"].ToString() != "")
-                //{
-                //    Session["U_Points"] = dt.Rows[0]["U_Points"].ToString();
-
-                //}
-
-
-                //if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
-                //{
-                //    lblScore.Text = Session["U_Points"].ToString();
-                //}
-                //else
-                //{
-                //    lblScore.Text = "0";
-                //}
+                
                 lblScore.Text = ReuseableItems.PlayerPoints_PlayerPanel.ToString();
                 Session["U_Points"] = lblScore.Text;
-                #region Commented
-                //UserPointsReportBLL _usersum = new UserPointsReportBLL();
-                //try
-                //{
-                //    _usersum.Points = point;
-                //    _usersum.Invoke();
-                //}
-                //catch (Exception ex)
-                //{
-                //}
-                //DataView dv = _usersum.Sum.Tables[0].DefaultView;
-                //DataTable dt = dv.ToTable();
-
-
-                //if (dt != null && dt.Rows.Count > 0 && dt.Rows[0][0].ToString() != "" )
-                //{
-                //    if (dt.Rows[1][0].ToString().Trim() != "")
-                //    {
-                //        lblScore.Text = (Convert.ToInt32(dt.Rows[0][0]) + Convert.ToInt32(dt.Rows[1][0])).ToString();
-                //    }
-                //    else {
-                //        lblScore.Text = Convert.ToInt32(dt.Rows[0][0]).ToString();
-                //    }
-                //}
-                //else
-                //{
-                //    lblScore.Text = "0";
-                //}
-                #endregion
+                
 
 
                 UserImageViewBLL UserImage = new UserImageViewBLL();
@@ -243,29 +99,7 @@ namespace LevelsPro.PlayerPanel
                 }
 
 
-                #region Commented
-                //UserViewBLL user = new UserViewBLL();
-                //try
-                //{
-                //    user.Invoke();
-                //}
-                //catch (Exception ex)
-                //{
-                //}
-                //DataView dvName = user.ResultSet.Tables[0].DefaultView;
-                //dvName.RowFilter = "UserID=" + Convert.ToInt32(Session["userid"]);
-                //DataTable dtName = dvName.ToTable();
-                //lblFullName.Visible = true;
-                //if (dtName.Rows[0]["Display_Name"].ToString() == "1")
-                //{
-                //  lblFullName.Text = dtName.Rows[0]["U_FirstName"].ToString() + ' ' + dtName.Rows[0]["U_LastName"].ToString();
-                //}
-                //else
-                //{
-                //    lblFullName.Text = dtName.Rows[0]["U_NickName"].ToString();
-
-                //}
-                #endregion
+              
 
                 if (!IsPostBack)
                 {
@@ -273,67 +107,23 @@ namespace LevelsPro.PlayerPanel
                     {
                         lblFullName.Text = Session["displayname"].ToString();
 
-                        #region Commented Authentication Code
-                        //try
-                        //{
-                        //    usr = (string)Session["username"];
-                        //    pwd = (string)Session["password"];
-                        //    role = (string)Session["role"];
-                        //    if ((usr == null) || (pwd == null))
-                        //    {
-                        //        Response.Redirect("~/Login.aspx");
-                        //    }
-                        //    else
-                        //    {
-
-                        //        if (!(Authorization(Roles(role), role)))
-                        //        {
-                        //            //ClientScript.RegisterStartupScript(typeof(Page), "warning", "<script>alert('Invalid UserName/Password')</script>");                            
-                        //        }
-                        //        else
-                        //        {
-                        //            if ((role.Equals("Player")) || (role.Equals("Manager")))
-                        //            {
-
-                        //            }
-                        //            else
-                        //            {
-                        //                Response.Redirect("~/Login.aspx");
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>", false);
-                        //}
-                        #endregion
+                        
 
                         if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                         {
                             if (Session["MyCulture"].ToString() == "fr-FR")
                             {
-                                //lbtnAwards.CssClass = "green-btn pag awards-btn frenpag";
-                                //btnGame.CssClass = "green-btn pag frenpag2";
-                                //btnRedeemPoints.CssClass = "green-btn pag frenpag2";
-                                //divPoints.Attributes["class"] = "grey-btn pal frenpag2";
+                                
                             }
                             else
                             {
-                                //lbtnAwards.CssClass = "green-btn pag awards-btn";
-                                //btnGame.CssClass = "green-btn pag";
-                                //btnRedeemPoints.CssClass = "green-btn pag";
-                                //divPoints.Attributes["class"] = "grey-btn pal";
+                                
                             }
                         }
 
-                        // if (Session["siteid"] != null && Session["siteid"].ToString() != "")
-                        // {
-                        //DataSet ds = new DataSet();
-                        //ds = UserData(usr, pwd, Convert.ToInt32(Session["siteid"]));
+                        
                         lblUserRole.Text = Session["rolename"].ToString();
-                        // }
-
+                        
                         if (Session["userid"] != null && Session["userid"].ToString() != "")
                         {
                             ///////////////////by nasir///////
@@ -517,23 +307,7 @@ namespace LevelsPro.PlayerPanel
                             #endregion
                             /////////////////////
 
-                            //UserLevelPercentBLL userlevel = new UserLevelPercentBLL();
-                            //Common.User _userPercent = new Common.User();
-
-                            //_userPercent.UserID = Convert.ToInt32(Session["userid"]);
-
-                            //userlevel.User = _userPercent;
-
-                            //try
-                            //{
-                            //    userlevel.Invoke();
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //}
-
-                         //   if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
-                         //   {
+                            
                                 #region Commented Code
                                 //lblPerformance.Text = Convert.ToDecimal(userlevel.ResultSet.Tables[0].Rows[0]["Percentage"]).ToString("0") + "%";//"80%";
 
@@ -548,24 +322,22 @@ namespace LevelsPro.PlayerPanel
                             {
                                 Session["CurLevel"] = ReuseableItems.PlayerCurrentLevelID_PlayerPanel.ToString();
                                 LevelStar.ImageUrl = "images/star_yellow_" + ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel.ToString() + ".png";
-                                // imgFxNews.ImageUrl = "~/" + FxNewsFolder + FxNewsImageFilename;
+                                
 
 
                                 TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
 
-                                //GetProgressDetailBLL progress1 = new GetProgressDetailBLL();
+                                
                                 Common.User user = new Common.User();
 
                                 user.UserID = Convert.ToInt32(Session["userid"]);
                                 user.CurrentLevel = Convert.ToInt32(ReuseableItems.PlayerCurrentLevelID_PlayerPanel);//
                                 progress.User = user;
-                                //progress1.UserID = user;
-                                //user.UserID = Convert.ToInt32(user);
-
+                                
                                 try
                                 {
                                     progress.Invoke();
-                                    //progress1.Invoke();
+                                    
                                 }
                                 catch (Exception ex)
                                 {
@@ -591,60 +363,9 @@ namespace LevelsPro.PlayerPanel
                                     {
                                         lblPerformance.Text = "0%";
                                     }
+                                    
 
-                                        #region Commented Old level up Code
-                                        //PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();                                        
-
-                                        //user.UserID = Convert.ToInt32(Session["userid"]);
-                                        //user.CurrentLevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["current_level"]);//
-                                        //targetprogress.User = user;                                        
-
-                                        //try
-                                        //{
-                                        //    targetprogress.Invoke();                                            
-                                        //}
-                                        //catch (Exception ex)
-                                        //{
-                                        //}
-                                        //if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
-                                        //{
-                                        //    foreach (DataRow dr in targetprogress.ResultSet.Tables[0].Rows)
-                                        //    {
-                                        //        if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString() == "")
-                                        //        {
-
-                                        //            UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                                        //            Common.User user_targetpoints = new Common.User();
-
-                                        //            user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
-                                        //            user.TargetID = Convert.ToInt32(dr["Target_ID"]);
-
-                                        //            popup.User = user;
-                                        //            try
-                                        //            {
-                                        //                popup.Invoke();
-                                        //            }
-                                        //            catch (Exception ex)
-                                        //            {
-                                        //            }                                                    
-
-                                        //            if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
-                                        //            {
-                                        //                Session["U_Points"] = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
-                                        //            }
-                                        //            else
-                                        //            {
-                                        //                Session["U_Points"] = dr["Points"].ToString();
-                                        //            }
-
-                                        //            Page_Load(null, null);                                                    
-                                        //        }
-                                        //    }
-                                        //}
-
-                                        #endregion
-
-                                        #region Display of multiple popups (by Haseeb)
+                                    #region Display of multiple popups (by Haseeb)
 
                                         GetPopupShowed_LevelPerformanceBLL Popup = new GetPopupShowed_LevelPerformanceBLL();
                                         DataSet dSpopUp = new DataSet();
@@ -723,66 +444,7 @@ namespace LevelsPro.PlayerPanel
                                         //}
 
                                         #endregion
-
-
-                                        #region Commented Old Level up Code
-                                        //        else
-                                        //        {                                        
-                                        //            PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();                                        
-
-                                        //            user.UserID = Convert.ToInt32(Session["userid"]);
-                                        //            user.CurrentLevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["current_level"]);//
-                                        //            targetprogress.User = user;                                        
-
-                                        //            try
-                                        //            {
-                                        //                targetprogress.Invoke();                                            
-                                        //            }
-                                        //            catch (Exception ex)
-                                        //            {
-                                        //            }
-                                        //            if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
-                                        //            {
-                                        //                foreach (DataRow dr in targetprogress.ResultSet.Tables[0].Rows)
-                                        //                {
-                                        //                    if (Convert.ToDecimal(dr["current_percentage"]) >= 100 && dr["achieved"].ToString() == "")
-                                        //                    {
-                                        //                        UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                                        //                        Common.User user_targetpoints = new Common.User();
-
-                                        //                        user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
-                                        //                        user.TargetID = Convert.ToInt32(dr["Target_ID"]);
-
-                                        //                        popup.User = user;
-                                        //                        try
-                                        //                        {
-                                        //                            popup.Invoke();
-                                        //                        }
-                                        //                        catch (Exception ex)
-                                        //                        {
-                                        //                        }
-
-                                        //                        if (Session["U_Points"] != null && Session["U_Points"].ToString() != "")
-                                        //                        {
-                                        //                            Session["U_Points"] = (Convert.ToInt32(Session["U_Points"]) + Convert.ToInt32(dr["Points"])).ToString();
-                                        //                        }
-                                        //                        else
-                                        //                        {
-                                        //                            Session["U_Points"] = dr["Points"].ToString();
-                                        //                        }
-
-                                        //                        Page_Load(null, null);                                                    
-                                        //                    }
-                                        //                }
-                                        //            }
-                                        //        }
-
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        lblPerformance.Text = "0%";
-                                        //    }
-                                        #endregion
+                                      
                                     }
                                 
 
@@ -795,52 +457,9 @@ namespace LevelsPro.PlayerPanel
                         }
                         else
                         {
-                            //lblPerformance.Text = "0%";
-                            //by atizaz  lblLevel.Text = Resources.TestSiteResources.Level0;
+                            
                         }
-                        #region Commented
-                        //PlayerAwardViewBLL awards = new PlayerAwardViewBLL();
-                        //Points points = new Points();
-
-                        //points.UserID = Convert.ToInt32(Session["userid"]);  //Check
-
-                        //awards.Points = points;
-
-                        //try
-                        //{
-                        //    awards.Invoke();
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //}
-
-                        //PlayerAwardViewBLL award = new PlayerAwardViewBLL();
-                        #endregion
-
-                        //Image of map.....by aun
-
-                        //LevelsViewBLL level = new LevelsViewBLL();
-                        //Common.Roles role = new Roles();
-                        //role.RoleID = Convert.ToInt32(Session["UserRoleID"]);
-                        //level.Role = role;
-                        //try
-                        //{
-                        //    level.Invoke();
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
-                        //}
-                        //if (Session["UserRoleID"] != null)
-                        //{
-                        //    DataView dv = level.ResultSet.Tables[0].DefaultView;
-
-                        //    dv.RowFilter = "Level_ID=" + Convert.ToInt32(Session["CurLevel"]);
-
-                        //    DataTable dt1 = new DataTable();
-                        //    dt1 = dv.ToTable();
-                        //    if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
-                        //    {
+                        
                         if(ReuseableItems.PlayerLevelImage != null || !ReuseableItems.PlayerLevelImage.Equals(""))
                         {
                             
@@ -854,27 +473,6 @@ namespace LevelsPro.PlayerPanel
                             }
                         
 
-                        //GetAutomaticAwardsBLL auto = new GetAutomaticAwardsBLL();
-                        ////Points points = new Points();
-                        //Common.User userAw = new Common.User();
-
-                        ////points.UserID = Convert.ToInt32(Session["userid"]);
-
-                        //userAw.UserID = Convert.ToInt32(Session["userid"]);
-
-                        ////award.Points = points;
-
-                        //auto.User = userAw;
-
-                        //try
-                        //{
-                        //    //award.Invoke();
-                        //    auto.Invoke();
-                        //}
-                        //catch (Exception ex)
-                        //{
-
-                        //}
                         DataSet ds = ReuseableItems.GetAutomaticAward;
 
                         if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
@@ -887,7 +485,7 @@ namespace LevelsPro.PlayerPanel
 
                             if (dtAw != null && dtAw.Rows.Count > 0)
                             {
-                                //lblTotal.Text = Resources.TestSiteResources.Total + ' ' + award.ResultSet.Tables[0].Rows.Count.ToString();
+                                
                                 lblTotal.Text = dtAw.Rows.Count.ToString() + ' ' + Resources.TestSiteResources.Total;
                             }
                         }
@@ -919,7 +517,7 @@ namespace LevelsPro.PlayerPanel
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
-          // Void Page_Load(System.Object, System.EventArgs)
+           // Void Page_Load(System.Object, System.EventArgs)
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
@@ -952,111 +550,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void ibtnFacebook_Click(object sender, ImageClickEventArgs e)
         {
-            //    try
-            //    {
-            //        string app_id = ConfigurationManager.AppSettings["FacebookAppID"].ToString();//app id we created
-            //        string app_secret = ConfigurationManager.AppSettings["FacebookAppSecretID"].ToString();// app secret
-            //        string scope = ConfigurationManager.AppSettings["FacebookScope"].ToString();// the permission to grant me for the facebook user
 
-            //        if (Request["code"] == null) // ask facebook for the code
-            //        {
-            //            Response.Redirect(string.Format(
-            //                "https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri={1}&scope={2}",
-            //                app_id, Request.Url.AbsoluteUri + "?from=sharebutton", scope));
-            //        }
-            //        else
-            //        {
-            //            Dictionary<string, string> tokens = new Dictionary<string, string>(); //parameters returned from facebook
-
-            //            string url = string.Format("https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&scope={2}&code={3}&client_secret={4}",
-            //                app_id, Request.Url.AbsoluteUri, scope, Request["code"].ToString(), app_secret);
-
-            //            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            //            //  read response at get the access code to post the on behalf of the user
-            //            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-            //            {
-            //                StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            //                string vals = reader.ReadToEnd();
-
-            //                foreach (string token in vals.Split('&'))
-            //                {
-
-            //                    tokens.Add(token.Substring(0, token.IndexOf("=")),
-            //                        token.Substring(token.IndexOf("=") + 1, token.Length - token.IndexOf("=") - 1));
-            //                }
-            //            }
-
-            //            string access_token = tokens["access_token"];// acess token never expire but user can deauthrize the app
-
-            //            var client = new FacebookClient(access_token); //acess token which we tailored up in the code
-
-            //            object objFB = client.Post("/me/feed", new { message = "You have successfully achieved: " + lblLevel.Text.Trim() + " (LevelsPro)" });
-
-
-            //           // object objFB = client.Post("/me/feed", new { message = "You have successfully achieved: " + lblLevel.Text.Trim() + " (LevelsPro)" });
-
-            //            if (objFB != null)
-            //            {
-            //                PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-            //                // make collection editable
-            //                isreadonly.SetValue(this.Request.QueryString, false, null);
-            //                // remove
-            //                this.Request.QueryString.Remove("from");
-
-            //                //Request.QueryString.Clear();
-            //                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Success", "<script>alert('You have successfully shared on facebook.')</script>", false);
-            //            }
-            //            else
-            //            {
-            //                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot share on facebook, please try later!')</script>", false);
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot share same status on facebook, please try again later!')</script>", false);
-            //    }
-            //}
-
-            //protected void ibtnTwitter_Click(object sender, ImageClickEventArgs e)
-            //{
-            //    if (auth.IsAuthorized)
-            //    {
-            //        TweetLevel();
-            //    }
-            //    else
-            //    {
-            //        Uri objUri;
-            //        if (Request.Url.PathAndQuery.Contains("fromtwitter") == false)
-            //        {
-            //            objUri = new Uri(Request.Url + "?fromtwitter=1");
-            //        }
-            //        else
-            //        {
-            //            objUri = Request.Url;
-            //        }
-
-            //        auth.BeginAuthorization(objUri);
-            //    }
-
-            //    //var twitterCtx = new TwitterContext(auth);
-            //    ////if (!Page.IsPostBack)
-            //    ////{
-            //    //    auth.CompleteAuthorization(Request.Url);
-            //    ////}
-
-            //    ////var accounts =
-            //    ////from acct in twitterCtx.Account
-            //    ////where acct.Type == AccountType.VerifyCredentials
-            //    ////select acct;
-
-            //    //twitterCtx = auth.IsAuthorized ? new TwitterContext(auth) : new TwitterContext(auth);
-
-            //    //auth.BeginAuthorization(Request.Url);
-
-
-            //    //twitterCtx.UpdateStatus("My tweet seventh from levelspro by Ahmed Hassan");
         }
 
         protected void btnGame_Click(object sender, EventArgs e)
@@ -1069,47 +563,7 @@ namespace LevelsPro.PlayerPanel
             Response.Redirect("ProgressDetails.aspx");
         }
 
-        //private void TweetLevel()
-        //{
-        //    try
-        //    {
-        //        using (var twitterCtx = new TwitterContext(auth))
-        //        {
-        //            //var twitterCtx = new TwitterContext(auth);
-
-        //            //by atizaz var tweet = twitterCtx.UpdateStatus("You have achieved " + lblLevel.Text + " (LevelsPro)");
-
-        //            if (tweet != null)
-        //            {
-
-        //                //Request.QueryString.Clear();
-        //                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Success", "<script>alert('You have successfully tweeted.')</script>", false);
-        //            }
-        //            else
-        //            {
-        //                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot tweet, please try later!')</script>", false);
-        //            }
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot tweet same status on twitter, please try again later!')</script>", false);
-        //    }
-
-        //    PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-        //    // make collection editable
-        //    isreadonly.SetValue(this.Request.QueryString, false, null);
-        //    // remove
-        //    this.Request.QueryString.Remove("fromtwitter");
-        //}
-
-        //[System.Web.Services.WebMethod]
-        //public static void AbandonSession()
-        //{
-        //    HttpContext.Current.Session.Abandon();
-        //}
-
+        
         protected void lbtnAwards_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/PlayerPanel/ViewAwards.aspx", false);
