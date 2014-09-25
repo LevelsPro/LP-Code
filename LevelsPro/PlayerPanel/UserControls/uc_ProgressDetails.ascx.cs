@@ -80,7 +80,7 @@ namespace LevelsPro.PlayerPanel.UserControls
 
                     #region Checking Limit of Quiz
                     Quiz _quiz = new Quiz();
-                    _quiz.LevelID = Convert.ToInt32(ReuseableItems.PlayerCurrentLevelID_PlayerPanel.ToString());
+                    _quiz.LevelID = Convert.ToInt32(Session["UserCurrentLevel"].ToString());
                     _quiz.QuizID = Convert.ToInt32(TipsParts[1]);
                     _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
 

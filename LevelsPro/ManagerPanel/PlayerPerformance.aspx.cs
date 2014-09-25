@@ -31,7 +31,8 @@ namespace LevelsPro.ManagerPanel
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                ReuseableItems.CheckForloadprogressfrompopup = 0;
+                Session["CheckForloadprogressfrompopup"] = 0;
+              //  ReuseableItems.CheckForloadprogressfrompopup = 0;
                 if (Request.QueryString["Base"] != null && Request.QueryString["Base"].ToString() != "" && Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "" && Request.QueryString["likelihood"] != null && Request.QueryString["likelihood"].ToString() != "" && Request.QueryString["remaining"] != null && Request.QueryString["remaining"].ToString() != "")
                 {
                     Session["playerid"] = Convert.ToInt32(Request.QueryString["id"]);
@@ -225,7 +226,7 @@ namespace LevelsPro.ManagerPanel
             Common.User user = new Common.User();
 
             user.UserID = userid;
-           user.CurrentLevel= ReuseableItems.PlayerCurrentLevelID_PlayerPanel;
+           user.CurrentLevel=Convert.ToInt32(Session["LevelIDMangerUser"]);
            // user.CurrentLevel = level;
             progress.User = user;
             //user.UserID = Convert.ToInt32(user);
@@ -271,9 +272,9 @@ namespace LevelsPro.ManagerPanel
            
             if (ds != null && ds.Rows.Count > 0)
             {
-                if (ReuseableItems.CheckForloadprogressfrompopup == 1)
+                if (Convert.ToInt32(Session["CheckForloadprogressfrompopup"]) == 1)
                 {
-                    ReuseableItems.CheckForloadprogressfrompopup = 0;
+                    Session["CheckForloadprogressfrompopup"] = 0;
                     lblLike.Text = "0 %";
                 }
                  
@@ -287,7 +288,8 @@ namespace LevelsPro.ManagerPanel
             //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
             //    dv.RowFilter = "PlayerStatus = 'red'";
                 lblPlayerName1.Text=ds.Rows[0]["PlayerName"].ToString();
-                ReuseableItems.userfullpointsdmanager =Convert.ToInt32(ds.Rows[0]["U_Points"].ToString());
+                Session["userfullpointsdmanager"] = Convert.ToInt32(ds.Rows[0]["U_Points"].ToString());
+               // ReuseableItems.userfullpointsdmanager =Convert.ToInt32(ds.Rows[0]["U_Points"].ToString());
                 Session["playernamemanager"] = lblPlayerName1.Text;
                 lblLevel1.Text = ds.Rows[0]["Role_Name"].ToString() + "- Level " + ds.Rows[0]["Level_Position"].ToString();
                 level=Convert.ToInt32(ds.Rows[0]["Level_ID"]);
@@ -306,11 +308,12 @@ namespace LevelsPro.ManagerPanel
                     //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
                     //    dv.RowFilter = "PlayerStatus = 'red'";
                     lblPlayerName1.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
-                    ReuseableItems.userfullpointsdmanager = Convert.ToInt32(progress.ResultSet.Tables[0].Rows[0]["Points"]);
+                    Session["userfullpointsdmanager"] = Convert.ToInt32(progress.ResultSet.Tables[0].Rows[0]["Points"]);
+                //    ReuseableItems.userfullpointsdmanager = Convert.ToInt32(progress.ResultSet.Tables[0].Rows[0]["Points"]);
                     Session["playernamemanager"] = lblPlayerName1.Text;
                     lblLevel1.Text = progress.ResultSet.Tables[0].Rows[0]["Role_Name"].ToString() + "- Level " + progress.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString();
                     //level = Convert.ToInt32(ds.Rows[0]["Level_ID"]);
-                    Session["levelidmanager"] = ReuseableItems.PlayerCurrentLevelID_PlayerPanel;
+                    Session["levelidmanager"] = Session["LevelIDMangerUser"].ToString();
                     MainColor.Attributes["class"] = "level-cont-" + "Green".ToLower(); ;
                     dlProgressDetail.DataSource = null;
                     dlProgressDetail.DataBind();
@@ -382,26 +385,32 @@ namespace LevelsPro.ManagerPanel
                     Session["chkmangerkpi"] = 1;
                     string[] arg = new string[2];
                     arg = e.CommandArgument.ToString().Split(';');
-                    ReuseableItems.userkpistargetidmanager = Convert.ToInt32(arg[0]);
+                    Session["UserKpiTargetIDManagrePanel"] = Convert.ToInt32(arg[0]);
+                  //  ReuseableItems.userkpistargetidmanager = Convert.ToInt32(arg[0]);
 
                     string[] arg1 = new string[2];
                     arg1 = arg[1].ToString().Split('&');
-                    ReuseableItems.userkpiscoremanager = Convert.ToInt32(arg1[0]);
+                    Session["userkpiscoremanager"] = Convert.ToInt32(arg1[0]);
+                   // ReuseableItems.userkpiscoremanager = Convert.ToInt32(arg1[0]);
 
 
                     string[] arg2 = new string[2];
                     arg2 = arg1[1].ToString().Split('(');
-                    ReuseableItems.userkpitargetmanager = Convert.ToInt32(arg2[0]);
+                    Session["userkpitargetmanager"] = Convert.ToInt32(arg2[0]);
+                  //  ReuseableItems.userkpitargetmanager = Convert.ToInt32(arg2[0]);
 
                     string[] arg3 = new string[2];
                     arg3 = arg2[1].ToString().Split(')');
-                    ReuseableItems.userkpitextmanager = arg3[0];
+                    Session["userkpitextmanager"] = arg3[0];
+                    //ReuseableItems.userkpitextmanager = arg3[0];
 
                     string[] arg4 = new string[2];
                     arg4 = arg3[1].ToString().Split('^');
-                    ReuseableItems.userkpiidmanager = Convert.ToInt32(arg4[0]);
+                    Session["userkpiidmanager"] = Convert.ToInt32(arg4[0]);
+                  //  ReuseableItems.userkpiidmanager = Convert.ToInt32(arg4[0]);
 
-                    ReuseableItems.usertargetpointsdmanager = Convert.ToInt32(arg4[1]);
+                    Session["usertargetpointsdmanager"] = Convert.ToInt32(arg4[1]);
+                   // ReuseableItems.usertargetpointsdmanager = Convert.ToInt32(arg4[1]);
                     try
                     {
                         mpeViewProgressDetailsDiv.Show();

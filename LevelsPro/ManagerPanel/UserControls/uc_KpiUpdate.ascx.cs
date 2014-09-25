@@ -24,9 +24,9 @@ namespace LevelsPro.ManagerPanel.UserControls
             if (Convert.ToInt32(Session["chkmangerkpi"]) == 1)
             {
                 Session["chkmangerkpi"] = 0;
-                lblKPIText.Text = ReuseableItems.userkpitextmanager;
-                lblKPIText.Text = lblKPIText.Text.Replace("X", ReuseableItems.userkpitargetmanager.ToString());
-                txtKPI.Text = ReuseableItems.userkpiscoremanager.ToString();
+                lblKPIText.Text = Session["userkpitextmanager"].ToString();
+                lblKPIText.Text = lblKPIText.Text.Replace("X",Session["userkpitargetmanager"].ToString());
+                txtKPI.Text = Session["userkpiscoremanager"].ToString();
             }
           
         }
@@ -39,9 +39,9 @@ namespace LevelsPro.ManagerPanel.UserControls
             Common.User user = new Common.User();
             user.UserID = Convert.ToInt32(Session["ManagerAsscociateID"]);
             user.CurrentLevel = Convert.ToInt32(Session["levelidmanager"]);
-            if (Convert.ToInt32(txtKPI.Text) < ReuseableItems.userkpitargetmanager)
+            if (Convert.ToInt32(txtKPI.Text) < Convert.ToInt32(Session["userkpitargetmanager"]))
             {
-                user.KPIID = Convert.ToInt32(ReuseableItems.userkpiidmanager);
+                user.KPIID = Convert.ToInt32(Session["userkpiidmanager"]);
                 user.Score = Convert.ToInt32(txtKPI.Text);
                 score.User = user;
 
@@ -58,10 +58,10 @@ namespace LevelsPro.ManagerPanel.UserControls
                 ModalPopupExtender mpe = this.Parent.FindControl("mpeViewProgressDetailsDiv") as ModalPopupExtender;
                 mpe.Hide();
             }
-            else if (Convert.ToInt32(txtKPI.Text) == ReuseableItems.userkpitargetmanager || Convert.ToInt32(txtKPI.Text) > ReuseableItems.userkpitargetmanager)
+            else if (Convert.ToInt32(txtKPI.Text) == Convert.ToInt32(Session["userkpitargetmanager"]) || Convert.ToInt32(txtKPI.Text) > Convert.ToInt32(Session["userkpitargetmanager"]))
             {
-                user.KPIID = user.KPIID = Convert.ToInt32(ReuseableItems.userkpiidmanager);
-                user.Score = Convert.ToInt32(ReuseableItems.userkpitargetmanager);
+                user.KPIID = user.KPIID = Convert.ToInt32(Session["userkpiidmanager"]);
+                user.Score = Convert.ToInt32(Session["userkpitargetmanager"]);
 
 
                 #region KPI Score Acheived
@@ -69,7 +69,7 @@ namespace LevelsPro.ManagerPanel.UserControls
 
                 UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
 
-                user.TargetID = Convert.ToInt32(ReuseableItems.userkpistargetidmanager);
+                user.TargetID = Convert.ToInt32(Session["UserKpiTargetIDManagrePanel"]);
 
                 popup.User = user;
                 try
@@ -82,12 +82,12 @@ namespace LevelsPro.ManagerPanel.UserControls
 
                 if (UserPoints != null && UserPoints != "")
                 {
-                    UserPoints = (Convert.ToInt32(ReuseableItems.userfullpointsdmanager) + ReuseableItems.usertargetpointsdmanager).ToString();
-                    ReuseableItems.userfullpointsdmanager = Convert.ToInt32(UserPoints);
+                    UserPoints = (Convert.ToInt32(Session["userfullpointsdmanager"]) + Convert.ToInt32(Session["usertargetpointsdmanager"])).ToString();
+                    Session["userfullpointsdmanager"] = Convert.ToInt32(UserPoints);
                 }
                 else
                 {
-                    UserPoints = ReuseableItems.usertargetpointsdmanager.ToString();
+                    UserPoints = Session["usertargetpointsdmanager"].ToString();
                 }
 
 
@@ -149,7 +149,7 @@ namespace LevelsPro.ManagerPanel.UserControls
                         if (totalPercentage >= 100)
                         {
 
-                            ReuseableItems.PlayerCurrentLevelID_PlayerPanel = nextlevel;
+                            Session["LevelIDMangerUser"] = nextlevel;
                             PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
                             targetprogress.User = user;
 
@@ -180,8 +180,8 @@ namespace LevelsPro.ManagerPanel.UserControls
 
                                 if (UserPoints != null && UserPoints != "")
                                 {
-                                    UserPoints = (Convert.ToInt32(ReuseableItems.userfullpointsdmanager) + Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["Bonus"].ToString())).ToString();
-                                    ReuseableItems.userfullpointsdmanager = Convert.ToInt32(UserPoints);
+                                    UserPoints = (Convert.ToInt32(Session["userfullpointsdmanager"]) + Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["Bonus"].ToString())).ToString();
+                                    Session["userfullpointsdmanager"] = Convert.ToInt32(UserPoints);
                                 }
                                 else
                                 {

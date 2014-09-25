@@ -111,7 +111,7 @@ namespace LevelsPro.ManagerPanel
             try
             {
                 
-                //award.Invoke();
+                award.Invoke();
             }
             catch (Exception ex)
             {

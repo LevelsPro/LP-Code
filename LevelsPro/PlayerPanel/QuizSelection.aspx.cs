@@ -45,7 +45,7 @@ namespace LevelsPro.PlayerPanel
                 if (Request.QueryString["check"] != null && Request.QueryString["check"].ToString() != "") // return check if there is no question for this role and level left
                 {
                     mes.Visible = true; //show message
-                    mes.Text = "There are no Questions Left in this Quiz for your level";
+                    mes.Text = "There are no Questions for this Quiz";
                 }
                 
                 try

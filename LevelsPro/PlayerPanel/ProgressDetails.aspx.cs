@@ -88,7 +88,7 @@ namespace LevelsPro.PlayerPanel
                     //    MapImage.Src = "images/map.png";
                     //}
 
-                    MapImage.Src = ReuseableItems.imgpath;
+                    MapImage.Src = Session["imagePath"].ToString();
                 }
 
                 try

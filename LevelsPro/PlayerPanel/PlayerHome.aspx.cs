@@ -26,6 +26,7 @@ namespace LevelsPro.PlayerPanel
     public partial class PlayerHome : AuthorizedPage
     {
         private string usr, pwd, role,pageURL;
+        public DataSet dsaward;
         // private WebAuthorizer auth; // twitter Authorizer
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,6 +35,64 @@ namespace LevelsPro.PlayerPanel
             //string Thumbpath = "";
            
             {
+                if (Convert.ToInt32(Session["FirstTimeLogin"]) == 1)
+                {
+                    UserInfoBLL userinfo = new UserInfoBLL();
+                    Common.User users = new Common.User();
+                    users.UserName = Session["username"].ToString();
+
+                    userinfo.User = users;
+                    try
+                    {
+                        userinfo.Invoke();
+                        DataSet ds = userinfo.ResultSet;
+
+                        Session["UserCurrentLevel"] = Convert.ToInt32(ds.Tables[0].Rows[0]["current_level"].ToString());
+                        Session["LevelPosition"] = Convert.ToInt32(ds.Tables[0].Rows[0]["Level_Position"].ToString());
+                        Session["PlayerLevelImage"] = ds.Tables[0].Rows[0]["ImageName"].ToString();
+                        Session["AllLevelsPlayer"] = ds.Tables[1];
+
+                        
+                        Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
+                        Session["rolename"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
+                        Session["TipsLinkage"] = "false";
+                        // Session["Role_ID"] = ds.Tables[0].Rows[0]["Role_ID"];
+                        Session["UserRoleID"] = ds.Tables[0].Rows[0]["U_RolesID"];
+                        Session["role"] = "Player";
+                        Session["checkforlogout"] = 0;
+                        if (ds.Tables[0].Rows[0]["Display_Name"].ToString() == "1")
+                        {
+                            Session["displayname"] = ds.Tables[0].Rows[0]["U_FirstName"].ToString() + ' ' + ds.Tables[0].Rows[0]["U_LastName"].ToString();
+                        }
+                        else
+                        {
+                            Session["displayname"] = ds.Tables[0].Rows[0]["U_NickName"].ToString();
+                        }
+
+                        Session["siteid"] = ds.Tables[0].Rows[0]["U_SiteID"];
+                        Session["sitename"] = ds.Tables[0].Rows[0]["SiteName"].ToString();
+
+
+                        Session["U_Points"] = ds.Tables[0].Rows[0]["U_Points"];
+                        //Session["username"] = user;                
+                        Session["password"] = pwd;
+
+                        if (ds.Tables[0].Rows[0]["ManagerEmail"] != null)
+                        {
+                            Session["ManagerEmail"] = ds.Tables[0].Rows[0]["ManagerEmail"];
+                        }
+                        if (ds.Tables[0].Rows[0]["ManagerID"] != null)
+                        {
+                            Session["ManagerID"] = ds.Tables[0].Rows[0]["ManagerID"];
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+
+                Session["FirstTimeLogin"] = 1;
+
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
                 
@@ -67,8 +126,8 @@ namespace LevelsPro.PlayerPanel
 
                 }
 
-                
-                lblScore.Text = ReuseableItems.PlayerPoints_PlayerPanel.ToString();
+
+                lblScore.Text = Session["U_Points"].ToString();
                 Session["U_Points"] = lblScore.Text;
                 
 
@@ -200,7 +259,8 @@ namespace LevelsPro.PlayerPanel
                                 throw ex;
                             }
 
-                           ReuseableItems.GetAutomaticAward = award.ResultSet;
+                            dsaward = award.ResultSet;
+                           //ReuseableItems.GetAutomaticAward = award.ResultSet;
                             if (award.ResultSet != null && award.ResultSet.Tables.Count > 0 && award.ResultSet.Tables[1] != null && award.ResultSet.Tables[1].Rows.Count > 0)
                             {
                                 DataView dv1 = award.ResultSet.Tables[1].DefaultView;
@@ -318,10 +378,10 @@ namespace LevelsPro.PlayerPanel
                                 //string p = "images/star_yellow_" + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString() + ".png";
 
                                 #endregion
-                            if(ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel > 0)
+                            if(Convert.ToInt32( Session["LevelPosition"]) > 0)
                             {
-                                Session["CurLevel"] = ReuseableItems.PlayerCurrentLevelID_PlayerPanel.ToString();
-                                LevelStar.ImageUrl = "images/star_yellow_" + ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel.ToString() + ".png";
+                                Session["CurLevel"] = Session["UserCurrentLevel"].ToString();
+                                LevelStar.ImageUrl = "images/star_yellow_" + Session["LevelPosition"].ToString() + ".png";
                                 
 
 
@@ -331,7 +391,7 @@ namespace LevelsPro.PlayerPanel
                                 Common.User user = new Common.User();
 
                                 user.UserID = Convert.ToInt32(Session["userid"]);
-                                user.CurrentLevel = Convert.ToInt32(ReuseableItems.PlayerCurrentLevelID_PlayerPanel);//
+                                user.CurrentLevel = Convert.ToInt32(Session["UserCurrentLevel"]);//
                                 progress.User = user;
                                 
                                 try
@@ -404,7 +464,7 @@ namespace LevelsPro.PlayerPanel
                                                 //{
                                                 //}
                                                 //dVFullLevel.RowFilter = "Level_ID = " + Convert.ToInt32(dTpopUp.Rows[0]["current_level"]);
-                                                DataTable dTFulllevel = ReuseableItems.AllLevelsPlayer;
+                                                DataTable dTFulllevel =(DataTable)Session["AllLevelsPlayer"];
                                                 dTFulllevel.DefaultView.RowFilter = "Level_ID = " + Convert.ToInt32(dTpopUp.Rows[0]["current_level"]);
                                                 dTFulllevel = dTFulllevel.DefaultView.ToTable();
                                                 String LevelName = "";
@@ -459,12 +519,12 @@ namespace LevelsPro.PlayerPanel
                         {
                             
                         }
-                        
-                        if(ReuseableItems.PlayerLevelImage != null || !ReuseableItems.PlayerLevelImage.Equals(""))
+
+                        if (Session["PlayerLevelImage"] != null || !Session["PlayerLevelImage"].ToString().Equals(""))
                         {
-                            
-                                string imagepath = ReuseableItems.PlayerLevelImage;
-                                ReuseableItems.imgpath = path + imagepath;
+
+                            string imagepath = Session["PlayerLevelImage"].ToString();
+                               Session["imagePath"] = path + imagepath;
                                 MapImage.Src = path + imagepath;
                             }
                             else
@@ -473,7 +533,7 @@ namespace LevelsPro.PlayerPanel
                             }
                         
 
-                        DataSet ds = ReuseableItems.GetAutomaticAward;
+                        DataSet ds = dsaward;
 
                         if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                         {

@@ -64,35 +64,7 @@ namespace LevelsPro
             base.OnInit(e);
         }       
 
-    //  public static string Encrypt(string originalString)
-    //   {
-
-    //var cryptoProvider = new DESCryptoServiceProvider();
-    //var memoryStream = new MemoryStream();
-    //var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
-    //    CryptoStreamMode.Write);
-    //var writer = new StreamWriter(cryptoStream);
-    //writer.Write(originalString);
-    //writer.Flush();
-    //cryptoStream.FlushFinalBlock();
-    //writer.Flush();
-    //return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
-    //}
-
-        //public static string Encrypt(string originalString)
-        //{
-
-        //    var cryptoProvider = new DESCryptoServiceProvider();
-        //    var memoryStream = new MemoryStream();
-        //    var cryptoStream = new CryptoStream(memoryStream, cryptoProvider.CreateEncryptor(bytes, bytes),
-        //    CryptoStreamMode.Write);
-        //    var writer = new StreamWriter(cryptoStream);
-        //    writer.Write(originalString);
-        //    writer.Flush();
-        //    cryptoStream.FlushFinalBlock();
-        //    writer.Flush();
-        //    return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
-        //}
+   
 
 
 
@@ -103,11 +75,7 @@ namespace LevelsPro
             string user, pwd, Sysrole;
             user = txtUser.Text.Trim();
             pwd = txtPassword.Text;
-           // pwd=PasswordEncrypt.CreateHash(pwd);
-            //string passw="1000:6/Rsa4P4vpJ1k2Uy3Vm67WbgpoOA/IK1:NoJ7+NXVtKbC0Nm56zWsC+UeFgsE47lo";
-          //  bool pd = PasswordEncrypt.ValidatePassword(txtPassword.Text, passw);
-           // pwd = Encrypt(txtPassword.Text);
-           // pwd = txtPassword.Text;
+         
 
             DataSet ds = new DataSet();
 
@@ -131,9 +99,6 @@ namespace LevelsPro
 
             if (ds.Tables[0].Rows[0]["U_Password"].ToString().Equals(""))
             {
-                //Session["userid"] = ds.Tables[0].Rows[0]["UserID"];
-                //Session["username"] = user;
-                //Session["language"] = ddlLanguage.SelectedItem.Text;
                 Session["password"] = null;
                 mpeSetNewPassword.Show();
             }
@@ -147,11 +112,17 @@ namespace LevelsPro
                 Sysrole = ds.Tables[0].Rows[0]["U_SysRole"].ToString();
                 if(Sysrole.Equals("Player"))
                 {
-                    ReuseableItems.PlayerPoints_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["U_Points"].ToString());
-                    ReuseableItems.PlayerCurrentLevelID_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["current_level"].ToString());
-                    ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["Level_Position"].ToString());
-                    ReuseableItems.PlayerLevelImage = ds.Tables[0].Rows[0]["ImageName"].ToString();
-                    ReuseableItems.AllLevelsPlayer = ds.Tables[1];
+                    Session["FirstTimeLogin"] = 0; //check to not run sp to get info two times
+                    Session["UserCurrentLevel"] = Convert.ToInt32(ds.Tables[0].Rows[0]["current_level"].ToString());
+                    Session["LevelPosition"] = Convert.ToInt32(ds.Tables[0].Rows[0]["Level_Position"].ToString());
+                    Session["PlayerLevelImage"] = ds.Tables[0].Rows[0]["ImageName"].ToString();
+                    Session["AllLevelsPlayer"] = ds.Tables[1];
+
+                    //ReuseableItems.PlayerPoints_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["U_Points"].ToString());
+                    //ReuseableItems.PlayerCurrentLevelID_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["current_level"].ToString());
+                    //ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["Level_Position"].ToString());
+                    //ReuseableItems.PlayerLevelImage = ds.Tables[0].Rows[0]["ImageName"].ToString();
+                    //ReuseableItems.AllLevelsPlayer = ds.Tables[1];
 
                 }
                 Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();

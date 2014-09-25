@@ -240,7 +240,7 @@ namespace LevelsPro.PlayerPanel
             //    //lblScore.Text = "0";
             //}
             int sum = Convert.ToInt32(Session["U_Points"]) - Convert.ToInt32(e.CommandArgument.ToString());
-            ReuseableItems.PlayerPoints_PlayerPanel = sum;
+           // Session["U_Points"] = sum;
             Session["U_Points"] = sum;
             point.RedeemPoints = sum;
             UserPointsReportBLL _usersum = new UserPointsReportBLL();

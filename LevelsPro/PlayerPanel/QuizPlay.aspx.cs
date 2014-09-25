@@ -95,84 +95,86 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw exp;
                     }
-                    ReduceChoicesCounter = 0;
-                    ReplaceQuestionCounter = 0;
-                    AddSecondsCounter = 0;
-                    CurrenLevel = 0;
-                    LinkedKPIID = 0;
-                    TotalPlayerScore = 0;
-                    //dtScore.Columns.Add("UserID", typeof(int));
-                    //dtScore.Columns.Add("QuizID", typeof(int));
-                    //dtScore.Columns.Add("QuestionID", typeof(int));
-                    //dtScore.Columns.Add("PointsAchieved", typeof(int));
-                    // dtScore.Columns.Add("ElapsedTime", typeof(int));
-                    //dtScore.Columns.Add("IsCorrect", typeof(int));
-                    ReduceOption1 = false;
-                    ReduceOption2 = false;
-                    ReduceOption3 = false;
-                    ReduceOption4 = false;
-                    //QuizPlayLogEntry = false;
-
-                    ltlQuestionNumber.Text = "Question # " + (counter + 1).ToString() + " of " + QuestionLimit.ToString(); // need to look into this
-
-                    QuizScoreDeleteBLL quizscore = new QuizScoreDeleteBLL();
-                    Quiz _quiz = new Quiz();
-                    _quiz.UserID = Convert.ToInt32(Session["userid"]);
-                    quizscore.Quiz = _quiz;
-                    try
+                    if (PlayAvailable.Equals(true))
                     {
-                        quizscore.Invoke();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                        ReduceChoicesCounter = 0;
+                        ReplaceQuestionCounter = 0;
+                        AddSecondsCounter = 0;
+                        CurrenLevel = 0;
+                        LinkedKPIID = 0;
+                        TotalPlayerScore = 0;
+                        //dtScore.Columns.Add("UserID", typeof(int));
+                        //dtScore.Columns.Add("QuizID", typeof(int));
+                        //dtScore.Columns.Add("QuestionID", typeof(int));
+                        //dtScore.Columns.Add("PointsAchieved", typeof(int));
+                        // dtScore.Columns.Add("ElapsedTime", typeof(int));
+                        //dtScore.Columns.Add("IsCorrect", typeof(int));
+                        ReduceOption1 = false;
+                        ReduceOption2 = false;
+                        ReduceOption3 = false;
+                        ReduceOption4 = false;
+                        //QuizPlayLogEntry = false;
 
-                    GetLifeLinesBLL LifeLine = new GetLifeLinesBLL();
+                        ltlQuestionNumber.Text = "Question # " + (counter + 1).ToString() + " of " + QuestionLimit.ToString(); // need to look into this
 
-                    try
-                    {
-                        LifeLine.Invoke();
-                        dsLifeLine = LifeLine.ResultSet;
-
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-
-                    DataView dvLifeLine = dsLifeLine.Tables[0].DefaultView;
-                    dvLifeLine.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND QuizID =" +
-                                                        Convert.ToInt32(Request.QueryString["quizid"]);
-
-                    DataTable dtLifeline = dvLifeLine.ToTable();
-
-                    for (int i = 0; i < dtLifeline.Rows.Count; i++)
-                    {
-                        String DateUsed = dtLifeline.Rows[i]["DateUsed"].ToString();
-                        if (DateUsed.Equals(System.DateTime.Now.ToShortDateString()))
+                        QuizScoreDeleteBLL quizscore = new QuizScoreDeleteBLL();
+                        Quiz _quiz = new Quiz();
+                        _quiz.UserID = Convert.ToInt32(Session["userid"]);
+                        quizscore.Quiz = _quiz;
+                        try
                         {
-                            if (Convert.ToInt32(dtLifeline.Rows[i]["ReduceChoices_LifeLine"]) == 1)
-                            {
-                                ReduceChoices.ImageUrl = "images/reduce-choices-disabled.png";
-                                ReduceChoicesCounter = 1;
-                            }
+                            quizscore.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
 
-                            if (Convert.ToInt32(dtLifeline.Rows[i]["ReplaceQuestion_LifeLine"]) == 1)
-                            {
-                                ReplaceQuestion.ImageUrl = "images/replace-question-disabled.png";
-                                ReplaceQuestionCounter = 1;
-                            }
+                        GetLifeLinesBLL LifeLine = new GetLifeLinesBLL();
 
-                            if (Convert.ToInt32(dtLifeline.Rows[i]["AddCounter_LifeLine"]) == 1)
+                        try
+                        {
+                            LifeLine.Invoke();
+                            dsLifeLine = LifeLine.ResultSet;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                        DataView dvLifeLine = dsLifeLine.Tables[0].DefaultView;
+                        dvLifeLine.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND QuizID =" +
+                                                            Convert.ToInt32(Request.QueryString["quizid"]);
+
+                        DataTable dtLifeline = dvLifeLine.ToTable();
+
+                        for (int i = 0; i < dtLifeline.Rows.Count; i++)
+                        {
+                            String DateUsed = dtLifeline.Rows[i]["DateUsed"].ToString();
+                            if (DateUsed.Equals(System.DateTime.Now.ToShortDateString()))
                             {
-                                AddSeconds.ImageUrl = "images/plus-5-sec-disabled.png";
-                                AddSecondsCounter = 1;
+                                if (Convert.ToInt32(dtLifeline.Rows[i]["ReduceChoices_LifeLine"]) == 1)
+                                {
+                                    ReduceChoices.ImageUrl = "images/reduce-choices-disabled.png";
+                                    ReduceChoicesCounter = 1;
+                                }
+
+                                if (Convert.ToInt32(dtLifeline.Rows[i]["ReplaceQuestion_LifeLine"]) == 1)
+                                {
+                                    ReplaceQuestion.ImageUrl = "images/replace-question-disabled.png";
+                                    ReplaceQuestionCounter = 1;
+                                }
+
+                                if (Convert.ToInt32(dtLifeline.Rows[i]["AddCounter_LifeLine"]) == 1)
+                                {
+                                    AddSeconds.ImageUrl = "images/plus-5-sec-disabled.png";
+                                    AddSecondsCounter = 1;
+                                }
                             }
                         }
-                    }
 
-                    
+                    }
                 }
             ExceptionUtility.CheckForErrorMessage(Session);
         }
@@ -239,46 +241,49 @@ namespace LevelsPro.PlayerPanel
             DataView dvQuizPoints = quiz.ResultSet.Tables[1].DefaultView;
             dv.RowFilter = "SiteID =" + Convert.ToInt32(Session["siteid"]) + " OR SiteID = 0";
             dt = dv.ToTable(); // contains all questions
-                
+               
                 GetGamesPlayLogBLL Log = new GetGamesPlayLogBLL();
                 try
                 {
-                    Log.Invoke();
-                    dtLog = Log.ResultSet;
-                    dvLog = dtLog.Tables[0].DefaultView;
-                    String DateString = System.DateTime.Now.ToShortDateString();
-                    dvLog.RowFilter = "QuizID =" + Convert.ToInt32(Request.QueryString["quizid"]) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
-
-
-                    DataTable dtPlayLog = dvLog.ToTable();
-
-                    int Playcount = 0;
-                    for (int i = 0; i < dtPlayLog.Rows.Count; i++)
+                    if (dt != null && dt.Rows.Count > 0)
                     {
-                        if (dtPlayLog.Rows[i]["QuizTime"].ToString().Equals(DateString))
+                        Log.Invoke();
+                        dtLog = Log.ResultSet;
+                        dvLog = dtLog.Tables[0].DefaultView;
+                        String DateString = System.DateTime.Now.ToShortDateString();
+                        dvLog.RowFilter = "QuizID =" + Convert.ToInt32(Request.QueryString["quizid"]) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
+
+
+                        DataTable dtPlayLog = dvLog.ToTable();
+
+                        int Playcount = 0;
+                        for (int i = 0; i < dtPlayLog.Rows.Count; i++)
                         {
-                            Playcount = Playcount + 1;
+                            if (dtPlayLog.Rows[i]["QuizTime"].ToString().Equals(DateString))
+                            {
+                                Playcount = Playcount + 1;
+                            }
                         }
-                    }
 
-                    if (DateString.Equals(System.DateTime.Now.ToShortDateString()))
-                    {
-                        if (Playcount >= Convert.ToInt32(dt.Rows[0]["LimitGame"]))
+                        if (DateString.Equals(System.DateTime.Now.ToShortDateString()))
                         {
-                            PlayAvailable = false;
+                            if (Playcount >= Convert.ToInt32(dt.Rows[0]["LimitGame"]))
+                            {
+                                PlayAvailable = false;
+                            }
+                            else
+                            {
+                                PlayAvailable = true;
+
+                            }
+
                         }
                         else
                         {
                             PlayAvailable = true;
-
                         }
 
                     }
-                    else
-                    {
-                        PlayAvailable = true;
-                    }
-
                     if (PlayAvailable.Equals(true))
                     {
                         DataTable dtQuizPoints = new DataTable();
@@ -306,7 +311,7 @@ namespace LevelsPro.PlayerPanel
 
                                     }
                                 }
-                            }
+                            
 
                             //--------- Randomized Question Logic -----------------//
 
@@ -340,7 +345,7 @@ namespace LevelsPro.PlayerPanel
 
 
                             //}
-
+                        }
                             if (dt != null && dt.Rows.Count > 0)
                             {
 
@@ -519,9 +524,16 @@ namespace LevelsPro.PlayerPanel
                     }
                     else
                     {
-                        Response.Write("<script>alert('Your Playable Limit is reached, you cannot play this game for today');</script>");
-                        string jScript = "<script>window.close();</script>";
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
+                        if (dt.Rows.Count > 0)
+                        {
+                            Response.Write("<script>alert('Your Playable Limit is reached, you cannot play this game for today');</script>");
+                            string jScript = "<script>window.close();</script>";
+                            ClientScript.RegisterClientScriptBlock(this.GetType(), "keyClientBlock", jScript);
+                        }
+                        else
+                        {
+                            Response.Redirect("QuizSelection.aspx?check=1");
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -1517,6 +1529,8 @@ namespace LevelsPro.PlayerPanel
 
 
             UserLevelPercentBLL userlevel = new UserLevelPercentBLL();
+            user.UserID = Convert.ToInt32(Session["userid"]);
+            user.CurrentLevel =Convert.ToInt32(ViewState["CurrenLevel"]);
             userlevel.User = user;
             try
             {
@@ -1761,7 +1775,7 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
-                                    throw ex;
+                                    //throw ex;
                                 }
 
                                 if (UserPoints != null && UserPoints != "")
@@ -1782,16 +1796,20 @@ namespace LevelsPro.PlayerPanel
                     }
                 }
             }
-
-            score.User = user;
-
-            try
+            if (Convert.ToInt32(ViewState["LinkedKPIID"]) > 0)
             {
-                score.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
+                user.Score = Convert.ToInt32(ViewState["TargetCurrentScore"]);
+                score.User = user;
+
+                try
+                {
+                    score.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             #endregion
