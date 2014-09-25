@@ -76,7 +76,8 @@ namespace LevelsPro.AdminPanel
                 }
                 else
                 {
-
+                    //ContentPlaceHolder myContent = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                    //myContent.FindControl("noti").Visible = false;
                 }
             }
             else

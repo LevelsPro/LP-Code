@@ -75,7 +75,7 @@ namespace LevelsPro.PlayerPanel
 
                         Session["U_Points"] = ds.Tables[0].Rows[0]["U_Points"];
                         //Session["username"] = user;                
-                        Session["password"] = pwd;
+                      //  Session["password"] = pwd;
 
                         if (ds.Tables[0].Rows[0]["ManagerEmail"] != null)
                         {
@@ -119,11 +119,15 @@ namespace LevelsPro.PlayerPanel
                 if (dtNoti != null && dtNoti.Rows.Count > 0)
                 {
                     lblMessageNotification.Text = dtNoti.Rows.Count.ToString();
+                    ContentPlaceHolder myContent = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                    myContent.FindControl("noti").Visible = true;
 
                 }
                 else
                 {
-
+                    ContentPlaceHolder myContent = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                    myContent.FindControl("noti").Visible = false;
+                 
                 }
 
 

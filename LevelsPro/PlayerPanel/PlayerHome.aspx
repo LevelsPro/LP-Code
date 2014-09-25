@@ -267,7 +267,7 @@
                                     ToolTip="Send Message">
 
                              </asp:Button>
-                            <div class="noti"><asp:Literal ID="lblMessageNotification" runat="server"></asp:Literal></div>
+                            <div class="noti" id="noti" runat="server"><asp:Literal ID="lblMessageNotification" runat="server"></asp:Literal></div>
                             </div>
                             
                             

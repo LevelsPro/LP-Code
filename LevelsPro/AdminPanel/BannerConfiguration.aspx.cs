@@ -22,7 +22,8 @@ namespace LevelsPro.AdminPanel
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-
+            Session.Abandon();
+            Response.Redirect("~/Index.aspx");
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)

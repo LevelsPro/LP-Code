@@ -94,11 +94,14 @@ namespace LevelsPro.ManagerPanel
                     if (dtNoti != null && dtNoti.Rows.Count > 0)
                     {
                         lblMessageNotification.Text = dtNoti.Rows.Count.ToString();
+                        ContentPlaceHolder myContent = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                        myContent.FindControl("noti").Visible = true;
 
                     }
                     else
                     {
-
+                        ContentPlaceHolder myContent = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                        myContent.FindControl("noti").Visible = false;
                     }
                 }
                 else

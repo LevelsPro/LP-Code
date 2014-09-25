@@ -124,7 +124,7 @@
                         <asp:Button ID="btnMessages" runat="server" OnClick="btnMessages_Click" 
                                 ToolTip="Send Messages" />
 
-                            <div class="noti"><asp:Literal ID="lblMessageNotification" runat="server"></asp:Literal></div>
+                            <div class="noti" id="noti" runat="server"><asp:Literal ID="lblMessageNotification" runat="server"></asp:Literal></div>
                         </div>
                         <%--<asp:Button ID="btnMessages" runat="server" CssClass="inbox" 
                             onclick="btnMessages_Click">

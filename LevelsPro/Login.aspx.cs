@@ -105,6 +105,7 @@ namespace LevelsPro
             bool PasswordVerification = false; 
             if (!ds.Tables[0].Rows[0]["U_Password"].ToString().Equals(""))
                 {
+                   // Session["password"] = txtPassword.Text;
                     PasswordVerification = PasswordEncrypt.ValidatePassword(txtPassword.Text, ds.Tables[0].Rows[0]["U_Password"].ToString());
                 }
              if (PasswordVerification == true)
