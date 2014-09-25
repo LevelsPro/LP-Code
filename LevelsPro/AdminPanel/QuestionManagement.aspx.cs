@@ -13,11 +13,13 @@ using LevelsPro.App_Code;
 using System.Data.OleDb;
 using System.Globalization;
 using System.IO;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class QuestionManagement : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -27,14 +29,42 @@ namespace LevelsPro.AdminPanel
         {
             if (!(Page.IsPostBack))
             {
-                if (Request.QueryString["quizid"] != null && Request.QueryString["quizid"].ToString() != "")
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
                 {
-                    ViewState["quizid"] = Request.QueryString["quizid"];
-                    LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
-                    //LoadRoles();
+                    if (Request.QueryString["quizid"] != null && Request.QueryString["quizid"].ToString() != "")
+                    {
+                        ViewState["quizid"] = Request.QueryString["quizid"];
+                        LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+                        //LoadRoles();
+                    }
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         private void LoadSites()
         {
             Site_DropDownBLL selectddlSite = new Site_DropDownBLL();
@@ -44,6 +74,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlRole.DataTextField = "site_name";
@@ -68,8 +99,9 @@ namespace LevelsPro.AdminPanel
             {
                 level.Invoke();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
 
             
@@ -93,6 +125,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlRole.DataTextField = "Role_Name";
@@ -139,6 +172,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             if (questionview.ResultSet.Tables[0] != null && questionview.ResultSet.Tables[0].Rows.Count > 0)
@@ -173,12 +207,14 @@ namespace LevelsPro.AdminPanel
                 try
                 {
                     questiondelete.Invoke();
+                    LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
-                LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+               
             }
         }
 
@@ -198,30 +234,36 @@ namespace LevelsPro.AdminPanel
 
         protected void ddlRole_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlRole.SelectedIndex > 0)
+            try
             {
-                if (Convert.ToInt32(ViewState["roleid"]) == 1)
+                if (ddlRole.SelectedIndex > 0)
                 {
-                    ViewState["siteid"]= null;
-                    ViewState["roleid"] = ddlRole.SelectedValue;
-                    LoadLevels(Convert.ToInt32( ViewState["roleid"]));
-                   // LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+                    if (Convert.ToInt32(ViewState["roleid"]) == 1)
+                    {
+                        ViewState["siteid"] = null;
+                        ViewState["roleid"] = ddlRole.SelectedValue;
+                        LoadLevels(Convert.ToInt32(ViewState["roleid"]));
+                        // LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+                    }
+                    else if (Convert.ToInt32(ViewState["siteid"]) == 1 || Convert.ToInt32(ViewState["check"]) == 1)
+                    {
+                        ViewState["roleid"] = null;
+                        ViewState["siteid"] = ddlRole.SelectedValue;
+                        LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+                    }
                 }
-                else if (Convert.ToInt32(ViewState["siteid"]) == 1 || Convert.ToInt32( ViewState["check"])==1)
+                else if (ddlRole.SelectedIndex == 0 && Convert.ToInt32(ViewState["check"]) == 1)
                 {
-                    ViewState["roleid"]= null;
+                    ViewState["roleid"] = null;
                     ViewState["siteid"] = ddlRole.SelectedValue;
                     LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+
                 }
             }
-            else if (ddlRole.SelectedIndex == 0 && Convert.ToInt32(ViewState["check"]) == 1)
+            catch (Exception exp)
             {
-                ViewState["roleid"] = null;
-                ViewState["siteid"] = ddlRole.SelectedValue;
-                LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
-
+                throw exp;
             }
-            
             
              
         }
@@ -288,47 +330,61 @@ namespace LevelsPro.AdminPanel
 
         protected void ddlFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlFilterBy.SelectedIndex > 0)
+            try
             {
-                if (ddlFilterBy.SelectedValue == "1")
+                if (ddlFilterBy.SelectedIndex > 0)
                 {
-                    ViewState["check"] = null;
-                    ViewState["siteid"] = null;
-                    ViewState["roleid"] = 1;
-                    LoadRoles();
+                    if (ddlFilterBy.SelectedValue == "1")
+                    {
+                        ViewState["check"] = null;
+                        ViewState["siteid"] = null;
+                        ViewState["roleid"] = 1;
+                        LoadRoles();
+                    }
+                    else if (ddlFilterBy.SelectedValue == "2")
+                    {
+                        ddlLevel.Items.Clear();
+
+                        ViewState["roleid"] = null;
+                        ViewState["siteid"] = 1;
+                        ViewState["check"] = 1;
+                        LoadSites();
+                        ddlRole_SelectedIndexChanged(null, null);
+                    }
+
                 }
-                else if (ddlFilterBy.SelectedValue == "2")
+                else if (ddlFilterBy.SelectedIndex == 0)
                 {
+                    ddlRole.Items.Clear();
                     ddlLevel.Items.Clear();
-                    
+
                     ViewState["roleid"] = null;
-                    ViewState["siteid"] = 1;
-                    ViewState["check"] = 1;
-                    LoadSites();
-                    ddlRole_SelectedIndexChanged(null, null);
+                    ViewState["siteid"] = null;
+                    ViewState["check"] = null;
+                    LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+
                 }
-               
             }
-            else if (ddlFilterBy.SelectedIndex == 0)
+            catch (Exception exp)
             {
-                ddlRole.Items.Clear();
-                ddlLevel.Items.Clear();
-               
-                ViewState["roleid"] = null;
-                ViewState["siteid"] = null;
-                ViewState["check"] = null;
-                LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
-                
+                throw exp;
             }
         }
 
         protected void ddlLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlRole.SelectedIndex > 0)
+            try
             {
-                ViewState["levelid"] = ddlLevel.SelectedValue;
-                LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
+                if (ddlRole.SelectedIndex > 0)
+                {
+                    ViewState["levelid"] = ddlLevel.SelectedValue;
+                    LoadQuestions(Convert.ToInt32(ViewState["quizid"]));
 
+                }
+            }
+            catch (Exception exp)
+            {
+                throw exp;
             }
         }
     }

@@ -9,11 +9,13 @@ using System.Data;
 using BusinessLogic.Delete;
 using BusinessLogic.Update;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class Messages : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -23,6 +25,8 @@ namespace LevelsPro.AdminPanel
         {
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Session["userid"] != null && Session["userid"].ToString() != "")
                 {
                   
@@ -32,6 +36,24 @@ namespace LevelsPro.AdminPanel
                 
                 btnShowAll_Click(null, null);
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void LoadData()
@@ -50,6 +72,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dv = messageview.ResultSet.Tables[0].DefaultView;
@@ -79,20 +102,34 @@ namespace LevelsPro.AdminPanel
 
         protected void btnComposeMessage_Click(object sender, EventArgs e)
         {
-            if (hfShowAll.Value == "0")
+            try
             {
-                LoadUnReadData();
+                if (hfShowAll.Value == "0")
+                {
+                    LoadUnReadData();
+                }
+                else
+                {
+                    LoadData();
+                }
             }
-            else
+            catch (Exception exp)
             {
-                LoadData();
+                throw exp;
             }
             mpeComposeMessageDiv.Show();
         }
 
         protected void btnShowUnRead_Click(object sender, EventArgs e)
         {
-            LoadUnReadData();
+            try
+            {
+                LoadUnReadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
 
         #region show unread message
@@ -110,6 +147,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dv = messageview.ResultSet.Tables[0].DefaultView;
@@ -134,8 +172,15 @@ namespace LevelsPro.AdminPanel
         #endregion
         protected void btnShowAll_Click(object sender, EventArgs e)
         {
-            LoadData();
-            hfShowAll.Value = "1";
+            try
+            {
+                LoadData();
+                hfShowAll.Value = "1";
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
 
         #region view and delete message
@@ -156,6 +201,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 if (hfShowAll.Value == "0")
                 {
@@ -185,9 +231,9 @@ namespace LevelsPro.AdminPanel
                     msgBLL.Invoke();
                     btnShowAll_Click(null, null);
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    throw ex;
                 }
             }
         }

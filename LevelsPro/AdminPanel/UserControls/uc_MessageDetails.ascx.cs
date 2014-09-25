@@ -34,6 +34,7 @@ namespace LevelsPro.AdminPanel.UserControls
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             DataView dv = messageview.ResultSet.Tables[0].DefaultView;
@@ -62,28 +63,41 @@ namespace LevelsPro.AdminPanel.UserControls
         protected void btnBack_Click(object sender, EventArgs e)
         {
             HiddenField hfShow = (HiddenField)this.Parent.FindControl("hfShowAll");
-            if (hfShow.Value == "0")
+            try
             {
-                ((Messages)this.Parent.Page).LoadUnReadData();
+                if (hfShow.Value == "0")
+                {
+                    ((Messages)this.Parent.Page).LoadUnReadData();
+                }
+                else
+                {
+                    ((Messages)this.Parent.Page).LoadData();
+                }
             }
-            else
+            catch (Exception exp)
             {
-                ((Messages)this.Parent.Page).LoadData();
+                throw exp;
             }
-
 
         }
 
         protected void btnClose_Click(object sender, EventArgs e)
         {
             HiddenField hfShow = (HiddenField)this.Parent.FindControl("hfShowAll");
-            if (hfShow.Value == "0")
+            try
             {
-                ((Messages)this.Parent.Page).LoadUnReadData();
+                if (hfShow.Value == "0")
+                {
+                    ((Messages)this.Parent.Page).LoadUnReadData();
+                }
+                else
+                {
+                    ((Messages)this.Parent.Page).LoadData();
+                }
             }
-            else
+            catch (Exception exp)
             {
-                ((Messages)this.Parent.Page).LoadData();
+                throw exp;
             }
         }
 
@@ -115,6 +129,7 @@ namespace LevelsPro.AdminPanel.UserControls
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
 
@@ -145,9 +160,9 @@ namespace LevelsPro.AdminPanel.UserControls
                         ((Messages)this.Parent.Page).LoadData();
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    throw ex;
                 }
             }
         }

@@ -13,11 +13,13 @@ using LevelsPro.App_Code;
 using System.Configuration;
 using System.IO;
 using BusinessLogic.Delete;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class QuizManagement : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -27,10 +29,36 @@ namespace LevelsPro.AdminPanel
         {
             if (!(Page.IsPostBack))
             {
-                LoadQuiz();
+                try
+                {
+                    System.Uri url = Request.Url;
+                    pageURL = url.AbsolutePath.ToString();
+                    LoadQuiz();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         protected void LoadQuiz()
         {
             QuizViewBLL quizview = new QuizViewBLL();
@@ -43,6 +71,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             if (quizview.ResultSet.Tables[0] != null && quizview.ResultSet.Tables[0].Rows.Count > 0)
             {
@@ -68,12 +97,14 @@ namespace LevelsPro.AdminPanel
                 try
                 {
                     quizdelete.Invoke();
+                    LoadQuiz();
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
-                LoadQuiz();
+               
             }
             else if (e.CommandName == "ManageQuestions")
             {

@@ -11,17 +11,17 @@ namespace LevelsPro.ErrorPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Exception exp = Server.GetLastError();
-            string role = (string)Session["role"];
-            role = role.ToLower();
-            string userRole = (string)Session["userrole"];
-            switch (role)
-            {
-                case "player":
-                    string source = "../PlayerPanel/Messages.aspx";
-                    Response.AppendHeader("Refresh", "5;url=" + source);
-                    break;
-            }
+            //Exception exp = Server.GetLastError();
+            //string role = (string)Session["role"];
+            //role = role.ToLower();
+            //string userRole = (string)Session["userrole"];
+            //switch (role)
+            //{
+            //    case "player":
+            //        string source = "../PlayerPanel/Messages.aspx";
+            //        Response.AppendHeader("Refresh", "5;url=" + source);
+            //        break;
+            //}
         }
     }
 }

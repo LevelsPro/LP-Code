@@ -72,12 +72,28 @@ namespace LevelsPro.Util
                 {"/AdminPanel/AwardManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/ContestManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/EditPlayer.aspx","/AdminPanel/PlayerManagement.aspx"},
+                {"/AdminPanel/PlayerAward.aspx","/AdminPanel/PlayerManagement.aspx"},
+                {"/AdminPanel/PlayerProgress.aspx","/AdminPanel/PlayerManagement.aspx"},
+                {"/AdminPanel/PlayerRewards.aspx","/AdminPanel/PlayerManagement.aspx"},
                 {"/AdminPanel/KPIEdit.aspx","/AdminPanel/KPIManagement.aspx"},
                 {"/AdminPanel/KPIManagement.aspx","/AdminPanel/AdminHome.aspx"},
-                {"/AdminPanel/LevelEdit.aspx","/AdminPanel/LevelManagement.aspx"},
+                {"/AdminPanel/LevelEdit.aspx","/AdminPanel/LevelManagements.aspx"},
                 {"/AdminPanel/LevelGameEdit.aspx","/AdminPanel/LevelGameManagement.aspx"},
                 {"/AdminPanel/LevelGameManagement.aspx","/AdminPanel/AdminHome.aspx"},
-                {"/AdminPanel/BannerConfiguration.aspx","/AdminPanel/AdminHome.aspx"}
+                {"/AdminPanel/LevelManagements.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/BannerConfiguration.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/Messages.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/PlayerManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/QuestionEdit.aspx","/AdminPanel/QuizManagement.aspx"},
+                {"/AdminPanel/QuestionManagement.aspx","/AdminPanel/QuizManagement.aspx"},
+                {"/AdminPanel/QuestionEdit.aspx","/AdminPanel/QuizManagement.aspx"},
+                {"/AdminPanel/QuizManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/RewardEdit.aspx","/AdminPanel/RewardManagement.aspx"},
+                {"/AdminPanel/RewardManagement.aspx","/AdminPanel/AdminHome.aspx"},
+                {"/AdminPanel/RoleEdit.aspx","/AdminPanel/RoleManagement.aspx"},
+                {"/AdminPanel/RoleManagement.aspx","/AdminPanel/AdminHome.aspx"},
+
+
 
             };
             linkExceptionCount = new Dictionary<string, int>();

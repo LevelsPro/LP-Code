@@ -13,11 +13,13 @@ using System.Drawing;
 using System.Globalization;
 using LevelsPro.App_Code;
 using System.Configuration;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class PlayerManagement : AuthorizedPage
     {
+        private static string pageURL;
         public static DataSet dsPlayer = new DataSet();
 
         public string sortOrder
@@ -56,11 +58,19 @@ namespace LevelsPro.AdminPanel
 
             if (!(Page.IsPostBack))
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 sortOrder = "asc";
               
                 ViewState["sortExp"] = "FullName";
-                
-                LoadData();
+                try
+                {
+                    LoadData();
+                }
+                catch(Exception exp)
+                {
+                    throw exp;
+                }
                 if (Request.QueryString["saved"] != null && Request.QueryString["saved"].ToString() != "")
                 {
                     lblmessage.Visible = true;
@@ -68,6 +78,25 @@ namespace LevelsPro.AdminPanel
                 }
               
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         private void LoadTotalPlayerScore(int userid)
@@ -89,6 +118,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             dsPlayer = player.ResultSet;
             DataView dvPlayer = player.ResultSet.Tables[0].DefaultView;
@@ -199,8 +229,14 @@ namespace LevelsPro.AdminPanel
                 strWhere += " AND tblUser.Active = " + ddlFilterActive.SelectedValue;
             }
 
-            
-            LoadData(ViewState["sortExp"].ToString(), "", strWhere);
+            try
+            {
+                LoadData(ViewState["sortExp"].ToString(), "", strWhere);
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
@@ -215,8 +251,14 @@ namespace LevelsPro.AdminPanel
             ddlFilterRole.SelectedIndex = 0;
             ddlFilterManager.SelectedIndex = 0;
             ddlFilterActive.SelectedIndex = 0;
-
-            LoadData();
+            try
+            {
+                LoadData();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
 
         protected void dlPlayers_ItemCommand(object source, DataListCommandEventArgs e)
@@ -244,37 +286,43 @@ namespace LevelsPro.AdminPanel
 
         protected void ddlFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (ddlFilterBy.SelectedIndex > 0)
+            try
             {
-                if (ddlFilterBy.SelectedValue == "1")
+                if (ddlFilterBy.SelectedIndex > 0)
                 {
-                    LoadRoles();
+                    if (ddlFilterBy.SelectedValue == "1")
+                    {
+                        LoadRoles();
+                    }
+                    else if (ddlFilterBy.SelectedValue == "2")
+                    {
+                        LoadManagers();
+                    }
+                    else if (ddlFilterBy.SelectedValue == "4")
+                    {
+                        LoadData("", "asc", " WHERE 1=1 AND tblUser.Active = 1");
+                    }
+                    else
+                    {
+                        LoadSites();
+                    }
                 }
-                else if (ddlFilterBy.SelectedValue == "2")
+                else if (ddlFilterBy.SelectedIndex == 0)
                 {
-                    LoadManagers();
-                }
-                else if (ddlFilterBy.SelectedValue == "4")
-                {
-                    LoadData("","asc"," WHERE 1=1 AND tblUser.Active = 1" );
-                }
-                else
-                {
-                    LoadSites();
+                    if (ViewState["sortExp"] != null && ViewState["sortExp"].ToString() != "")
+                    {
+                        LoadData(ViewState["sortExp"].ToString(), "", "");
+                    }
+                    else
+                    {
+                        LoadData();
+                    }
+                    ddlFilterExp.Items.Clear();
                 }
             }
-            else if (ddlFilterBy.SelectedIndex == 0)
+            catch (Exception exp)
             {
-                if (ViewState["sortExp"] != null && ViewState["sortExp"].ToString() != "")
-                {
-                    LoadData(ViewState["sortExp"].ToString(), "", "");
-                }
-                else
-                {
-                    LoadData();
-                }
-                ddlFilterExp.Items.Clear();
+                throw exp;
             }
         }
 
@@ -287,6 +335,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlFilterExp.DataTextField = "Role_Name";
@@ -312,6 +361,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlFilterExp.DataTextField = "U_Name";
@@ -335,6 +385,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlFilterExp.DataTextField = "site_name";
@@ -351,66 +402,80 @@ namespace LevelsPro.AdminPanel
         #region sort and filter
         protected void ddlFilterExp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlFilterExp.SelectedIndex > 0)
+            try
             {
-                string where = " WHERE 1=1 ";
-                if (ddlFilterBy.SelectedValue == "1")
+                if (ddlFilterExp.SelectedIndex > 0)
                 {
-                    where += " AND tblUser.U_RolesID = " + ddlFilterExp.SelectedValue;
-                }
-                else if (ddlFilterBy.SelectedValue == "2")
-                {
-                    where += " AND tblUser.ManagerID = " + ddlFilterExp.SelectedValue;
-                }
-                else
-                {
-                    where += " AND tblUser.U_SiteID = " + ddlFilterExp.SelectedValue;
-                }
+                    string where = " WHERE 1=1 ";
+                    if (ddlFilterBy.SelectedValue == "1")
+                    {
+                        where += " AND tblUser.U_RolesID = " + ddlFilterExp.SelectedValue;
+                    }
+                    else if (ddlFilterBy.SelectedValue == "2")
+                    {
+                        where += " AND tblUser.ManagerID = " + ddlFilterExp.SelectedValue;
+                    }
+                    else
+                    {
+                        where += " AND tblUser.U_SiteID = " + ddlFilterExp.SelectedValue;
+                    }
 
-                if (ViewState["sortExp"] != null && ViewState["sortExp"].ToString() != "")
-                {
-                    LoadData(ViewState["sortExp"].ToString(), "", where);
+                    if (ViewState["sortExp"] != null && ViewState["sortExp"].ToString() != "")
+                    {
+                        LoadData(ViewState["sortExp"].ToString(), "", where);
+                    }
+                    else
+                    {
+                        LoadData("", "", where);
+                    }
                 }
-                else
+                else if (ddlFilterExp.SelectedIndex == 0)
                 {
-                    LoadData("", "", where);
+                    if (ViewState["sortExp"] != null && ViewState["sortExp"].ToString() != "")
+                    {
+                        LoadData(ViewState["sortExp"].ToString(), "", "");
+                    }
+                    else
+                    {
+                        LoadData();
+                    }
                 }
             }
-            else if (ddlFilterExp.SelectedIndex == 0)
+            catch (Exception exp)
             {
-                if (ViewState["sortExp"] != null && ViewState["sortExp"].ToString() != "")
-                {
-                    LoadData(ViewState["sortExp"].ToString(), "", "");
-                }
-                else
-                {
-                    LoadData();
-                }
+                throw exp;
             }
         }
 
         protected void ddlSortBy_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-            if (ddlSortBy.SelectedIndex > 0)
+        {
+            try
             {
-                hdnSortCheck.Value = "0";
-                if (ddlSortBy.SelectedValue == "1")
+                if (ddlSortBy.SelectedIndex > 0)
                 {
-                    ViewState["sortExp"] = "U_FirstName";
-                }
-                else
-                {
-                    ViewState["sortExp"] = "U_LastName";
-                }
+                    hdnSortCheck.Value = "0";
+                    if (ddlSortBy.SelectedValue == "1")
+                    {
+                        ViewState["sortExp"] = "U_FirstName";
+                    }
+                    else
+                    {
+                        ViewState["sortExp"] = "U_LastName";
+                    }
 
-                if (ddlFilterBy.SelectedIndex > 0 && ddlFilterExp.SelectedIndex > 0)
-                {
-                    ddlFilterExp_SelectedIndexChanged(null, null);
+                    if (ddlFilterBy.SelectedIndex > 0 && ddlFilterExp.SelectedIndex > 0)
+                    {
+                        ddlFilterExp_SelectedIndexChanged(null, null);
+                    }
+                    else
+                    {
+                        LoadData(ViewState["sortExp"].ToString());
+                    }
                 }
-                else
-                {
-                    LoadData(ViewState["sortExp"].ToString());
-                }
+            }
+            catch (Exception exp)
+            {
+                throw exp;
             }
         }
         #endregion

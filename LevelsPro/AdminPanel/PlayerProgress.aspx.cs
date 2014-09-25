@@ -9,11 +9,13 @@ using BusinessLogic.Update;
 using LevelsPro.App_Code;
 using System.Data;
 using Common;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class PlayerProgress : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -22,6 +24,8 @@ namespace LevelsPro.AdminPanel
         {
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
                 {
                     ViewState["userid"] = Request.QueryString["userid"];
@@ -35,10 +39,36 @@ namespace LevelsPro.AdminPanel
 
                 if (ViewState["userid"] != null && ViewState["levelid"] != null)
                 {
-                    LoadData(Convert.ToInt32(ViewState["userid"]), Convert.ToInt32(ViewState["levelid"]));
+                    try
+                    {
+                        LoadData(Convert.ToInt32(ViewState["userid"]), Convert.ToInt32(ViewState["levelid"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         #region show player progress
         private void LoadData(int UserID, int LevelID)
         {
@@ -56,6 +86,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
                 {
@@ -129,6 +160,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dvTarget = dsTarget.Tables[0].DefaultView;
@@ -182,6 +214,7 @@ namespace LevelsPro.AdminPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
                                 DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                                 dv.RowFilter = "KPI_ID = " + Convert.ToInt32(lblKPIID.Text.Trim());
@@ -205,6 +238,7 @@ namespace LevelsPro.AdminPanel
                                         }
                                         catch (Exception ex)
                                         {
+                                            throw ex;
                                         }
 
                                         if (UserPoints != null && UserPoints != "")
@@ -238,6 +272,7 @@ namespace LevelsPro.AdminPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
                                 DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                                 dv.RowFilter = "KPI_ID = " + Convert.ToInt32(lblKPIID.Text.Trim());
@@ -261,6 +296,7 @@ namespace LevelsPro.AdminPanel
                                             }
                                             catch (Exception ex)
                                             {
+                                                throw ex;
                                             }
 
                                             if (UserPoints != null && UserPoints != "")
@@ -292,7 +328,7 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
-
+                        throw ex;
                     }
                 }
 
@@ -311,6 +347,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
                 DataView dvPoints = scorePoints.Sum.Tables[0].DefaultView;
                 DataTable dt = dvPoints.ToTable();
@@ -332,6 +369,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
@@ -344,6 +382,7 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        throw ex;
                     }
 
                     if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
@@ -368,6 +407,7 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
                             if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
                             {
@@ -389,6 +429,7 @@ namespace LevelsPro.AdminPanel
                                         }
                                         catch (Exception ex)
                                         {
+                                            throw ex;
                                         }
 
                                         if (UserPoints != null && !UserPoints.Equals(""))
@@ -418,6 +459,7 @@ namespace LevelsPro.AdminPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    throw ex;
                                 }
 
                                 if (UserPoints != null && !UserPoints.Equals(""))
@@ -444,6 +486,7 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
+                                throw ex;
                             }
 
                             int Level = 0;
@@ -461,16 +504,21 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-
+                                throw ex;
                             }
 
                             dVNext.RowFilter = "user_id = " + UserID + "AND current_level = " + Level;
                             DataTable dTNext = dVNext.ToTable();
                             int NextLevel = 0;
                             if (dTNext.Rows.Count == 1) { NextLevel = Convert.ToInt32(dTNext.Rows[0]["next_level"]); }
-
-                            LoadData(UserID, NextLevel);
-
+                            try
+                            {
+                                LoadData(UserID, NextLevel);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
                             ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('The player has completed all the targets and has been successfully Leveled Up')</script>", false);
 
                             //Response.Write("<script LANGUAGE='JavaScript' >alert('The player has completed all the targets and has been successfully Leveled Up')</script>");
@@ -481,7 +529,14 @@ namespace LevelsPro.AdminPanel
                         }
                         else
                         {
-                            LoadData(UserID, LevelID);
+                            try
+                            {
+                                LoadData(UserID, LevelID);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
                         }
                     }
                 }

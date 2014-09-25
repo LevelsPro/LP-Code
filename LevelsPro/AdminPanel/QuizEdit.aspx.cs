@@ -14,12 +14,14 @@ using BusinessLogic.Update;
 using LevelsPro.App_Code;
 using MySql.Data.MySqlClient;
 using BusinessLogic.Delete;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     
     public partial class QuizEdit : AuthorizedPage
     {
+        private static string pageURL;
         static DataSet dss;
         protected override void OnInit(EventArgs e)
         {
@@ -31,24 +33,52 @@ namespace LevelsPro.AdminPanel
             lblmessage.Visible = false;
             if (!IsPostBack)
             {
-                LoadKPI();
-
-                if (Request.QueryString["mess"] != null && Request.QueryString["mess"].ToString() != "")
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
                 {
-                    lblmessage.Visible = true;
-                    lblmessage.Text = "Quiz info " + Resources.TestSiteResources.UpdateMessage;
+                    LoadKPI();
 
+                    if (Request.QueryString["mess"] != null && Request.QueryString["mess"].ToString() != "")
+                    {
+                        lblmessage.Visible = true;
+                        lblmessage.Text = "Quiz info " + Resources.TestSiteResources.UpdateMessage;
+
+                    }
+
+                    if (Request.QueryString["quizid"] != null && Request.QueryString["quizid"].ToString() != "")
+                    {
+                        ViewState["quizid"] = Request.QueryString["quizid"];
+
+                        LoadData(Convert.ToInt32(ViewState["quizid"]));
+                    }
+                    loadDataList();
                 }
-
-                if (Request.QueryString["quizid"] != null && Request.QueryString["quizid"].ToString() != "")
+                catch (Exception exp)
                 {
-                    ViewState["quizid"] = Request.QueryString["quizid"];
-                    
-                    LoadData(Convert.ToInt32(ViewState["quizid"]));
+                    throw exp;
                 }
-                loadDataList();
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         #region show quiz for edit
         private void LoadData(int QuizID)
         {
@@ -63,6 +93,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             if (quizview.ResultSet != null && quizview.ResultSet.Tables.Count > 0 && quizview.ResultSet.Tables[0] != null && quizview.ResultSet.Tables[0].Rows.Count > 0)
@@ -95,6 +126,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlKPI_ID.DataTextField = "KPI_name";
@@ -382,24 +414,31 @@ namespace LevelsPro.AdminPanel
 
         private void loadDataList()
         {
-            QuizLevelsBLL Rolelevel = new QuizLevelsBLL();
-            Quiz quiz = new Quiz();
-
-            if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
+            try
             {
-                quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
+                QuizLevelsBLL Rolelevel = new QuizLevelsBLL();
+                Quiz quiz = new Quiz();
 
+                if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
+                {
+                    quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
+
+                }
+                else
+                {
+                    quiz.QuizID = -1;
+                }
+                Rolelevel.Quiz = quiz;
+                Rolelevel.Invoke();
+                dss = new DataSet();
+                dss = Rolelevel.ResultSet;
+                dlRoles.DataSource = Rolelevel.ResultSet.Tables[0].DefaultView.ToTable(true, "Role_ID", "Role_Name");
+                dlRoles.DataBind();
             }
-            else
+            catch (Exception exp)
             {
-                quiz.QuizID = -1;
+                throw exp;
             }
-            Rolelevel.Quiz = quiz;
-            Rolelevel.Invoke();
-            dss = new DataSet();
-            dss = Rolelevel.ResultSet;
-            dlRoles.DataSource = Rolelevel.ResultSet.Tables[0].DefaultView.ToTable(true, "Role_ID", "Role_Name");
-            dlRoles.DataBind();
         }
     }
 }

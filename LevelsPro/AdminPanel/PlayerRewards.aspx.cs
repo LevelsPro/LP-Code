@@ -8,11 +8,13 @@ using BusinessLogic.Select;
 using System.Data;
 using BusinessLogic.Update;
 using LevelsPro.App_Code;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class PlayerRewards : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -22,13 +24,41 @@ namespace LevelsPro.AdminPanel
             lblMessage.Visible = false;
             if (!IsPostBack)
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
                 if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
                 {
                     ViewState["userid"] = Request.QueryString["userid"];
-                    LoadData(Convert.ToInt32(ViewState["userid"]));
+                    try
+                    {
+                        LoadData(Convert.ToInt32(ViewState["userid"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         #region show all rewards
         private void LoadData( int UserID)
         {
@@ -46,6 +76,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }                
                 DataView dvPlayer = player.ResultSet.Tables[0].DefaultView;
                 if (dvPlayer != null && dvPlayer.ToTable().Rows.Count > 0)
@@ -67,9 +98,9 @@ namespace LevelsPro.AdminPanel
                 {
                     manual.Invoke();
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    throw ex;
                 }
 
                 if (manual.ResultSet != null && manual.ResultSet.Tables.Count > 0 && manual.ResultSet.Tables[0] != null && manual.ResultSet.Tables[0].Rows.Count > 0)
@@ -142,8 +173,8 @@ namespace LevelsPro.AdminPanel
                     lblMessage.Visible = true;
                 }
                 catch (Exception ex)
-                { 
-                    
+                {
+                    throw ex;
                 }
             }
         }

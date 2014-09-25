@@ -12,11 +12,13 @@ using BusinessLogic.Insert;
 using System.Text;
 using LevelsPro.App_Code;
 using BusinessLogic.Delete;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class LevelManagements : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -29,13 +31,39 @@ namespace LevelsPro.AdminPanel
             lblmessage.Visible = false;
             if (!(Page.IsPostBack))
             {
-               
-                LoadRoles();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
+                {
+                    LoadRoles();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 lblHeading.Text =Resources.TestSiteResources.ManageLevels;
                 pnlMain.Visible = true;
                 pnlSort.Visible = false;
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
 
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void LoadRoles()
@@ -47,6 +75,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             ddlRole.DataTextField = "Role_Name";
@@ -82,8 +111,9 @@ namespace LevelsPro.AdminPanel
             {
                 level.Invoke();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
 
             if (level.ResultSet != null && level.ResultSet.Tables.Count > 0 && level.ResultSet.Tables[0] != null && level.ResultSet.Tables[0].Rows.Count > 0)
@@ -309,6 +339,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 DataView dv = level.ResultSet.Tables[0].DefaultView;

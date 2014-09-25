@@ -10,11 +10,13 @@ using Common;
 using BusinessLogic.Insert;
 using LevelsPro.App_Code;
 using BusinessLogic.Delete;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class PlayerAward : AuthorizedPage
     {
+        private static string pageURL;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -23,7 +25,16 @@ namespace LevelsPro.AdminPanel
         {
             if (!IsPostBack)
             {
-                LoadAwards();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                try
+                {
+                    LoadAwards();
+                }
+                catch (Exception exp)
+                {
+                    throw exp;
+                }
                 if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
                 {
                     ViewState["userid"] = Request.QueryString["userid"];
@@ -35,6 +46,24 @@ namespace LevelsPro.AdminPanel
                     ViewState["levelid"] = Request.QueryString["levelid"];
                 }
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
@@ -64,6 +93,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             dsAwards = award.ResultSet;
 
@@ -101,6 +131,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }                
                 DataView dvPlayer = player.ResultSet.Tables[0].DefaultView;
                 if (dvPlayer != null && dvPlayer.ToTable().Rows.Count > 0)
@@ -121,9 +152,9 @@ namespace LevelsPro.AdminPanel
                 {
                     manual.Invoke();
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    throw ex;
                 }
 
                 if (manual.ResultSet != null && manual.ResultSet.Tables.Count > 0 && manual.ResultSet.Tables[0] != null && manual.ResultSet.Tables[0].Rows.Count > 0)
@@ -193,6 +224,7 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                 }
 
                 LoadData(Convert.ToInt32(ViewState["userid"]));

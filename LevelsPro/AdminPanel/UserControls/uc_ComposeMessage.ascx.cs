@@ -31,6 +31,7 @@ namespace LevelsPro.AdminPanel.UserControls
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = _role.ResultSet.Tables[0].DefaultView;
 
@@ -65,6 +66,7 @@ namespace LevelsPro.AdminPanel.UserControls
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             DataView dv = _user.ResultSet.Tables[0].DefaultView;
 
@@ -108,6 +110,7 @@ namespace LevelsPro.AdminPanel.UserControls
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
 
@@ -119,13 +122,20 @@ namespace LevelsPro.AdminPanel.UserControls
 
 
             HiddenField hfShow = (HiddenField)this.Parent.FindControl("hfShowAll");
-            if (hfShow.Value == "0")
+            try
             {
-                ((Messages)this.Parent.Page).LoadUnReadData();
+                if (hfShow.Value == "0")
+                {
+                    ((Messages)this.Parent.Page).LoadUnReadData();
+                }
+                else
+                {
+                    ((Messages)this.Parent.Page).LoadData();
+                }
             }
-            else
+            catch (Exception exp)
             {
-                ((Messages)this.Parent.Page).LoadData();
+                throw exp;
             }
             txtareaMessage.Text = "";
             txtareaSubject.Text = "";
