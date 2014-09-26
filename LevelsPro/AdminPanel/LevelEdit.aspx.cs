@@ -48,11 +48,11 @@ namespace LevelsPro.AdminPanel
                 pageURL = url.AbsolutePath.ToString();
                 if (Request.QueryString["levelid"] != null && Request.QueryString["levelid"].ToString() != "")
                 {
-                {
                     ViewState["levelid"] = Request.QueryString["levelid"];
                 }
 
                 if (Request.QueryString["roleid"] != null && Request.QueryString["roleid"].ToString() != "")
+                {
                     ViewState["roleid"] = Request.QueryString["roleid"];
                 }
 
@@ -64,7 +64,7 @@ namespace LevelsPro.AdminPanel
                     imgbtnright.Enabled = false;
                     btnUpdate.Text = Resources.TestSiteResources.Add;
 
-                  
+
                 }
                 try
                 {
@@ -656,38 +656,41 @@ namespace LevelsPro.AdminPanel
                                     throw exp;
                                 }
 
-                                Target target = new Target();
-                                target.TargetValue = Convert.ToInt32(txtTargetValue.Text.Trim());
-                                target.RoleID = Convert.ToInt32(ViewState["roleid"]);
-                                target.LevelID = Convert.ToInt32(ViewState["levelid"]);
-                                target.KPIID = Convert.ToInt32(ddlKPI.SelectedValue);
-                                target.Points = Convert.ToInt32(txtPoints.Text.Trim());
-                                target.Description = "";
-
-                                TargetInsertBLL insertTarget = new TargetInsertBLL();
-                                insertTarget.Target = target;
-                                try
+                                if (!txtTargetValue.Text.Trim().Equals("") || !txtPoints.Text.Trim().Equals(""))
                                 {
-                                    insertTarget.Invoke();
+                                    Target target = new Target();
+                                    target.TargetValue = Convert.ToInt32(txtTargetValue.Text.Trim());
+                                    target.RoleID = Convert.ToInt32(ViewState["roleid"]);
+                                    target.LevelID = Convert.ToInt32(ViewState["levelid"]);
+                                    target.KPIID = Convert.ToInt32(ddlKPI.SelectedValue);
+                                    target.Points = Convert.ToInt32(txtPoints.Text.Trim());
+                                    target.Description = "";
 
-
-                                    pnlAddGoal.Visible = false;
-                                    ddlKPI.SelectedIndex = 0;
-                                    txtTargetValue.Text = "";
-                                    txtPoints.Text = "";
-                                    btnUpdate.Text = Resources.TestSiteResources.Update;
-                                    LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
-                                }
-                                catch (Exception ex)
-                                {
-                                    if (ex.Message.Contains("Duplicate"))
+                                    TargetInsertBLL insertTarget = new TargetInsertBLL();
+                                    insertTarget.Target = target;
+                                    try
                                     {
-                                        lblmessage.Text = Resources.TestSiteResources.TargetValue + ' ' + Resources.TestSiteResources.Already;
+                                        insertTarget.Invoke();
+
+
+                                        pnlAddGoal.Visible = false;
+                                        ddlKPI.SelectedIndex = 0;
+                                        txtTargetValue.Text = "";
+                                        txtPoints.Text = "";
+                                        btnUpdate.Text = Resources.TestSiteResources.Update;
+                                        LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
                                     }
-                                    else
+                                    catch (Exception ex)
                                     {
-                                        //show unsuceess
-                                        lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.TargetValue;
+                                        if (ex.Message.Contains("Duplicate"))
+                                        {
+                                            lblmessage.Text = Resources.TestSiteResources.TargetValue + ' ' + Resources.TestSiteResources.Already;
+                                        }
+                                        else
+                                        {
+                                            //show unsuceess
+                                            lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.TargetValue;
+                                        }
                                     }
                                 }
                             }
