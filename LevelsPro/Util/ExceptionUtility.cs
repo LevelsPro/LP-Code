@@ -86,15 +86,12 @@ namespace LevelsPro.Util
                 {"/AdminPanel/PlayerManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/QuestionEdit.aspx","/AdminPanel/QuizManagement.aspx"},
                 {"/AdminPanel/QuestionManagement.aspx","/AdminPanel/QuizManagement.aspx"},
-                {"/AdminPanel/QuestionEdit.aspx","/AdminPanel/QuizManagement.aspx"},
+                {"/AdminPanel/QuizEdit.aspx","/AdminPanel/QuizManagement.aspx"},
                 {"/AdminPanel/QuizManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/RewardEdit.aspx","/AdminPanel/RewardManagement.aspx"},
                 {"/AdminPanel/RewardManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/RoleEdit.aspx","/AdminPanel/RoleManagement.aspx"},
-                {"/AdminPanel/RoleManagement.aspx","/AdminPanel/AdminHome.aspx"},
-
-
-
+                {"/AdminPanel/RoleManagement.aspx","/AdminPanel/AdminHome.aspx"}
             };
             linkExceptionCount = new Dictionary<string, int>();
         }
