@@ -35,14 +35,83 @@ $(document).ready(function () {
 
         var secrh = $('.sec-right').height();
         $(".pd-desc").height(secrh - 38);
+	
+	
 
-
-
-
+	
 
     });
 
 
+
+ $('.mapb').resize(function(){
+	alert("resize test");	
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+	});
+
+
+
+
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 1000);
+
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 2000);
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 3000);
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 4000);
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 5000);
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 7000);
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 6000);
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 8000);
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 9000);
+
+setTimeout(function () {
+                        
+	 var rcolumn = $('.lof').height();
+        $(".awpoints").height(rcolumn - 22);
+                        }, 10000);
 
     $('.mappad').resize(function () {
 
@@ -51,7 +120,8 @@ $(document).ready(function () {
 
     });
 
-
+	
+	 
 
 
     //    var canvaswidth = $('.my-map').width();
