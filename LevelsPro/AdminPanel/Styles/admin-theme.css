@@ -16,6 +16,13 @@ body{
 	position:relative;
 	}
 	
+	.acme-inc {
+width: 318px;
+height: 65px;
+background: url(../images/acme-inc.png) 10px 39px no-repeat;
+padding: 39px 10px 10px 10px;
+}
+	
 .body-cont{
 	background:url(../images/body-bg.png) top repeat-x;
 	margin:0 16px;

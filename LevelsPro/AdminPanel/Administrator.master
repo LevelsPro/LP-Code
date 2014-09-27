@@ -29,14 +29,12 @@
             <div class="logo">
                 <img src="images/logo.png" />
             </div>
-            <div class="banner">
-                <div class="txt1">
-                    Acme Inc.</div>
-                <div class="txt2">
-                    Around the World</div>
+          <div class="banner">
+                <div class="acme-inc">
+                   </div>
             </div>
             <div class="clear">
-            </div>
+            </div>>
         </div>
         <div class="body-cont">
             <div class="box profile secadmin">
