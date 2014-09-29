@@ -376,6 +376,7 @@ namespace LevelsPro.Util
                 // first instance of exception.
                 linkExceptionCount[sourcePage] = 1;
             }
+            session["ExCountDictionary"] = linkExceptionCount;
         }
 
         /// <summary>
@@ -392,6 +393,7 @@ namespace LevelsPro.Util
                 linkExceptionCount.Remove(sourcePage);
                 
             }
+            session["ExCountDictionary"] = linkExceptionCount;
         }
 
         private static void SetRemoteRedirectionURL(string destPage, HttpSessionState session)
