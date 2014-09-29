@@ -221,9 +221,9 @@ namespace LevelsPro.PlayerPanel
             loginuser.Users = user;
             try
             {
-                throw new Exception();
                 
-               // loginuser.Invoke();
+                
+               loginuser.Invoke();
             }
             catch (Exception ex)
             {

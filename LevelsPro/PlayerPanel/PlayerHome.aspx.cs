@@ -660,8 +660,8 @@ namespace LevelsPro.PlayerPanel
             loginuser.Users = user;
             try
             {
-                throw new NullReferenceException();
-               // loginuser.Invoke();
+               
+                loginuser.Invoke();
             }
             catch (Exception ex)
             {
