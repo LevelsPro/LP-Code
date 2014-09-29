@@ -26,6 +26,7 @@ namespace LevelsPro
         protected void Page_Load(object sender, EventArgs e)
         {
             ExceptionUtility.CheckForLoginErrorMessage();
+            Session["ExCountDictionary"] = new Dictionary<string, int>();
             if (Session["MyUICulture"] != null && Session["MyCulture"] != null)
             {
                 if (Session["MyUICulture"].ToString() == "en-US")

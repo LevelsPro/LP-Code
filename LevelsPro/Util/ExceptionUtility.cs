@@ -23,7 +23,7 @@ namespace LevelsPro.Util
         private static Dictionary<string, string> AdminRedirectionLookup;
         //this dictionary will be used to keep track of a bad link,
         //in case of continous failures, different redirection strategy will be used.
-        private static Dictionary<string, int> linkExceptionCount;
+        private  Dictionary<string, int> linkExceptionCount;
         #endregion
 
         #region Constructor
@@ -93,7 +93,7 @@ namespace LevelsPro.Util
                 {"/AdminPanel/RoleEdit.aspx","/AdminPanel/RoleManagement.aspx"},
                 {"/AdminPanel/RoleManagement.aspx","/AdminPanel/AdminHome.aspx"}
             };
-            linkExceptionCount = new Dictionary<string, int>();
+            //linkExceptionCount = new Dictionary<string, int>();
         }
         #endregion
 
@@ -110,7 +110,7 @@ namespace LevelsPro.Util
         internal static void GenerateExpResponse(string sourcePage, RedirectionStrategy redirectionStrategy, HttpSessionState session, HttpServerUtility server, HttpResponse response, Exception exp)
         {
             string role = (string)session["role"];
-            ManageExceptionEntry(sourcePage);
+            ManageExceptionEntry(sourcePage,session);
             if (role != null)
             {
                 #region Player
@@ -123,10 +123,10 @@ namespace LevelsPro.Util
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
  
-                            if (ExceptionCount(sourcePage) > 2)
+                            if (ExceptionCount(sourcePage,session) > 2)
                             {
                                 SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage);
+                                RemoveExceptionEntry(sourcePage,session);
                                 LogoutUser(sourcePage, session, response);
                             }
                             else
@@ -138,7 +138,7 @@ namespace LevelsPro.Util
                         else
                         {
                             SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
-                            RemoveExceptionEntry(sourcePage);
+                            RemoveExceptionEntry(sourcePage, session);
                             LogoutUser(sourcePage, session, response);
                         }
                     }
@@ -149,10 +149,10 @@ namespace LevelsPro.Util
                     {
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
-                            if (ExceptionCount(sourcePage) > 2)
+                            if (ExceptionCount(sourcePage, session) > 2)
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage);
+                                RemoveExceptionEntry(sourcePage, session);
                                 SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage,role.ToLower()),session);
                                 response.Redirect(DefaultErrorPage,false);
                             }
@@ -165,7 +165,7 @@ namespace LevelsPro.Util
                         else
                         {
                             SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                            RemoveExceptionEntry(sourcePage);
+                            RemoveExceptionEntry(sourcePage, session);
                             SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                             response.Redirect(DefaultErrorPage,false);
                         }
@@ -181,10 +181,10 @@ namespace LevelsPro.Util
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
 
-                            if (ExceptionCount(sourcePage) > 2)
+                            if (ExceptionCount(sourcePage, session) > 2)
                             {
                                 SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage);
+                                RemoveExceptionEntry(sourcePage, session);
                                 LogoutManager(sourcePage,session, response);
                             }
                             else
@@ -196,7 +196,7 @@ namespace LevelsPro.Util
                         else
                         {
                             SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
-                            RemoveExceptionEntry(sourcePage);
+                            RemoveExceptionEntry(sourcePage, session);
                             LogoutManager(sourcePage, session, response);
                         }
                     }
@@ -205,10 +205,10 @@ namespace LevelsPro.Util
                     {
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
-                            if (ExceptionCount(sourcePage) > 2)
+                            if (ExceptionCount(sourcePage, session) > 2)
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage);
+                                RemoveExceptionEntry(sourcePage, session);
                                 SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                                 response.Redirect(DefaultErrorPage, false);
                             }
@@ -221,7 +221,7 @@ namespace LevelsPro.Util
                         else
                         {
                             SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                            RemoveExceptionEntry(sourcePage);
+                            RemoveExceptionEntry(sourcePage, session);
                             SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                             response.Redirect(DefaultErrorPage, false);
                         }
@@ -236,10 +236,10 @@ namespace LevelsPro.Util
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
 
-                            if (ExceptionCount(sourcePage) > 2)
+                            if (ExceptionCount(sourcePage, session) > 2)
                             {
                                 SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage);
+                                RemoveExceptionEntry(sourcePage, session);
                                 LogoutAdmin(sourcePage, session, response);
                             }
                             else
@@ -251,7 +251,7 @@ namespace LevelsPro.Util
                         else
                         {
                             SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
-                            RemoveExceptionEntry(sourcePage);
+                            RemoveExceptionEntry(sourcePage, session);
                             LogoutAdmin(sourcePage, session, response);
                         }
                     }
@@ -260,10 +260,10 @@ namespace LevelsPro.Util
                     {
                         if (redirectionStrategy == RedirectionStrategy.local)
                         {
-                            if (ExceptionCount(sourcePage) > 2)
+                            if (ExceptionCount(sourcePage, session) > 2)
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage);
+                                RemoveExceptionEntry(sourcePage, session);
                                 SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                                 response.Redirect(DefaultErrorPage, false);
                             }
@@ -276,7 +276,7 @@ namespace LevelsPro.Util
                         else
                         {
                             SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                            RemoveExceptionEntry(sourcePage);
+                            RemoveExceptionEntry(sourcePage, session);
                             SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                             response.Redirect(DefaultErrorPage, false);
                         }
@@ -362,8 +362,9 @@ namespace LevelsPro.Util
         /// Called to add entry in the log incase of local redirection.
         /// </summary>
         /// <param name="sourcePage"></param>
-        private static void ManageExceptionEntry(string sourcePage)
+        private static void ManageExceptionEntry(string sourcePage,HttpSessionState session)
         {
+            Dictionary<string, int> linkExceptionCount = (Dictionary<string, int>)session["ExCountDictionary"];
             if (linkExceptionCount.ContainsKey(sourcePage))
             {
                 int value = linkExceptionCount[sourcePage];
@@ -383,8 +384,9 @@ namespace LevelsPro.Util
         /// </summary>
         /// <param name="sourcePage"></param>
         /// <returns></returns>
-        private static void RemoveExceptionEntry(string sourcePage)
+        private static void RemoveExceptionEntry(string sourcePage, HttpSessionState session)
         {
+            Dictionary<string, int> linkExceptionCount = (Dictionary<string, int>)session["ExCountDictionary"];
             if (linkExceptionCount.ContainsKey(sourcePage))
             {
                 linkExceptionCount.Remove(sourcePage);
@@ -398,8 +400,9 @@ namespace LevelsPro.Util
             session["RED-URL"] = destPage;
         }
         
-        private static int ExceptionCount(string sourcePage)
+        private static int ExceptionCount(string sourcePage,HttpSessionState session)
         {
+            Dictionary<string, int> linkExceptionCount = (Dictionary<string, int>)session["ExCountDictionary"];
             int count = 0;
             if (linkExceptionCount.ContainsKey(sourcePage))
             {
