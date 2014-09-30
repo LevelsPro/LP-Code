@@ -4,6 +4,7 @@
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery-ui.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.ui.touch-punch.min.js"></script>
     
     <script type="text/javascript">
         $(document).ready(function () {
