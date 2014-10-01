@@ -103,6 +103,30 @@ namespace LevelsPro.AdminPanel
                     {
                         cbActive.Checked = false;
                     }
+                    if (dt.Rows[0]["TypeLevel"].ToString().Equals("Level"))
+                    {
+                        rbtypelevel.Checked = true;
+                    }
+                    else
+                    {
+                        rbtypelevel.Checked = false;
+                    }
+                    if (dt.Rows[0]["TypeAward"].ToString().Equals("Award"))
+                    {
+                        rbtypeaward.Checked = true;
+                    }
+                    else
+                    {
+                        rbtypeaward.Checked = false;
+                    }
+                    if (dt.Rows[0]["TypeContest"].ToString().Equals("Contest"))
+                    {
+                        rbtypecontest.Checked = true;
+                    }
+                    else
+                    {
+                        rbtypecontest.Checked = false;
+                    }
                     lblmessage.Visible = false;
                     btnAddKPI.Text = Resources.TestSiteResources.Update;
                 }
@@ -111,6 +135,9 @@ namespace LevelsPro.AdminPanel
                     lblHeading.Text = Resources.TestSiteResources.AddKPI;
                     lblActive.Enabled = false;
                     cbActive.Enabled = false;
+                    rbtypelevel.Checked = false;
+                    rbtypeaward.Checked = false;
+                    rbtypecontest.Checked = false;
                     ddlKPIType.SelectedIndex = 0;
                     ddlCategory.SelectedIndex = 0;
                     Session["TipsDESC"] = "";
@@ -172,6 +199,7 @@ namespace LevelsPro.AdminPanel
             ddlCategory.Items.Insert(0, li);
         }
 
+
         #region add update kpi code
         protected void btnAddKPI_Click(object sender, EventArgs e)
         {
@@ -191,6 +219,30 @@ namespace LevelsPro.AdminPanel
                 kpi.KPICategory = ddlCategory.SelectedValue;
                 kpi.KPITipsDESC = Session["TipsDESC"].ToString();
                 kpi.KPITipsLINK = Session["TipsLINK"].ToString();
+                if (rbtypelevel.Checked == true)
+                {
+                    kpi.TypeLevel = rbtypelevel.Text;
+                }
+                else
+                {
+                    kpi.TypeLevel = " ";
+                }
+                if (rbtypeaward.Checked == true)
+                {
+                    kpi.TypeAward = rbtypeaward.Text;
+                }
+                else
+                {
+                    kpi.TypeAward = " ";
+                }
+                if (rbtypecontest.Checked == true)
+                {
+                    kpi.TypeContest = rbtypecontest.Text;
+                }
+                else
+                {
+                    kpi.TypeContest = " ";
+                }
             
 
 

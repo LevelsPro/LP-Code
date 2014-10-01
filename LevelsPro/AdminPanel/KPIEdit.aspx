@@ -5,7 +5,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
- <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     <link href="Styles/admin-theme.css" rel="stylesheet" type="text/css" />
     <link href="Styles/admin-website.css" rel="stylesheet" type="text/css" />
@@ -120,8 +120,34 @@
 					<%--<select class="edit-combo fr">
 						<option>Training</option>
 					</select>--%>
+                   
+                   
+                   
+                    <%--<asp:RadioButton ID="rbtypelevel" Text="Level" runat="server" AutoPostBack="true" />
+                      <asp:RadioButton ID="rbtypeaward" Text="Award" runat="server" AutoPostBack="true" />
+                        <asp:RadioButton ID="rbtypecontest" Text="Contest" runat="server" AutoPostBack="true" />--%>
+                    <%-- <asp:RadioButtonList ID="rbltype" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow"
+                            CssClass="edit-right">
+                            <asp:ListItem Text="Level" Value="Level" style="font-size: 24px" />
+                            <asp:ListItem Text="Award" Value="Award" style="font-size: 24px" />
+                              <asp:ListItem Text="Contest" Value="Contest" style="font-size: 24px" />
+                        </asp:RadioButtonList>--%>
 					<div class="clear"></div>
 		</div>
+          <div class="lvl-desc edit-block mt50 wbg">
+          <asp:Label runat="server" 
+                  Text="Select the type of KPI to which you want to assign"  
+                  class="edit-name fl" Width="579px"></asp:Label>
+          <div class="clear"></div>
+           <asp:CheckBox ID="rbtypelevel" class="edit-desc fl" Text="Level" runat="server" 
+                  Width="132px" />
+            <asp:CheckBox ID="rbtypeaward" class="edit-desc fl" Text="Award" runat="server" 
+                  Width="152px" />
+          <asp:CheckBox ID="rbtypecontest" class="edit-desc fl" Text="Contest" runat="server" />
+           <div class="clear"></div>
+          </div>
+
+         
             <div class="lvl-desc edit-block mt50 wbg">
           
                     <asp:Label ID="lblActive" runat="server"  class="edit-name fl"  Text="<%$ Resources:TestSiteResources, Active %>"></asp:Label>

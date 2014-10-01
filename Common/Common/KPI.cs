@@ -19,6 +19,9 @@ namespace Common
         SqlString _kpidesc;
         SqlString _kpiTipsDESC;
         SqlString _kpiTipsLink;
+        SqlString _typeaward;
+        SqlString _typecontest;
+        SqlString _typelevel;
 
         #endregion
 
@@ -77,6 +80,21 @@ namespace Common
         {
             get { return _kpiTipsLink; }
             set { _kpiTipsLink = value; }
+        }
+        public SqlString TypeAward
+        {
+            get { return _typeaward; }
+            set { _typeaward = value; }
+        }
+        public SqlString TypeContest
+        {
+            get { return _typecontest; }
+            set { _typecontest = value; }
+        }
+        public SqlString TypeLevel
+        {
+            get { return _typelevel; }
+            set { _typelevel = value; }
         }
         #endregion
     }

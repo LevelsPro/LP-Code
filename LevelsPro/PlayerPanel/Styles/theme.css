@@ -4,11 +4,11 @@
 
 
 body{
-	margin:0px;
-	padding:0px;
-	font-family:Arial, Helvetica, sans-serif;
-	background:#000;
-	}
+                margin:0px;
+                padding:0px;
+                font-family:Arial, Helvetica, sans-serif;
+                background:url(../images/body-bg2.png);
+                }
 	
 #myCanvas{
 	/*background:url(../images/map.png) top left no-repeat;*/

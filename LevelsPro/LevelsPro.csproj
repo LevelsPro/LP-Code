@@ -85,6 +85,7 @@
     <Content Include="AdminPanel\ContestManagement.aspx" />
     <Content Include="AdminPanel\DataSetEdit.aspx" />
     <Content Include="AdminPanel\DataSetManagement.aspx" />
+    <Content Include="AdminPanel\Images\body-bg2.png" />
     <Content Include="AdminPanel\RoundEdit.aspx" />
     <Content Include="AdminPanel\DataElementEdit.aspx" />
     <Content Include="AdminPanel\MatchEdit.aspx" />
@@ -308,6 +309,7 @@
     <Content Include="Images\bg-scrollbar-trackend-y.png" />
     <Content Include="Images\big-bar-right.png" />
     <Content Include="Images\body-bg.png" />
+    <Content Include="Images\body-bg2.png" />
     <Content Include="Images\btns-bg.png" />
     <Content Include="Images\cm-bg.png" />
     <Content Include="Images\dots.png" />
@@ -449,6 +451,7 @@
     <Content Include="ManagerPanel\Images\big-bar-ptrn.png" />
     <Content Include="ManagerPanel\Images\big-bar-right.png" />
     <Content Include="ManagerPanel\Images\body-bg.png" />
+    <Content Include="ManagerPanel\Images\body-bg2.png" />
     <Content Include="ManagerPanel\Images\btn-spr-left.png" />
     <Content Include="ManagerPanel\Images\btn-spr-right.png" />
     <Content Include="ManagerPanel\Images\btns-bg.png" />
@@ -595,6 +598,7 @@
     <Content Include="ManagerPanel\UserControls\uc_Profile.ascx" />
     <Content Include="PlayerPanel\ChangePassword.aspx" />
     <Content Include="PlayerPanel\ContestDetails.aspx" />
+    <Content Include="PlayerPanel\Images\body-bg2.png" />
     <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_flat_10_000000_40x100.png" />

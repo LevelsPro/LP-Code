@@ -57,7 +57,10 @@ namespace DataAccess.Update
                                             new MySqlParameter("?p_KpiCategory",KPI.KPICategory),
                                             new MySqlParameter("?p_Descp",KPI.KPIDescription),
                                             new MySqlParameter("?p_KpiTipsDESC",KPI.KPITipsDESC),
-                                            new MySqlParameter("?p_KpiTipsLINK",KPI.KPITipsLINK)};
+                                            new MySqlParameter("?p_KpiTipsLINK",KPI.KPITipsLINK),
+                                           new MySqlParameter("?p_TypeLevel",KPI.TypeLevel),
+                                           new MySqlParameter("?p_TypeAward",KPI.TypeAward),
+                                           new MySqlParameter("?p_TypeContest",KPI.TypeContest)};
             
             Parameters = parameters;
         }

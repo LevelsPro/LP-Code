@@ -417,7 +417,7 @@ namespace LevelsPro.AdminPanel
 
                     DataView dv = kpi.ResultSet.Tables[0].DefaultView;
 
-                    dv.RowFilter = "Active=1";
+                    dv.RowFilter = "Active=1 AND TypeLevel='Level'";
 
                     dropdown.DataSource = dv.ToTable();
                     dropdown.DataBind();
@@ -771,7 +771,7 @@ namespace LevelsPro.AdminPanel
 
             DataView dv = kpi.ResultSet.Tables[0].DefaultView;
 
-            dv.RowFilter = "Active=1";
+            dv.RowFilter = "Active=1 AND TypeLevel='Level'";
 
             ddlKPI.DataSource = dv.ToTable();
             ddlKPI.DataBind();
