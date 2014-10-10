@@ -134,16 +134,15 @@
                         </asp:RadioButtonList>--%>
 					<div class="clear"></div>
 		</div>
-          <div class="lvl-desc edit-block mt50 wbg">
-          <asp:Label runat="server" 
-                  Text="Select the type of KPI to which you want to assign"  
-                  class="edit-name fl" Width="579px"></asp:Label>
-          <div class="clear"></div>
+         <div class="lvl-desc edit-block mt50 wbg">
+          <asp:Label ID="Label2" runat="server" 
+                  Text="Assign KPI To:"  
+                  class="edit-name fl" Width="200px"></asp:Label>
            <asp:CheckBox ID="rbtypelevel" class="edit-desc fl" Text="Level" runat="server" 
-                  Width="132px" />
+                  Width="90px" />
             <asp:CheckBox ID="rbtypeaward" class="edit-desc fl" Text="Award" runat="server" 
-                  Width="152px" />
-          <asp:CheckBox ID="rbtypecontest" class="edit-desc fl" Text="Contest" runat="server" />
+                  Width="100px" />
+          <asp:CheckBox ID="rbtypecontest" class="edit-desc fl" Text="Contest" runat="server" Width="130px" />
            <div class="clear"></div>
           </div>
 
