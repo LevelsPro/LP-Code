@@ -988,7 +988,10 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
-                                    throw ex;
+                                    if (ex.Message.ToLower().Contains("duplicate"))
+                                    { }
+                                    else
+                                        throw ex;
                                 }
 
                                 if (UserPoints != null && UserPoints != "")

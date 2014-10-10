@@ -738,7 +738,7 @@ namespace Microsoft.ApplicationBlocks.Data
 				// Detach the MySqlParameters from the command object, so they can be used again
 				cmd.Parameters.Clear();
 
-				if( mustCloseConnection )
+				//if( mustCloseConnection )
 					connection.Close();
 
 				// Return the dataset
@@ -1342,7 +1342,7 @@ namespace Microsoft.ApplicationBlocks.Data
 			// Detach the MySqlParameters from the command object, so they can be used again
 			cmd.Parameters.Clear();
 
-			if( mustCloseConnection )
+			//if( mustCloseConnection )
 				connection.Close();
 
 			return retval;
@@ -1994,7 +1994,7 @@ namespace Microsoft.ApplicationBlocks.Data
 				command.Parameters.Clear();
 			}
 
-			if( mustCloseConnection )
+			//if( mustCloseConnection )
 				connection.Close();
 		}
 		#endregion
