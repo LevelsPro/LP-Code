@@ -50,8 +50,18 @@ namespace LevelsPro.PlayerPanel.UserControls
             successDiv.Visible = false;
             TweeterFailureDiv.Visible = false;
             TweeterSuccessDiv.Visible = false;
-            if (check > 0)
+            //if (check > 0)
+            //{
+            //    imgbtnFacebook_Click(null, null);
+            //}
+            if (Session["check12"] != null && Convert.ToInt32(Session["check12"]) > 0)
             {
+                Session["check12"] = "0";
+                imgbtnFacebook_Click(null, null);
+            }
+            else if (Session["checkss"] != null && Convert.ToInt32(Session["checkss"]) > 0)
+            {
+                Session["checkss"] = "0";
                 imgbtnFacebook_Click(null, null);
             }
             if (Request.QueryString["from"] != null && Request.QueryString["from"].ToString() == "sharebutton") // Needed for facebook share (Hassan)
@@ -288,6 +298,7 @@ namespace LevelsPro.PlayerPanel.UserControls
 
         protected void imgbtnFacebook_Click(object sender, ImageClickEventArgs e)
         {
+            int fbck = 0;
             try
             {
 
@@ -308,6 +319,8 @@ namespace LevelsPro.PlayerPanel.UserControls
                 }
                 else
                 {
+                    Session["check12"] = 0;
+                    fbck++;
                     check = 0;
                     Dictionary<string, string> tokens = new Dictionary<string, string>(); //parameters returned from facebook
 
@@ -338,6 +351,8 @@ namespace LevelsPro.PlayerPanel.UserControls
                     //object objFB = client.Post("/me/feed", new { message = "You have successfully achieved: " + lblLevel.Text.Trim() + " (LevelsPro)" });
                     if (objFB != null)
                     {
+                        Session["checkss"] = "0";
+                        Session["check12"] = "0";
                         PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
                         // make collection editable
                         isreadonly.SetValue(this.Request.QueryString, false, null);
@@ -361,11 +376,28 @@ namespace LevelsPro.PlayerPanel.UserControls
             }
             catch (Exception ex)
             {
-                //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot share same status on facebook, please try again later!')</script>", false);
-                FailureDiv.Visible = true;
-                check++;
-                ModalPopupExtender mpe = this.Parent.FindControl("mpeAwardCongratsMessageDiv") as ModalPopupExtender;
-                mpe.Show();
+                if (ex.Message.ToLower().Contains("duplicate"))
+                {
+                    FailureDiv.Visible = true;
+                    Session["checkss"] = "0";
+                    Session["check12"] = "0";
+                    ModalPopupExtender mpe = this.Parent.FindControl("mpeAwardCongratsMessageDiv") as ModalPopupExtender;
+                    mpe.Show();
+                }
+                else
+                {
+                    //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot share same status on facebook, please try again later!')</script>", false);
+                    FailureDiv.Visible = true;
+                    if (fbck > 0)
+                    {
+                        Session["checkss"] = "1";
+                        Response.Redirect("PlayerHome.aspx");
+                    }
+                    Session["check12"] = "1";
+                    // check++;
+                    ModalPopupExtender mpe = this.Parent.FindControl("mpeAwardCongratsMessageDiv") as ModalPopupExtender;
+                    mpe.Show();
+                }
             }
            
         }
