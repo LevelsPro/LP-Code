@@ -46,8 +46,7 @@
                 <asp:Label ID="lblTextImage" runat="server" class="edit-left32" Text="Text Image : "></asp:Label>
                  <span class="edit-right32 tl">
                 <asp:FileUpload ID="fpTextImage" runat="server" ValidationGroup="Insertion"/>
-                <asp:RequiredFieldValidator ID="rfvTextImage" runat="server" ErrorMessage="Provide Text Image"
-                    ControlToValidate="fpTextImage" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator> 
+               
                 <asp:Label ID="lblTextCond" runat="server" class="edit-left32" Text="(Size = 320*70 px)"></asp:Label>                              
                 </span>
                 <div class="clear">
