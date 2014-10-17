@@ -102,7 +102,7 @@
 				<img src="AdminPanel/Images/logo.png">
 			</div>
 			<div class="banner">
-				<div class="acme-inc"></div>
+				<!--<div class="acme-inc"></div>-->
 			</div>
 			<div class="clear"></div>
 		</div>
