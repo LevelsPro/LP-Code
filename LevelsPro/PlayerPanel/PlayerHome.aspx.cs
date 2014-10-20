@@ -20,6 +20,7 @@ using BusinessLogic.Insert;
 using BusinessLogic.Update;
 using LevelsPro.Util;
 using Common.Utils;
+using log4net;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -27,11 +28,14 @@ namespace LevelsPro.PlayerPanel
     {
         private string usr, pwd, role,pageURL;
         public DataSet dsaward;
+        private ILog log;
         // private WebAuthorizer auth; // twitter Authorizer
         protected void Page_Load(object sender, EventArgs e)
         {
-      
-        
+
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             //string Thumbpath = "";
            
             {
@@ -88,13 +92,14 @@ namespace LevelsPro.PlayerPanel
                     }
                     catch (Exception ex)
                     {
+
+                        
+                        throw ex;
                     }
                 }
 
                 Session["FirstTimeLogin"] = 1;
 
-                System.Uri url = Request.Url;
-                pageURL = url.AbsolutePath.ToString();
                 
                 string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
                 string path = ConfigurationManager.AppSettings["RolePath"].ToString();
@@ -107,6 +112,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    
                     throw ex;
                 }
 
@@ -150,6 +156,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
+                    
                     throw ex;
                 }
                 DataView dvImage1 = UserImage.ResultSet.Tables[0].DefaultView;
@@ -166,6 +173,7 @@ namespace LevelsPro.PlayerPanel
 
                 if (!IsPostBack)
                 {
+                   
                     if (Session["userid"] != null && Session["userid"].ToString() != "")
                     {
                         lblFullName.Text = Session["displayname"].ToString();
@@ -189,63 +197,6 @@ namespace LevelsPro.PlayerPanel
                         
                         if (Session["userid"] != null && Session["userid"].ToString() != "")
                         {
-                            ///////////////////by nasir///////
-                            #region  Commented Awards Congratulations
-                            //ManualAwardViewBLL manualaward = new ManualAwardViewBLL();
-                            //Common.UserAwards _useraward = new Common.UserAwards();
-                            //_useraward.User_Id = Convert.ToInt32(Session["userid"]);
-
-
-                            //manualaward.UserAwards = _useraward;
-                            //try
-                            //{
-                            //    manualaward.Invoke();
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //}
-
-                            //if (manualaward.ResultSet != null && manualaward.ResultSet.Tables.Count > 0 && manualaward.ResultSet.Tables[0] != null && manualaward.ResultSet.Tables[0].Rows.Count > 0)
-                            //{
-                            //    foreach (DataRow dr in manualaward.ResultSet.Tables[0].Rows)
-                            //    {
-                            //        if (Convert.ToInt32(dr["popup_showed"]) == 0)
-                            //        {
-                            //            ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "manual");
-                            //            mpeAwardCongratsMessageDiv.Show();
-                            //            //Response.Redirect("PlayerHome.aspx", false);
-                            //        }
-                            //    }
-                            //}
-
-                            //UserAwardAchievedBLL awardachieved = new UserAwardAchievedBLL();
-                            //Common.User _user = new Common.User();
-                            //_user.UserID = Convert.ToInt32(Session["userid"]);
-                            //awardachieved.User = _user;
-                            //try
-                            //{
-                            //    awardachieved.Invoke();
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //}
-
-                            //if (awardachieved.ResultSet != null && awardachieved.ResultSet.Tables.Count > 0 && awardachieved.ResultSet.Tables[0] != null && awardachieved.ResultSet.Tables[0].Rows.Count > 0)
-                            //{
-                            //    foreach (DataRow dr in awardachieved.ResultSet.Tables[0].Rows)
-                            //    {
-                            //        if (dr["achieved"].ToString() == "" && Convert.ToDecimal(dr["Percentage"]) >= 100)
-                            //        {
-                            //            ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["AwardName"].ToString(), "auto");
-                            //            mpeAwardCongratsMessageDiv.Show();
-                            //            //Response.Redirect("PlayerHome.aspx", false);
-                            //        }
-                            //    }
-                            //}
-
-                            #endregion
-                            //////////////////////
-
                             /////////by atizaz
                             #region  Awards Congratulations
                             GetAutomaticAwardsBLL award = new GetAutomaticAwardsBLL();
@@ -260,6 +211,7 @@ namespace LevelsPro.PlayerPanel
                             }
                             catch (Exception ex)
                             {
+                                
                                 throw ex;
                             }
 
@@ -288,6 +240,7 @@ namespace LevelsPro.PlayerPanel
                                     }
                                     catch (Exception ex)
                                     {
+                                       
                                         throw ex;
                                     }
 
@@ -298,32 +251,10 @@ namespace LevelsPro.PlayerPanel
 
                             }
 
-                            //try
-                            //{
-                            //    award.Invoke();
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //}
+                            
                             if (award.ResultSet != null && award.ResultSet.Tables.Count > 0 && award.ResultSet.Tables[0] != null && award.ResultSet.Tables[0].Rows.Count > 0)
                             {
-                                #region Commented
-                                //foreach (DataRow dr in award.ResultSet.Tables[0].Rows)
-                                //{
-                                //    if (dr["popup_showed"].ToString() == "0" && dr["Award_Manual"].ToString() == "1" && dr["AchievedAward"].ToString() == "yes")
-                                //    {
-                                //        ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "manual");
-                                //        mpeAwardCongratsMessageDiv.Show();
-                                //        //Response.Redirect("PlayerHome.aspx", false);
-                                //    }
-                                //    if (dr["Award_Manual"].ToString() == "0" && dr["AchievedAward"].ToString() == "" && Convert.ToDecimal(dr["Percentage"]) >= 100)
-                                //    {
-                                //        ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "auto");
-                                //        mpeAwardCongratsMessageDiv.Show();
-                                //        //Response.Redirect("PlayerHome.aspx", false);
-                                //    }
-                                //}
-                                #endregion
+                              
                                 foreach (DataRow dr in award.ResultSet.Tables[0].Rows)
                                 {
                                     if (dr["popup_showed"].ToString() == "False" && dr["Award_Manual"].ToString() == "True")
@@ -372,16 +303,7 @@ namespace LevelsPro.PlayerPanel
                             /////////////////////
 
                             
-                                #region Commented Code
-                                //lblPerformance.Text = Convert.ToDecimal(userlevel.ResultSet.Tables[0].Rows[0]["Percentage"]).ToString("0") + "%";//"80%";
-
-                                //by atizaz  lblLevel.Text = Resources.TestSiteResources.LevelL + ' ' + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString();//"Level 1";
-                                //lblLevel.Text = Resources.TestSiteResources.LevelL + ' ' + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString();//"Level 1";
-                                // LevelStar.ImageUrl = "images/star_yellow_1.png";
-
-                                //string p = "images/star_yellow_" + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString() + ".png";
-
-                                #endregion
+                               
                             if(Convert.ToInt32( Session["LevelPosition"]) > 0)
                             {
                                 Session["CurLevel"] = Session["UserCurrentLevel"].ToString();
@@ -405,6 +327,7 @@ namespace LevelsPro.PlayerPanel
                                 }
                                 catch (Exception ex)
                                 {
+                                    
                                     throw ex;
                                 }
                                 if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
@@ -441,6 +364,7 @@ namespace LevelsPro.PlayerPanel
                                         }
                                         catch (Exception ex)
                                         {
+                                            
                                             throw ex;
                                         }
 
@@ -450,24 +374,13 @@ namespace LevelsPro.PlayerPanel
                                         DataTable dTpopUp = dVpopUp.ToTable();
 
 
-                                        //for (int i = 0; i < dTpopUp.Rows.Count; i++)
-                                        //{
+                                        
                                         if (dTpopUp.Rows.Count > 0)
                                         {
                                             if (Convert.ToInt32(dTpopUp.Rows[0]["popup_showed"]) == 0)
                                             {
                                                 #region Checking Level Name and bonus
-                                                //GetFullLevelTableBLL FullLevel = new GetFullLevelTableBLL();
-                                                //DataView dVFullLevel = new DataView();
-                                                //try
-                                                //{
-                                                //    FullLevel.Invoke();
-                                                //    dVFullLevel = FullLevel.ResultSet.Tables[0].DefaultView;
-                                                //}
-                                                //catch (Exception ex)
-                                                //{
-                                                //}
-                                                //dVFullLevel.RowFilter = "Level_ID = " + Convert.ToInt32(dTpopUp.Rows[0]["current_level"]);
+                                                
                                                 DataTable dTFulllevel =(DataTable)Session["AllLevelsPlayer"];
                                                 dTFulllevel.DefaultView.RowFilter = "Level_ID = " + Convert.ToInt32(dTpopUp.Rows[0]["current_level"]);
                                                 dTFulllevel = dTFulllevel.DefaultView.ToTable();
@@ -497,15 +410,7 @@ namespace LevelsPro.PlayerPanel
                                                 }
                                             }
                                         }
-                                        //  }
-                                        //}
-
-
-                                        //if (userlevel.ResultSet.Tables[0].Rows[0]["popup_showed"].ToString().ToLower() == "0")
-                                        //{
-                                        //    ucCongratsMessage.LoadData("Level " + (Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"]) + 1).ToString(), userlevel.ResultSet.Tables[0].Rows[0]["current_level"].ToString(), userlevel.ResultSet.Tables[0].Rows[0]["Bonus"].ToString());
-                                        //    mpeCongratsMessageDiv.Show();
-                                        //}
+                                       
 
                                         #endregion
                                       
@@ -567,8 +472,11 @@ namespace LevelsPro.PlayerPanel
                                 Response.Redirect("~/Login.aspx");
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            ExceptionUtility.ExceptionLogString(ex,Session);
+                            Session["ExpLogString"]+= " Aditional Info: The page has been redirected to login";
+                            log.Error(Session["ExpLogString"]);
                             Response.Redirect("~/Login.aspx");
                         }
                     }
@@ -585,11 +493,11 @@ namespace LevelsPro.PlayerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log,exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -660,11 +568,11 @@ namespace LevelsPro.PlayerPanel
             loginuser.Users = user;
             try
             {
-               
                 loginuser.Invoke();
             }
             catch (Exception ex)
             {
+                
                 throw ex;
             }
             Session.Abandon();

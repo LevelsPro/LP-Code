@@ -14,6 +14,7 @@ using BusinessLogic.Delete;
 using System.Configuration;
 using System.IO;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro
 {
@@ -25,7 +26,7 @@ namespace LevelsPro
         static int previousid = 0;
         static int currentid = 0;
         private static string pageURL;
-
+        private ILog log;
         protected string TypedPassword
         {
             get
@@ -85,11 +86,12 @@ namespace LevelsPro
                 }
             }
             lblmessage.Visible = false;
-
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 #region language check for images
 
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
@@ -339,14 +341,9 @@ namespace LevelsPro
 
 
                             UpdateImage.UserImage = _userimage;
-                            try
-                            {
-                                UpdateImage.Invoke();
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
+                            
+                            UpdateImage.Invoke();
+                            
                             int previous = Convert.ToInt32(previousid);
                             _userimage.UserIDImage = previous;
 
@@ -355,30 +352,23 @@ namespace LevelsPro
 
 
                             UpdateImage.UserImage = _userimage;
-                            try
-                            {
-                                UpdateImage.Invoke();
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
+                            
+                            UpdateImage.Invoke();
+                            
 
 
 
                             lblmessage.Visible = true;
                             lblmessage.Text = Resources.TestSiteResources.Player + ' ' + Resources.TestSiteResources.UpdateMessage;
-                            try
-                            {
-                                LoadData(Convert.ToInt32(ViewState["userid"]));
-                            }
-                            catch (Exception exp)
-                            {
-                                throw exp;
-                            }
+                            
+                            LoadData(Convert.ToInt32(ViewState["userid"]));
+                            
                         }
                         catch (Exception ex)
                         {
+                            ExceptionUtility.ExceptionLogString(ex, Session);
+                            Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                            log.Debug(Session["ExpLogString"]);
                             lblmessage.Visible = true;
                             lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.Player;
                         }
@@ -404,6 +394,9 @@ namespace LevelsPro
                     }
                     catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
                         lblmessage.Visible = true;
                         if (ex.Message.Contains("Duplicate"))
                         {
@@ -428,11 +421,11 @@ namespace LevelsPro
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();

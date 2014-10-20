@@ -10,22 +10,26 @@ using LevelsPro.App_Code;
 using System.Data;
 using Common;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class PlayerProgress : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
                 {
                     ViewState["userid"] = Request.QueryString["userid"];
@@ -59,11 +63,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -160,7 +164,10 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    if (ex.Message.ToLower().Contains("duplicate"))
+                    { }
+                    else
+                        throw ex;
                 }
 
                 DataView dvTarget = dsTarget.Tables[0].DefaultView;
@@ -214,7 +221,10 @@ namespace LevelsPro.AdminPanel
                                 }
                                 catch (Exception ex)
                                 {
-                                    throw ex;
+                                    if (ex.Message.ToLower().Contains("duplicate"))
+                                    { }
+                                    else
+                                        throw ex;
                                 }
                                 DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                                 dv.RowFilter = "KPI_ID = " + Convert.ToInt32(lblKPIID.Text.Trim());
@@ -238,7 +248,10 @@ namespace LevelsPro.AdminPanel
                                         }
                                         catch (Exception ex)
                                         {
-                                            throw ex;
+                                            if (ex.Message.ToLower().Contains("duplicate"))
+                                            { }
+                                            else
+                                                throw ex;
                                         }
 
                                         if (UserPoints != null && UserPoints != "")
@@ -272,7 +285,10 @@ namespace LevelsPro.AdminPanel
                                 }
                                 catch (Exception ex)
                                 {
-                                    throw ex;
+                                    if (ex.Message.ToLower().Contains("duplicate"))
+                                    { }
+                                    else
+                                        throw ex;
                                 }
                                 DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                                 dv.RowFilter = "KPI_ID = " + Convert.ToInt32(lblKPIID.Text.Trim());
@@ -296,7 +312,10 @@ namespace LevelsPro.AdminPanel
                                             }
                                             catch (Exception ex)
                                             {
-                                                throw ex;
+                                                if (ex.Message.ToLower().Contains("duplicate"))
+                                                { }
+                                                else
+                                                    throw ex;
                                             }
 
                                             if (UserPoints != null && UserPoints != "")
@@ -328,7 +347,10 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        if (ex.Message.ToLower().Contains("duplicate"))
+                        { }
+                        else
+                            throw ex;
                     }
                 }
 
@@ -347,7 +369,10 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    if (ex.Message.ToLower().Contains("duplicate"))
+                    { }
+                    else
+                        throw ex;
                 }
                 DataView dvPoints = scorePoints.Sum.Tables[0].DefaultView;
                 DataTable dt = dvPoints.ToTable();
@@ -369,7 +394,10 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    if (ex.Message.ToLower().Contains("duplicate"))
+                    { }
+                    else
+                        throw ex;
                 }
 
                 if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
@@ -382,7 +410,10 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        if (ex.Message.ToLower().Contains("duplicate"))
+                        { }
+                        else
+                            throw ex;
                     }
 
                     if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
@@ -407,7 +438,10 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                                throw ex;
+                                if (ex.Message.ToLower().Contains("duplicate"))
+                                { }
+                                else
+                                    throw ex;
                             }
                             if (targetprogress.ResultSet != null && targetprogress.ResultSet.Tables.Count > 0 && targetprogress.ResultSet.Tables[0] != null && targetprogress.ResultSet.Tables[0].Rows.Count > 0)
                             {
@@ -429,7 +463,10 @@ namespace LevelsPro.AdminPanel
                                         }
                                         catch (Exception ex)
                                         {
-                                            throw ex;
+                                            if (ex.Message.ToLower().Contains("duplicate"))
+                                            { }
+                                            else
+                                                throw ex;
                                         }
 
                                         if (UserPoints != null && !UserPoints.Equals(""))
@@ -459,7 +496,10 @@ namespace LevelsPro.AdminPanel
                                 }
                                 catch (Exception ex)
                                 {
-                                    throw ex;
+                                    if (ex.Message.ToLower().Contains("duplicate"))
+                                    { }
+                                    else
+                                        throw ex;
                                 }
 
                                 if (UserPoints != null && !UserPoints.Equals(""))
@@ -486,7 +526,10 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                                throw ex;
+                                if (ex.Message.ToLower().Contains("duplicate"))
+                                { }
+                                else
+                                    throw ex;
                             }
 
                             int Level = 0;
@@ -504,7 +547,10 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                                throw ex;
+                                if (ex.Message.ToLower().Contains("duplicate"))
+                                { }
+                                else
+                                    throw ex;
                             }
 
                             dVNext.RowFilter = "user_id = " + UserID + "AND current_level = " + Level;
@@ -517,7 +563,10 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                                throw ex;
+                                if (ex.Message.ToLower().Contains("duplicate"))
+                                { }
+                                else
+                                    throw ex;
                             }
                             ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('The player has completed all the targets and has been successfully Leveled Up')</script>", false);
 
@@ -535,7 +584,10 @@ namespace LevelsPro.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                                throw ex;
+                                if (ex.Message.ToLower().Contains("duplicate"))
+                                { }
+                                else
+                                    throw ex;
                             }
                         }
                     }

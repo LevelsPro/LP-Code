@@ -6,16 +6,19 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class AdminHome : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         protected void Page_Load(object sender, EventArgs e)
         {
             System.Uri url = Request.Url;
             pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             ExceptionUtility.CheckForErrorMessage(Session);
         }
         protected override void OnInit(EventArgs e)
@@ -31,11 +34,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();

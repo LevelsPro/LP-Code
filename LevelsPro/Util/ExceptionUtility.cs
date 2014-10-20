@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.SessionState;
 using Common.Utils;
 using BusinessLogic.Update;
+using log4net;
 
 namespace LevelsPro.Util
 {
@@ -107,10 +108,14 @@ namespace LevelsPro.Util
         /// <param name="parentPage"></param>
         /// <param name="session"></param>
         /// <param name="server"></param>
-        internal static void GenerateExpResponse(string sourcePage, RedirectionStrategy redirectionStrategy, HttpSessionState session, HttpServerUtility server, HttpResponse response, Exception exp)
+        internal static void GenerateExpResponse(string sourcePage, RedirectionStrategy redirectionStrategy, HttpSessionState session, HttpServerUtility server, HttpResponse response, ILog log, Exception exp)
         {
             string role = (string)session["role"];
             ManageExceptionEntry(sourcePage,session);
+            //+Moiz: Logs Error
+            ExceptionLogString(exp,session);
+            log.Error(session["ExpLogString"]);
+            //-Moiz
             if (role != null)
             {
                 #region Player
@@ -443,9 +448,14 @@ namespace LevelsPro.Util
             response.Redirect(ProvideRedirectionURL(sourcePage, MANAGER), false);
         }
 
-        private static void LogError(Exception exp)
+        public static void ExceptionLogString(Exception exp, HttpSessionState session)
         {
-            // need to add task for this later
+            string message;
+           
+            string[] splitString = exp.StackTrace.Split(new string[] { "line" }, StringSplitOptions.None);
+            string[] lineSplit = splitString[1].Split(new string[]{"\r\n"}, StringSplitOptions.None);
+            session["ExpLogString"] = exp.GetType().ToString() + " Message : " + exp.Message + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0];
+                       
         }
 
         

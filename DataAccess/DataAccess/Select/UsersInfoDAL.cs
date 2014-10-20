@@ -35,7 +35,7 @@ namespace DataAccess.Select
                 {
                     if (log.IsDebugEnabled)
                     {
-                        log.Debug("User Authenticate Successfully, Taken Time in MS = " + timetaken.ElapsedMilliseconds + "Row Count = " + ds.Tables[0].Rows.Count);
+                       // log.Debug("User Authenticate Successfully, Taken Time in MS = " + timetaken.ElapsedMilliseconds + "Row Count = " + ds.Tables[0].Rows.Count);
                     }
                 }
 

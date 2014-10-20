@@ -17,6 +17,7 @@ using LevelsPro.App_Code;
 using System.Web.Services;
 using System.Xml;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -26,6 +27,7 @@ namespace LevelsPro.PlayerPanel
         
         static int check = 0;
         static int DataSetLimit = 0;
+        
         public static int[] RandomArray;
         
         static DataTable dt_DataSets;
@@ -53,7 +55,7 @@ namespace LevelsPro.PlayerPanel
 
         private bool RoundResult = false;
         private static string pageURL;
-        
+        private ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -61,10 +63,12 @@ namespace LevelsPro.PlayerPanel
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!(Page.IsPostBack))
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 #region Current Match
                 MatchViewBLL getmatch = new MatchViewBLL();
                 Match _gmatch = new Match();
@@ -235,11 +239,11 @@ namespace LevelsPro.PlayerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();

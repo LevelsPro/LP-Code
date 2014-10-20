@@ -20,11 +20,11 @@ namespace LevelsPro
     {
         // Comments for GitHUb
        // static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
-        private static readonly ILog log = LogManager.GetLogger(
-  System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private ILog log;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             ExceptionUtility.CheckForLoginErrorMessage();
             Session["ExCountDictionary"] = new Dictionary<string, int>();
             if (Session["MyUICulture"] != null && Session["MyCulture"] != null)
@@ -73,22 +73,30 @@ namespace LevelsPro
         {
             try
             {
+            System.Diagnostics.Stopwatch timetaken = new System.Diagnostics.Stopwatch();
+            timetaken.Start();
             string user, pwd, Sysrole;
             user = txtUser.Text.Trim();
             pwd = txtPassword.Text;
-         
 
+            if (log.IsDebugEnabled)
+            {
+                Session["DebLogString"] = "Attempts Sign-in";
+                log.Debug(Session["DebLogString"]);
+            }
             DataSet ds = new DataSet();
-
-           
-                
-                ds = UserData(user);
+            ds = UserData(user);
            
 
             if (ds.Tables[0].Rows.Count == 0)
             {
                 lblError.Visible = true;
                 lblError.Text = "Invalid user name or password.";
+                if (log.IsDebugEnabled)
+                {
+                    Session["DebLogString"] = "Invalid user name or password.";
+                    log.Debug(Session["DebLogString"]);
+                }
                 txtPassword.Focus();
                 return;
                 
@@ -96,8 +104,8 @@ namespace LevelsPro
             Session["language"] = ddlLanguage.SelectedItem.Text;
             Session["userid"] = ds.Tables[0].Rows[0]["UserID"];
             Session["username"] = user;
-            
-
+            //MOiz: For value to be saved in log file.
+            log4net.GlobalContext.Properties["userID"] = Session["userid"];
             if (ds.Tables[0].Rows[0]["U_Password"].ToString().Equals(""))
             {
                 Session["password"] = null;
@@ -161,6 +169,12 @@ namespace LevelsPro
                     Session["ManagerID"] = ds.Tables[0].Rows[0]["ManagerID"];
                 }
                 
+                if (log.IsDebugEnabled)
+                {
+                    Session["DebLogString"] = "SuccessFull login [Time taken = " + timetaken.ElapsedMilliseconds + " ]";
+                    log.Debug(Session["DebLogString"]);
+                }
+
                 if (Sysrole.Equals("Admin"))
                 {
                     Response.Redirect("~/AdminPanel/AdminHome.aspx?" + DateTime.Now.Ticks);
@@ -182,6 +196,12 @@ namespace LevelsPro
             {
                 lblError.Visible = true;
                 lblError.Text = "Invalid user name or password.";
+                if (log.IsDebugEnabled)
+                {
+                    Session["DebLogString"] = "Invalid user name or password.";
+                    log.Debug(Session["DebLogString"]);
+                }
+
                 txtPassword.Focus();
                 return;
             }
@@ -190,7 +210,8 @@ namespace LevelsPro
             {
                 if (log.IsErrorEnabled)
                 {
-                    log.Error("Login error of User"+ Session["username"].ToString()+" :" + ex.Message);
+                    ExceptionUtility.ExceptionLogString(ex, Session);
+                              log.Error(Session["ExpLogString"]);
                 }
             }
         }

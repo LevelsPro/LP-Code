@@ -9,12 +9,14 @@ using System.Data;
 using BusinessLogic.Update;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class PlayerRewards : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -22,6 +24,7 @@ namespace LevelsPro.AdminPanel
         protected void Page_Load(object sender, EventArgs e)
         {
             lblMessage.Visible = false;
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 System.Uri url = Request.Url;
@@ -49,11 +52,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -174,7 +177,10 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    if (ex.Message.ToLower().Contains("duplicate"))
+                    { }
+                    else
+                        throw ex;
                 }
             }
         }

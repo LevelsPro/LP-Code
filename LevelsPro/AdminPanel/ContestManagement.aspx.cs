@@ -12,15 +12,17 @@ using BusinessLogic.Insert;
 using System.Drawing;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class ContestManagement : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             lblmessage.Visible = false;
             if (!(Page.IsPostBack))
             {
@@ -50,11 +52,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -266,7 +268,10 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        if (ex.Message.ToLower().Contains("duplicate"))
+                        { }
+                        else
+                            throw ex;
                     }
 
                     DataView dv = ContestObj.ResultSet.Tables[0].DefaultView;
@@ -300,6 +305,8 @@ namespace LevelsPro.AdminPanel
                         {
 
                             //alert("End Date Must be Greater Than Start Date")
+                            Session["DebLogString"] = "End Date Must be Greater Than Start Date.";
+                            log.Debug(Session["DebLogString"]);
                             lblmessage.Visible = true;
                             lblmessage.Text = "End Date Must be Greater Than Start Date.";
                             return;
@@ -337,6 +344,9 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
                         lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.Contest;
                     }
                     lblmessage.Visible = true;
@@ -398,6 +408,9 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
                         if (ex.Message.Contains("Duplicate"))
                         {
                             lblmessage.Text = Resources.TestSiteResources.Contest + ' ' + Resources.TestSiteResources.Already;
@@ -445,7 +458,10 @@ namespace LevelsPro.AdminPanel
                 }
                 catch (Exception exp)
                 {
-                    throw exp;
+                    if (exp.Message.ToLower().Contains("duplicate"))
+                    { }
+                    else
+                        throw exp;
                 }
             }
         }

@@ -15,6 +15,7 @@ using LevelsPro.App_Code;
 using MySql.Data.MySqlClient;
 using BusinessLogic.Delete;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
@@ -22,6 +23,7 @@ namespace LevelsPro.AdminPanel
     public partial class QuizEdit : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         static DataSet dss;
         protected override void OnInit(EventArgs e)
         {
@@ -31,10 +33,12 @@ namespace LevelsPro.AdminPanel
         protected void Page_Load(object sender, EventArgs e)
         {
             lblmessage.Visible = false;
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 try
                 {
                     LoadKPI();
@@ -69,11 +73,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -254,6 +258,9 @@ namespace LevelsPro.AdminPanel
                         }
                         catch (Exception ex)
                         {
+                            ExceptionUtility.ExceptionLogString(ex, Session);
+                            Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                            log.Debug(Session["ExpLogString"]);
                             lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.GameName;
                         }
                     }
@@ -272,6 +279,9 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
                         if (ex.Message.Contains("Duplicate"))
                         {
                             lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.Already;
@@ -319,8 +329,11 @@ namespace LevelsPro.AdminPanel
                      }
                      
                     }
-                    catch (Exception )
+                    catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Transaction Rolledback";
+                        log.Debug(Session["ExpLogString"]);
                         sqlTrans.Rollback();
                     }
                     finally

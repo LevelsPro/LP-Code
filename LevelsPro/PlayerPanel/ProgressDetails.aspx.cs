@@ -11,12 +11,14 @@ using System.Data;
 using System.Configuration;
 using BusinessLogic.Update;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class ProgressDetails : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -25,6 +27,7 @@ namespace LevelsPro.PlayerPanel
         protected void Page_Load(object sender, EventArgs e)
         {
             string path = ConfigurationSettings.AppSettings["RolePath"].ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 //Session["check"]=0;
@@ -56,6 +59,7 @@ namespace LevelsPro.PlayerPanel
                 //}
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 LevelsViewBLL level = new LevelsViewBLL();
                 Common.Roles role = new Roles();
                 role.RoleID = Convert.ToInt32(Session["UserRoleID"]);
@@ -119,11 +123,11 @@ namespace LevelsPro.PlayerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();

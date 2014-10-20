@@ -14,6 +14,7 @@ using BusinessLogic.Delete;
 using System.Configuration;
 using System.IO;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -22,6 +23,7 @@ namespace LevelsPro.PlayerPanel
         static int previousid = 0;
         static int currentid = 0;
         private static string pageURL;
+        private ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -30,11 +32,12 @@ namespace LevelsPro.PlayerPanel
         protected void Page_Load(object sender, EventArgs e)
         {
             lblmessage.Visible = false;
-
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!(Page.IsPostBack))
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                 {
                     if (Session["MyCulture"].ToString() == "es-ES")
@@ -73,11 +76,11 @@ namespace LevelsPro.PlayerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();

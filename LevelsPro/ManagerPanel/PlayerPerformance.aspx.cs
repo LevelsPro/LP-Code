@@ -12,12 +12,14 @@ using System.Configuration;
 using System.Web.UI.HtmlControls;
 using LevelsPro.PlayerPanel;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.ManagerPanel
 {
     public partial class PlayerPerformance : AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         int level = 0;
 
         protected override void OnInit(EventArgs e)
@@ -27,10 +29,12 @@ namespace LevelsPro.ManagerPanel
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 Session["CheckForloadprogressfrompopup"] = 0;
               //  ReuseableItems.CheckForloadprogressfrompopup = 0;
                 if (Request.QueryString["Base"] != null && Request.QueryString["Base"].ToString() != "" && Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "" && Request.QueryString["likelihood"] != null && Request.QueryString["likelihood"].ToString() != "" && Request.QueryString["remaining"] != null && Request.QueryString["remaining"].ToString() != "")
@@ -154,11 +158,11 @@ namespace LevelsPro.ManagerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -414,15 +418,10 @@ namespace LevelsPro.ManagerPanel
 
                     Session["usertargetpointsdmanager"] = Convert.ToInt32(arg4[1]);
                    // ReuseableItems.usertargetpointsdmanager = Convert.ToInt32(arg4[1]);
-                    try
-                    {
-                        mpeViewProgressDetailsDiv.Show();
-                        ucViewProgressDetails.LoadData();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                    
+                    mpeViewProgressDetailsDiv.Show();
+                    ucViewProgressDetails.LoadData();
+                   
 
                 }
                 #endregion

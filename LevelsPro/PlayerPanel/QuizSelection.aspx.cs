@@ -15,6 +15,7 @@ using System.Net.Mail;
 using BusinessLogic.Update;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -28,6 +29,7 @@ namespace LevelsPro.PlayerPanel
         public DataTable dtMandatoryQuizes; // for to check which quizes are mandatory .. and to highlight them
         public int TimeCheck_counter;
         private static string pageURL;
+        private ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -36,12 +38,12 @@ namespace LevelsPro.PlayerPanel
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!(Page.IsPostBack))
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-               
+                
                 if (Request.QueryString["check"] != null && Request.QueryString["check"].ToString() != "") // return check if there is no question for this role and level left
                 {
                     mes.Visible = true; //show message
@@ -70,11 +72,11 @@ namespace LevelsPro.PlayerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();

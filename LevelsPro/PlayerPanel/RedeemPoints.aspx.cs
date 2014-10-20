@@ -14,12 +14,15 @@ using System.Net.Mail;
 using LevelsPro.App_Code;
 using BusinessLogic.Update;
 using LevelsPro.Util;
+using log4net;
+using Common.Utils;
 
 namespace LevelsPro.PlayerPanel
 {
     public partial class RedeemPoints : AuthorizedPage
     {
         private static string pageURL;
+        private  ILog log;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -27,12 +30,12 @@ namespace LevelsPro.PlayerPanel
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!(Page.IsPostBack))
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-
+                
 
                 Points point = new Points();
                 point.UserID = Convert.ToInt32(Session["userid"]);
@@ -50,7 +53,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception exp)
                 {
-                    throw exp;
+                   throw exp;
                 }
                 if (Session["Redeemed"] != null && Session["Redeemed"].Equals(1))
                 {
@@ -69,11 +72,11 @@ namespace LevelsPro.PlayerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -90,6 +93,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+               
                 throw ex;
             }
             DataView dv = reward.ResultSet.Tables[0].DefaultView;
@@ -148,186 +152,97 @@ namespace LevelsPro.PlayerPanel
         }
         protected void dlRewards_ItemCommand(object source, DataListCommandEventArgs e)
         {
-
-
-            Label lblReward = e.Item.FindControl("lblRewardName") as Label;
-            LinkButton lbtnRedeem = e.Item.FindControl("lbtnRedeem") as LinkButton;
-            //lbtnRedeem.OnClientClick = "return confirm('Are you sure to delete Level.');";
-
-            Points point = new Points();
-            if (e.CommandName == "redeem")
+            try
             {
-                if (Session["userid"] != null && Session["userid"].ToString() != "")
+
+                Label lblReward = e.Item.FindControl("lblRewardName") as Label;
+                LinkButton lbtnRedeem = e.Item.FindControl("lbtnRedeem") as LinkButton;
+                //lbtnRedeem.OnClientClick = "return confirm('Are you sure to delete Level.');";
+                //+Moiz Logging Test
+                Session["DebLogString"] = "Selected [Item =" + lblReward.Text + " ] to be redeemed";
+                log.Debug(Session["DebLogString"]);
+                //-Moiz
+                Points point = new Points();
+                if (e.CommandName == "redeem")
                 {
-                    point.UserID = Convert.ToInt32(Session["userid"]);
+                    if (Session["userid"] != null && Session["userid"].ToString() != "")
+                    {
+                        point.UserID = Convert.ToInt32(Session["userid"]);
+                    }
+                    point.RedeemPoints = Convert.ToInt32(e.CommandArgument.ToString());
+                    point.RedeemPoints = point.RedeemPoints * -1;
+                    point.RewardID = int.Parse(dlRewards.DataKeys[e.Item.ItemIndex].ToString());
+
+
                 }
-                point.RedeemPoints = Convert.ToInt32(e.CommandArgument.ToString());
-                point.RedeemPoints = point.RedeemPoints * -1;
-                point.RewardID = int.Parse(dlRewards.DataKeys[e.Item.ItemIndex].ToString());
-
-
-            }
-            PointsInsertBLL points = new PointsInsertBLL();
-            try
-            {
-               points.Points = point;
+                PointsInsertBLL points = new PointsInsertBLL();
+                
+                points.Points = point;
                 points.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            PointsViewBLL check = new PointsViewBLL();
-            try
-            {
+                
+                PointsViewBLL check = new PointsViewBLL();
+                
                 check.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            RewardViewBLL reward = new RewardViewBLL();
+                
+                RewardViewBLL reward = new RewardViewBLL();
 
-           
-            try
-            {
                 reward.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            DataView dvreward = reward.ResultSet.Tables[0].DefaultView;
-            DataTable dtreward = new DataTable();
+               
+                DataView dvreward = reward.ResultSet.Tables[0].DefaultView;
+                DataTable dtreward = new DataTable();
 
-            dtreward = dvreward.ToTable();
+                dtreward = dvreward.ToTable();
 
-            DataView dvpoints = check.ResultSet.Tables[0].DefaultView;
-            int userid = Convert.ToInt32(Session["userid"]);
-            dvpoints.RowFilter = "User_ID=" + userid;
-            DataTable dtpoints = new DataTable();
-            dtpoints = dvpoints.ToTable();
-            //int count = 0;
+                DataView dvpoints = check.ResultSet.Tables[0].DefaultView;
+                int userid = Convert.ToInt32(Session["userid"]);
+                dvpoints.RowFilter = "User_ID=" + userid;
+                DataTable dtpoints = new DataTable();
+                dtpoints = dvpoints.ToTable();
+                //int count = 0;
 
-            point.UserID = Convert.ToInt32(Session["userid"]);
+                point.UserID = Convert.ToInt32(Session["userid"]);
 
-            //UserPointsReportBLL _usersum = new UserPointsReportBLL();
-            //try
-            //{
-            //    _usersum.Points = point;
-            //    _usersum.Invoke();
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-            //DataView dvpsum = _usersum.Sum.Tables[0].DefaultView;
-            //DataTable dtpsum = dvpsum.ToTable();
-            //int sum = 0;
-            //if (dtpsum != null && dtpsum.Rows.Count >= 1)
-            //{
-            //    if (dtpsum.Rows[1][0].ToString().Trim() != "")
-            //    {
-            //        sum = Convert.ToInt32(dtpsum.Rows[0][0]) + Convert.ToInt32(dtpsum.Rows[1][0]);
-            //    }
-            //    else
-            //    {
-            //        sum = Convert.ToInt32(dtpsum.Rows[0][0]);
-            //    }
-            //    //lblScore.Text = sum.ToString();
-            //}
-            //else
-            //{
-            //    //lblScore.Text = "0";
-            //}
-            int sum = Convert.ToInt32(Session["U_Points"]) - Convert.ToInt32(e.CommandArgument.ToString());
-           // Session["U_Points"] = sum;
-            Session["U_Points"] = sum;
-            point.RedeemPoints = sum;
-            UserPointsReportBLL _usersum = new UserPointsReportBLL();
-            try
-            {
+                
+                int sum = Convert.ToInt32(Session["U_Points"]) - Convert.ToInt32(e.CommandArgument.ToString());
+                // Session["U_Points"] = sum;
+                Session["U_Points"] = sum;
+                point.RedeemPoints = sum;
+                UserPointsReportBLL _usersum = new UserPointsReportBLL();
+                
                 _usersum.Points = point;
                 _usersum.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+               
+                DataView dvsumfilter = reward.ResultSet.Tables[0].DefaultView;
+                dvsumfilter.RowFilter = "Reward_Cost>=" + sum;
+                DataTable dtsumfilter = new DataTable();
 
-
-
-            DataView dvsumfilter = reward.ResultSet.Tables[0].DefaultView;
-            dvsumfilter.RowFilter = "Reward_Cost>=" + sum;
-            DataTable dtsumfilter = new DataTable();
-
-            dtsumfilter = dvsumfilter.ToTable();
-            if (dtsumfilter.Rows.Count >= 1 && dtsumfilter != null)
-            {
-                for (int k = 0; k < dtsumfilter.Rows.Count; k++)
+                dtsumfilter = dvsumfilter.ToTable();
+                if (dtsumfilter.Rows.Count >= 1 && dtsumfilter != null)
                 {
-                    if (dtsumfilter.Rows[k]["Reward_ID"].Equals(Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex])))
+                    for (int k = 0; k < dtsumfilter.Rows.Count; k++)
                     {
+                        if (dtsumfilter.Rows[k]["Reward_ID"].Equals(Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex])))
+                        {
 
-                        LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
-                        //button to linkbutton
-                        //LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
-                        // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
-                        HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
-                        lbtnRedeem.OnClientClick = "return false;" ;
-                        Div.Attributes["class"] = "locked-btn rdmption-btn";
-                        chkbtn.Enabled = false;
-                    }
+                            LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
+                            //button to linkbutton
+                            //LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
+                            // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
+                            HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
+                            lbtnRedeem.OnClientClick = "return false;";
+                            Div.Attributes["class"] = "locked-btn rdmption-btn";
+                            chkbtn.Enabled = false;
+                        }
 
 
 
-                }
-            }
-            else
-            {
-                for (int k = 0; k < dtreward.Rows.Count; k++)
-                {
-                    if (dtreward.Rows[k]["Reward_ID"].Equals(Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex])))
-                    {
-                        LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
-                        //button to linkbutton
-                        // LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
-                        // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
-                        HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
-                        Div.Attributes["class"] = "rdmption-btn";
-
-                        chkbtn.Enabled = true;
                     }
                 }
-
-
-            }
-
-
-
-            for (int i = 0; i < dtpoints.Rows.Count; i++)
-            {
-
-
-                if (dtpoints.Rows[i]["Reward_ID"].Equals(Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex])))
+                else
                 {
-                    dvreward = reward.ResultSet.Tables[0].DefaultView;
-
-                    dvreward.RowFilter = "Reward_ID=" + Convert.ToInt32(dtpoints.Rows[i]["Reward_ID"]);
-                    dtreward = dvreward.ToTable();
-                    int limit = Convert.ToInt32(dtreward.Rows[0]["Reward_Type"]);
-                    if (limit == 0)
+                    for (int k = 0; k < dtreward.Rows.Count; k++)
                     {
-                        LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
-                    //button to linkbutton
-                    // LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
-                    // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
-                    HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
-                    Div.Attributes["class"] = "locked-btn rdmption-btn";
-                    chkbtn.Enabled = false;
-                    }
-                    else
-                    {
-                        if (Convert.ToInt32(Session["U_Points"]) >= Convert.ToInt32(dtreward.Rows[0]["Reward_Cost"]))
+                        if (dtreward.Rows[k]["Reward_ID"].Equals(Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex])))
                         {
                             LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
                             //button to linkbutton
@@ -335,9 +250,28 @@ namespace LevelsPro.PlayerPanel
                             // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
                             HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
                             Div.Attributes["class"] = "rdmption-btn";
+
                             chkbtn.Enabled = true;
                         }
-                        else
+                    }
+
+
+                }
+
+
+
+                for (int i = 0; i < dtpoints.Rows.Count; i++)
+                {
+
+
+                    if (dtpoints.Rows[i]["Reward_ID"].Equals(Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex])))
+                    {
+                        dvreward = reward.ResultSet.Tables[0].DefaultView;
+
+                        dvreward.RowFilter = "Reward_ID=" + Convert.ToInt32(dtpoints.Rows[i]["Reward_ID"]);
+                        dtreward = dvreward.ToTable();
+                        int limit = Convert.ToInt32(dtreward.Rows[0]["Reward_Type"]);
+                        if (limit == 0)
                         {
                             LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
                             //button to linkbutton
@@ -347,136 +281,126 @@ namespace LevelsPro.PlayerPanel
                             Div.Attributes["class"] = "locked-btn rdmption-btn";
                             chkbtn.Enabled = false;
                         }
-                    //    for (int j = 0; j < dtpoints.Rows.Count; j++)
-                    //    {
+                        else
+                        {
+                            if (Convert.ToInt32(Session["U_Points"]) >= Convert.ToInt32(dtreward.Rows[0]["Reward_Cost"]))
+                            {
+                                LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
+                                //button to linkbutton
+                                // LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
+                                // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
+                                HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
+                                Div.Attributes["class"] = "rdmption-btn";
+                                chkbtn.Enabled = true;
+                            }
+                            else
+                            {
+                                LinkButton chkbtn = e.Item.FindControl("lbtnRedeem") as LinkButton;
+                                //button to linkbutton
+                                // LinkButton chkbtn = e.Item.FindControl("btnRedeem") as LinkButton;
+                                // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
+                                HtmlGenericControl Div = (HtmlGenericControl)e.Item.FindControl("divscore");
+                                Div.Attributes["class"] = "locked-btn rdmption-btn";
+                                chkbtn.Enabled = false;
+                            }
+                            
+                        }
+                    }
 
-                    //        if (dtpoints.Rows[i]["Type_ID"].Equals(dtpoints.Rows[j]["Type_ID"]))
-                    //        {
-                    //            count++;
 
-                    //        }
+                }
 
-                    //    }
-                    //    if (count == limit)
-                    //    {
+                Session["RedeemedRewardName"] = lblReward.Text;
+                Session["Redeemed"] = 1;
 
-                    //        Button chkbtn = e.Item.FindControl("btnRedeem") as Button;
-                    //        // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
-                    //        chkbtn.Enabled = false;
+                if (Session["ManagerEmail"] != null && Session["ManagerEmail"].ToString() != "")
+                {
 
-                    //    }
-                    //    count = 0;
+                    string strTo = Session["ManagerEmail"].ToString();
 
+                    string strSubject = "Redeem Points";
+
+                    String MessageBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
+                                           + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has redeemed " +
+                                           lblReward.Text.ToString() + " for points " + e.CommandArgument.ToString() + " at " + System.DateTime.Now.ToString();
+
+                    string strBody = MessageBody;
+
+                    int result = SendMail(strTo, strSubject, strBody);
+                    if (result > 0)
+                    {
+                        //btnLogin.Visible = true;
+                        // lblMeassage.Visible = true;
+                        string sr = "Email sent.";
                     }
                 }
 
 
-            }
 
-            Session["RedeemedRewardName"] = lblReward.Text;
-            Session["Redeemed"] = 1;
+                //for Message sending to Player manager and Admins
+                UserViewBLL _adminusers = new UserViewBLL();
+                Common.User adminuser = new Common.User();
 
-            if (Session["ManagerEmail"] != null && Session["ManagerEmail"].ToString() != "")
-            {
-
-                string strTo = Session["ManagerEmail"].ToString();
-
-                string strSubject = "Redeem Points";
-
-                String MessageBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
-                                       + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has redeemed " +
-                                       lblReward.Text.ToString() + " for points " + e.CommandArgument.ToString() + " at " + System.DateTime.Now.ToString();
-
-                string strBody = MessageBody;
-
-                int result = SendMail(strTo, strSubject, strBody);
-                if (result > 0)
-                {
-                    //btnLogin.Visible = true;
-                    // lblMeassage.Visible = true;
-                    string sr = "Email sent.";
-                }
-            }
-
-
-
-            //for Message sending to Player manager and Admins
-            UserViewBLL _adminusers = new UserViewBLL();
-            Common.User adminuser = new Common.User();
-
-            adminuser.Where = "where U_SysRole = 'Admin'";
-            _adminusers.User = adminuser;
-
-            try
-            {
+                adminuser.Where = "where U_SysRole = 'Admin'";
+                _adminusers.User = adminuser;
+                              
                 _adminusers.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                
 
-            MessagesInsertBLL _messageInsert = new MessagesInsertBLL();
-            Common.Messages _message = new Common.Messages();
+                MessagesInsertBLL _messageInsert = new MessagesInsertBLL();
+                Common.Messages _message = new Common.Messages();
 
-            foreach (DataRow dr in _adminusers.ResultSet.Tables[0].Rows)
-            {
-                _message.FromUserID = Convert.ToInt32(Session["UserID"]);
-                _message.ToUserID = Convert.ToInt32(dr["UserID"]);
-                _message.MessageSubject = "Points redeemed for reward";
-
-                String MessageBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
-                                       + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has redeemed " +
-                                       lblReward.Text.ToString() + " for points " + e.CommandArgument.ToString() + " at " + System.DateTime.Now.ToString();
-
-                _message.MessageText = MessageBody;
-                try
+                foreach (DataRow dr in _adminusers.ResultSet.Tables[0].Rows)
                 {
+                    _message.FromUserID = Convert.ToInt32(Session["UserID"]);
+                    _message.ToUserID = Convert.ToInt32(dr["UserID"]);
+                    _message.MessageSubject = "Points redeemed for reward";
+
+                    String MessageBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
+                                           + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has redeemed " +
+                                           lblReward.Text.ToString() + " for points " + e.CommandArgument.ToString() + " at " + System.DateTime.Now.ToString();
+
+                    _message.MessageText = MessageBody;
+                   
                     _messageInsert.messages = _message;
                     _messageInsert.Invoke();
+                   
                 }
-                catch (Exception ex)
+
+
+                _message.FromUserID = Convert.ToInt32(Session["UserID"]);
+                if (Session["ManagerID"] != null)
                 {
-                    throw ex;
+                    _message.ToUserID = Convert.ToInt32(Session["ManagerID"]);
                 }
+                _message.MessageSubject = "Points redeemed for reward";
 
-            }
+                String MessageMainBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
+                                           + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has redeemed " +
+                                           lblReward.Text.ToString() + " for points " + e.CommandArgument.ToString() + " at " + System.DateTime.Now.ToString();
 
-
-            _message.FromUserID = Convert.ToInt32(Session["UserID"]);
-            if (Session["ManagerID"] != null)
-            {
-                _message.ToUserID = Convert.ToInt32(Session["ManagerID"]);
-            }
-            _message.MessageSubject = "Points redeemed for reward";
-
-            String MessageMainBody = Session["displayname"].ToString() + " ( " + Session["username"].ToString() + " ) in "
-                                       + Session["userrole"].ToString() + " at " + Session["sitename"].ToString() + " has redeemed " +
-                                       lblReward.Text.ToString() + " for points " + e.CommandArgument.ToString() + " at " + System.DateTime.Now.ToString();
-
-            _message.MessageText = MessageMainBody;
-            try
-            {
+                _message.MessageText = MessageMainBody;
+                
                 _messageInsert.messages = _message;
                 _messageInsert.Invoke();
+                
+                LoadData();
+                Session["DebLogString"] = "[Item= " + lblReward.Text + "]" + "SuccessFully Redeemed";
+                log.Debug(Session["DebLogString"]);
+                Response.Redirect("RedeemPoints.aspx");
+                // Response.Redirect("RedeemPoints.aspx");
             }
             catch (Exception ex)
             {
-                throw ex;
-            }
+                ExceptionUtility.ExceptionLogString(ex, Session);
+                Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                log.Debug(Session["ExpLogString"]);
 
-
-            try
-            {
-                LoadData();
+                if (ex.Message.ToLower().Contains("duplicate"))
+                { }
+                else
+                    throw ex;
             }
-            catch (Exception exp)
-            {
-                throw exp;
-            }
-                Response.Redirect("RedeemPoints.aspx");
-            // Response.Redirect("RedeemPoints.aspx");
-
 
 
 
@@ -491,6 +415,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                
                 throw ex;
             }
             RewardViewBLL reward = new RewardViewBLL();
@@ -501,6 +426,7 @@ namespace LevelsPro.PlayerPanel
             }
             catch (Exception ex)
             {
+                
                 throw ex;
             }
             DataView dvreward = reward.ResultSet.Tables[0].DefaultView;

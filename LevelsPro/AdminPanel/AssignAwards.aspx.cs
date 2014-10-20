@@ -10,14 +10,17 @@ using Common;
 using BusinessLogic.Insert;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class AssignAwards :AuthorizedPage
     {
         private static string pageURL;
+        private ILog log;
         protected void Page_Load(object sender, EventArgs e)
         {
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!Page.IsPostBack)
             {
                 System.Uri url = Request.Url;
@@ -43,11 +46,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -63,31 +66,32 @@ namespace LevelsPro.AdminPanel
         {
             try
             {
+                              
                 UserAwards Awards = new UserAwards();
                 Awards.User_Id = Convert.ToInt32(ddlPalyer.SelectedValue);
                 Awards.Award_Id = Convert.ToInt32(ddlAward.SelectedValue);
                 Awards.AwardDate = DateTime.Now;
                 Awards.Manual = 1;
                 Awards.AwardedBy = Convert.ToInt32(Session["Userid"]);
-                try
-                {
-                    UserAwardInsertBLL insert = new UserAwardInsertBLL();
-                    insert.Award = Awards;
-                    insert.Invoke();
+                
+                UserAwardInsertBLL insert = new UserAwardInsertBLL();
+                insert.Award = Awards;
+                insert.Invoke();
 
-                    lblmessage.Visible = true;
-                    lblmessage.Text = Resources.TestSiteResources.AssignedAward;
+                lblmessage.Visible = true;
+                lblmessage.Text = Resources.TestSiteResources.AssignedAward;
 
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                LoadData();
+                Session["DebLogString"] = "[User " + Awards.AwardedBy + "] assigned [Award " + Awards.Award_Id + "] to [User " + Awards.User_Id + "]";
+                log.Debug(Session["DebLogString"]);
             }
             catch (Exception ex)
             {
                 lblmessage.Visible = true;
+                ExceptionUtility.ExceptionLogString(ex, Session);
+                Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                log.Debug(Session["ExpLogString"]);
+                
                 if (ex.Message.Contains("Duplicate"))
                 {
                     lblmessage.Text = Resources.TestSiteResources.AwardsB + ' ' + Resources.TestSiteResources.AlreadyAssigned;

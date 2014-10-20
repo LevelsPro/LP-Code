@@ -14,6 +14,7 @@ using LevelsPro.App_Code;
 using System.Configuration;
 using System.IO;
 using LevelsPro.Util;
+using log4net;
 
 namespace LevelsPro.AdminPanel
 {
@@ -23,11 +24,13 @@ namespace LevelsPro.AdminPanel
         {
             base.OnInit(e);
         }
-        private static string pageURL; 
+        private static string pageURL;
+        private ILog log;
         protected void Page_Load(object sender, EventArgs e)
         {
 
             lblmessage.Visible = false;
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (Convert.ToInt32(Session["viewcheck"]) == 1)
             {
                 lblmessage.Text = Resources.TestSiteResources.Level + ' ' + Resources.TestSiteResources.UpdateMessage;
@@ -46,6 +49,7 @@ namespace LevelsPro.AdminPanel
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
+                
                 if (Request.QueryString["levelid"] != null && Request.QueryString["levelid"].ToString() != "")
                 {
                     ViewState["levelid"] = Request.QueryString["levelid"];
@@ -89,11 +93,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -531,6 +535,9 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
                         lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.Level;
                        
                     }
@@ -563,6 +570,9 @@ namespace LevelsPro.AdminPanel
                         }
                         catch (Exception ex)
                         {
+                            ExceptionUtility.ExceptionLogString(ex, Session);
+                            Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                            log.Debug(Session["ExpLogString"]);
                             lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.Level;
                            
                         }
@@ -682,6 +692,9 @@ namespace LevelsPro.AdminPanel
                                     }
                                     catch (Exception ex)
                                     {
+                                        ExceptionUtility.ExceptionLogString(ex, Session);
+                                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                                        log.Debug(Session["ExpLogString"]);
                                         if (ex.Message.Contains("Duplicate"))
                                         {
                                             lblmessage.Text = Resources.TestSiteResources.TargetValue + ' ' + Resources.TestSiteResources.Already;
@@ -734,15 +747,18 @@ namespace LevelsPro.AdminPanel
                     }
                     catch (Exception ex)
                     {
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
                         if (ex.Message.Contains("Duplicate"))
                         {
                             
                         }
                         else
                         {
-                            
+                            throw ex;
                         }
-                        throw ex;
+                        
                     }
                 }
         }
@@ -763,7 +779,14 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception ex)
             {
-                throw ex;
+                ExceptionUtility.ExceptionLogString(ex, Session);
+                Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                log.Debug(Session["ExpLogString"]);
+
+                if (ex.Message.ToLower().Contains("duplicate"))
+                { }
+                else
+                    throw ex;
             }
            
             ddlKPI.DataTextField = "KPI_name";
