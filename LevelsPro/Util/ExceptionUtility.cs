@@ -450,11 +450,10 @@ namespace LevelsPro.Util
 
         public static void ExceptionLogString(Exception exp, HttpSessionState session)
         {
-            string message;
-           
+                      
             string[] splitString = exp.StackTrace.Split(new string[] { "line" }, StringSplitOptions.None);
             string[] lineSplit = splitString[1].Split(new string[]{"\r\n"}, StringSplitOptions.None);
-            session["ExpLogString"] = exp.GetType().ToString() + " Message : " + exp.Message + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0];
+            session["ExpLogString"] = exp.GetType().ToString() + " Message : " + exp.Message + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0] + " [User : " + session["userid"]+"] ";
                        
         }
 

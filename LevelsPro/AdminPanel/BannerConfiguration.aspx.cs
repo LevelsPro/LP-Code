@@ -109,7 +109,7 @@ namespace LevelsPro.AdminPanel
                     }
                 }
                 #endregion
-                Session["DebLogString"] = "Banner Has been updated successfully";
+                Session["DebLogString"] = " [User : " + Session["userid"] + "]- Message : " + "Banner Has been updated successfully";
                 log.Debug(Session["DebLogString"]);
                 Common.Utils.WebMessageBoxUtil.Show("Banner Has been updated successfully");
             }

@@ -305,7 +305,7 @@ namespace LevelsPro.AdminPanel
                         {
 
                             //alert("End Date Must be Greater Than Start Date")
-                            Session["DebLogString"] = "End Date Must be Greater Than Start Date.";
+                            Session["DebLogString"] = " [User : " + Session["userid"] + "]- Message : " + "End Date Must be Greater Than Start Date.";
                             log.Debug(Session["DebLogString"]);
                             lblmessage.Visible = true;
                             lblmessage.Text = "End Date Must be Greater Than Start Date.";

@@ -82,7 +82,7 @@ namespace LevelsPro.AdminPanel
                 lblmessage.Text = Resources.TestSiteResources.AssignedAward;
 
                 LoadData();
-                Session["DebLogString"] = "[User " + Awards.AwardedBy + "] assigned [Award " + Awards.Award_Id + "] to [User " + Awards.User_Id + "]";
+                Session["DebLogString"] = "[User " + Awards.AwardedBy + "]- assigned [Award " + Awards.Award_Id + "] to [User " + Awards.User_Id + "]";
                 log.Debug(Session["DebLogString"]);
             }
             catch (Exception ex)

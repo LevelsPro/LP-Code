@@ -159,7 +159,7 @@ namespace LevelsPro.PlayerPanel
                 LinkButton lbtnRedeem = e.Item.FindControl("lbtnRedeem") as LinkButton;
                 //lbtnRedeem.OnClientClick = "return confirm('Are you sure to delete Level.');";
                 //+Moiz Logging Test
-                Session["DebLogString"] = "Selected [Item =" + lblReward.Text + " ] to be redeemed";
+                Session["DebLogString"] = " [User : " + Session["userid"] + "]- Message : " + "Selected [Item =" + lblReward.Text + " ] to be redeemed";
                 log.Debug(Session["DebLogString"]);
                 //-Moiz
                 Points point = new Points();
@@ -385,7 +385,7 @@ namespace LevelsPro.PlayerPanel
                 _messageInsert.Invoke();
                 
                 LoadData();
-                Session["DebLogString"] = "[Item= " + lblReward.Text + "]" + "SuccessFully Redeemed";
+                Session["DebLogString"] = " [User : " + Session["userid"] + "]- Message : " + "[Item= " + lblReward.Text + "]" + "SuccessFully Redeemed";
                 log.Debug(Session["DebLogString"]);
                 Response.Redirect("RedeemPoints.aspx");
                 // Response.Redirect("RedeemPoints.aspx");

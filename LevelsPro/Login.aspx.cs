@@ -105,7 +105,7 @@ namespace LevelsPro
             Session["userid"] = ds.Tables[0].Rows[0]["UserID"];
             Session["username"] = user;
             //MOiz: For value to be saved in log file.
-            log4net.GlobalContext.Properties["userID"] = Session["userid"];
+           
             if (ds.Tables[0].Rows[0]["U_Password"].ToString().Equals(""))
             {
                 Session["password"] = null;
@@ -171,7 +171,7 @@ namespace LevelsPro
                 
                 if (log.IsDebugEnabled)
                 {
-                    Session["DebLogString"] = "SuccessFull login [Time taken = " + timetaken.ElapsedMilliseconds + " ]";
+                    Session["DebLogString"] = " [User : " + Session["userid"] + "]- Message : " + " SuccessFull login [Time taken = " + timetaken.ElapsedMilliseconds + " ]";
                     log.Debug(Session["DebLogString"]);
                 }
 
