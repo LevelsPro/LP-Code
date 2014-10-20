@@ -879,9 +879,11 @@ namespace LevelsPro.PlayerPanel
                 if (Convert.ToInt32(ViewState["LinkedKPIID"]).Equals(TargetText))
                 {
                     int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
+                   ViewState["targetvalue"]=TargetValue;
 
                     if (Convert.ToInt32(ViewState["TotalPlayerScore"]) < TargetValue)
                     {
+                        ViewState["targetvalue"]=Convert.ToInt32(ViewState["TotalPlayerScore"]);
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                         user.Score = Convert.ToInt32(ViewState["TotalPlayerScore"]);
 
@@ -1012,16 +1014,22 @@ namespace LevelsPro.PlayerPanel
                     }
                 }
             }
-
-            score.User = user;
-
-            try
+            if (Convert.ToInt32(ViewState["LinkedKPIID"]) > 0)
             {
-                score.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+
+                user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
+                user.CurrentLevel = LevelID;
+                user.Score = Convert.ToInt32(ViewState["targetvalue"]);
+                score.User = user;
+
+                try
+                {
+                    score.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             #endregion
