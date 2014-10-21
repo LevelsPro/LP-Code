@@ -91,8 +91,7 @@ namespace LevelsPro.PlayerPanel
             _match.RoleID = Convert.ToInt32(Session["UserRoleID"]);
             _match.LevelID = Convert.ToInt32(Session["CurLevel"]);
 
-            // _quiz.UserID = Convert.ToInt32(Session["userid"]);
-            //_quiz.RoleID = Int32.Parse(Session["userid"].ToString());
+            
             _quiz.LevelID= Convert.ToInt32(Session["CurLevel"]);
             PlayerQuizViewBLL QuizSelection = new PlayerQuizViewBLL();
             PlayerGamesViewBLL Games_Selection = new PlayerGamesViewBLL();
@@ -102,7 +101,7 @@ namespace LevelsPro.PlayerPanel
             dtLog = Log.ResultSet;
             dvLog = dtLog.Tables[0].DefaultView;
 
-            //Quiz_Selection.Quiz = _quiz;
+           
             try
             {
                 QuizSelection.Quiz = _quiz;
@@ -118,7 +117,7 @@ namespace LevelsPro.PlayerPanel
             dtMandatoryQuizes = Games_Selection.ResultSet.Tables[4];
 
             dv_New = Games_Selection.ResultSet.Tables[3].DefaultView;
-           // dv_New.RowFilter = "LevelID = " + Convert.ToInt32(Session["CurLevel"]);
+           
             dt_New = Games_Selection.ResultSet.Tables[1];
             dt = dv.ToTable();
             
@@ -159,39 +158,7 @@ namespace LevelsPro.PlayerPanel
             dlGame.DataSource = dtQuiz;
             dlGame.DataBind();
 
-            #region Commented Code
-            //dt.Columns.Add("Check", typeof(int));
-            //dt.Columns.Add("TopUser", typeof(String));
-
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    if (dr["DateTime"] != null && dr["DateTime"].ToString() != "")
-            //    {
-            //        DateTime Dt = Convert.ToDateTime(dr["DateTime"].ToString());
-
-            //        if (dr["TopScorer"].Equals(dr["YourBest"]))
-            //        {
-            //            dr["TopUser"] = "You have the top score!";
-            //        }
-            //        else
-            //        {
-            //            dr["TopUser"] = dr["TopScorer"].ToString() + ", " + dr["TopScorerName"].ToString();
-            //        }
-
-            //        if (Dt.ToShortDateString().Equals(System.DateTime.Now.ToShortDateString()))
-            //        {
-            //            dr["Check"] = 1;
-            //        }
-            //        else
-            //        {
-            //            dr["Check"] = 0;
-            //        }
-            //    }
-            //}
-
-            //dlGame.DataSource = dt;
-            //dlGame.DataBind();
-            #endregion
+          
 
         }
         protected void dlGame_ItemCommand(object source, DataListCommandEventArgs e)
@@ -259,11 +226,6 @@ namespace LevelsPro.PlayerPanel
                 dvTimeCheck.RowFilter = "QuizID =" + ltQuizID.Text.Trim() + " AND UserID = " + Session["userid"].ToString();
                 dvSelect.RowFilter = "QuizID =" + ltQuizID.Text.Trim() + " AND UserID = " + Session["userid"].ToString();
 
-                //DataView dv_SelectionCheck = dt.DefaultView;
-                //dv_SelectionCheck.RowFilter = "UserID = " + Session["userid"].ToString();
-
-             //   dt_New = dv_New.ToTable();
-
                 DataRow[] drTimeCheck = dvTimeCheck.ToTable().Select();
 
                 DataRow[] drs = dvSelect.ToTable().Select("QuizPoints = max(QuizPoints)");
@@ -284,106 +246,70 @@ namespace LevelsPro.PlayerPanel
                     ltTopScore.Text = drsTop[0]["QuizPoints"].ToString() + " " + drsTop[0]["FullName"].ToString();
                 }
 
-                //if (dvTimeCheck.ToTable().Rows.Count>0)
-                //{
-                //    foreach (DataRow dr in dvTimeCheck.ToTable().Rows)
-                //    {
-                       // DateTime Date = Convert.ToDateTime(dr["QuizTime"].ToString()); //assign quiz date to datetime
-                       // String DateString = Date.ToShortDateString();
-                        String DateString = System.DateTime.Now.ToShortDateString();
-                        dvLog.RowFilter = "QuizID =" + Convert.ToInt32(ltQuizID.Text.Trim()) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
+               
+                String DateString = System.DateTime.Now.ToShortDateString();
+                dvLog.RowFilter = "QuizID =" + Convert.ToInt32(ltQuizID.Text.Trim()) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
 
                         
-                        DataTable dtPlayLog = dvLog.ToTable();
-                        int Playcount = 0;
-                        for (int i = 0; i < dtPlayLog.Rows.Count; i++)
-                        {
-                            if (dtPlayLog.Rows[i]["QuizTime"].ToString().Equals(DateString))
-                            {
-                                Playcount = Playcount + 1;
-                            }
-                        }
+                DataTable dtPlayLog = dvLog.ToTable();
+                int Playcount = 0;
+                for (int i = 0; i < dtPlayLog.Rows.Count; i++)
+                {
+                    if (dtPlayLog.Rows[i]["QuizTime"].ToString().Equals(DateString))
+                    {
+                        Playcount = Playcount + 1;
+                    }
+                }
 
-                            if (DateString.Equals(System.DateTime.Now.ToShortDateString()))
+                    if (DateString.Equals(System.DateTime.Now.ToShortDateString()))
+                    {
+                        if (Playcount >= Convert.ToInt32(ltLimitPlayable.Text.ToString()))
+                        {
+                            AlreadyPlayed.Visible = true;
+                            Playing.Visible = false;
+                            ItemContainer.Attributes["class"] = "qs-item qs-game-done";
+                        }
+                        else
+                        {
+                            AlreadyPlayed.Visible = false;
+                            Playing.Visible = true;
+                            for (int i = 0; i < dtMandatoryQuizes.Rows.Count; i++)
                             {
-                                if (Playcount >= Convert.ToInt32(ltLimitPlayable.Text.ToString()))
+                                if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
                                 {
-                                    AlreadyPlayed.Visible = true;
-                                    Playing.Visible = false;
-                                    ItemContainer.Attributes["class"] = "qs-item qs-game-done";
+                                    ItemContainer.Attributes["class"] = "qs-item qs-game-important";
+                                    break;
                                 }
                                 else
                                 {
-                                    AlreadyPlayed.Visible = false;
-                                    Playing.Visible = true;
-                                    for (int i = 0; i < dtMandatoryQuizes.Rows.Count; i++)
-                                    {
-                                        if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
-                                        {
-                                            ItemContainer.Attributes["class"] = "qs-item qs-game-important";
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
-                                        }
-                                    }
-                                        
+                                    ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
                                 }
-                                //  ItemContainer.Attributes.CssStyle = "qs-item qs-game-done";
+                            }
+                                        
+                        }
+                        //  ItemContainer.Attributes.CssStyle = "qs-item qs-game-done";
 
+                    }
+                    else
+                    {
+                        AlreadyPlayed.Visible = false;
+                        Playing.Visible = true;
+                        for (int i = 0; i < dtMandatoryQuizes.Rows.Count; i++)
+                        {
+                            if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
+                            {
+                                ItemContainer.Attributes["class"] = "qs-item qs-game-important";
+                                break;
                             }
                             else
                             {
-                                AlreadyPlayed.Visible = false;
-                                Playing.Visible = true;
-                                for (int i = 0; i < dtMandatoryQuizes.Rows.Count; i++)
-                                {
-                                    if (ltQuizID.Text.Equals(dtMandatoryQuizes.Rows[i]["QuizID"].ToString()))
-                                    {
-                                        ItemContainer.Attributes["class"] = "qs-item qs-game-important";
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
-                                    }
-                                }
-                                //ItemContainerPlayed.Visible = false;
+                                ItemContainer.Attributes["class"] = "qs-item qs-game-ny";
                             }
+                        }
+                        //ItemContainerPlayed.Visible = false;
                     }
-                }
-                    
-
-                #region Commented Code
-                /*
-                //dvBest.RowFilter = "";
-                //foreach (DataRow dr in dt.Rows)
-                //{
-                //    if (dr["Check"].Equals(1))
-                //    {
-                //        e.Item.CssClass = "qs-item qs-game-done"; // Played
-                //        ltDone.Visible = true;
-                //        //btn.CssClass = "already-played";
-                //        //btn.Text = "You have \n already played\n this game";
-                //        //btn.Enabled = false;
-                //        btn.Visible = false;
-                //    }
-                //    else if (dr["Check"].Equals(0))
-                //    {
-                //        e.Item.CssClass = "qs-item qs-game-ny"; // Not Played
-                //        ltDone.Visible = false;
-                //        btn.CssClass = "green";
-                //        btn.Text = "Play Game";
-                //        btn.Enabled = true;
-                //        btn.Visible = true;
-                //    }
-                //}
-                 */
-                #endregion
-            
-        
-
-        
+            }
+        }
+       
     }
 }

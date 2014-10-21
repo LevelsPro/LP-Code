@@ -36,8 +36,7 @@ namespace LevelsPro.PlayerPanel
             System.Uri url = Request.Url;
             pageURL = url.AbsolutePath.ToString();
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            //string Thumbpath = "";
-           
+                       
             {
                 if (Convert.ToInt32(Session["FirstTimeLogin"]) == 1)
                 {
@@ -60,7 +59,7 @@ namespace LevelsPro.PlayerPanel
                         Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                         Session["rolename"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                         Session["TipsLinkage"] = "false";
-                        // Session["Role_ID"] = ds.Tables[0].Rows[0]["Role_ID"];
+                       
                         Session["UserRoleID"] = ds.Tables[0].Rows[0]["U_RolesID"];
                         Session["role"] = "Player";
                         Session["checkforlogout"] = 0;
@@ -78,8 +77,7 @@ namespace LevelsPro.PlayerPanel
 
 
                         Session["U_Points"] = ds.Tables[0].Rows[0]["U_Points"];
-                        //Session["username"] = user;                
-                      //  Session["password"] = pwd;
+                     
 
                         if (ds.Tables[0].Rows[0]["ManagerEmail"] != null)
                         {
@@ -216,7 +214,7 @@ namespace LevelsPro.PlayerPanel
                             }
 
                             dsaward = award.ResultSet;
-                           //ReuseableItems.GetAutomaticAward = award.ResultSet;
+                          
                             if (award.ResultSet != null && award.ResultSet.Tables.Count > 0 && award.ResultSet.Tables[1] != null && award.ResultSet.Tables[1].Rows.Count > 0)
                             {
                                 DataView dv1 = award.ResultSet.Tables[1].DefaultView;
@@ -232,7 +230,7 @@ namespace LevelsPro.PlayerPanel
 
                                     user.UserID = Convert.ToInt32(Session["userid"]);
                                     user.AwardID = AwardID;
-                                    //user.CurrentLevel = Convert.ToInt32(LevelID);
+                                   
                                     popup.User = user;
                                     try
                                     {
@@ -276,7 +274,7 @@ namespace LevelsPro.PlayerPanel
                                             
                                         }
                                        
-                                        //Response.Redirect("PlayerHome.aspx", false);
+                                        
                                     }
                                     if (dr["popup_showed"].ToString() == "False" && dr["Award_Manual"].ToString() == "False" && Convert.ToDecimal(dr["Percentage"]) >= 100)
                                     {
@@ -293,7 +291,7 @@ namespace LevelsPro.PlayerPanel
                                         {
                                             ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "auto");
                                             mpeAwardCongratsMessageDiv.Show();
-                                            //Response.Redirect("PlayerHome.aspx", false);
+                                            
                                         }
                                     }
                                 }

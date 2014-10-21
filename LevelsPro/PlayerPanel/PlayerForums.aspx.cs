@@ -101,7 +101,7 @@ namespace LevelsPro.PlayerPanel
                     }
 
                     Label lblMinues = (Label)e.Row.Controls[0].FindControl("lblLatestDate");
-                  //  e.Row.Cells[4].Text += " " + GetTimeDiff(Convert.ToInt32(lblMinues.Text));
+                
 
                 }
             }
@@ -202,7 +202,7 @@ namespace LevelsPro.PlayerPanel
             catch (Exception ex)
             {
             }
-            //DataView dv = _postTypes.ResultSet.Tables[0].DefaultView;
+            
 
             ddlType.DataSource = _postTypes.ResultSet;
             ddlType.DataTextField = "Name";

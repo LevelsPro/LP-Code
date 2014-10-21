@@ -16,17 +16,7 @@ namespace LevelsPro.PlayerPanel
         protected void Page_Load(object sender, EventArgs e)
         {
             lblMeassage.Visible = false;
-            //if (Session["MyUICulture"] != null && Session["MyCulture"] != null)
-            //{
-            //    if (Session["MyUICulture"].ToString() == "en-US")
-            //    {
-            //        ddlLanguage.SelectedIndex = 0;
-            //    }
-            //    else
-            //    {
-            //        ddlLanguage.SelectedIndex = 1;
-            //    }
-            //}
+            
         }
         protected override void OnInit(EventArgs e)
         {

@@ -86,7 +86,7 @@ namespace LevelsPro.PlayerPanel
                 lblContestName.InnerText = ds.Tables[0].Rows[0]["Contest_Name"].ToString();
                 lblContestEndDate.InnerText = Convert.ToDateTime(ds.Tables[0].Rows[0]["Contest_EndDate"]).ToString("MMMM dd, yyyy");
                 ltContestDescription.Text = ds.Tables[0].Rows[0]["Contest_Descp"].ToString();
-                // lblContestDescription.InnerText = ds.Tables[0].Rows[0]["Contest_Dur"].ToString();
+                
             }
 
             DataSet dsPointsTable = new DataSet();

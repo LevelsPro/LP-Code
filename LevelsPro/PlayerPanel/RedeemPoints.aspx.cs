@@ -112,20 +112,7 @@ namespace LevelsPro.PlayerPanel
             int value = 0;
             try
             {
-                //System.Web.Mail.MailMessage objMailMsg = new System.Web.Mail.MailMessage();
-                //objMailMsg.To = strTo;
-                //objMailMsg.From = System.Configuration.ConfigurationManager.AppSettings["SMTPFROM"];
-                //objMailMsg.Subject = strSubject;
-                //objMailMsg.Body = strBody;
-
-                //System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationManager.AppSettings["SMTPSERVER"];                
-                //objMailMsg.BodyFormat = MailFormat.Html; 
-
-                //System.Web.Mail.SmtpMail.Send(objMailMsg);
-                //value = 1;
-
-
-
+               
                 MailAddress sendFrom = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["SMTPFROM"].ToString());
                 MailAddress sendTo = new MailAddress(strTo);
 
@@ -329,8 +316,6 @@ namespace LevelsPro.PlayerPanel
                     int result = SendMail(strTo, strSubject, strBody);
                     if (result > 0)
                     {
-                        //btnLogin.Visible = true;
-                        // lblMeassage.Visible = true;
                         string sr = "Email sent.";
                     }
                 }
@@ -387,7 +372,7 @@ namespace LevelsPro.PlayerPanel
                 LoadData();
                 Session["DebLogString"] = " [User : " + Session["userid"] + "]- Message : " + "[Item= " + lblReward.Text + "]" + "SuccessFully Redeemed";
                 log.Debug(Session["DebLogString"]);
-                Response.Redirect("RedeemPoints.aspx");
+                Response.Redirect("RedeemPoints.aspx",false);
                 // Response.Redirect("RedeemPoints.aspx");
             }
             catch (Exception ex)
@@ -443,31 +428,7 @@ namespace LevelsPro.PlayerPanel
 
             Points point = new Points();
             point.UserID = Convert.ToInt32(Session["userid"]);
-            //UserPointsReportBLL _usersum = new UserPointsReportBLL();
-            //try
-            //{
-            //    _usersum.Points = point;
-            //    _usersum.Invoke();
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-            //DataView dvpsum = _usersum.Sum.Tables[0].DefaultView;
-            //DataTable dtpsum = dvpsum.ToTable();
-            //int sum = 0;
-            //if (dtpsum != null && dtpsum.Rows.Count > 0 && dtpsum.Rows[0][0].ToString() != "")
-            //{
-            //    if (dtpsum.Rows[1][0].ToString().Trim() != "")
-            //    {
-            //        sum = Convert.ToInt32(dtpsum.Rows[0][0]) + Convert.ToInt32(dtpsum.Rows[1][0]);
-            //    }
-            //    else
-            //    {
-            //        sum = Convert.ToInt32(dtpsum.Rows[0][0]);
-            //    }
-            //    //lblScore.Text = sum.ToString();
-            //}
-
+            
             int sum = Convert.ToInt32(Session["U_Points"]);
 
             DataView dvsumfilter = reward.ResultSet.Tables[0].DefaultView;
@@ -570,25 +531,7 @@ namespace LevelsPro.PlayerPanel
                             chkbtn.OnClientClick = "return false;";
                             chkbtn.Enabled = false;
                         }
-                        //for (int j = 0; j < dtpoints.Rows.Count; j++)
-                        //{
-
-                        //    if (dtpoints.Rows[i]["Reward_ID"].Equals(dtpoints.Rows[j]["Reward_ID"]))
-                        //{
-                        //    count++;
-
-                        //}
-
-                        //}
-                        //if (count == limit)
-                        //{
-
-                        //    Button chkbtn = e.Item.FindControl("btnRedeem") as Button;
-                        //    // int id = Convert.ToInt32(dlRewards.DataKeys[e.Item.ItemIndex]);
-                        //    chkbtn.Enabled = false;
-
-                        //}
-                        //count = 0;
+                       
 
                     }
                 }

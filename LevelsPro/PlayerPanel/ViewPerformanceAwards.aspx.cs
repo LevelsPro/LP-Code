@@ -34,7 +34,7 @@ namespace LevelsPro.PlayerPanel
                 {
                     throw exp;
                 }
-                //btnMyAwards.Enabled = false;
+               
             }
             ExceptionUtility.CheckForErrorMessage(Session);
         }
@@ -71,20 +71,16 @@ namespace LevelsPro.PlayerPanel
                 ViewProfile.LoadData();
                 lblName.Text = Session["displayname"].ToString() + " - " + Resources.TestSiteResources.AwardsB;
                 GetAutomaticAwardsBLL auto = new GetAutomaticAwardsBLL();
-                //Points points = new Points();
+                
                 Common.User user = new Common.User();
 
-                //points.UserID = Convert.ToInt32(Session["userid"]);
-
                 user.UserID = Convert.ToInt32(Session["userid"]);
-
-                //award.Points = points;
 
                 auto.User = user;
 
                 try
                 {
-                    //award.Invoke();
+                    
                     auto.Invoke();
                 }
                 catch (Exception ex)
@@ -108,21 +104,6 @@ namespace LevelsPro.PlayerPanel
             }
         }
 
-
-
-        //protected void dlViewAwards_ItemCommand(object source, DataListCommandEventArgs e)
-        //{
-        //    if (e.CommandName == "ViewAward")
-        //    {
-        //        Award _award = new Award();
-
-        //        int id = Convert.ToInt32(e.CommandArgument);
-        //        _award.AwardID = id;
-        //        //ucAwardDetails.Load_AwardDetails(id);
-        //        //mpeAwardDetails.Show();
-        //        //upAwardDetails.Update();
-        //    }
-        //}
 
         protected void dlViewAwards_ItemDataBound(object sender, DataListItemEventArgs e)
         {

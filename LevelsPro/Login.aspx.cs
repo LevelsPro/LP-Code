@@ -128,17 +128,11 @@ namespace LevelsPro
                     Session["PlayerLevelImage"] = ds.Tables[0].Rows[0]["ImageName"].ToString();
                     Session["AllLevelsPlayer"] = ds.Tables[1];
 
-                    //ReuseableItems.PlayerPoints_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["U_Points"].ToString());
-                    //ReuseableItems.PlayerCurrentLevelID_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["current_level"].ToString());
-                    //ReuseableItems.PlayerCurrentLevelPosition_PlayerPanel = Convert.ToInt32(ds.Tables[0].Rows[0]["Level_Position"].ToString());
-                    //ReuseableItems.PlayerLevelImage = ds.Tables[0].Rows[0]["ImageName"].ToString();
-                    //ReuseableItems.AllLevelsPlayer = ds.Tables[1];
-
                 }
                 Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                 Session["rolename"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                 Session["TipsLinkage"] ="false";
-               // Session["Role_ID"] = ds.Tables[0].Rows[0]["Role_ID"];
+              
                 Session["UserRoleID"] = ds.Tables[0].Rows[0]["U_RolesID"];
                 Session["role"] = Sysrole;
                 Session["checkforlogout"] = 0;
@@ -157,7 +151,7 @@ namespace LevelsPro
 
                 
                 Session["U_Points"] = ds.Tables[0].Rows[0]["U_Points"];
-                //Session["username"] = user;                
+                            
                 Session["password"] = pwd;
 
                 if (ds.Tables[0].Rows[0]["ManagerEmail"] != null)

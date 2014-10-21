@@ -48,11 +48,7 @@ namespace LevelsPro.ManagerPanel
                     }
                     Label2.Text = Resources.TestSiteResources.AssignAward1 + " to " + Session["playernamemanager"].ToString();
                 }
-                //if (Session["playerid"] != null && Session["playerid"].ToString() != "")
-                //{
-                //    ViewState["playerid"] = Session["playerid"];
-                //    LoadData(Convert.ToInt32(ViewState["playerid"]));
-                //}
+                
 
             }
             ExceptionUtility.CheckForErrorMessage(Session); 
@@ -194,20 +190,14 @@ namespace LevelsPro.ManagerPanel
                 }
             }
 
-            //ModalPopupExtender mpe1 = (ModalPopupExtender)this.Parent.FindControl("mpeViewMessageDetailsDiv");
-            //mpe1.Show();
-
-            //ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeComposeMessageDiv");
-            //mpe.Hide();
+            
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             ddlAward.SelectedValue = "0";
             lblmessage.Text = "";
-            //ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeViewMessageDetailsDiv");
-            //mpe.Hide();
-
+            
         }
 
 
@@ -239,9 +229,7 @@ namespace LevelsPro.ManagerPanel
             ddlAward.SelectedValue = "0";
             lblmessage.Text = "";
             Response.Redirect("PlayerPerformance.aspx?id=" + Convert.ToInt32(Session["playerid"]) + "&likelihood=" + Session["likelihood"] + "&remaining=" + Convert.ToInt32(Session["remaining"]) + "&Base=" + Convert.ToInt32(Session["Base"]), false);
-            //Response.Redirect("PlayerPerformance.aspx");
-            //ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeViewMessageDetailsDiv");
-            //mpe.Hide();
+            
         }
 
       

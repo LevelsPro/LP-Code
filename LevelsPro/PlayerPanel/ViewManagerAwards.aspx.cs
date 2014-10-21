@@ -37,7 +37,7 @@ namespace LevelsPro.PlayerPanel
                 Button2.Visible = false;
                 Button3.Visible = false;
                 Button4.Visible = false;
-                //btnMyAwards.Enabled = false;
+                
             }
             ExceptionUtility.CheckForErrorMessage(Session);
         }
@@ -114,19 +114,6 @@ namespace LevelsPro.PlayerPanel
 
 
 
-        //protected void dlViewAwards_ItemCommand(object source, DataListCommandEventArgs e)
-        //{
-        //    if (e.CommandName == "ViewAward")
-        //    {
-        //        Award _award = new Award();
-
-        //        int id = Convert.ToInt32(e.CommandArgument);
-        //        _award.AwardID = id;
-        //        //ucAwardDetails.Load_AwardDetails(id);
-        //        //mpeAwardDetails.Show();
-        //        //upAwardDetails.Update();
-        //    }
-        //}
 
         protected void dlViewAwards_ItemDataBound(object sender, DataListItemEventArgs e)
         {

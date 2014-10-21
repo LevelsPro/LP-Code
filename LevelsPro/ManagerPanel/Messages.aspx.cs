@@ -44,8 +44,7 @@ namespace LevelsPro.ManagerPanel
                     lblName.Text = Session["displayname"].ToString() + " - " + Resources.TestSiteResources.Messages;
                 }
 
-                //LoadData();
-                //btnShowUnRead_Click(null, null);
+                
                 btnShowAll_Click(null, null);
             }
             ExceptionUtility.CheckForErrorMessage(Session); 
@@ -72,9 +71,7 @@ namespace LevelsPro.ManagerPanel
         {
             if (Session["userid"] != null && Session["userid"].ToString() != "")
             {
-                // ViewProfile.LoadData();
-                //lblName.Text = Session["displayname"].ToString() + " - Messages";
-
+                
                 btnShowUnRead.CssClass = "green";
                 btnShowAll.CssClass = "orange";
                 MessagesViewBLL messageview = new MessagesViewBLL();

@@ -30,33 +30,7 @@ namespace LevelsPro.PlayerPanel
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
-                //Session["check"]=0;
-                //RolesViewBLL roles = new RolesViewBLL();
-                //try
-                //{
-                //    roles.Invoke();
-                //}
-                //catch (Exception ex)
-                //{
-                //    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
-                //}
-
-                //DataView dv = roles.ResultSet.Tables[0].DefaultView;
-
-                //dv.RowFilter = "Role_ID=" + Convert.ToInt32(Session["UserRoleID"]);
-
-                //DataTable dt1 = new DataTable();
-                //dt1 = dv.ToTable();
-                //if (dt1.Rows[0]["ImageName"].ToString() != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"].ToString() != "")
-                //{
-                //    string imagepath = dt1.Rows[0]["ImageName"].ToString();
-
-                //    MapImage.Src = path + imagepath;
-                //}
-                //else 
-                //{
-                //    MapImage.Src = "images/map.png";
-                //}
+                
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
                 
@@ -71,26 +45,11 @@ namespace LevelsPro.PlayerPanel
                 catch (Exception ex)
                 {
                     throw ex;
-                    //ClientScript.RegisterClientScriptBlock(typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>");
+                   
                 }
                 if (Session["UserRoleID"] != null)
                 {
-                    //DataView dv = level.ResultSet.Tables[0].DefaultView;
-
-                    //dv.RowFilter = "Level_ID=" + Convert.ToInt32(Session["CurLevel"]);
-
-                    //DataTable dt1 = new DataTable();
-                    //dt1 = dv.ToTable();
-                    //if (dt1 != null && dt1.Rows.Count > 0 && dt1.Rows[0]["ImageName"] != null && dt1.Rows[0]["ImageName"].ToString() != "")
-                    //{
-                    //    string imagepath = dt1.Rows[0]["ImageName"].ToString();
-
-                    //    MapImage.Src = path + imagepath;
-                    //}
-                    //else
-                    //{
-                    //    MapImage.Src = "images/map.png";
-                    //}
+                    
 
                     MapImage.Src = Session["imagePath"].ToString();
                 }
@@ -105,15 +64,7 @@ namespace LevelsPro.PlayerPanel
                 }
             }
             ExceptionUtility.CheckForErrorMessage(Session);
-            //if(Convert.ToInt32(Session["check"])==1)
-            //{
-            //    Session["check"] = 0;
-            //    ucViewProgressDetails.LoadTargetDescription(Convert.ToInt32(Session["targetid"]));
-            //    mpeViewProgressDetailsDiv.Show();
-            //    string URL = Session["lbturl"].ToString();
-            //   ClientScript.RegisterStartupScript(this.Page.GetType(), "", "window.open('"+URL+"');", true);
-             
-            //}
+            
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -158,25 +109,23 @@ namespace LevelsPro.PlayerPanel
 
                 if (userlevel.ResultSet != null && userlevel.ResultSet.Tables.Count > 0 && userlevel.ResultSet.Tables[0] != null && userlevel.ResultSet.Tables[0].Rows.Count > 0)
                 {
-                    //lblPerformance.Text = Convert.ToDecimal(userlevel.ResultSet.Tables[0].Rows[0]["Percentage"]).ToString("0") + "%";//"80%";
+                   
                     lblLevel.Text = Resources.TestSiteResources.LevelL + ' ' + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString();//"Level 1";
                     LevelStar.ImageUrl = "images/star_yellow_" + userlevel.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString() + ".png";
 
                     TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
 
-                    //GetProgressDetailBLL progress1 = new GetProgressDetailBLL();
+                    
                     User user = new User();
 
                     user.UserID = Convert.ToInt32(Session["userid"]);
                     user.CurrentLevel = Convert.ToInt32(userlevel.ResultSet.Tables[0].Rows[0]["current_level"]);//
                     progress.User = user;
-                    //progress1.UserID = user;
-                    //user.UserID = Convert.ToInt32(user);
-
+                    
                     try
                     {
                         progress.Invoke();
-                        //progress1.Invoke();
+                        
                     }
                     catch (Exception ex)
                     {
@@ -267,18 +216,14 @@ namespace LevelsPro.PlayerPanel
 
             Label lbltargetvalue = (Label)e.Item.FindControl("lblTargetValue");
 
-            //lblcpercentage.Text = "100";
+           
 
             if (Convert.ToInt32(lblcpercentage.Text) > 100)
             {
                 lblcpercentage.Text = "100";
             }
 
-            //if (Convert.ToInt32(lblcpercentage.Text) == 100)
-            //{
-            //    e.Item.CssClass = "qgame-cont flset-change pdone";//"";
-            //}
-
+           
             lblcpercentage.Text = lblcpercentage.Text + "%";
 
             lblkpiname.Text = lblkpiname.Text.Replace("X", lbltargetvalue.Text);
@@ -294,11 +239,7 @@ namespace LevelsPro.PlayerPanel
             }
         }
 
-        //[System.Web.Services.WebMethod]
-        //public static void AbandonSession()
-        //{
-        //    HttpContext.Current.Session.Abandon();
-        //}
+       
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {

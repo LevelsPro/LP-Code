@@ -136,10 +136,7 @@ namespace LevelsPro.ManagerPanel
 
                 }
 
-                //txtFbID.Text = dt.Rows[0]["U_FbUserID"].ToString();
-                //txtFbPassword.Text = dt.Rows[0]["U_FbPassword"].ToString();
-                //txtTwID.Text = dt.Rows[0]["U_TwUserID"].ToString();
-                //txtTwPassword.Text = dt.Rows[0]["U_TwPassword"].ToString();
+                
                 Common.UserImage image = new Common.UserImage();
 
                 image.UserID = Convert.ToInt32(Session["userid"]);
@@ -157,10 +154,7 @@ namespace LevelsPro.ManagerPanel
 
                 DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
 
-                //dvImage.RowFilter = "Active=1 AND UserID=" + Convert.ToInt32(Session["userid"]);
-
-                // DataTable dtImage = new DataTable();
-                // dtImage = dvImage.ToTable();
+                
                 dlImages.DataSource = dvImage.ToTable();
                 dlImages.DataBind();
 
@@ -174,78 +168,15 @@ namespace LevelsPro.ManagerPanel
                     currentid = Convert.ToInt32(dtcImage.Rows[0]["U_UserIDImage"]);
                 }
 
-                //btnUpdat.Text = "Update";
-                //gvInfo.DataSource = User.ResultSet;
-                //gvInfo.DataBind();
+                
             }
         }
-
-        //protected void LoadRoles()
-        //{
-        //    RolesViewBLL role = new RolesViewBLL();
-        //    try
-        //    {
-        //        role.Invoke();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-
-        //    ddlRole.DataTextField = "Role_Name";
-        //    ddlRole.DataValueField = "Role_ID";
-
-        //    DataView dv = role.ResultSet.Tables[0].DefaultView;
-
-        //    dv.RowFilter = "Active=1";
-
-        //    ddlRole.DataSource = dv.ToTable();
-        //    ddlRole.DataBind();
-
-        //    ListItem li = new ListItem("Select", "0");
-        //    ddlRole.Items.Insert(0, li);
-        //}
-
-        /*  protected void gvInfo_SelectedIndexChanged(object sender, EventArgs e)
-          {
-              //if (gvInfo.SelectedIndex != -1)
-              //{
-              //    lblmessage.Visible = false;
-              //    //ImageButton gvLevelRow = (ImageButton)sender;
-              //    //GridViewRow row = (GridViewRow)gvLevelRow.NamingContainer;
-              //    Label lblRoleID = (Label)gvInfo.SelectedRow.FindControl("lblRoleID");
-              //    Label lblActive = (Label)gvInfo.SelectedRow.FindControl("lblActive");
-              //    txtFirstName.Text = "";
-              //    txtFirstName.Text = gvInfo.SelectedRow.Cells[4].Text.Trim();
-              //    ddlRole.SelectedValue = lblRoleID.Text.Trim();
-              //    txtLastName.Text = gvInfo.SelectedRow.Cells[5].Text.Trim();
-              //    txtNickName.Text = gvInfo.SelectedRow.Cells[6].Text.Trim();
-              //    txtLocation.Text = gvInfo.SelectedRow.Cells[8].Text.Trim();
-              //    txtFbID.Text = gvInfo.SelectedRow.Cells[9].Text.Trim();
-              //    txtFbPassword.Text = gvInfo.SelectedRow.Cells[10].Text.Trim();
-              //    txtTwID.Text = gvInfo.SelectedRow.Cells[11].Text.Trim();
-              //    txtTwPassword.Text = gvInfo.SelectedRow.Cells[12].Text.Trim();
-
-
-
-              //    if (lblActive.Text.Trim() == "1")
-              //    {
-              //        cbActive.Checked = true;
-              //    }
-              //    else
-              //    {
-              //        cbActive.Checked = false;
-              //    }
-              //    trActive.Visible = true;
-              //    //btnUpdat.Text = "Update";
-              //}
-
-          }*/
 
         protected void btnUpdateInfo_Click(object sender, EventArgs e)
         {
             if (txtFirstName.Text.Equals(""))
             {
-                //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Warning", "<script>alert('Provide country to add')</script>", false);
+                
                 return;
             }
             else
@@ -253,7 +184,7 @@ namespace LevelsPro.ManagerPanel
 
                 User user = new User();
                 user.FirstName = txtFirstName.Text.Trim();
-                // user.RoleID = Convert.ToInt32(ddlRole.SelectedValue);
+                
                 user.UserLastName = txtLastName.Text.Trim();
                 user.UserNickName = txtNickName.Text.Trim();
                 if (rblName.Items[0].Selected == true)
@@ -278,19 +209,14 @@ namespace LevelsPro.ManagerPanel
                 try
                 {
                     UpdateUser.Invoke();
-                    //lblmessage.Text = Constants._TargetUpdated;//"Level has been updated successfully";
-                    //    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Warning", "<script>alert('Updation successfully performed')</script>", false);
+                    
                 }
                 catch (Exception ex)
                 {
                     throw ex;
-                    // lblmessage.Text = Constants._TargetNotUpdated;
-                    //    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Warning", "<script>alert('" + ex.Message + "')</script>", false);
+                    
                 }
-
-
-
-
+                
                 UserImageUpdateBLL UpdateImage = new UserImageUpdateBLL();
                 UserImage _userimage = new UserImage();
                 int id = Convert.ToInt32(currentid);

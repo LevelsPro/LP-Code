@@ -179,7 +179,7 @@ namespace LevelsPro.ManagerPanel
                 Label lblBase = e.Item.FindControl("lblBase") as Label;
                 Label lbllevelid = e.Item.FindControl("lbllevelid") as Label;
                 Session["LevelIDMangerUser"] = Convert.ToInt32(lbllevelid.Text.ToString());
-                //int Likess = Convert.ToInt32(lbllike.Text);
+                
                 int remain=0;
                 int BaseHours=0;
 

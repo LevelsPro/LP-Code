@@ -33,8 +33,7 @@ namespace LevelsPro.PlayerPanel
         static String Optselected = "";
         static DataTable dt_Questions;
         static DataTable dt = new DataTable();
-       // static DataTable dtScore = new DataTable();
-       // public int Seed = (int)DateTime.Now.Ticks;
+       
         public Random a = new Random(System.DateTime.Now.Ticks.GetHashCode());
         public List<int> randomList = new List<int>();
         public static int MyNumber = 0;
@@ -107,17 +106,11 @@ namespace LevelsPro.PlayerPanel
                         CurrenLevel = 0;
                         LinkedKPIID = 0;
                         TotalPlayerScore = 0;
-                        //dtScore.Columns.Add("UserID", typeof(int));
-                        //dtScore.Columns.Add("QuizID", typeof(int));
-                        //dtScore.Columns.Add("QuestionID", typeof(int));
-                        //dtScore.Columns.Add("PointsAchieved", typeof(int));
-                        // dtScore.Columns.Add("ElapsedTime", typeof(int));
-                        //dtScore.Columns.Add("IsCorrect", typeof(int));
                         ReduceOption1 = false;
                         ReduceOption2 = false;
                         ReduceOption3 = false;
                         ReduceOption4 = false;
-                        //QuizPlayLogEntry = false;
+                        
 
                         ltlQuestionNumber.Text = "Question # " + (counter + 1).ToString() + " of " + QuestionLimit.ToString(); // need to look into this
 
@@ -315,40 +308,7 @@ namespace LevelsPro.PlayerPanel
 
                                     }
                                 }
-                            
-
-                            //--------- Randomized Question Logic -----------------//
-
-
-
-                            //-----------------------------------------------------//
-
-
-                            //int count = dt.Rows.Count;
-                            //for (int i = 0; i < count; i++)
-                            //{
-
-                            //    for (int j = 0; j < dtQuizPoints.Rows.Count; j++)
-                            //    {
-                            //        if (i == -1 && count !=0)
-                            //        { i = 0; }
-                            //      if(i !=-1)
-                            //      {
-                            //        if (dt.Rows[i]["QuestionID"].Equals(dtQuizPoints.Rows[j]["QuestionID"]))
-                            //        {
-                            //            dt.Rows[i].Delete();
-                            //            dt.AcceptChanges();
-                            //            count--;
-                            //            i--;
-                            //            break;
-
-                            //        }
-                            //          }
-
-                            //    }
-
-
-                            //}
+                                                                                       
                         }
                             if (dt != null && dt.Rows.Count > 0)
                             {
@@ -402,11 +362,7 @@ namespace LevelsPro.PlayerPanel
                                     lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
                                     imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
                                 }
-                                ////by atizaz//
-                                //lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                                //ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                                //hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
-                                ///////////////
+                               
                             }
                             else
                             {
@@ -492,9 +448,7 @@ namespace LevelsPro.PlayerPanel
                                     lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
                                     imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
                                 }
-                                //lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                                //ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                                //hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
+                               
                             }
                         }
                         //by atizaz//
@@ -552,71 +506,7 @@ namespace LevelsPro.PlayerPanel
         {
             if (check == 1)
             {
-                //QuizScoreDeleteBLL quizscore = new QuizScoreDeleteBLL();
-                //Quiz _quiz = new Quiz();
-                //_quiz.UserID = Convert.ToInt32(Session["userid"]);
-                //quizscore.Quiz = _quiz;
-                //try
-                //{
-                //    quizscore.Invoke();
-                //}
-                //catch (Exception ex)
-                //{
-                //}
-                //QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
-                //Quiz _quiz = new Quiz();
-                //if (dtScore != null && dtScore.Rows.Count > 0)
-                //{
-                //    QuizScoreDeleteBLL quizscore = new QuizScoreDeleteBLL();
-                //    _quiz.UserID = Convert.ToInt32(Session["userid"]);
-                //    quizscore.Quiz = _quiz;
-                //    try
-                //    {
-                //        quizscore.Invoke();
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //    }
-                    //foreach (DataRow drow in dtScore.Rows)
-                    //{
-                        //_quiz.UserID = Convert.ToInt32(drow["UserID"]);
-                        //_quiz.QuizID = Convert.ToInt32(drow["QuizID"]);
-                        //_quiz.QuestionID = Convert.ToInt32(drow["QuestionID"]);
-                        //_quiz.AchievedPoints = Convert.ToInt32(drow["PointsAchieved"]);
-                        //_quiz.Elapsed = Convert.ToInt32(drow["ElapsedTime"]);
-                        //_quiz.IsCorrect = Convert.ToInt32(drow["IsCorrect"]);
 
-                        //insertpoints.Quiz = _quiz;
-                        //try
-                        //{
-                        //    insertpoints.Invoke();
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //}
-                    //}
-
-                        //_quiz.UserID = Convert.ToInt32(Session["userid"]);
-                        //_quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        //_quiz.QuizTime = System.DateTime.Now.ToShortDateString();
-
-
-                        //QuizPlayLogBLL Log = new QuizPlayLogBLL();
-
-                        //Log.Quiz = _quiz;
-                        //try
-                        //{
-                        //    Log.Invoke();
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //}
-
-               
- //}
-
-
-                       // dtScore = new DataTable();
 
                         Response.Redirect("QuizResult.aspx?check= " + Convert.ToInt32(Request.QueryString["quizid"]));
                         btnNext.Visible = false;
@@ -979,11 +869,7 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw ex;
                     }
-
-                 
-                    //ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
-                    //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
-                    //dtScore.AcceptChanges();
+                                    
 
                 }
                 else // for wrong answer
@@ -1013,8 +899,7 @@ namespace LevelsPro.PlayerPanel
                         }
 
                         
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                     else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1039,8 +924,6 @@ namespace LevelsPro.PlayerPanel
                         }
 
 
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
                     }
                     else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1063,8 +946,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                    
                 }
@@ -1095,9 +977,7 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw ex;
                     }
-                    //ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
-                    //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
-                    //dtScore.AcceptChanges();
+                   
                 }
                 else // for wrong answer
                 {
@@ -1123,8 +1003,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                     else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1147,8 +1026,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                     else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1171,8 +1049,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                      
                     }
                    
                 }
@@ -1203,9 +1080,7 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw ex;
                     }
-                   // ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
-                    //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
-                    //dtScore.AcceptChanges();
+                  
                 }
                 else // for wrong answer
                 {
@@ -1231,8 +1106,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                     else if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1255,8 +1129,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                     else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1279,8 +1152,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                       
                     }
                    
                 }
@@ -1311,9 +1183,7 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw ex;
                     }
-                    //ltScore.Text = (Convert.ToInt32(ltScore.Text) + Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionPoints"])).ToString();
-                    //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), Convert.ToInt32(ltScore.Text), Convert.ToInt32(lblTimeQuestion.Text), 1);
-                    //dtScore.AcceptChanges();
+                   
                 }
                 else // for wrong answer
                 {
@@ -1340,8 +1210,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();  
+                       
                     }
                     else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1364,8 +1233,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                      
                     }
                     else if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
                     {
@@ -1388,33 +1256,13 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
-                        //dtScore.Rows.Add(Convert.ToInt32(Session["userid"]), Convert.ToInt32(Request.QueryString["quizid"]), Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]), 0, Convert.ToInt32(lblTimeQuestion.Text), 0);
-                        //dtScore.AcceptChanges();
+                      
                     }
                    
                 }
                 #endregion
             }
-            //else
-            //{
-            //    QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
-            //    Quiz _quiz = new Quiz();
-            //    _quiz.UserID = Convert.ToInt32(Session["userid"]);
-            //    _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-            //    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
-            //    _quiz.AchievedPoints = 0;
-            //    _quiz.Elapsed = 0;
-            //    _quiz.IsCorrect = 0;
-
-            //    insertpoints.Quiz = _quiz;
-            //    try
-            //    {
-            //        insertpoints.Invoke();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //    }
-            //}
+            
            
           
         }
@@ -1590,9 +1438,7 @@ namespace LevelsPro.PlayerPanel
                                 {
 
                                     UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                                    //Common.User user_targetpoints = new Common.User();
-
-                                    //user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
+                                    
                                     user.TargetID = Convert.ToInt32(dr["Target_ID"]);
 
                                     popup.User = user;
@@ -1669,14 +1515,6 @@ namespace LevelsPro.PlayerPanel
                         DataTable dTNext = dVNext.ToTable();
                         int NextLevel = 0;
                         if (dTNext.Rows.Count == 1) { NextLevel = Convert.ToInt32(dTNext.Rows[0]["next_level"]); }
-
-                       // LoadData(UserID, NextLevel);
-
-                     //   ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('The player has completed all the targets and has been successfully Leveled Up')</script>", false);
-
-                        //Response.Write("<script LANGUAGE='JavaScript' >alert('The player has completed all the targets and has been successfully Leveled Up')</script>");
-
-                    //    Response.Redirect("PlayerProgress.aspx?userid=" + ViewState["userid"].ToString() + "&levelid=" + NextLevel, false);
 
                         #endregion
                     }
@@ -1767,9 +1605,7 @@ namespace LevelsPro.PlayerPanel
 
 
                                 UserTargetAchievedUpdateBLL popup = new UserTargetAchievedUpdateBLL();
-                                //Common.User user_targetpoints = new Common.User();
-
-                                //user_targetpoints.UserID = Convert.ToInt32(Session["userid"]);
+                               
                                 user.TargetID = Convert.ToInt32(dr["Target_ID"]);
 
                                 popup.User = user;
@@ -1865,33 +1701,7 @@ namespace LevelsPro.PlayerPanel
             #endregion
         }
 
-        //public void TotalScore()
-        //{
-
-        //    Common.Quiz _quiz = new Quiz();
-        //    _quiz.RoleID = Convert.ToInt32(Session["UserRoleID"]);
-        //    _quiz.LevelID = Convert.ToInt32(Session["CurLevel"]);
-
-        //    PlayerQuizViewBLL Quiz_Selection = new PlayerQuizViewBLL();
-        //    try
-        //    {
-        //        Quiz_Selection.Quiz = _quiz;
-        //        Quiz_Selection.Invoke();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //    DataView dv = Quiz_Selection.ResultSet.Tables[0].DefaultView;
-        //    dv.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND QuizID =" +
-        //                                            Convert.ToInt32(Request.QueryString["quizid"]);
-            
-        //    DataRow[] drs = dv.ToTable().Select("QuizPoints = max(QuizPoints)");
-
-        //    if (drs.Length > 0)
-        //    {
-        //        ViewState["TotalPlayerScore"] = Convert.ToInt32(drs[0]["QuizPoints"].ToString());
-        //    }
-        //}
+      
 
         #region Quiz Internal Playing Rules & Events
         public void NewNumber()

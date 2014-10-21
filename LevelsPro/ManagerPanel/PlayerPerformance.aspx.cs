@@ -51,24 +51,7 @@ namespace LevelsPro.ManagerPanel
                     lblLike.Text = percentage.ToString("0") + "%";
                     lblHours.Text = Convert.ToInt32(ViewState["remaining"]).ToString();
                     int Percent = Convert.ToInt32(ViewState["remaining"]) * 100 / Convert.ToInt32(ViewState["Base"]);
-                    //if (percentage < 80)
-                    //{
-                    //System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
-                    //div1.Attributes["class"] = "level-cont-red";
-                    //}
-                    //else if (percentage > 80 && percentage < 90)
-                    //{
-                    //    System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
-                    //    div1.Attributes["class"] = "level-cont-yellow";
-                    //}
-                    //else
-                    //{
-                    //    System.Web.UI.HtmlControls.HtmlGenericControl div1 = (System.Web.UI.HtmlControls.HtmlGenericControl)this.FindControl("MainColor");
-                    //    div1.Attributes["class"] = "level-cont-green";
-                    //}
-
-
-
+                    
                     Session["ManagerAsscociateID"] = Request.QueryString["id"];
                     try
                     {
@@ -113,38 +96,29 @@ namespace LevelsPro.ManagerPanel
                     try
                     {
                         LoadData(Convert.ToInt32(Request.QueryString["id"]));
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                    MessagesViewBLL messageview = new MessagesViewBLL();
-
-                    try
-                    {
+                        MessagesViewBLL messageview = new MessagesViewBLL();
                         messageview.Invoke();
+                        DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
+
+                        dvNoti.RowFilter = "To_UserID=" + Session["userid"] + " AND IsRead=" + 0;
+
+                        DataTable dtNoti = dvNoti.ToTable();
+
+                        if (dtNoti != null && dtNoti.Rows.Count > 0)
+                        {
+                            lblMessageNotification.Text = dtNoti.Rows.Count.ToString();
+
+                        }
+                        else
+                        {
+
+                        }
                     }
                     catch (Exception ex)
                     {
                         throw ex;
                     }
-
-                    DataView dvNoti = messageview.ResultSet.Tables[0].DefaultView;
-
-                    dvNoti.RowFilter = "To_UserID=" + Session["userid"] + " AND IsRead=" + 0;
-
-                    DataTable dtNoti = dvNoti.ToTable();
-
-                    if (dtNoti != null && dtNoti.Rows.Count > 0)
-                    {
-                        lblMessageNotification.Text = dtNoti.Rows.Count.ToString();
-
-                    }
-                    else
-                    {
-
-                    }
-                }
+                 }
 
                
             }
@@ -234,9 +208,9 @@ namespace LevelsPro.ManagerPanel
 
             user.UserID = userid;
            user.CurrentLevel=Convert.ToInt32(Session["LevelIDMangerUser"]);
-           // user.CurrentLevel = level;
+          
             progress.User = user;
-            //user.UserID = Convert.ToInt32(user);
+          
 
             try
             {
@@ -252,12 +226,7 @@ namespace LevelsPro.ManagerPanel
                 {
                     dlProgressDetail.DataSource = progress.ResultSet.Tables[0];
                     dlProgressDetail.DataBind();
-                    // lblPlayerName.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
-                    //lblLevel.Text = Resources.TestSiteResources.Challengesfor + ' ' progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); 
-                    //lblLevel.Text = Resources.TestSiteResources.Challengesfor +' '+ progress.ResultSet.Tables[0].Rows[0]["Level_ID"].ToString(); //PlayerName
-                    //lblPlayerName.Text = Resources.TestSiteResources.PlayerName +' '+ progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString(); //PlayerName
-               
-
+                   
             TeamPerformanceBLL team = new TeamPerformanceBLL();
            // Common.User user = new Common.User();
 
@@ -292,11 +261,9 @@ namespace LevelsPro.ManagerPanel
                     lblLike.Text = percentage.ToString("0") + "%";
                 }
                 lblHours.Text = ds.Rows[0]["remainingHours"].ToString();
-            //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
-            //    dv.RowFilter = "PlayerStatus = 'red'";
                 lblPlayerName1.Text=ds.Rows[0]["PlayerName"].ToString();
                 Session["userfullpointsdmanager"] = Convert.ToInt32(ds.Rows[0]["U_Points"].ToString());
-               // ReuseableItems.userfullpointsdmanager =Convert.ToInt32(ds.Rows[0]["U_Points"].ToString());
+          
                 Session["playernamemanager"] = lblPlayerName1.Text;
                 lblLevel1.Text = ds.Rows[0]["Role_Name"].ToString() + "- Level " + ds.Rows[0]["Level_Position"].ToString();
                 level=Convert.ToInt32(ds.Rows[0]["Level_ID"]);
@@ -307,19 +274,15 @@ namespace LevelsPro.ManagerPanel
                 }
                 else
                 {
-                   // progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString();
-
-
                     lblHours.Text = progress.ResultSet.Tables[0].Rows[0]["BaseHours"].ToString();
                     lblLike.Text = "100 %";
-                    //    DataView dv1 = team.ResultSet.Tables[0].DefaultView;
-                    //    dv.RowFilter = "PlayerStatus = 'red'";
+                    
                     lblPlayerName1.Text = progress.ResultSet.Tables[0].Rows[0]["PlayerName"].ToString();
                     Session["userfullpointsdmanager"] = Convert.ToInt32(progress.ResultSet.Tables[0].Rows[0]["Points"]);
-                //    ReuseableItems.userfullpointsdmanager = Convert.ToInt32(progress.ResultSet.Tables[0].Rows[0]["Points"]);
+                
                     Session["playernamemanager"] = lblPlayerName1.Text;
                     lblLevel1.Text = progress.ResultSet.Tables[0].Rows[0]["Role_Name"].ToString() + "- Level " + progress.ResultSet.Tables[0].Rows[0]["Level_Position"].ToString();
-                    //level = Convert.ToInt32(ds.Rows[0]["Level_ID"]);
+                
                     Session["levelidmanager"] = Session["LevelIDMangerUser"].ToString();
                     MainColor.Attributes["class"] = "level-cont-" + "Green".ToLower(); ;
                     dlProgressDetail.DataSource = null;
@@ -393,31 +356,31 @@ namespace LevelsPro.ManagerPanel
                     string[] arg = new string[2];
                     arg = e.CommandArgument.ToString().Split(';');
                     Session["UserKpiTargetIDManagrePanel"] = Convert.ToInt32(arg[0]);
-                  //  ReuseableItems.userkpistargetidmanager = Convert.ToInt32(arg[0]);
+                  
 
                     string[] arg1 = new string[2];
                     arg1 = arg[1].ToString().Split('&');
                     Session["userkpiscoremanager"] = Convert.ToInt32(arg1[0]);
-                   // ReuseableItems.userkpiscoremanager = Convert.ToInt32(arg1[0]);
+                   
 
 
                     string[] arg2 = new string[2];
                     arg2 = arg1[1].ToString().Split('(');
                     Session["userkpitargetmanager"] = Convert.ToInt32(arg2[0]);
-                  //  ReuseableItems.userkpitargetmanager = Convert.ToInt32(arg2[0]);
+                  
 
                     string[] arg3 = new string[2];
                     arg3 = arg2[1].ToString().Split(')');
                     Session["userkpitextmanager"] = arg3[0];
-                    //ReuseableItems.userkpitextmanager = arg3[0];
+                    
 
                     string[] arg4 = new string[2];
                     arg4 = arg3[1].ToString().Split('^');
                     Session["userkpiidmanager"] = Convert.ToInt32(arg4[0]);
-                  //  ReuseableItems.userkpiidmanager = Convert.ToInt32(arg4[0]);
+                  
 
                     Session["usertargetpointsdmanager"] = Convert.ToInt32(arg4[1]);
-                   // ReuseableItems.usertargetpointsdmanager = Convert.ToInt32(arg4[1]);
+                   
                     
                     mpeViewProgressDetailsDiv.Show();
                     ucViewProgressDetails.LoadData();
