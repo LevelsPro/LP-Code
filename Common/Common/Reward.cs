@@ -11,8 +11,7 @@ namespace Common
         #region Private Members
         SqlInt32 _rewardid;
         SqlString _rewardname;
-        //byte[] _rewardgraphic;
-        //SqlString _rewardgraphicext;
+        
         SqlInt32 _rewardpoints;
         SqlInt16 _active;
         SqlString _rewarddescp;
@@ -65,16 +64,7 @@ namespace Common
             get { return _rewarddescp; }
             set { _rewarddescp = value; }
         }
-        //public byte[] RewardGraphics
-        //{
-        //    get { return _rewardgraphic; }
-        //    set { _rewardgraphic = value; }
-        //}
-        //public SqlString RewardGraphicsExt
-        //{
-        //    get { return _rewardgraphicext; }
-        //    set { _rewardgraphicext = value; }
-        //}
+      
         public SqlInt32 SiteID
         {
             get { return _siteid; }

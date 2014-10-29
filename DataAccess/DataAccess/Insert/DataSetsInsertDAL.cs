@@ -21,10 +21,10 @@ namespace DataAccess.Insert
 
             _insertParameters = new DataSetsInsertDataParameters(Match);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
+           
             int retu = dbHelper.Run(Match.sqlTransaction, base.ConnectionString, _insertParameters.Parameters);
 
-            //object[] mObjRetu = dbHelper.RunReturnParValueSqlTrans(base.ConnectionString, _insertParameters.Parameters, Match.sqlTransaction);
+            
             Match.DataSetID = Convert.ToInt32(((MySqlParameter)_insertParameters.Parameters[5]).Value);
             
         }

@@ -58,8 +58,6 @@ namespace DataAccess.Update
                                             new MySqlParameter("?p_Game",Levels.Game),
                                             new MySqlParameter("?p_levelImage",Levels.LevelImage),
                                              new MySqlParameter("?p_levelthumbnail",Levels.LevelThumbnail)
-                                            //new MySqlParameter("?p_dimensiontop",Levels.Dimension_top),
-                                            //new MySqlParameter("?p_dimensionleft",Levels.Dimension_left)
                                           };
 
             Parameters = parameters;

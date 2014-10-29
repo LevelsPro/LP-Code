@@ -197,16 +197,7 @@ namespace Common
             set { _roleid = value; }
         }
 
-        //public byte[] UserGraphic
-        //{
-        //    get { return _usergraphic; }
-        //    set { _usergraphic = value; }
-        //}
-        //public SqlString UserGraphicExt
-        //{  
-        //    get { return _usergraphicext; }
-        //    set { _usergraphicext = value; }
-        //}
+       
         public SqlInt16 Active
         {
             get { return _active; }

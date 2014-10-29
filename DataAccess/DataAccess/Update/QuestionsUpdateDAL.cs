@@ -21,7 +21,7 @@ namespace DataAccess.Update
 
             _insertParameters = new QuestionUpdateDataParameters(Quiz);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
+           
             int retu = dbHelper.Run(Quiz.sqlTransaction, base.ConnectionString, _insertParameters.Parameters);             
         }
 

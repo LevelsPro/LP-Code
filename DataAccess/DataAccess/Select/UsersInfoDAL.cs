@@ -29,7 +29,7 @@ namespace DataAccess.Select
             {
                 UserInfoDataParameters _insertParameters = new UserInfoDataParameters(User);
                 DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-                //ds = dbHelper.Run(ConnectionString);
+                
                 ds = dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
                 if (ds.Tables[0].Rows.Count > 0)
                 {
@@ -77,10 +77,7 @@ namespace DataAccess.Select
         }
         public void Build()
         {
-            MySqlParameter[] parameters = {new MySqlParameter("?p_Name",User.UserName)
-                                            //  ,  new MySqlParameter("?p_password",User.UserPassword)//,
-                                           //new MySqlParameter("?p_SiteID",User.SiteID)
-                                          };
+            MySqlParameter[] parameters = {new MySqlParameter("?p_Name",User.UserName) };
             Parameters = parameters;
         }
         public MySqlParameter[] Parameters

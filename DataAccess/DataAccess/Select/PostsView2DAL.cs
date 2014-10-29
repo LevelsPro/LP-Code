@@ -20,14 +20,11 @@ namespace DataAccess.Select
             DataSet ds;
             PostViewDataParameters _viewParameters = new PostViewDataParameters(Post);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
+            
             ds = dbHelper.Run(base.ConnectionString, _viewParameters.Parameters);
             return ds;
 
-            //DataSet ds;
-            //DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
-            //return ds;
+            
         }
 
         public Common.Posts Post

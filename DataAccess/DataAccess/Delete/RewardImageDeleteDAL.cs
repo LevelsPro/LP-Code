@@ -21,7 +21,7 @@ namespace DataAccess.Delete
 
             _deleteParameters = new RewardImageDeleteDataParameters(Reward);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //dbHelper.RunScalar(base.ConnectionString, _deleteParameters.Parameters);
+           
             return dbHelper.Run(base.ConnectionString, _deleteParameters.Parameters);
         }
 

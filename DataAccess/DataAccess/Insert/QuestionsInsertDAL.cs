@@ -21,10 +21,10 @@ namespace DataAccess.Insert
 
             _insertParameters = new QuestionInsertDataParameters(Quiz);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
+            
             int retu = dbHelper.Run(Quiz.sqlTransaction, base.ConnectionString, _insertParameters.Parameters);
 
-            //object[] mObjRetu = dbHelper.RunReturnParValueSqlTrans(base.ConnectionString, _insertParameters.Parameters, Quiz.sqlTransaction);
+            
             Quiz.QuestionID = Convert.ToInt32(((MySqlParameter)_insertParameters.Parameters[13]).Value);
             
 

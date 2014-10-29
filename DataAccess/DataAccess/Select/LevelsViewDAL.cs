@@ -19,12 +19,6 @@ namespace DataAccess.Select
 
         public DataSet View()
         {
-            //DataSet ds;
-            //DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
-            //return ds;
-
-
             DataSet ds;
             _viewParameters = new LevelsByRoleParameters(Role);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);

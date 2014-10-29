@@ -19,23 +19,12 @@ namespace DataAccess.Select
         public DataSet View()
         {
             DataSet ds;
-            //AwardViewDataParameters _viewParameters = new AwardViewDataParameters(Award);
+            
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
             ds = dbHelper.Run(ConnectionString);
             return ds;
         }
-        //    public Common.Award Award
-        //    {
-        //        get
-        //        {
-        //            return _award;
-        //        }
-        //        set
-        //        {
-        //            _award = value;
-        //        }
-        //    }
-        //}
+        
 
         public class PlayerAwardViewDAL : DataAccessBase
         {

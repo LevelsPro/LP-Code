@@ -49,7 +49,6 @@ namespace DataAccess.Insert
         public void Build()
         {
             MySqlParameter[] parameters = { new MySqlParameter("?p_RoleName", Roles.RoleName)
-                                            // new MySqlParameter("?p_ImageName",Roles.ImageName)
                                           };
             Parameters = parameters;
         }

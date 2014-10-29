@@ -65,7 +65,7 @@ namespace DataAccess.Insert
                                           new MySqlParameter("?p_NextLevel",User.NextLevel),
                                            new MySqlParameter("?p_LastLevel",User.LastLevel),
                                            new MySqlParameter("?p_LevelAchieved",User.LevelAchieved)
-                                           //new MySqlParameter("?p_TargetScores",User.TargetScores)
+                                           
                                           };
            
 

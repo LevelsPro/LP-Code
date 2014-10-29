@@ -20,7 +20,7 @@ namespace DataAccess.Delete
             _deleteParameters = new QuizLevelsDeleteDataParameters(Quiz);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
             int retu = dbHelper.Run(Quiz.sqlTransaction, base.ConnectionString, _deleteParameters.Parameters);
-           // return dbHelper.Run(base.ConnectionString, _deleteParameters.Parameters);
+          
         }
 
         public Common.Quiz Quiz

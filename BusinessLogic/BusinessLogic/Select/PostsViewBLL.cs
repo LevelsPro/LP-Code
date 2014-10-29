@@ -20,9 +20,7 @@ namespace BusinessLogic.Select
             PostsView2DAL selectData = new PostsView2DAL();
             selectData.Post = Post;
             ResultSet = selectData.View();
-
-            //PostsView2DAL selectData = new PostsView2DAL();
-            //ResultSet = selectData.View();
+                       
         }
 
         public DataSet ResultSet

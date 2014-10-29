@@ -50,7 +50,6 @@ namespace DataAccess.Insert
         {
             MySqlParameter[] parameters = {new MySqlParameter("?p_RewardName",Reward.RewardName),
                                           new MySqlParameter("?p_RewardType", Reward.RewardType),
-                                          //new MySqlParameter("?p_RewardGraphicsExt", Reward.RewardGraphicsExt),
                                           new MySqlParameter("?p_RewardPoints", Reward.RewardPoints),
                                           new MySqlParameter("?p_RewardDesc", Reward.RewardDescp),
                                           new MySqlParameter("?p_RewardImage", Reward.RewardImage),

@@ -21,7 +21,7 @@ namespace DataAccess.Select
             DataSet ds;
             QuizViewDataParameters _viewParameters = new QuizViewDataParameters(Quiz);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
+            
             ds = dbHelper.Run(base.ConnectionString, _viewParameters.Parameters);
             return ds;
         }

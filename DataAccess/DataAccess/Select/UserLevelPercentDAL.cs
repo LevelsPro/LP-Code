@@ -20,7 +20,7 @@ namespace DataAccess.Select
             DataSet ds;
             UserLevelPercentDataParameters _insertParameters = new UserLevelPercentDataParameters(User);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
+            
             ds = dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
             return ds;
 

@@ -20,7 +20,6 @@ namespace DataAccess.Select
             DataSet ds;
             DataSetViewDataParameters _viewParameters = new DataSetViewDataParameters(Match);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
             ds = dbHelper.Run(base.ConnectionString, _viewParameters.Parameters);
             return ds;
         }

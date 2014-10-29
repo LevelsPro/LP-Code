@@ -10,28 +10,18 @@ namespace BusinessLogic.Select
    public class AwardViewBLL : Transaction
     {
         private DataSet _resultSet;
-        //private Common.Award _award;
+       
         public AwardViewBLL()
         {
         }
         public void Invoke()
         {
             AwardViewDAL selectData = new AwardViewDAL();
-           // selectData.Award = Award;
+          
             ResultSet = selectData.View();
         }
 
-        //public Common.Award Award
-        //{
-        //    get
-        //    {
-        //        return _award;
-        //    }
-        //    set
-        //    {
-        //        _award = value;
-        //    }
-        //}
+       
         public DataSet ResultSet
         {
             get

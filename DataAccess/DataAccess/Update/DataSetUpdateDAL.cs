@@ -21,7 +21,7 @@ namespace DataAccess.Update
 
             _insertParameters = new DataSetUpdateDataParameters(Match);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
+            
             int retu = dbHelper.Run(Match.sqlTransaction, base.ConnectionString, _insertParameters.Parameters);             
         }
 

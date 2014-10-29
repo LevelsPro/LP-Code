@@ -15,8 +15,7 @@ namespace Common
         SqlString _awardname;
         SqlString _awarddesc;
         SqlInt32 _awardmanual;
-        // byte[] _awardgraphic;
-        //SqlString _awardgraphicext;
+        
         SqlInt32 _kpiid;
         SqlInt32 _targetid;
         SqlInt16 _active;
@@ -64,16 +63,7 @@ namespace Common
             get { return _awardmanual; }
             set { _awardmanual = value; }
         }
-        //public byte[] AwardGraphic
-        //{
-        //    get { return _awardgraphic; }
-        //    set { _awardgraphic = value; }
-        //}
-        //public SqlString AwardGraphicExt
-        //{
-        //    get { return _awardgraphicext; }
-        //    set { _awardgraphicext = value; }
-        //   }
+        
         public SqlInt32 KPIID
         {
             get { return _kpiid; }

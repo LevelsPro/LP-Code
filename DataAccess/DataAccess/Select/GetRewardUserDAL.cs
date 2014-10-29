@@ -20,7 +20,7 @@ namespace DataAccess.Select
             DataSet ds;
             UserRewardgetparameters _viewParameters = new UserRewardgetparameters(UserRewards);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
+            
             ds = dbHelper.Run(base.ConnectionString, _viewParameters.Parameters);
             return ds;           
         }

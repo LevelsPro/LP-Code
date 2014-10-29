@@ -51,15 +51,13 @@ namespace DataAccess.Update
             MySqlParameter[] parameters = { new MySqlParameter("?p_RewardID", Reward.RewardID), 
                                             new MySqlParameter("?p_RewardName", Reward.RewardName),
                                             new MySqlParameter("?p_Active", Reward.Active),
-                                             new MySqlParameter("?p_RewardType", Reward.RewardType),
-                                          //new MySqlParameter("?p_RewardGraphics", Reward.RewardGraphics),
-                                          //new MySqlParameter("?p_RewardGraphicsExt", Reward.RewardGraphicsExt),
-                                          new MySqlParameter("?p_RewardPoints", Reward.RewardPoints),
-                                          new MySqlParameter("?p_RewardDescp", Reward.RewardDescp),
-                                          new MySqlParameter("?p_CurrentImage", Reward.CurrentImage),
-                                           new MySqlParameter("?p_ID", Reward.ID)
+                                            new MySqlParameter("?p_RewardType", Reward.RewardType),
+                                            new MySqlParameter("?p_RewardPoints", Reward.RewardPoints),
+                                            new MySqlParameter("?p_RewardDescp", Reward.RewardDescp),
+                                            new MySqlParameter("?p_CurrentImage", Reward.CurrentImage),
+                                            new MySqlParameter("?p_ID", Reward.ID)
                                           };
-            //new MySqlParameter("?p_SiteID", Reward.SiteID)
+           
 
             Parameters = parameters;
         }

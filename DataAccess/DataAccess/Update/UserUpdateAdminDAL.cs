@@ -50,7 +50,6 @@ namespace DataAccess.Update
         {
             MySqlParameter[] parameters = { 
                                            new MySqlParameter("?p_UserID",User.UserID),
-                                           //new MySqlParameter("?p_U_Name",User.UserName),
                                            new MySqlParameter("?p_U_FirstName",User.FirstName),
                                             new MySqlParameter("?p_U_LastName",User.UserLastName),
                                           new MySqlParameter("?p_U_NickName",User.UserNickName),

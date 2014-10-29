@@ -21,7 +21,7 @@ namespace DataAccess.Select
             DataSet ds;
             UserImageViewDataParameters _viewParameters = new UserImageViewDataParameters(UserImages);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //ds = dbHelper.Run(ConnectionString);
+            
             ds = dbHelper.Run(base.ConnectionString, _viewParameters.Parameters);
             return ds;          
         }

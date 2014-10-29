@@ -20,7 +20,7 @@ namespace DataAccess.Update
 
             _updateParameters = new UpdatePasswordDataParameters(User);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            //dbHelper.Run(base.ConnectionString, _updateParameters.Parameters);
+            
             int retu = dbHelper.Run(User.sqlTransaction, base.ConnectionString, _updateParameters.Parameters); 
 
         }

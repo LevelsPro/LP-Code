@@ -53,7 +53,7 @@ namespace DataAccess.Update
                                             new MySqlParameter("?p_RoleName", Roles.RoleName),
                                             new MySqlParameter("?p_Active", Roles.Active),
                                              new MySqlParameter("?p_ActiveStatus", Roles.ActiveStatus)
-                                            // new MySqlParameter("?p_ImageName",Roles.ImageName)
+                                            
                                           };
             
             Parameters = parameters;
