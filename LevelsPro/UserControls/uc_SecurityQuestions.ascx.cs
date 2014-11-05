@@ -118,7 +118,12 @@ namespace LevelsPro.UserControls
 
                 //if (dsCheck != null && dsCheck.Tables.Count > 0 && dsCheck.Tables[0] != null && dsCheck.Tables[0].Rows.Count > 0)
                // {
-                    if ((answer1 == txtAnswer1.Text) && (answer2 == txtAnswer2.Text) && (answer3 == txtAnswer3.Text))
+                bool PasswordVerification1 = PasswordEncrypt.ValidatePassword(txtAnswer1.Text, answer1);
+                bool PasswordVerification2 = PasswordEncrypt.ValidatePassword(txtAnswer2.Text, answer2);
+                bool PasswordVerification3 = PasswordEncrypt.ValidatePassword(txtAnswer3.Text, answer3);
+
+                    //if ((answer1 == txtAnswer1.Text) && (answer2 == txtAnswer2.Text) && (answer3 == txtAnswer3.Text))
+                if ((PasswordVerification1 == true) && (PasswordVerification2 == true) && (PasswordVerification3 == true))
                     {
                         lblMeassage.Visible = false;
                         //if (Session["useridForgot"] != null && Session["useridForgot"].ToString() != "")
@@ -204,17 +209,17 @@ namespace LevelsPro.UserControls
 
                         user.Securitytype = 2;
                         user.QuestionID = Convert.ToInt32(ddlQuestion1.SelectedValue);
-                        user.Answer = txtAnswer1.Text.Trim();
+                        user.Answer = PasswordEncrypt.CreateHash(txtAnswer1.Text.Trim());
                         securityanswers.User = user;
                         securityanswers.Invoke();
 
                         user.QuestionID = Convert.ToInt32(ddlQuestion2.SelectedValue);
-                        user.Answer = txtAnswer2.Text.Trim();
+                        user.Answer = PasswordEncrypt.CreateHash(txtAnswer2.Text.Trim());
                         securityanswers.User = user;
                         securityanswers.Invoke();
 
                         user.QuestionID = Convert.ToInt32(ddlQuestion3.SelectedValue);
-                        user.Answer = txtAnswer3.Text.Trim();
+                        user.Answer = PasswordEncrypt.CreateHash(txtAnswer3.Text.Trim());
                         securityanswers.User = user;
                         securityanswers.Invoke();
                         /////////////////////////////////////////////////////////      
