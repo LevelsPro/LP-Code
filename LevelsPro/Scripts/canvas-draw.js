@@ -45,7 +45,7 @@ $(document).ready(function () {
 
 
  $('.mapb').resize(function(){
-	alert("resize test");	
+	//alert("resize test");	
 	 var rcolumn = $('.lof').height();
         $(".awpoints").height(rcolumn - 22);
 	});
