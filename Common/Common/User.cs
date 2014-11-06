@@ -13,6 +13,7 @@ namespace Common
     {
         #region Private Members
         SqlInt32 _userid;
+        SqlString _empid;
         SqlString _username;
         SqlString _firstname;
         SqlString _userlastname;
@@ -133,6 +134,13 @@ namespace Common
             get { return _displayname; }
             set { _displayname = value; }
         }
+
+        public SqlString EmployeeID
+        {
+            get { return _empid; }
+            set { _empid = value; }
+        }
+
         public SqlString UserName
         {
             get { return _username; }

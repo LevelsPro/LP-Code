@@ -57,6 +57,20 @@
         </div>
         <div class="usercont-right">
             <div class="fl-wrapper user-data np-user-data">
+                  <div class="strip" id="divEmployeeID" runat="server">
+                    <asp:Label ID="lblEmpID" runat="server" Text="Emp ID"
+                        CssClass="edit-left"></asp:Label>
+                    <asp:TextBox ID="txtEmpID" runat="server" ValidationGroup="Insertion" MaxLength="50"
+                        CssClass="edit-right"></asp:TextBox>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" Display="Dynamic"
+                        ErrorMessage="Enter Only Alphanumeric :" SetFocusOnError="True" ValidationExpression="^[a-zA-Z0-9]*$"
+                        ValidationGroup="Insertion" ControlToValidate="txtEmpID">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter Only Alphanumeric</asp:RegularExpressionValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtEmpID"
+                        Display="Dynamic" ErrorMessage="Enter User Name" SetFocusOnError="True" ValidationGroup="Insertion">*</asp:RequiredFieldValidator>
+                    
+                    <div class="clear">
+                    </div>
+                </div>
                 <div class="strip" id="divUserName" runat="server">
                     <asp:Label ID="lblUserName" runat="server" Text="<%$ Resources:TestSiteResources, UserID %>"
                         CssClass="edit-left"></asp:Label>

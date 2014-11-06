@@ -171,6 +171,7 @@ namespace LevelsPro
 
                 User user = new User();
 
+                user.EmployeeID = txtEmpID.Text.Trim();
                 user.UserName = txtUserName.Text.Trim();
                 user.FirstName = txtFirstName.Text.Trim();
                 user.UserLastName = txtLastName.Text.Trim();
@@ -276,6 +277,7 @@ namespace LevelsPro
                     if (ViewState["userid"] != null && ViewState["userid"].ToString() != "")
                     {
                         UserUpdateAdminBLL updateuser = new UserUpdateAdminBLL();
+                        user.EmployeeID = txtEmpID.Text.Trim();
                         user.UserID = Convert.ToInt32(ViewState["userid"]);
 
                         if (cbActive.Checked)
@@ -463,7 +465,7 @@ namespace LevelsPro
                 {
                     DataTable dt = new DataTable();
                     dt = dvPlayer.ToTable();
-
+                    txtEmpID.Text = dt.Rows[0]["U_EmpID"].ToString();
                     txtUserName.Text = dt.Rows[0]["U_Name"].ToString();
                     txtFirstName.Text = dt.Rows[0]["U_FirstName"].ToString();
                     txtLastName.Text = dt.Rows[0]["U_LastName"].ToString();

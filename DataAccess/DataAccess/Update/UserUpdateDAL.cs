@@ -49,21 +49,19 @@ namespace DataAccess.Update
         public void Build()
         {
             MySqlParameter[] parameters = { new MySqlParameter("?p_UserID",User.UserID),
-
-                                          
+                                            
                                             new MySqlParameter("?p_RoleID",User.RoleID),
-                                          new MySqlParameter("?p_UserLastName",User.UserPassword),
-                                           new MySqlParameter("?p_UserNickName",User.UserEmail),
-                                           new MySqlParameter("?p_UserLocation",User.SiteID),
-                                           new MySqlParameter("?p_FbUserID",User.UserFbID),
-                                           new MySqlParameter("?p_FbPassword",User.UserFbPassword),
-                                           new MySqlParameter("?p_TwUserID",User.UserTwID),
-                                           new MySqlParameter("?p_TwPassword",User.UserTwPassword),
-                                           new MySqlParameter("?p_UserName",User.FirstName),                                            
-                                          new MySqlParameter("?p_UserLastName",User.UserLastName),
-                                           new MySqlParameter("?p_UserNickName",User.UserNickName),                                         
-
-                                           new MySqlParameter("?p_Status",User.Active)
+                                            new MySqlParameter("?p_UserLastName",User.UserPassword),
+                                            new MySqlParameter("?p_UserNickName",User.UserEmail),
+                                            new MySqlParameter("?p_UserLocation",User.SiteID),
+                                            new MySqlParameter("?p_FbUserID",User.UserFbID),
+                                            new MySqlParameter("?p_FbPassword",User.UserFbPassword),
+                                            new MySqlParameter("?p_TwUserID",User.UserTwID),
+                                            new MySqlParameter("?p_TwPassword",User.UserTwPassword),
+                                            new MySqlParameter("?p_UserName",User.FirstName),                                            
+                                            new MySqlParameter("?p_UserLastName",User.UserLastName),
+                                            new MySqlParameter("?p_UserNickName",User.UserNickName),
+                                            new MySqlParameter("?p_Status",User.Active)
                                           };
             
             Parameters = parameters;
