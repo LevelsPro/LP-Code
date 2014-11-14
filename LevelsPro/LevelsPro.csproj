@@ -82,10 +82,16 @@
     <Content Include="AdminPanel\AwardManagement.aspx" />
     <Content Include="AdminPanel\BannerConfiguration.aspx" />
     <Content Include="AdminPanel\ChangePassword.aspx" />
+    <Content Include="AdminPanel\ContestDetails.aspx" />
     <Content Include="AdminPanel\ContestManagement.aspx" />
+    <Content Include="AdminPanel\ContestEdit.aspx" />
     <Content Include="AdminPanel\DataSetEdit.aspx" />
     <Content Include="AdminPanel\DataSetManagement.aspx" />
+    <Content Include="AdminPanel\fonts\avengeance_mightiest_avenger-webfont.svg" />
+    <Content Include="AdminPanel\fonts\stylesheet.css" />
     <Content Include="AdminPanel\Images\body-bg2.png" />
+    <Content Include="AdminPanel\Images\star_cont.png" />
+    <Content Include="AdminPanel\Images\upd-img.png" />
     <Content Include="AdminPanel\RoundEdit.aspx" />
     <Content Include="AdminPanel\DataElementEdit.aspx" />
     <Content Include="AdminPanel\MatchEdit.aspx" />
@@ -294,6 +300,7 @@
     <Content Include="AdminPanel\Styles\website.css" />
     <Content Include="AdminPanel\TargetManagement.aspx" />
     <Content Include="AdminPanel\UserControls\uc_ComposeMessage.ascx" />
+    <Content Include="AdminPanel\UserControls\uc_Contests.ascx" />
     <Content Include="AdminPanel\UserControls\uc_MessageDetails.ascx" />
     <Content Include="AdminPanel\UserControls\uc_TipsTricks.ascx" />
     <Content Include="AdminPanel\WelcomeAdmin.aspx" />
@@ -598,7 +605,11 @@
     <Content Include="ManagerPanel\UserControls\uc_Profile.ascx" />
     <Content Include="PlayerPanel\ChangePassword.aspx" />
     <Content Include="PlayerPanel\ContestDetails.aspx" />
+    <Content Include="PlayerPanel\fonts\avengeance_mightiest_avenger-webfont.svg" />
+    <Content Include="PlayerPanel\Images\bg-scrollbar-thumb-x.png" />
     <Content Include="PlayerPanel\Images\body-bg2.png" />
+    <Content Include="PlayerPanel\Images\contest-points-bg.png" />
+    <Content Include="PlayerPanel\Images\divisor.png" />
     <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="PlayerPanel\Images\jquery-ui\ui-bg_flat_10_000000_40x100.png" />
@@ -618,6 +629,8 @@
     <Content Include="PlayerPanel\Images\match-dataelement-bg-top.png" />
     <Content Include="PlayerPanel\Images\qbtns-disabled-bg-white.png" />
     <Content Include="PlayerPanel\Images\qbtns-disabled-blue-bg.png" />
+    <Content Include="PlayerPanel\Images\qbtns-wrong-nox-bg.png" />
+    <Content Include="PlayerPanel\Images\star_cont.png" />
     <Content Include="PlayerPanel\MatchPlay.aspx" />
     <Content Include="PlayerPanel\MatchSelection.aspx" />
     <Content Include="PlayerPanel\ForumDetails.aspx" />
@@ -842,6 +855,7 @@
     <Content Include="PlayerPanel\Styles\theme.css" />
     <Content Include="PlayerPanel\Styles\uniform.default.css" />
     <Content Include="PlayerPanel\Styles\website.css" />
+    <Content Include="PlayerPanel\UserControls\uc_ContestUserProfile.ascx" />
     <Content Include="PlayerPanel\UserControls\uc_AwardCongratulations.ascx" />
     <Content Include="PlayerPanel\UserControls\uc_AwardDetails.ascx" />
     <Content Include="PlayerPanel\UserControls\uc_ComposeMessage.ascx" />
@@ -968,12 +982,26 @@
     <Compile Include="AdminPanel\ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminPanel\ContestDetails.aspx.cs">
+      <DependentUpon>ContestDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\ContestDetails.aspx.designer.cs">
+      <DependentUpon>ContestDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminPanel\ContestManagement.aspx.cs">
       <DependentUpon>ContestManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminPanel\ContestManagement.aspx.designer.cs">
       <DependentUpon>ContestManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\ContestEdit.aspx.cs">
+      <DependentUpon>ContestEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\ContestEdit.aspx.designer.cs">
+      <DependentUpon>ContestEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\DataSetEdit.aspx.cs">
       <DependentUpon>DataSetEdit.aspx</DependentUpon>
@@ -1184,6 +1212,13 @@
     </Compile>
     <Compile Include="AdminPanel\UserControls\uc_ComposeMessage.ascx.designer.cs">
       <DependentUpon>uc_ComposeMessage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\UserControls\uc_Contests.ascx.cs">
+      <DependentUpon>uc_Contests.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\UserControls\uc_Contests.ascx.designer.cs">
+      <DependentUpon>uc_Contests.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\UserControls\uc_MessageDetails.ascx.cs">
       <DependentUpon>uc_MessageDetails.ascx</DependentUpon>
@@ -1493,6 +1528,13 @@
     <Compile Include="PlayerPanel\RedeemPoints.aspx.designer.cs">
       <DependentUpon>RedeemPoints.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PlayerPanel\UserControls\uc_ContestUserProfile.ascx.cs">
+      <DependentUpon>uc_ContestUserProfile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlayerPanel\UserControls\uc_ContestUserProfile.ascx.designer.cs">
+      <DependentUpon>uc_ContestUserProfile.ascx</DependentUpon>
+    </Compile>
     <Compile Include="PlayerPanel\UserControls\uc_AwardCongratulations.ascx.cs">
       <DependentUpon>uc_AwardCongratulations.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1794,6 +1836,16 @@
   <ItemGroup>
     <Content Include="ErrorPages\Error.Master" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="AdminPanel\fonts\avengeance_mightiest_avenger-webfont.eot" />
+    <None Include="AdminPanel\fonts\avengeance_mightiest_avenger-webfont.ttf" />
+    <None Include="AdminPanel\fonts\avengeance_mightiest_avenger-webfont.woff" />
+    <None Include="AdminPanel\fonts\avengeance_mightiest_avenger-webfont.woff2" />
+    <None Include="PlayerPanel\fonts\avengeance_mightiest_avenger-webfont.eot" />
+    <None Include="PlayerPanel\fonts\avengeance_mightiest_avenger-webfont.ttf" />
+    <None Include="PlayerPanel\fonts\avengeance_mightiest_avenger-webfont.woff" />
+    <None Include="PlayerPanel\fonts\avengeance_mightiest_avenger-webfont.woff2" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
@@ -1802,7 +1854,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2408</DevelopmentServerPort>
+          <DevelopmentServerPort>15033</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

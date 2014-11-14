@@ -58,8 +58,8 @@ namespace DataAccess.Insert
                                               new MySqlParameter("?p_PointsPerQuestion",Quiz.PointsPerQuestion),
                                               new MySqlParameter("?p_QuizImage",Quiz.QuizImage),
                                               new MySqlParameter("?p_QuizImageThumbnail",Quiz.QuizImageThumbnail),
-                                              new MySqlParameter("?p_KPIID",Quiz.KPIID)
-                                              ,new MySqlParameter("?p_Qid", MySqlDbType.Int16, 4, ParameterDirection.Output, false, 10, 0, "", DataRowVersion.Proposed, Quiz.QuizID)
+                                              new MySqlParameter("?p_KPIID",Quiz.KPIID),
+                                              new MySqlParameter("?p_Qid", MySqlDbType.Int16, 4, ParameterDirection.Output, false, 10, 0, "", DataRowVersion.Proposed, Quiz.QuizID)
                                           };
             Parameters = parameters;
         }

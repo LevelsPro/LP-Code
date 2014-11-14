@@ -22,15 +22,6 @@ namespace LevelsPro.PlayerPanel {
         protected global::System.Web.UI.WebControls.Button btnHome;
         
         /// <summary>
-        /// lblName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblName;
-        
-        /// <summary>
         /// btnLogout control.
         /// </summary>
         /// <remarks>
@@ -46,69 +37,42 @@ namespace LevelsPro.PlayerPanel {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::LevelsPro.PlayerPanel.UserControls.uc_Profile ViewProfile;
+        protected global::LevelsPro.PlayerPanel.UserControls.uc_ContestUserProfile ViewProfile;
         
         /// <summary>
-        /// lblContest control.
+        /// ddlSortBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblContest;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSortBy;
         
         /// <summary>
-        /// imgContestImage control.
+        /// dlPlayers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgContestImage;
+        protected global::System.Web.UI.WebControls.DataList dlPlayers;
         
         /// <summary>
-        /// lblContestName control.
+        /// lblContestLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblContestName;
+        protected global::System.Web.UI.WebControls.Label lblContestLbl;
         
         /// <summary>
-        /// Label1 control.
+        /// Contest1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// lblContestEndDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblContestEndDate;
-        
-        /// <summary>
-        /// ltContestDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltContestDescription;
-        
-        /// <summary>
-        /// gvPointsTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvPointsTable;
+        protected global::LevelsPro.PlayerPanel.UserControls.uc_Contests Contest1;
     }
 }

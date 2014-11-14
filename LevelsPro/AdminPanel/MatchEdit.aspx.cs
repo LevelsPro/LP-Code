@@ -13,11 +13,17 @@ using BusinessLogic.Insert;
 using BusinessLogic.Update;
 using BusinessLogic.Delete;
 using LevelsPro.App_Code;
+using log4net;
+using LevelsPro.Util;
+using MySql.Data.MySqlClient;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class MatchEdit : AuthorizedPage
     {
+        private static string pageURL;
+        private ILog log;
+        static DataSet dss;
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -26,24 +32,54 @@ namespace LevelsPro.AdminPanel
         protected void Page_Load(object sender, EventArgs e)
         {
             lblmessage.Visible = false;
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
-                LoadKPI();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
 
-                if (Request.QueryString["matchid"] != null && Request.QueryString["matchid"].ToString() != "")
+                try 
                 {
-                    ViewState["matchid"] = Request.QueryString["matchid"];
+                    LoadKPI();
 
-                    LoadData(Convert.ToInt32(ViewState["matchid"]));
+                    if (Request.QueryString["matchid"] != null && Request.QueryString["matchid"].ToString() != "")
+                    {
+                        ViewState["matchid"] = Request.QueryString["matchid"];
+
+                        LoadData(Convert.ToInt32(ViewState["matchid"]));
+                    }
+                    else
+                    {
+                        this.Title = Resources.TestSiteResources.AddMatch;
+                        lblHeading.Text = Resources.TestSiteResources.AddMatch;
+                        btnNewDataElement.Enabled = false;
+                        btnAddRound.Enabled = false;
+                    }
+                    loadDataList();
                 }
-                else 
+                catch(Exception exp)
                 {
-                    this.Title = Resources.TestSiteResources.AddMatch;
-                    lblHeading.Text = Resources.TestSiteResources.AddMatch;
-                    btnNewDataElement.Enabled = false;
-                    btnAddRound.Enabled = false;
-                }
+                    throw exp;
+                }                
             }
+            ExceptionUtility.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         #region show match for edit
@@ -95,6 +131,7 @@ namespace LevelsPro.AdminPanel
             }
         }
         #endregion
+
         protected void LoadKPI()
         {
             KPIViewBLL kpi = new KPIViewBLL();
@@ -192,59 +229,7 @@ namespace LevelsPro.AdminPanel
                 grdRounds.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 grdRounds.Rows[0].Cells[0].Text = "No Record Found";
             }
-        }
-
-        //protected void LoadDS(int MatchID)
-        //{
-        //    DataElementViewBLL dsview = new DataElementViewBLL();
-        //    Match _match = new Match();
-        //    _match.Where = " WHERE MatchID = " + MatchID.ToString(); ;
-        //    dsview.Match = _match;
-        //    try
-        //    {
-        //        dsview.Invoke();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //    if (dsview.ResultSet.Tables[0] != null && dsview.ResultSet.Tables[0].Rows.Count > 0)
-        //    {
-
-        //        dlDataElements.DataSource = dsview.ResultSet.Tables[0];
-        //        dlDataElements.DataBind();
-        //    }
-
-        //}
-
-        //protected void dlDataElements_ItemCommand(object source, DataListCommandEventArgs e)
-        //{
-        //    if (e.CommandName == "EditElement")
-        //    {
-        //        Response.Redirect("DataElementEdit.aspx?eid=" + e.CommandArgument.ToString() + "&matchid=" + ViewState["matchid"].ToString());
-        //    }
-        //    else if (e.CommandName == "DeleteElement")
-        //    {
-                
-        //        DataElementDeleteBLL matchdelete = new DataElementDeleteBLL();
-        //        Match _match = new Match();
-        //        _match.MatchID = Convert.ToInt32(e.CommandArgument);
-        //        matchdelete.Match = _match;
-        //        try
-        //        {
-        //            matchdelete.Invoke();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //        }
-
-        //        LoadDS(Convert.ToInt32(ViewState["matchid"]));
-        //    }
-        //    else if (e.CommandName == "ManageDataSets")
-        //    {
-        //        Response.Redirect("DataSetsManagement.aspx?matchid=" + e.CommandArgument.ToString());
-        //    }
-
-        //}
+        }        
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
@@ -318,66 +303,126 @@ namespace LevelsPro.AdminPanel
                     {
                         match.MatchImageThumbnail = ViewState["MatchImageThumbnail"].ToString();
                     }
-
                 }
 
-                if (btnAddMatch.Text == "Update" || btnAddMatch.Text == "mettre à jour" || btnAddMatch.Text == "actualizar")
-                {
-                    if (ViewState["matchid"] != null && ViewState["matchid"].ToString() != "")
-                    {
-                        match.MatchID = Convert.ToInt32(ViewState["matchid"]);
-                        lblmessage.Visible = true;
+                MySqlConnection scon = new MySqlConnection(ConfigurationManager.ConnectionStrings["SQLCONN"].ToString());
+                scon.Open();
+                MySqlTransaction sqlTrans = scon.BeginTransaction();
+                match.sqlTransaction = sqlTrans;
 
-                        MatchUpdateBLL updategame = new MatchUpdateBLL();
-                        updategame.Match = match;
+                try
+                {
+                    if (btnAddMatch.Text == "Update" || btnAddMatch.Text == "mettre à jour" || btnAddMatch.Text == "actualizar")
+                    {
+                        if (ViewState["matchid"] != null && ViewState["matchid"].ToString() != "")
+                        {
+                            match.MatchID = Convert.ToInt32(ViewState["matchid"]);
+                            lblmessage.Visible = true;
+
+                            MatchUpdateBLL updategame = new MatchUpdateBLL();
+                            updategame.Match = match;
+                            lblmessage.Visible = true;
+                            try
+                            {
+                                updategame.Invoke();
+                                lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.UpdateMessage;
+                                LoadData(Convert.ToInt32(ViewState["matchid"]));
+
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionUtility.ExceptionLogString(ex, Session);
+                                Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                                log.Debug(Session["ExpLogString"]);
+                                lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.GameName;
+                            }
+                        }
+                    }
+                    else
+                    {
+
                         lblmessage.Visible = true;
+                        MatchInsertBLL insertmatch = new MatchInsertBLL();
+                        insertmatch.Match = match;
                         try
                         {
-                            updategame.Invoke();
-                            lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.UpdateMessage;
-                            LoadData(Convert.ToInt32(ViewState["matchid"]));
-                           
+                            insertmatch.Invoke();
+                            //LoadData(Convert.ToInt32(ViewState["matchid"]));
+                            //Response.Redirect("MatchManagement.aspx",false);
                         }
                         catch (Exception ex)
                         {
-                            lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.GameName;
+                            ExceptionUtility.ExceptionLogString(ex, Session);
+                            Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                            log.Debug(Session["ExpLogString"]);
+                            if (ex.Message.Contains("Duplicate"))
+                            {
+                                lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.Already;
+                            }
+                            else
+                            {
+                                //show unsuceess
+                                lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.GameName;
+                            }
                         }
                     }
-                }
-                else
-                {
 
-                    lblmessage.Visible = true;
-                    MatchInsertBLL insertmatch = new MatchInsertBLL();
-                    insertmatch.Match = match;
-                    try
+                    MatchLevelsDeleteBLL del = new MatchLevelsDeleteBLL();
+                    MatchLevelsInsertBLL mLevels = new MatchLevelsInsertBLL();
+
+                    del.Match = match;
+                    del.Invoke();
+
+                    for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
                     {
-                        insertmatch.Invoke();
-                        //LoadData(Convert.ToInt32(ViewState["matchid"]));
-                        //Response.Redirect("MatchManagement.aspx",false);
+                        if (dss.Tables[0].Rows[i]["Allow"].ToString() == "yes")
+                        {
+                            match.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
+                            match.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
+                            mLevels.Match = match;
+                            mLevels.Invoke();
+                        }
+
                     }
-                    catch (Exception ex)
+                    sqlTrans.Commit();
+
+                    if (btnAddMatch.Text == "Update" || btnAddMatch.Text == "mettre à jour" || btnAddMatch.Text == "actualizar")
                     {
-                        if (ex.Message.Contains("Duplicate"))
-                        {
-                            lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.Already;
-                        }
-                        else
-                        {
-                            //show unsuceess
-                            lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.GameName;
-                        }
+                        LoadData(int.Parse(match.MatchID.ToString()));
+                        lblmessage.Visible = true;
+                        lblmessage.Text = "Match info " + Resources.TestSiteResources.UpdateMessage;
+                        Response.Redirect("MatchEdit.aspx?mess=1" + "&matchid=" + ViewState["matchid"].ToString(), false);
+
                     }
+                    else
+                    {
+                        Response.Redirect("MatchEdit.aspx?matchid=" + match.MatchID.ToString(), true);
+                    }
+
+                }                
+                catch (Exception ex)
+                {
+                    ExceptionUtility.ExceptionLogString(ex, Session);
+                    Session["ExpLogString"] += " Aditional Info : Transaction Rolledback";
+                    log.Debug(Session["ExpLogString"]);
+                    //sqlTrans.Rollback();
+                }
+                finally
+                {
+                    sqlTrans.Dispose();
+                    scon.Close();
                 }
             }                        
         }
         #endregion
+
         #region add dataelement
         protected void btnNewMatchElement_Click(object sender, EventArgs e)
         {
             Response.Redirect("DataElementEdit.aspx?matchid=" + ViewState["matchid"].ToString());
         }
         #endregion
+
         #region add round
         protected void btnNewMatchRound_Click(object sender, EventArgs e)
         {
@@ -401,6 +446,94 @@ namespace LevelsPro.AdminPanel
         protected void btnAddImage_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void dlRoles_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                DataList dlLevels = e.Item.FindControl("dlLevels") as DataList;
+                Literal ltRoleID = e.Item.FindControl("ltRoleID") as Literal;
+
+
+                DataView dv = dss.Tables[0].DefaultView;
+                dv.RowFilter = "Role_ID=" + Convert.ToInt32(ltRoleID.Text.Trim());
+                dlLevels.DataSource = dv.ToTable();
+                dlLevels.DataBind();
+
+
+                foreach (DataListItem item in dlLevels.Items)
+                {
+                    Button btnLevel = item.FindControl("btnLevels") as Button;
+
+                    if (dv.ToTable().Rows[item.ItemIndex]["Allow"].ToString().Trim() == "yes")
+                    {
+                        btnLevel.CssClass = "lvl-green";
+                    }
+                    else
+                    {
+                        btnLevel.CssClass = "lvl-white";
+
+                    }
+
+                }
+
+            }
+        }
+
+        protected void dlLevels_ItemCommand(object source, DataListCommandEventArgs e)
+        {
+            DataList dlLevels = source as DataList;
+            Button btnLevel = dlLevels.Items[e.Item.ItemIndex].FindControl("btnLevels") as Button;
+
+            for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+            {
+
+                if (dss.Tables[0].Rows[i]["Level_ID"].ToString() == e.CommandArgument.ToString().Trim())
+                {
+                    if (btnLevel.CssClass == "lvl-green")
+                    {
+                        dss.Tables[0].Rows[i]["Allow"] = null;
+                        btnLevel.CssClass = "lvl-white";
+                    }
+                    else
+                    {
+                        dss.Tables[0].Rows[i]["Allow"] = "yes";
+                        btnLevel.CssClass = "lvl-green";
+                    }
+                    break;
+                }
+
+            }
+        }
+
+        private void loadDataList()
+        {
+            try
+            {
+                MatchLevelsBLL Rolelevel = new MatchLevelsBLL();
+                Match match = new Match();
+
+                if (ViewState["matchid"] != null && ViewState["matchid"].ToString() != "")
+                {
+                    match.MatchID = Convert.ToInt32(ViewState["matchid"]);
+
+                }
+                else
+                {
+                    match.MatchID = -1;
+                }
+                Rolelevel.Match = match;
+                Rolelevel.Invoke();
+                dss = new DataSet();
+                dss = Rolelevel.ResultSet;
+                dlRoles.DataSource = Rolelevel.ResultSet.Tables[0].DefaultView.ToTable(true, "Role_ID", "Role_Name");
+                dlRoles.DataBind();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
         }
     }
 }

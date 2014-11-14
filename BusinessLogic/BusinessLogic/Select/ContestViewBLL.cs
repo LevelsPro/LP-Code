@@ -10,15 +10,27 @@ namespace BusinessLogic.Select
     public class ContestViewBLL : Transaction
     {
         private DataSet _resultSet;
+        private Common.Contest _contest;
         public ContestViewBLL()
         {
         }
         public void Invoke()
         {
             ContestViewDAL selectData = new ContestViewDAL();
+            selectData.Contest = Contest;
             ResultSet = selectData.View();
         }
-
+        public Common.Contest Contest
+        {
+            get
+            {
+                return _contest;
+            }
+            set
+            {
+                _contest = value;
+            }
+        }
         public DataSet ResultSet
         {
             get
@@ -31,32 +43,4 @@ namespace BusinessLogic.Select
             }
         }
     }
-
-    public class PlayerContestViewBLL : Transaction
-    {
-        private DataSet _resultSet;
-        public PlayerContestViewBLL()
-        {
-        }
-        public void Invoke()
-        {
-            PlayerContestViewDAL selectData = new PlayerContestViewDAL();
-            ResultSet = selectData.View();
-        }
-
-        public DataSet ResultSet
-        {
-            get
-            {
-                return _resultSet;
-            }
-            set
-            {
-                _resultSet = value;
-            }
-        }
-    }
-
-   
-
 }

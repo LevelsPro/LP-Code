@@ -174,9 +174,7 @@ namespace LevelsPro.PlayerPanel
                    
                     if (Session["userid"] != null && Session["userid"].ToString() != "")
                     {
-                        lblFullName.Text = Session["displayname"].ToString();
-
-                        
+                        lblFullName.Text = Session["displayname"].ToString();                        
 
                         if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                         {

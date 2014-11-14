@@ -60,6 +60,9 @@
   <ItemGroup>
     <Compile Include="Delete\AssignAwardDeleteBLL.cs" />
     <Compile Include="Delete\AwardImageDeleteBLL.cs" />
+    <Compile Include="Delete\ContestDeleteBLL.cs" />
+    <Compile Include="Delete\ContestPositionDeleteBLL.cs" />
+    <Compile Include="Delete\MatchLevelsDeleteBLL.cs" />
     <Compile Include="Delete\MatchScoreDeleteBLL.cs" />
     <Compile Include="Delete\DataSetDeleteBLL.cs" />
     <Compile Include="Delete\DataSetLevelDeleteBLL.cs" />
@@ -76,10 +79,13 @@
     <Compile Include="Delete\RewardImageDeleteBLL.cs" />
     <Compile Include="Delete\SecurityAnswersDeleteBLL.cs" />
     <Compile Include="Delete\UserImageDeleteBLL.cs" />
+    <Compile Include="Duplicate\ContestDuplicateBLL.cs" />
     <Compile Include="Insert\AwardImageInsertBLL.cs" />
     <Compile Include="Insert\BulkInsertQuizQuestionsBLL.cs" />
     <Compile Include="Insert\CategoryInsertBLL.cs" />
     <Compile Include="Insert\BulkInsertMatchDataSetsBLL.cs" />
+    <Compile Include="Insert\ContestPositionInsertBLL.cs" />
+    <Compile Include="Insert\MatchLevelsInsertBLL.cs" />
     <Compile Include="Insert\MatchScoreInsertBLL.cs" />
     <Compile Include="Insert\MatchPlayLogBLL.cs" />
     <Compile Include="Insert\DataSetLevelsInsertBLL.cs" />
@@ -131,7 +137,14 @@
     <Compile Include="Select\CheckUserNameBLL.cs" />
     <Compile Include="Select\ContestPlayersScoreBLL.cs" />
     <Compile Include="Select\ContestViewBLL.cs" />
+    <Compile Include="Select\ContestPositionViewBLL.cs" />
+    <Compile Include="Select\ContestPositionListViewBLL.cs" />
+    <Compile Include="Select\ContestLeaderBoardViewBLL.cs" />
+    <Compile Include="Select\ContestPlayerLeaderBoardViewBLL.cs" />
+    <Compile Include="Select\MatchLevelsBLL.cs" />
+    <Compile Include="Select\UserInfoByIDBLL.cs" />
     <Compile Include="Select\GetGamesPlayLogBLL.cs" />
+    <Compile Include="Select\PlayerContestViewBLL.cs" />
     <Compile Include="Select\PlayerGamesViewBLL.cs" />
     <Compile Include="Select\GetMatchPlayLogBLL.cs" />
     <Compile Include="Select\PlayerMatchDataSetsViewBLL.cs" />

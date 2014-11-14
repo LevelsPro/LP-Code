@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace DataAccess.Insert
 {
@@ -21,6 +22,8 @@ namespace DataAccess.Insert
             _insertParameters = new MatchInsertDataParameters(Match);
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
             dbHelper.Run(base.ConnectionString, _insertParameters.Parameters);
+            
+            Match.MatchID = Convert.ToInt32(((MySqlParameter)_insertParameters.Parameters[8]).Value);
         }
 
         public Common.Match Match
@@ -35,7 +38,6 @@ namespace DataAccess.Insert
             }
         }
     }
-
     public class MatchInsertDataParameters 
     {
         private Common.Match _match;
@@ -55,7 +57,8 @@ namespace DataAccess.Insert
                                               new MySqlParameter("?p_NoOfRounds", Match.NoOfRounds),
                                               new MySqlParameter("?p_MatchImage", Match.MatchImage),
                                               new MySqlParameter("?p_MatchImageThumbnail", Match.MatchImageThumbnail),
-                                              new MySqlParameter("?p_KPIID",Match.KPIID)
+                                              new MySqlParameter("?p_KPIID",Match.KPIID),
+                                              new MySqlParameter("?p_Mid", MySqlDbType.Int16, 4, ParameterDirection.Output, false, 10, 0, "", DataRowVersion.Proposed, Match.MatchID)
                                           };
             Parameters = parameters;
         }

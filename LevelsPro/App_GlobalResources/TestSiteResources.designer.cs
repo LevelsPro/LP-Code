@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Contest.
+        /// </summary>
+        internal static string AddContest {
+            get {
+                return ResourceManager.GetString("AddContest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Data Element.
         /// </summary>
         internal static string AddDataElement {
@@ -201,6 +210,15 @@ namespace Resources {
         internal static string AddMatchRound {
             get {
                 return ResourceManager.GetString("AddMatchRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Place.
+        /// </summary>
+        internal static string AddPlace {
+            get {
+                return ResourceManager.GetString("AddPlace", resourceCulture);
             }
         }
         
@@ -655,6 +673,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company Rank:.
+        /// </summary>
+        internal static string CompanyRanking {
+            get {
+                return ResourceManager.GetString("CompanyRanking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compose Message.
         /// </summary>
         internal static string ComposeMessage {
@@ -709,6 +736,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Points &amp; Awards.
+        /// </summary>
+        internal static string ContestAwards {
+            get {
+                return ResourceManager.GetString("ContestAwards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are Currently in .
         /// </summary>
         internal static string ContestLabel {
@@ -723,6 +759,33 @@ namespace Resources {
         internal static string ContestManagement {
             get {
                 return ResourceManager.GetString("ContestManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string ContestName {
+            get {
+                return ResourceManager.GetString("ContestName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contest Parameters.
+        /// </summary>
+        internal static string ContestParameters {
+            get {
+                return ResourceManager.GetString("ContestParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contests.
+        /// </summary>
+        internal static string Contests {
+            get {
+                return ResourceManager.GetString("Contests", resourceCulture);
             }
         }
         
@@ -777,6 +840,24 @@ namespace Resources {
         internal static string CostH {
             get {
                 return ResourceManager.GetString("CostH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create A Contest.
+        /// </summary>
+        internal static string CreateAContest {
+            get {
+                return ResourceManager.GetString("CreateAContest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Contest.
+        /// </summary>
+        internal static string CreateContest {
+            get {
+                return ResourceManager.GetString("CreateContest", resourceCulture);
             }
         }
         
@@ -1114,6 +1195,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Contest.
+        /// </summary>
+        internal static string EditContest {
+            get {
+                return ResourceManager.GetString("EditContest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Data Element.
         /// </summary>
         internal static string EditDataElement {
@@ -1339,11 +1429,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1st Place.
+        /// </summary>
+        internal static string FPlace {
+            get {
+                return ResourceManager.GetString("FPlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From :.
         /// </summary>
         internal static string From {
             get {
                 return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        internal static string FromDate {
+            get {
+                return ResourceManager.GetString("FromDate", resourceCulture);
             }
         }
         
@@ -1632,6 +1740,15 @@ namespace Resources {
         internal static string LastReply {
             get {
                 return ResourceManager.GetString("LastReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leaderboards.
+        /// </summary>
+        internal static string LeaderBoards {
+            get {
+                return ResourceManager.GetString("LeaderBoards", resourceCulture);
             }
         }
         
@@ -2131,6 +2248,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Contest.
+        /// </summary>
+        internal static string NewContest {
+            get {
+                return ResourceManager.GetString("NewContest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Password:.
         /// </summary>
         internal static string NewPassword {
@@ -2307,6 +2433,15 @@ namespace Resources {
         internal static string PersonalDetails {
             get {
                 return ResourceManager.GetString("PersonalDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place.
+        /// </summary>
+        internal static string Place {
+            get {
+                return ResourceManager.GetString("Place", resourceCulture);
             }
         }
         
@@ -2779,6 +2914,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Place.
+        /// </summary>
+        internal static string RemovePlace {
+            get {
+                return ResourceManager.GetString("RemovePlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replies.
         /// </summary>
         internal static string Replies {
@@ -3121,6 +3265,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2nd Place.
+        /// </summary>
+        internal static string SPlace {
+            get {
+                return ResourceManager.GetString("SPlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Date :.
         /// </summary>
         internal static string StartDate {
@@ -3153,6 +3306,15 @@ namespace Resources {
         internal static string StatusUpdatedDate {
             get {
                 return ResourceManager.GetString("StatusUpdatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Rank:.
+        /// </summary>
+        internal static string StoreRanking {
+            get {
+                return ResourceManager.GetString("StoreRanking", resourceCulture);
             }
         }
         
@@ -3274,6 +3436,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Contest:.
+        /// </summary>
+        internal static string ThisContest {
+            get {
+                return ResourceManager.GetString("ThisContest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time before points start deducting (Seconds).
         /// </summary>
         internal static string TimeDeduction {
@@ -3306,6 +3477,15 @@ namespace Resources {
         internal static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        internal static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
             }
         }
         
@@ -3360,6 +3540,15 @@ namespace Resources {
         internal static string Total0 {
             get {
                 return ResourceManager.GetString("Total0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3rd Place.
+        /// </summary>
+        internal static string TPlace {
+            get {
+                return ResourceManager.GetString("TPlace", resourceCulture);
             }
         }
         

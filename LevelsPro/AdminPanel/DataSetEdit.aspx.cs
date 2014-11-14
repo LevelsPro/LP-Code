@@ -434,34 +434,34 @@ namespace LevelsPro.AdminPanel
                     del.Match = match;
                     del.Invoke();
 
-                        for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+                    for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+                    {
+                        if (dss.Tables[0].Rows[i]["Allow"].ToString()=="yes")
                         {
-                            if (dss.Tables[0].Rows[i]["Allow"].ToString()=="yes")
-                            {
-                            match.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
-                            match.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
-                            qLevels.Match = match;
-                            qLevels.Invoke();
-                            }
-
+                        match.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
+                        match.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
+                        qLevels.Match = match;
+                        qLevels.Invoke();
                         }
-                        sqlTrans.Commit();
 
-                        if (btnAddDataSet.Text == "Update" || btnAddDataSet.Text == "mettre à jour" || btnAddDataSet.Text == "actualizar")
-                        {
-                            //LoadDataElements(Convert.ToInt32(ViewState["matchid"]));
-                            LoadData(int.Parse(match.DataSetID.ToString()));
-                            lblMessage.Visible = true;
-                            lblMessage.Text = "DataSet info " + Resources.TestSiteResources.UpdateMessage;
-                            Response.Redirect("DataSetEdit.aspx?mess=1" + "&datasetid=" + ViewState["datasetid"].ToString() + "&matchid=" + ViewState["matchid"].ToString(), false);
+                    }
+                    sqlTrans.Commit();
+
+                    if (btnAddDataSet.Text == "Update" || btnAddDataSet.Text == "mettre à jour" || btnAddDataSet.Text == "actualizar")
+                    {
+                        //LoadDataElements(Convert.ToInt32(ViewState["matchid"]));
+                        LoadData(int.Parse(match.DataSetID.ToString()));
+                        lblMessage.Visible = true;
+                        lblMessage.Text = "DataSet info " + Resources.TestSiteResources.UpdateMessage;
+                        Response.Redirect("DataSetEdit.aspx?mess=1" + "&datasetid=" + ViewState["datasetid"].ToString() + "&matchid=" + ViewState["matchid"].ToString(), false);
                          
-                        }
-                        else
-                        {
-                            lblMessage.Visible = true;
-                            lblMessage.Text = "DataSet info " + ' ' + Resources.TestSiteResources.SavedMessage;
-                            Response.Redirect("DataSetManagement.aspx?matchid=" + ViewState["matchid"].ToString(), false);
-                        }
+                    }
+                    else
+                    {
+                        lblMessage.Visible = true;
+                        lblMessage.Text = "DataSet info " + ' ' + Resources.TestSiteResources.SavedMessage;
+                        Response.Redirect("DataSetManagement.aspx?matchid=" + ViewState["matchid"].ToString(), false);
+                    }
                 }
                 catch (Exception )
                 {

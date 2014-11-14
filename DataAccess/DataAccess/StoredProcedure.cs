@@ -84,7 +84,13 @@ namespace DataAccess
             sp_GetMatchPlayLog,
             sp_GetMatchDataSet_Player,
             sp_GetGames_Player,
-            sp_GetGamesPlayLog
+            sp_GetGamesPlayLog,
+            sp_GetContestPositions,
+            sp_GetContestList,
+            sp_GetContestLeaderBoard,
+            sp_GetUsersInfoByID,
+            sp_GetContestPlayerLeaderBoard,
+            sp_MatchLevels
         }
         public enum Insert
         {
@@ -126,7 +132,13 @@ namespace DataAccess
             sp_InsertDataSet,
             sp_InsertDataSetLevels,
             sp_InsertMatchPlayLog,
-            sp_InsertMatchScore
+            sp_InsertMatchScore,
+            sp_InsertContestPosition,
+            sp_InsertMatchLevels
+        }
+        public enum Duplicate
+        {
+            sp_DuplicateContest
         }
         public enum Delete
         {
@@ -149,7 +161,10 @@ namespace DataAccess
             sp_DeleteDataElement,
             sp_DeleteDataSet,
             sp_DeleteDataSetLevel,
-            sp_DeleteMatchUserScore
+            sp_DeleteMatchUserScore,
+            sp_DeleteContest,
+            sp_DeleteContestPosition,
+            sp_DeleteMatchLevels
         }
         public enum Update
         {

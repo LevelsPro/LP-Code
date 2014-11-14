@@ -11,6 +11,7 @@ using LevelsPro.App_Code;
 using BusinessLogic.Update;
 using LevelsPro.Util;
 using log4net;
+using System.Web.UI.HtmlControls;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -18,10 +19,11 @@ namespace LevelsPro.PlayerPanel
     {
         private static string pageURL;
         private ILog log;
+        public static DataSet dsPlayer = new DataSet();           
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -32,22 +34,58 @@ namespace LevelsPro.PlayerPanel
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
                 
-                if (Session["userid"] != null && Session["userid"].ToString() != "")
+                if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
                 {
-                    try
-                    {
-                        ViewProfile.LoadData();
-                    }
-                    catch (Exception exp)
-                    {
-                        throw exp;
-                    }
-                    lblName.Text = Session["displayname"].ToString() + " - Contest";
-                }
+                    ViewState["userid"] = Request.QueryString["userid"];
 
-                if (Session["ContestID"] != null)
+                    ViewProfile.LoadData(ViewState["userid"].ToString());                    
+
+                    if (Session["ContestID"] != null)
+                    {
+                        Load_ContestDetails(Convert.ToInt32(Session["ContestID"]), ViewState["userid"].ToString());
+                    }
+                }
+                else 
                 {
-                    Load_ContestDetails(Convert.ToInt32(Session["ContestID"]));
+                    if (Session["userid"] != null && Session["userid"].ToString() != "")
+                    {
+                        try
+                        {
+                            ViewProfile.LoadData(Session["userid"].ToString());
+                        }
+                        catch (Exception exp)
+                        {
+                            throw exp;
+                        }                        
+
+                        if (Session["ContestID"] != null)
+                        {
+                            Load_ContestDetails(Convert.ToInt32(Session["ContestID"]), Session["userid"].ToString());
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
+                {
+                    ViewState["userid"] = Request.QueryString["userid"];
+
+                    ViewProfile.LoadData(ViewState["userid"].ToString());
+                }
+                else
+                {
+                    if (Session["userid"] != null && Session["userid"].ToString() != "")
+                    {
+                        try
+                        {
+                            ViewProfile.LoadData(Session["userid"].ToString());
+                        }
+                        catch (Exception exp)
+                        {
+                            throw exp;
+                        }
+                    }
                 }
             }
             ExceptionUtility.CheckForErrorMessage(Session);
@@ -70,38 +108,48 @@ namespace LevelsPro.PlayerPanel
             Server.ClearError();
         }
 
-        public void Load_ContestDetails(int ContestID)
+        public void Load_ContestDetails(int ContestID, string userid = "", string where = "")
         {
 
-            DataSet ds = new DataSet();
-            Contest _contest = new Contest();
-            PlayerContestViewDetailBLL contest = new PlayerContestViewDetailBLL();
+            ContestPlayerLeaderBoardViewBLL leaderboard = new ContestPlayerLeaderBoardViewBLL();
+            Common.Contest _contest = new Contest();
+
             _contest.ContestID = ContestID;
-            contest.Contest = _contest;
-            contest.Invoke();
-            ds = contest.ResultSet;
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
-            {
-                imgContestImage.ImageUrl = "~/view-file.aspx?contestid=" + ContestID;
-                lblContestName.InnerText = ds.Tables[0].Rows[0]["Contest_Name"].ToString();
-                lblContestEndDate.InnerText = Convert.ToDateTime(ds.Tables[0].Rows[0]["Contest_EndDate"]).ToString("MMMM dd, yyyy");
-                ltContestDescription.Text = ds.Tables[0].Rows[0]["Contest_Descp"].ToString();
-                
-            }
+            _contest.UserID = Convert.ToInt32(userid);
 
-            DataSet dsPointsTable = new DataSet();
-            Contest _contestid = new Contest();
-            ContestPlayersScoreBLL contestplayerscore = new ContestPlayersScoreBLL();
-            _contestid.ContestID = ContestID;
-            contestplayerscore.Contest = _contestid;
-            contestplayerscore.Invoke();
-            dsPointsTable = contestplayerscore.ResultSet;
-            if (dsPointsTable != null && dsPointsTable.Tables[0].Rows.Count > 0)
-            {
-                gvPointsTable.DataSource = dsPointsTable;
-                gvPointsTable.DataBind();
-            }
+            //_contest.Where = " WHERE y.ContestID = " + Session["ContestID"].ToString();            
 
+            leaderboard.ContestLeaderBoard = _contest;
+            try
+            {
+                leaderboard.Invoke();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            dsPlayer = leaderboard.ResultSet;
+            DataView dvPlayer = leaderboard.ResultSet.Tables[0].DefaultView;
+
+            if ((ViewState["SortItem"] != null) && (ViewState["SortItem"].ToString() != ""))
+            {
+                dvPlayer.Sort = ViewState["SortItem"].ToString();
+            }
+            else 
+            {
+                dvPlayer.Sort = "PositionClear";
+            }            
+
+            if (dvPlayer != null && dvPlayer.ToTable().Rows.Count > 0)
+            {
+                dlPlayers.DataSource = dvPlayer;
+                dlPlayers.DataBind();
+            }
+            else
+            {
+                dlPlayers.DataSource = null;
+                dlPlayers.DataBind();
+            }
         }
 
         protected void gvPointsTable_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -153,6 +201,57 @@ namespace LevelsPro.PlayerPanel
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
-    }
 
+        protected void ddlSortBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var sortOrder = "ASC";
+            if (ddlSortBy.SelectedValue == "Score") 
+            {
+                sortOrder = "DESC";
+            }
+
+            ViewState["SortItem"] = ddlSortBy.SelectedValue + " " + sortOrder;
+
+            if (ViewState["userid"] != null && ViewState["userid"].ToString() != "")
+            {
+                if (Session["ContestID"] != null)
+                {
+                    Load_ContestDetails(Convert.ToInt32(Session["ContestID"]), ViewState["userid"].ToString());
+                }
+            }
+            else 
+            {
+                if (Session["ContestID"] != null)
+                {
+                    Load_ContestDetails(Convert.ToInt32(Session["ContestID"]));
+                }
+            }            
+        }
+
+        protected void dlPlayers_ItemCommand(object source, DataListCommandEventArgs e)
+        {
+            
+        }
+
+        protected void dlPlayers_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            Label lbl = (Label)e.Item.FindControl("lblUName");
+            if (lbl.Text == Session["CurrectName"].ToString())
+            {
+
+                HtmlGenericControl container1 = (HtmlGenericControl)e.Item.FindControl("itemContainer");
+                
+                container1.Attributes.Remove("class");
+                container1.Attributes.Add("class", "level-cont-grey level-cont-green-selected");
+            }
+        }
+
+        protected void dlPlayers_ItemCommand1(object source, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "LoadPlayer")
+            {
+                Response.Redirect("ContestDetails.aspx?userid=" + e.CommandArgument.ToString());
+            }
+        }
+    }
 }

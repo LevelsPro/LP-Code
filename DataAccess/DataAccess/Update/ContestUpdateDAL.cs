@@ -48,15 +48,12 @@ namespace DataAccess.Update
         public void Build()
         {
             MySqlParameter[] parameters = {new MySqlParameter("?p_ContestID",Contest.ContestID),
-                                            new MySqlParameter("?p_ContestName",Contest.ContestName),
-                                          new MySqlParameter("?p_RoleID",Contest.RoleID),
-                                          new MySqlParameter("?p_Active",Contest.Active),
-                                          new MySqlParameter("?p_ContestGraphics",Contest.ContestGraphics),
-                                          new MySqlParameter("?p_ContestGraphicsExt",Contest.ContestGraphicsExt),
-                                          new MySqlParameter("?p_ContestStartDate",Contest.ContestStartDate),
-                                          new MySqlParameter("?p_ContestEndDate",Contest.ContestEndDate),
-                                          new MySqlParameter("?p_Site_ID",Contest.SiteID),
-                                          new MySqlParameter("?p_KPIID",Contest.KPIID)};
+                                            new MySqlParameter("?p_ContestName",Contest.ContestName),                                          
+                                          new MySqlParameter("?p_FromDate",Contest.FromDate),
+                                          new MySqlParameter("?p_ToDate",Contest.ToDate),
+                                          new MySqlParameter("?p_KPIID",Contest.KPIID),
+                                          new MySqlParameter("?p_SiteID", Contest.SiteID),
+                                          new MySqlParameter("?p_RoleID", Contest.RoleID)};
             Parameters = parameters;
         }
         public MySqlParameter[] Parameters

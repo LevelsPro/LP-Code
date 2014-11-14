@@ -9,7 +9,7 @@
 #scrollbar1 .admin-prog { width:500px !important; height: 370px; overflow: hidden; position: relative; }
 #scrollbar1 .progadmin { width:542px !important; height: 525px !important; overflow: hidden; position: relative; }
 #scrollbar1 .progadminkpi { width:542px !important; height: 500px !important; overflow: hidden; position: relative; }
-#scrollbar1 .progadminquiz, #scrollbar1 .progadminmatch { width:542px !important; height: 480px !important; overflow: hidden; position: relative; }
+#scrollbar1 .progadminquiz, #scrollbar1 .progadminmatch, #scrollbar1 .progadmincontest { width:542px !important; height: 480px !important; overflow: hidden; position: relative; }
 
 
 

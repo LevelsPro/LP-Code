@@ -23,6 +23,8 @@
         }
     }
 
+    
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -123,38 +125,6 @@
             <div class="strip">
                 <asp:Label ID="lblDataElementDefinition" runat="server" class="edit-leftfull" Text="<%$ Resources:TestSiteResources, DataElementDefinition %>"></asp:Label>
                 <div class="overview">
-                    <%--<asp:DataList ID="dlDataElements" runat="server" Width="100%" OnItemCommand="dlDataElements_ItemCommand">
-                        <HeaderTemplate>
-                            <ul class="header-list">
-                                <li><span>Element ID</span></li>
-                                <li><span>Element Name</span></li>
-                                <li><span>&nbsp;</span></li>
-                                <li><span>&nbsp;</span></li>
-                            </ul>
-                        </HeaderTemplate>
-                        <ItemTemplate>
-                            <div class="adminprog-cont">
-                                <ul>
-                                    <li>
-                                        <asp:Label ID="lblElementID" runat="server" Text='<%# Eval("ElementID") %>'></asp:Label>
-                                    </li>
-                                    <li>
-                                        <asp:Label ID="lblElementName" runat="server" Text='<%# Eval("ElementName") %>'></asp:Label>
-                                    </li>
-                                    <li>
-                                        <asp:LinkButton ID="lbtnEdit" runat="server" CommandName="EditElement" CommandArgument='<%# Eval("ElementID") %>'>
-                                            <span>edit</span>
-                                        </asp:LinkButton>
-                                    </li>
-                                    <li>
-                                        <asp:LinkButton ID="lbtnDelete" runat="server" CommandName="DeleteElement" CommandArgument='<%# Eval("ElementID") %>'>
-                                            <span>delete</span>
-                                        </asp:LinkButton>
-                                    </li>
-                                </ul>
-                            </div>
-                        </ItemTemplate>
-                    </asp:DataList>--%>
                     <asp:GridView ID="grdDataElements" AutoGenerateColumns="False" CssClass="fl" DataKeyNames="MatchID,ElementID,ElementName" runat="server" Width="564px">
                         <Columns>
                             <asp:TemplateField HeaderText="Element ID" HeaderStyle-HorizontalAlign="Center"
@@ -257,7 +227,6 @@
         </div>           
         <div  class="fl-wrapper img-r mt10 pr">
             <div class="r-image" >
-                <%--<asp:Image ID="imgMatch" runat="server" ImageUrl="~/Images/No_Image_Wide.png" width="284px" height="223px" />--%>
                 <img id="imgMatch" alt=""  src="<%= hdImage.Value %>" style="width: 284px; height: 223px"  />
                 <asp:HiddenField ID="hdImage" runat="server" Value="/Images/No_Image_Wide.png" />
             </div>
@@ -268,12 +237,63 @@
             <div class="clear">
             </div>
         </div>
-    </div>                                
-    <asp:Button ID="btnAddMatch" runat="server" class="edit-left" CssClass="green-btn admin-edit fr wa"
-        Text="<%$ Resources:TestSiteResources, AddMatch %>" ValidationGroup="Insertion" onclick="btnAddMatch_Click" />
-    &nbsp;
-    <asp:Button ID="btnCancel" runat="server" class="edit-left" CssClass="green-btn admin-edit fr mr10"
-        Text="<%$ Resources:TestSiteResources, Cancel %>" OnClick="btnCancel_Click" />
-    <div class="clear">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <div class="manager-cont mt10" id="scrollbar1">
+                    <div class="scrollbar" style="height: 450px;">
+                        <div class="track" style="height: 450px;">
+                            <div class="thumb" style="top: 0px; height: 52px;">
+                                <div class="end">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="viewport progadmin">
+                        <div class="overview" style="top: 0px;">
+                            <asp:DataList ID="dlRoles" runat="server" Width="100%" RepeatDirection="Vertical"
+                                RepeatColumns="1" OnItemDataBound="dlRoles_ItemDataBound">
+                                <HeaderTemplate>
+                                    <div class="l33p hem">
+                                        <asp:Label ID="lblimg" runat="server" Text="<%$ Resources:TestSiteResources, Role %>"></asp:Label>
+                                    </div>
+                                    <div class="r66p hem">
+                                        <asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources, Levels1 %>"></asp:Label>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <div class="l33p">
+                                        <asp:Literal ID="ltRoleID" runat="server" Text='<%# Eval("Role_ID") %>' Visible="false"></asp:Literal>
+                                        <asp:Literal ID="ltRole" runat="server" Text='<%# Eval("Role_Name") %>'></asp:Literal>
+                                    </div>
+                                    <div class="r66p">
+                                        <asp:DataList ID="dlLevels" runat="server" RepeatDirection="Horizontal" RepeatColumns="10"
+                                            OnItemCommand="dlLevels_ItemCommand">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="ltRoleID" runat="server" Text='<%# Eval("Role_ID") %>' Visible="false"></asp:Literal>
+                                                <asp:Button ID="btnLevels" runat="server" class="lvl-white" Text='<%# Eval("Level_Position") %>'
+                                                    CommandName="LevelSet" CommandArgument='<%# Eval("Level_ID") %>' />
+                                                </div>
+                                                <div class="clear">
+                                            </ItemTemplate>
+                                        </asp:DataList>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:DataList>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <asp:Button ID="btnAddMatch" runat="server" class="edit-left" CssClass="green-btn admin-edit fr wa"
+            Text="<%$ Resources:TestSiteResources, AddMatch %>" ValidationGroup="Insertion" onclick="btnAddMatch_Click" />
+        &nbsp;
+        <asp:Button ID="btnCancel" runat="server" class="edit-left" CssClass="green-btn admin-edit fr mr10"
+            Text="<%$ Resources:TestSiteResources, Cancel %>" OnClick="btnCancel_Click" />
+        <div class="clear">
+        </div>
     </div>
 </asp:Content>

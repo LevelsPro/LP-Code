@@ -13,39 +13,12 @@ namespace LevelsPro.PlayerPanel.UserControls {
     public partial class uc_Contests {
         
         /// <summary>
-        /// lblContests control.
+        /// lvViewContests control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblContests;
-        
-        /// <summary>
-        /// lblContestCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblContestCount;
-        
-        /// <summary>
-        /// lblContest control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblContest;
-        
-        /// <summary>
-        /// dlViewContests control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList dlViewContests;
+        protected global::System.Web.UI.WebControls.ListView lvViewContests;
     }
 }

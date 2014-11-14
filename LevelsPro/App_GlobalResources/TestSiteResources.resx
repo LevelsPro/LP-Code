@@ -1701,4 +1701,71 @@
     <value>View Correct Answers</value>
     <comment>ViewCorrectAnswers</comment>
   </data>
+  <data name="AddContest" xml:space="preserve">
+    <value>Add Contest</value>
+  </data>
+  <data name="ContestAwards" xml:space="preserve">
+    <value>Points &amp; Awards</value>
+  </data>
+  <data name="ContestName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditContest" xml:space="preserve">
+    <value>Edit Contest</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="AddPlace" xml:space="preserve">
+    <value>Add Place</value>
+  </data>
+  <data name="ContestParameters" xml:space="preserve">
+    <value>Contest Parameters</value>
+  </data>
+  <data name="CreateAContest" xml:space="preserve">
+    <value>Create A Contest</value>
+  </data>
+  <data name="CreateContest" xml:space="preserve">
+    <value>Create Contest</value>
+  </data>
+  <data name="NewContest" xml:space="preserve">
+    <value>New Contest</value>
+  </data>
+  <data name="RemovePlace" xml:space="preserve">
+    <value>Remove Place</value>
+  </data>
+  <data name="FPlace" xml:space="preserve">
+    <value>1st Place</value>
+  </data>
+  <data name="SPlace" xml:space="preserve">
+    <value>2nd Place</value>
+  </data>
+  <data name="TPlace" xml:space="preserve">
+    <value>3rd Place</value>
+  </data>
+  <data name="CompanyRanking" xml:space="preserve">
+    <value>Company Rank:</value>
+    <comment>CompanyRanking</comment>
+  </data>
+  <data name="StoreRanking" xml:space="preserve">
+    <value>Store Rank:</value>
+    <comment>StoreRanking</comment>
+  </data>
+  <data name="Place" xml:space="preserve">
+    <value>Place</value>
+    <comment>Place</comment>
+  </data>
+  <data name="ThisContest" xml:space="preserve">
+    <value>This Contest:</value>
+  </data>
+  <data name="Contests" xml:space="preserve">
+    <value>Contests</value>
+    <comment>Contest</comment>
+  </data>
+  <data name="LeaderBoards" xml:space="preserve">
+    <value>Leaderboards</value>
+  </data>
 </root>

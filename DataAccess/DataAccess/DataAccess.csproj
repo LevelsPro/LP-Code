@@ -78,6 +78,9 @@
     <Compile Include="DataBaseHelper.cs" />
     <Compile Include="Delete\AssignAwardDeleteDAL.cs" />
     <Compile Include="Delete\AwardImageDeleteDAL.cs" />
+    <Compile Include="Delete\ContestDeleteDAL.cs" />
+    <Compile Include="Delete\ContestPositionDeleteDAL.cs" />
+    <Compile Include="Delete\MatchLevelsDeleteDAL.cs" />
     <Compile Include="Delete\MatchScoreDeleteDAL.cs" />
     <Compile Include="Delete\DataSetLevelDeleteDAL.cs" />
     <Compile Include="Delete\DataSetDeleteDAL.cs" />
@@ -103,6 +106,9 @@
     <Compile Include="Insert\CategoryInsertDAL.cs" />
     <Compile Include="Insert\ContestInsertDAL.cs" />
     <Compile Include="Insert\BulkInsertMatchDataSetsDAL.cs" />
+    <Compile Include="Insert\ContestPositionInsertDAL.cs" />
+    <Compile Include="Duplicate\ContestDuplicateDAL.cs" />
+    <Compile Include="Insert\MatchLevelsInsertDAL.cs" />
     <Compile Include="Insert\MatchScoreInsertDAL.cs" />
     <Compile Include="Insert\MatchPlayLogDAL.cs" />
     <Compile Include="Insert\DataSetLevelsInsertDAL.cs" />
@@ -150,6 +156,12 @@
     <Compile Include="Select\CheckUserNameDAL.cs" />
     <Compile Include="Select\ContestPlayersScoreDAL.cs" />
     <Compile Include="Select\ContestViewDAL.cs" />
+    <Compile Include="Select\ContestPositionViewDAL.cs" />
+    <Compile Include="Select\ContestPositionListViewDAL.cs" />
+    <Compile Include="Select\ContestLeaderBoardViewDAL.cs" />
+    <Compile Include="Select\ContestPlayerLeaderBoardViewDAL.cs" />
+    <Compile Include="Select\MatchLevelsDAL.cs" />
+    <Compile Include="Select\UsersInfoByIDDAL.cs" />
     <Compile Include="Select\GetGamesPlayLogDAL.cs" />
     <Compile Include="Select\MatchViewDAL.cs" />
     <Compile Include="Select\PlayerGamesViewDAL.cs" />

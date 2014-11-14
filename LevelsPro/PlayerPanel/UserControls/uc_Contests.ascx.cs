@@ -27,7 +27,10 @@ namespace LevelsPro.PlayerPanel.UserControls
 
         protected void LoadData()
         {
-            PlayerContestViewBLL contest = new PlayerContestViewBLL();
+            ContestPositionListViewBLL contest = new ContestPositionListViewBLL();
+            Contest _contest = new Contest();
+            _contest.Where = " WHERE y.User_ID = " + Session["userid"].ToString();
+            contest.ContestPositionList = _contest;
             try
             {
                 contest.Invoke();
@@ -35,16 +38,15 @@ namespace LevelsPro.PlayerPanel.UserControls
             catch (Exception ex)
             {
             }
-            DataView dv = contest.ResultSet.Tables[0].DefaultView;
+            if (contest.ResultSet.Tables[0] != null && contest.ResultSet.Tables[0].Rows.Count > 0)
+            {
 
-            dv.RowFilter = "UserID=" + Convert.ToInt32(Session["userid"]);
-            int contest_count = dv.Count;
-            lblContestCount.InnerText = contest_count.ToString();
-            dlViewContests.DataSource = dv.ToTable();
-            dlViewContests.DataBind();
+                lvViewContests.DataSource = contest.ResultSet.Tables[0];
+                lvViewContests.DataBind();
+            }
         }
 
-        protected void dlViewContests_ItemCommand(object source, DataListCommandEventArgs e)
+        protected void lvViewContests_ItemCommand(object source, ListViewCommandEventArgs e)
         {
             int ContestID = Convert.ToInt32(e.CommandArgument);
             Session["ContestID"] = ContestID;
@@ -54,7 +56,7 @@ namespace LevelsPro.PlayerPanel.UserControls
         protected void dlViewContests_ItemDataBound(object sender, DataListItemEventArgs e)
         {
             //DataSet dsPointsTable = new DataSet();
-            Contest _contestid = new Contest();
+            /*Contest _contestid = new Contest();
             ContestPlayersScoreBLL contestplayerscore = new ContestPlayersScoreBLL();
             Label lblcontid = (Label)e.Item.FindControl("lblcontestid");
             _contestid.ContestID = Convert.ToInt32(lblcontid.Text);
@@ -68,7 +70,7 @@ namespace LevelsPro.PlayerPanel.UserControls
                 Label lbl = (Label)e.Item.FindControl("lblRank");
                 lbl.Text = dt.Rows[0]["contest_rank"].ToString();
 
-            }
+            }*/
         }
     }
 }

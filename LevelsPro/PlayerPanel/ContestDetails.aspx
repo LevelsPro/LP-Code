@@ -1,258 +1,130 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PlayerPanel/Player.master" AutoEventWireup="true"
     CodeBehind="ContestDetails.aspx.cs" Inherits="LevelsPro.PlayerPanel.ContestDetails" %>
-    <%@ Register TagPrefix="uc" TagName="Profile" Src="~/PlayerPanel/UserControls/uc_Profile.ascx" %>
+
+<%@ Register TagPrefix="uc" TagName="Contests" Src="~/PlayerPanel/UserControls/uc_Contests.ascx" %>
+<%@ Register TagPrefix="uc" TagName="Profile" Src="~/PlayerPanel/UserControls/uc_ContestUserProfile.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>Contests</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script type="text/javascript" src="Scripts/fontResizer.js"></script>
+    <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/website.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+
+        $.fn.digits = function () {
+            return this.each(function () {
+                $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            })
+        }
+
         $(document).ready(function () {
-            var faw = $('.filled-area').text();
-            $('.filled-area').css("width", faw);
-            //	$('.filled-area').slideRight();
+            $('#scrollbar1').tinyscrollbar();
+            $('#scrollbar2').tinyscrollbar({ axis: "x" });
+
+            $('.points-label').digits();
+
+
+            $('.green-wrapper').each(function () {
+                if ($(this).text().match(/^\s*$/) && !$(this).children().length>0) {
+                    $(this).hide();
+                }
+            });
+
         });
     </script>
-    <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="box top-b">
-        <%--<div class="green-btn btn fl">--%>
-        <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"
-            PostBackUrl="~/PlayerPanel/PlayerHome.aspx" CssClass="green-btn btn fl"></asp:Button><%--</div>--%>
-        <%--<div class="user-nt fl">--%>
-        <asp:Label ID="lblName" runat="server" CssClass="user-nt fl"></asp:Label><%--</div>--%>
-        <%--div class="green-btn btn fr">--%>
-        <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
-            CssClass="green-btn btn fr" OnClick="btnLogout_Click"></asp:Button><%--</div>--%>
+<div class="container">
+    <div class="top-b">
+        <div class="green-ar-wrapper fl home-btn">
+            <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"
+                PostBackUrl="~/PlayerPanel/PlayerHome.aspx" class="green-ar"></asp:Button>
+        </div>
+        <div class="user-nt"><span><%= Session["HeaderName"].ToString() %></span></div>
+        <div class="green-wrapper logout">
+            <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
+                class="green" OnClick="btnLogout_Click"></asp:Button>
+        </div>
         <div class="clear">
         </div>
     </div>
-     <uc:Profile ID="ViewProfile" runat="server" />
-    <div class="box brd mt10">
-        <div class="cc-h">
-           <asp:Label ID="lblContest" runat="server" Text="<%$ Resources:TestSiteResources, Contest %>"></asp:Label></div>
-        <div class="in-cont">
-            <asp:Image ID="imgContestImage" runat="server" Width="152" Height="96" class="fl" />
-            <%-- <img src='<%# "~/view-file.aspx?contestid=" + Eval("Contest_ID") %>' width="152"
-                height="96" class="fl" alt="" />--%>
-            <h2 class="int-heading fl">
-                <label id="lblContestName" runat="server">
-                </label>
-                <br />
-                <asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources, EndOn %>"></asp:Label>&nbsp;&nbsp;
-                <label id="lblContestEndDate" runat="server">
-                </label>
-            </h2>
-            
-          
-            <div class="clear">
+    <div class="leaderboard-container">
+        <uc:Profile ID="ViewProfile" runat="server"></uc:Profile>
+        <div class="body-container">
+            <asp:DropDownList ID="ddlSortBy" runat="server" CssClass="sort-filter" 
+                AutoPostBack="true" 
+                onselectedindexchanged="ddlSortBy_SelectedIndexChanged" style="display:none;">
+                <asp:ListItem Text="Sort By..." Value="0" Selected="True"></asp:ListItem>
+                <asp:ListItem Text="Position" Value="PositionClear" ></asp:ListItem>
+                <asp:ListItem Text="Name" Value="U_Name"></asp:ListItem>
+                <asp:ListItem Text="Points" Value="Score"></asp:ListItem>
+            </asp:DropDownList>
+            <div class="in-cont">
+                <div class="manager-cont" id="scrollbar1">
+                    <div class="scrollbar">
+                        <div class="track">
+                            <div class="thumb">
+                                <div class="end">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="viewport progadmin">
+                        <div class="overview">
+                            <asp:DataList ID="dlPlayers" runat="server" RepeatColumns="1" RepeatDirection="Vertical"
+                                Width="100%" onitemdatabound="dlPlayers_ItemDataBound" 
+                                onitemcommand="dlPlayers_ItemCommand1">
+                                <ItemTemplate>
+                                    <div class="<%#Eval("cssClass")%>">
+                                        <div id="itemContainer" runat="server" class="level-cont-grey">
+                                            <asp:LinkButton ID="lbtnPlayer" CommandName="LoadPlayer" CommandArgument='<%# Eval("User_ID") %>'
+                                            ForeColor="Black" runat="server">
+                                                <asp:Image ID="imgPlayer" runat="server" ImageUrl='<%# Eval("Player_Thumbnail").ToString().Trim() != "" ? ConfigurationManager.AppSettings["PlayersThumbPath"].ToString() + Eval("Player_Thumbnail") : "Images/imagesNo.jpeg"  %>' CssClass="lvl-img" Width="75px" Height="75px" />
+                                                <div class="lvl-desc fl">
+                                                <div class="strip">
+                                                    <div class="msg-r">
+                                                        <span class="st <%#Eval("cssClass")%>">
+                                                            <asp:Label ID="lblRank1" runat="server" Text='<%#Eval("Position")%>'></asp:Label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <asp:Label ID="lblUName" CssClass="lvl fl" runat="server" Text='<%#Eval("U_Name")%>'></asp:Label>
+                                                <div class="desc fl">
+                                                    <%#Eval("Role_Name")%>
+                                                    -
+                                                    <%#Eval("Site_Name")%>
+                                                </div>
+                                                <div class="lvl-points fl">
+                                                    <%#Eval("Score")%>
+                                                    <br/>
+                                                    <%#Eval("KPI_measure")%>
+                                                </div>
+                                            </div>
+                                                <div class="clear">
+                                                </div>
+                                            </asp:LinkButton>
+                                        </div>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:DataList>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="expl">
-                <asp:Literal ID="ltContestDescription" runat="server"></asp:Literal>
-                <%--Are you the Acme Inc. trivia champion? You have until July 1st to play the special
-                Acme quiz to find out. The highest scoring team member in the chain will win a great
-                prize as well as being crowned our Trivia King. There are also prizes for second
-                and third places. So go ahead and give it your best shot, and best of luck.--%></p>
-            <asp:GridView ID="gvPointsTable" runat="server" EmptyDataText="No Record Found."
-                AutoGenerateColumns="false" CssClass="grid" GridLines="None" Width="100%" OnRowDataBound="gvPointsTable_RowDataBound">
-                <Columns>
-                    <asp:TemplateField HeaderText="<%$ Resources:TestSiteResources, Rank %>" ItemStyle-Width="17%">
-                        <ItemTemplate>
-                            <asp:Image ID="imgbtnRank" runat="server" />
-                        </ItemTemplate>
-                        <ItemStyle HorizontalAlign="Center" />
-                    </asp:TemplateField>
-                    <asp:TemplateField ItemStyle-Width="4%">
-                        <ItemTemplate>
-                            <asp:Literal ID="ltsno" runat="server" Text='<%#Container.DataItemIndex+1 %>'></asp:Literal>
-                        </ItemTemplate>
-                        <ItemStyle HorizontalAlign="Center" />
-                    </asp:TemplateField>
-                    <asp:BoundField HeaderText="<%$ Resources:TestSiteResources, Player %>" DataField="U_FullName" HeaderStyle-HorizontalAlign="Left"
-                        ItemStyle-Width="52%" />
-                    <asp:BoundField HeaderText="<%$ Resources:TestSiteResources, Score %>" DataField="Score" ItemStyle-HorizontalAlign="Center"
-                        ItemStyle-Width="18%" />
-                    <asp:TemplateField ItemStyle-Width="9%">
-                        <ItemTemplate>
-                            <asp:Literal ID="ltend" runat="server" Text=''></asp:Literal>
-                        </ItemTemplate>
-                        <ItemStyle HorizontalAlign="Center" />
-                    </asp:TemplateField>
-                </Columns>
-                <RowStyle CssClass="even" />
-                <AlternatingRowStyle CssClass="odd" />
-            </asp:GridView>
-            <%-- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
-                <tr>
-                    <th width="17%">
-                        Rank
-                    </th>
-                    <th width="4%">
-                        &nbsp;
-                    </th>
-                    <th width="52%">
-                        Player
-                    </th>
-                    <th width="18%">
-                        Score
-                    </th>
-                    <th width="9%">
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr class="odd">
-                    <td align="center">
-                        <img src="images/rank-1.png" width="34" height="26" />
-                    </td>
-                    <td>
-                        1.
-                    </td>
-                    <td>
-                        Jason P.
-                    </td>
-                    <td>
-                        2,104
-                    </td>
-                    <td>
-                        <img src="images/up-arrow.png" width="10" height="10" />
-                        2
-                    </td>
-                </tr>
-                <tr class="even">
-                    <td align="center">
-                        <img src="images/rank-2.png" width="27" height="20" />
-                    </td>
-                    <td>
-                        2.
-                    </td>
-                    <td>
-                        Jackie T.
-                    </td>
-                    <td>
-                        1,990
-                    </td>
-                    <td>
-                        <img src="images/down-arrow.png" width="10" height="10" />
-                        1
-                    </td>
-                </tr>
-                <tr class="odd">
-                    <td align="center">
-                        <img src="images/rank-3.png" width="21" height="16" />
-                    </td>
-                    <td>
-                        3.
-                    </td>
-                    <td>
-                        Sarah L.
-                    </td>
-                    <td>
-                        1,800
-                    </td>
-                    <td>
-                        <img src="images/down-arrow.png" width="10" height="10" />
-                        1
-                    </td>
-                </tr>
-                <tr align="center" class="even">
-                    <td>
-                        &nbsp;
-                    </td>
-                    <td>
-                        4.
-                    </td>
-                    <td align="left">
-                        Paul P.
-                    </td>
-                    <td>
-                        1,754
-                    </td>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr class="odd">
-                    <td align="center">
-                        &nbsp;
-                    </td>
-                    <td>
-                        5.
-                    </td>
-                    <td>
-                        Peggy S.
-                    </td>
-                    <td>
-                        &nbsp;
-                    </td>
-                    <td>
-                        1,650
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td colspan="100%" height="42">
-                        <img src="images/dots.png" width="4" height="24" />
-                    </td>
-                </tr>
-                <tr class="odd">
-                    <td align="center">
-                        &nbsp;
-                    </td>
-                    <td>
-                        9.
-                    </td>
-                    <td>
-                        Jason P.
-                    </td>
-                    <td>
-                        2,104
-                    </td>
-                    <td>
-                        <img src="images/up-arrow.png" width="10" height="10" />
-                        2
-                    </td>
-                </tr>
-                <tr class="even">
-                    <td align="center">
-                        &nbsp;
-                    </td>
-                    <td>
-                        10.
-                    </td>
-                    <td>
-                        Jackie T.
-                    </td>
-                    <td>
-                        1,990
-                    </td>
-                    <td>
-                        <img src="images/down-arrow.png" width="10" height="10" />
-                        1
-                    </td>
-                </tr>
-                <tr class="odd">
-                    <td align="center">
-                        &nbsp;
-                    </td>
-                    <td>
-                        11.
-                    </td>
-                    <td>
-                        Sarah L.
-                    </td>
-                    <td>
-                        1,800
-                    </td>
-                    <td>
-                        <img src="images/down-arrow.png" width="10" height="10" />
-                        1
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td colspan="100%" height="42">
-                        <img src="images/dots.png" width="4" height="24" />
-                    </td>
-                </tr>
-            </table>--%>
+        </div>
+        <div class="contest-footer-container" id="scrollbar2">
+            <asp:Label ID="lblContestLbl" CssClass="contest-title" runat="server" Text="<%$ Resources:TestSiteResources, Contests %>"></asp:Label>
+            <div class="viewport">
+                <uc:Contests ID="Contest1" runat="server" />
+            </div>
+            <div class="scrollbar">
+                <div class="track">
+                    <div class="thumb">
+                        <div class="end">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </asp:Content>
