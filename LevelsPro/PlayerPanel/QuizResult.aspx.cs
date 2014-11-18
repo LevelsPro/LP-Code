@@ -12,6 +12,7 @@ using LevelsPro.App_Code;
 using Common;
 using LevelsPro.Util;
 using log4net;
+using BusinessLogic.Insert;
 
 namespace LevelsPro.PlayerPanel
 {
@@ -91,8 +92,24 @@ namespace LevelsPro.PlayerPanel
             
             }
 
+
             dlResult.DataSource = dtQuiz;
             dlResult.DataBind();
+
+            _quiz.UserID = Convert.ToInt32(Session["userid"]);
+            _quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
+            _quiz.Total = Convert.ToInt32(lblTotal.Text);
+
+            QuizResultInsertBLL QuizResult = new QuizResultInsertBLL();
+            try
+            {
+                QuizResult.Quiz = _quiz;
+                QuizResult.Invoke();
+            }
+            catch(Exception ex)
+            {
+            }
+
         }
         protected void btnHome_Click(object sender, System.EventArgs e)
         {

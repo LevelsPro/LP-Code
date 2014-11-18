@@ -13,6 +13,7 @@ namespace Common
         #region Private Members
 
         SqlInt32 _quizid;
+        SqlInt32 _total;
         SqlString _quizname;
         SqlInt32 _noofquestions;
         SqlInt32 _timeperquestion;
@@ -64,6 +65,12 @@ namespace Common
         {
             get { return _quizid; }
             set { _quizid = value; }
+        }
+
+        public SqlInt32 Total
+        {
+            get { return _total; }
+            set { _total = value; }
         }
 
         public SqlInt32 KPIID
