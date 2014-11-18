@@ -22,47 +22,45 @@ namespace LevelsPro.PlayerPanel
 {
     public partial class QuizPlay : AuthorizedPage
     {
-        static int counter = 0;
-        static int cntans1 = 0;
-        static int cntans2 = 0;
-        static int cntans3 = 0;
-        static int cntans4 = 0;
-        static int check = 0;
-        static int QuestionLimit = 0;
-        public static int[] RandomArray;
+        
+        
+        
+        
+        
+        public  int[] RandomArray;
         static String Optselected = "";
         static DataTable dt_Questions;
         static DataTable dt = new DataTable();
        
         public Random a = new Random(System.DateTime.Now.Ticks.GetHashCode());
         public List<int> randomList = new List<int>();
-        public static int MyNumber = 0;
-        public static bool ReduceOption1 = false;
-        public static bool ReduceOption2 = false;
-        public static bool ReduceOption3 = false;
-        public static bool ReduceOption4 = false;
-        public bool QuizPlayLogEntry = false;
-        public static int NumberofQuestions;
-        public static DataSet dsLifeLine;
-        public static int ReduceChoicesCounter=0;
-        public static int ReplaceQuestionCounter = 0;
-        public static int AddSecondsCounter = 0;
+        public  int MyNumber = 0;
+        public  bool ReduceOption1 = false;
+        public  bool ReduceOption2 = false;
+        public  bool ReduceOption3 = false;
+        public  bool ReduceOption4 = false;
+        public  bool QuizPlayLogEntry = false;
+        public  int NumberofQuestions;
+        public  DataSet dsLifeLine;
+        public  int ReduceChoicesCounter=0;
+        public  int ReplaceQuestionCounter = 0;
+        public  int AddSecondsCounter = 0;
         private int checkSeconds = 0;
-        private static int CurrenLevel;
-        private static int LinkedKPIID;
-        private static int TotalPlayerScore;
+        private int CurrenLevel;
+        private int LinkedKPIID;
+        private int TotalPlayerScore;
         private Common.User user = new Common.User();
         //
-        static int counters = 0;
-        static int timeSec = 0;//int.Parse(lblTimeQuestion.Text);
-        static Decimal score = 0;//int.Parse(ltScore.Text);
-        static int deduction = 0;//int.Parse(hdDeductionTime.Value);
+        public int counters = 0;
+        public int timeSec = 0;//int.Parse(lblTimeQuestion.Text);
+        public Decimal score = 0;//int.Parse(ltScore.Text);
+        public int deduction = 0;//int.Parse(hdDeductionTime.Value);
         public DataView dvLog;
         public DataSet dtLog;
-        static int sec = 0;
-        static Decimal scoreTemp = 0;
-        static Decimal values = 0;
-        static bool PlayAvailable = false;
+        public int sec = 0;
+        public Decimal scoreTemp = 0;
+        public Decimal values = 0;
+        
         private static string pageURL;
         private ILog log;
         //
@@ -73,22 +71,31 @@ namespace LevelsPro.PlayerPanel
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            ViewState["counter"] = 0;
+            ViewState["cntans1"] = 0;
+            ViewState["cntans2"] = 0;
+            ViewState["cntans3"] = 0;
+            ViewState["cntans4"] = 0;
+            ViewState["check"] = 0;
+            ViewState["QuestionLimit"] = 0;
+            ViewState["PlayAvailable"] = false;
+
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!(Page.IsPostBack))
             {
 
                     System.Uri url = Request.Url;
                     pageURL = url.AbsolutePath.ToString();
-                    
-                    cntans1 = 0;
-                    cntans2 = 0;
-                    cntans3 = 0;
-                    cntans4 = 0;
-                    counter = 0;
+
+                    ViewState["cntans1"] = 0;
+                    ViewState["cntans2"] = 0;
+                    ViewState["cntans3"] = 0;
+                    ViewState["cntans4"] = 0;
+                    ViewState["counter"] = 0;
                     dt = new DataTable();
                     dt_Questions = new DataTable();
                     ltScore.Text = "0";
-                    check = 0;
+                    ViewState["check"] = 0;
                     checkSeconds = 0;
                     try
                     {
@@ -98,7 +105,7 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw exp;
                     }
-                    if (PlayAvailable.Equals(true))
+                    if (ViewState["PlayAvailable"].Equals(true))
                     {
                         ReduceChoicesCounter = 0;
                         ReplaceQuestionCounter = 0;
@@ -110,9 +117,9 @@ namespace LevelsPro.PlayerPanel
                         ReduceOption2 = false;
                         ReduceOption3 = false;
                         ReduceOption4 = false;
-                        
 
-                        ltlQuestionNumber.Text = "Question # " + (counter + 1).ToString() + " of " + QuestionLimit.ToString(); // need to look into this
+
+                        ltlQuestionNumber.Text = "Question # " + (Int32.Parse(ViewState["counter"].ToString()) + 1).ToString() + " of " + ViewState["QuestionLimit"].ToString(); // need to look into this
 
                         QuizScoreDeleteBLL quizscore = new QuizScoreDeleteBLL();
                         Quiz _quiz = new Quiz();
@@ -266,22 +273,22 @@ namespace LevelsPro.PlayerPanel
                         {
                             if (Playcount >= Convert.ToInt32(dt.Rows[0]["LimitGame"]))
                             {
-                                PlayAvailable = false;
+                                ViewState["PlayAvailable"] = false;
                             }
                             else
                             {
-                                PlayAvailable = true;
+                                ViewState["PlayAvailable"] = true;
 
                             }
 
                         }
                         else
                         {
-                            PlayAvailable = true;
+                            ViewState["PlayAvailable"] = true;
                         }
 
                     }
-                    if (PlayAvailable.Equals(true))
+                    if (ViewState["PlayAvailable"].Equals(true))
                     {
                         DataTable dtQuizPoints = new DataTable();
                         dvQuizPoints.RowFilter = "UserID = " + Convert.ToInt32(Session["userid"]) + " AND QuizId = " + Convert.ToInt32(Request.QueryString["quizid"]);
@@ -315,52 +322,52 @@ namespace LevelsPro.PlayerPanel
 
                                 if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
                                 {
-                                    QuestionLimit = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
+                                    ViewState["QuestionLimit"] = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
                                 }
                                 else
                                 {
-                                    QuestionLimit = dt.Rows.Count;
+                                    ViewState["QuestionLimit"] = dt.Rows.Count;
                                 }
 
                                 RandomQuestionMaking();
 
-                                if (counter < QuestionLimit)
+                                if (Int32.Parse(ViewState["counter"].ToString()) < Int32.Parse(ViewState["QuestionLimit"].ToString()))
                                 {
                                     NewNumber();
-                                    ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
+                                    ltQuestion.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionText"].ToString();
                                     if (MyNumber == 1)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
                                     }
 
                                     else if (MyNumber == 2)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                                     }
 
                                     else if (MyNumber == 3)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
                                     }
 
                                     else if (MyNumber == 4)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                                     }
-                                    lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
-                                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
+                                    lblExplain.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionExplanation"].ToString();
+                                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionImage"].ToString();
                                 }
                                
                             }
@@ -400,53 +407,53 @@ namespace LevelsPro.PlayerPanel
                             {
                                 if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
                                 {
-                                    QuestionLimit = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
+                                    ViewState["QuestionLimit"] = Convert.ToInt32(dt.Rows[0]["NoQuestions"]);
                                 }
                                 else
                                 {
-                                    QuestionLimit = dt.Rows.Count;
+                                    ViewState["QuestionLimit"] = dt.Rows.Count;
                                 }
                                 RandomQuestionMaking();
 
 
 
-                                if (counter < QuestionLimit)
+                                if (Int32.Parse(ViewState["counter"].ToString()) < Int32.Parse(ViewState["QuestionLimit"].ToString()))
                                 {
                                     NewNumber();
-                                    ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
+                                    ltQuestion.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionText"].ToString();
                                     if (MyNumber == 1)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
                                     }
 
                                     else if (MyNumber == 2)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                                     }
 
                                     else if (MyNumber == 3)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
                                     }
 
                                     else if (MyNumber == 4)
                                     {
-                                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                                     }
-                                    lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
-                                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
+                                    lblExplain.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionExplanation"].ToString();
+                                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionImage"].ToString();
                                 }
                                
                             }
@@ -454,9 +461,9 @@ namespace LevelsPro.PlayerPanel
                         //by atizaz//
                         if (dt != null && dt.Rows.Count > 0)
                         {
-                            lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                            ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                            hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
+                            lblTimeQuestion.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["TimeQuestion"].ToString();
+                            ltScore.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionPoints"].ToString();
+                            hdDeductionTime.Value = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["DeductionTime"].ToString();
                             //
                             counters = 0;
                             scoreTemp = 0;
@@ -504,7 +511,7 @@ namespace LevelsPro.PlayerPanel
 
         public void Next()
         {
-            if (check == 1)
+            if (Int32.Parse(ViewState["check"].ToString()) == 1)
             {
 
 
@@ -515,12 +522,12 @@ namespace LevelsPro.PlayerPanel
                         ReduceChoices.Visible = true;
                         ReplaceQuestion.Visible = true;
                         explain.Visible = false;
-                        counter = 0;
-                        check = 0;
-                        cntans1 = 0;
-                        cntans2 = 0;
-                        cntans3 = 0;
-                        cntans4 = 0;
+                        ViewState["counter"] = 0;
+                        ViewState["check"] = 0;
+                        ViewState["cntans1"] = 0;
+                        ViewState["cntans2"] = 0;
+                        ViewState["cntans3"] = 0;
+                        ViewState["cntans4"] = 0;
                         ReduceOption1 = false;
                         ReduceOption2 = false;
                         ReduceOption3 = false;
@@ -537,9 +544,9 @@ namespace LevelsPro.PlayerPanel
                 ReduceChoices.Visible = true;
                 ReplaceQuestion.Visible = true;
 
-                counter = counter + 1;
-                ltlQuestionNumber.Text = "Question # " + (counter + 1).ToString() + " of " + QuestionLimit.ToString();
-                if (counter < QuestionLimit - 1)
+                ViewState["counter"] = Int32.Parse(ViewState["counter"].ToString()) + 1;
+                ltlQuestionNumber.Text = "Question # " + (Int32.Parse(ViewState["counter"].ToString()) + 1).ToString() + " of " + ViewState["QuestionLimit"].ToString();
+                if (Int32.Parse(ViewState["counter"].ToString()) < Int32.Parse(ViewState["QuestionLimit"].ToString()) - 1)
                 {
 
                     btnAnswer1.OnClientClick = "return true;";
@@ -548,46 +555,46 @@ namespace LevelsPro.PlayerPanel
                     btnAnswer4.OnClientClick = "return true;";
 
                     NewNumber();
-                    ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
+                    ltQuestion.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionText"].ToString();
                     if (MyNumber == 1)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
                     }
                     
                     else if (MyNumber == 2)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                     }
                     
                     else if (MyNumber == 3)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
                     }
 
                     else if (MyNumber == 4)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                     }
-                    
 
-                    lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
-                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
+
+                    lblExplain.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionExplanation"].ToString();
+                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionImage"].ToString();
                    
 
                 }
-                else if (counter < QuestionLimit)
+                else if (Int32.Parse(ViewState["counter"].ToString()) < Int32.Parse(ViewState["QuestionLimit"].ToString()))
                 {
                     btnAnswer1.OnClientClick = "return true;";
                     btnAnswer2.OnClientClick = "return true;";
@@ -598,54 +605,54 @@ namespace LevelsPro.PlayerPanel
                     
                    
                     NewNumber();
-                    ltQuestion.Text = dt.Rows[RandomArray[counter]]["QuestionText"].ToString();
+                    ltQuestion.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionText"].ToString();
                     if (MyNumber == 1)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
                     }
 
                     else if (MyNumber == 2)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                     }
 
                     else if (MyNumber == 3)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
                     }
 
                     else if (MyNumber == 4)
                     {
-                        btnAnswer1.Text = dt.Rows[RandomArray[counter]]["Answer1"].ToString();
-                        btnAnswer2.Text = dt.Rows[RandomArray[counter]]["Answer4"].ToString();
-                        btnAnswer3.Text = dt.Rows[RandomArray[counter]]["Answer2"].ToString();
-                        btnAnswer4.Text = dt.Rows[RandomArray[counter]]["Answer3"].ToString();
+                        btnAnswer1.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer1"].ToString();
+                        btnAnswer2.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer4"].ToString();
+                        btnAnswer3.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer2"].ToString();
+                        btnAnswer4.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["Answer3"].ToString();
                     }
-                   
-                    lblExplain.Text = dt.Rows[RandomArray[counter]]["QuestionExplanation"].ToString();
-                
-                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[counter]]["QuestionImage"].ToString();
-                   
-                    check = 1;
+
+                    lblExplain.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionExplanation"].ToString();
+
+                    imgQuestion.ImageUrl = "../" + ConfigurationSettings.AppSettings["QuestionPath"].ToString() + dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionImage"].ToString();
+
+                    ViewState["check"] = 1;
                 }
                 //by atizaz//
-                lblTimeQuestion.Text = dt.Rows[RandomArray[counter]]["TimeQuestion"].ToString();
-                ltScore.Text = dt.Rows[RandomArray[counter]]["QuestionPoints"].ToString();
-                hdDeductionTime.Value = dt.Rows[RandomArray[counter]]["DeductionTime"].ToString();
+                lblTimeQuestion.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["TimeQuestion"].ToString();
+                ltScore.Text = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionPoints"].ToString();
+                hdDeductionTime.Value = dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["DeductionTime"].ToString();
                 //
-                cntans1 = 0;
-                cntans2 = 0;
-                cntans3 = 0;
-                cntans4 = 0;
+                ViewState["cntans1"] = 0;
+                ViewState["cntans2"] = 0;
+                ViewState["cntans3"] = 0;
+                ViewState["cntans4"] = 0;
 
                 counters = 0;
                 scoreTemp = 0;
@@ -670,7 +677,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnAnswer1_Click(object sender, EventArgs e)
         {
-            if (cntans1 == 0)
+            if (Int32.Parse(ViewState["cntans1"].ToString()) == 0)
             {
                 btnAnswer1.Attributes["Class"] = "yellow option";
                 btnAnswer2.Attributes["Class"] = "qbtn option";
@@ -678,10 +685,10 @@ namespace LevelsPro.PlayerPanel
                 btnAnswer4.Attributes["Class"] = "qbtn option";
                 Optselected = "btnAnswer1";
                 btnCnfrm.Visible = true;
-                cntans1++;
-                cntans2 = 0;
-                cntans3 = 0;
-                cntans4 = 0;
+                ViewState["cntans1"] = Int32.Parse( ViewState["cntans1"].ToString()) + 1;
+                ViewState["cntans2"] = 0;
+                ViewState["cntans3"] = 0;
+                ViewState["cntans4"] = 0;
             }
             else
             { 
@@ -696,7 +703,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnAnswer2_Click(object sender, EventArgs e)
         {
-          if (cntans2 ==0)
+          if (Int32.Parse(ViewState["cntans2"].ToString()) ==0)
              {
                 btnAnswer2.Attributes["Class"] = "yellow option";
                 btnAnswer1.Attributes["Class"] = "qbtn option";
@@ -704,10 +711,10 @@ namespace LevelsPro.PlayerPanel
                 btnAnswer4.Attributes["Class"] = "qbtn option";
                 Optselected = "btnAnswer2";
                 btnCnfrm.Visible = true;
-                cntans2++;
-                cntans1 = 0;
-                cntans3 = 0;
-                cntans4 = 0;
+                ViewState["cntans2"] = Int32.Parse(ViewState["cntans2"].ToString()) + 1;
+                ViewState["cntans1"] = 0;
+                ViewState["cntans3"] = 0;
+                ViewState["cntans4"] = 0;
             }
           else
           {
@@ -722,7 +729,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnAnswer3_Click(object sender, EventArgs e)
         {
-          if(cntans3==0)
+          if(Int32.Parse(ViewState["cntans3"].ToString())==0)
             {
                 btnAnswer3.Attributes["Class"] = "yellow option";
                 btnAnswer1.Attributes["Class"] = "qbtn option";
@@ -730,10 +737,10 @@ namespace LevelsPro.PlayerPanel
                 btnAnswer4.Attributes["Class"] = "qbtn option";
                 Optselected = "btnAnswer3";
                 btnCnfrm.Visible = true;
-                cntans3++;
-                cntans1 = 0;
-                cntans2 = 0;
-                cntans4 = 0;
+                ViewState["cntans3"] = Int32.Parse(ViewState["cntans3"].ToString()) + 1;
+                ViewState["cntans1"] = 0;
+                ViewState["cntans2"] = 0;
+                ViewState["cntans4"] = 0;
             }
           else
             {
@@ -748,7 +755,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnAnswer4_Click(object sender, EventArgs e)
         {
-            if(cntans4 == 0)
+            if(Int32.Parse(ViewState["cntans4"].ToString()) == 0)
             {
                 btnAnswer4.Attributes["Class"] = "yellow option";
                 btnAnswer1.Attributes["Class"] = "qbtn option";
@@ -758,10 +765,10 @@ namespace LevelsPro.PlayerPanel
                 Optselected = "btnAnswer4";
 
                 btnCnfrm.Visible = true;
-                cntans4++;
-                cntans1 = 0;
-                cntans2 = 0;
-                cntans3 = 0;
+                ViewState["cntans4"] = Int32.Parse(ViewState["cntans4"].ToString()) + 1;
+                ViewState["cntans1"] = 0;
+                ViewState["cntans2"] = 0;
+                ViewState["cntans3"] = 0;
             }
             else
             {
@@ -796,7 +803,7 @@ namespace LevelsPro.PlayerPanel
                 Quiz _quiz = new Quiz();
                 _quiz.UserID = Convert.ToInt32(Session["userid"]);
                 _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                 _quiz.AchievedPoints = 0;
                 _quiz.Elapsed = 0;
                 _quiz.IsCorrect = 0;
@@ -812,7 +819,7 @@ namespace LevelsPro.PlayerPanel
                 }
 
 
-                if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer1.Attributes["class"] = "correct option";
                     btnAnswer2.Attributes["class"] = "disabled option";
@@ -820,21 +827,21 @@ namespace LevelsPro.PlayerPanel
                     btnAnswer4.Attributes["class"] = "disabled option";
                 
                 }
-                else if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                else if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer2.Attributes["class"] = "correct option";
                     btnAnswer1.Attributes["class"] = "disabled option";
                     btnAnswer3.Attributes["class"] = "disabled option";
                     btnAnswer4.Attributes["class"] = "disabled option";
                 }
-                else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer3.Attributes["class"] = "correct option";
                     btnAnswer1.Attributes["class"] = "disabled option";
                     btnAnswer2.Attributes["class"] = "disabled option";
                     btnAnswer4.Attributes["class"] = "disabled option";
                 }
-                else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer4.Attributes["class"] = "correct option";
                     btnAnswer1.Attributes["class"] = "disabled option";
@@ -847,14 +854,14 @@ namespace LevelsPro.PlayerPanel
             else if (Optselected.Equals("btnAnswer1"))
             {
                 #region Button 1 Logic
-                if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer1.Attributes["class"] = "correct option";
                     QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                     Quiz _quiz = new Quiz();
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                     ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
@@ -876,14 +883,14 @@ namespace LevelsPro.PlayerPanel
                 {
                     btnAnswer1.Attributes["class"] = "wrong option";
 
-                    if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer2.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -901,14 +908,14 @@ namespace LevelsPro.PlayerPanel
                         
                        
                     }
-                    else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer3.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -925,14 +932,14 @@ namespace LevelsPro.PlayerPanel
 
 
                     }
-                    else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer4.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -955,14 +962,14 @@ namespace LevelsPro.PlayerPanel
             else if (Optselected.Equals("btnAnswer2"))
             {
                 #region Button 2 Logic
-                if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer2.Attributes["class"] = "correct option";
                     QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                     Quiz _quiz = new Quiz();
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                     ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
@@ -982,14 +989,14 @@ namespace LevelsPro.PlayerPanel
                 else // for wrong answer
                 {
                     btnAnswer2.Attributes["class"] = "wrong option";
-                    if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer1.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1005,14 +1012,14 @@ namespace LevelsPro.PlayerPanel
                         }
                        
                     }
-                    else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer3.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1028,14 +1035,14 @@ namespace LevelsPro.PlayerPanel
                         }
                        
                     }
-                    else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer4.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1058,14 +1065,14 @@ namespace LevelsPro.PlayerPanel
             else if (Optselected.Equals("btnAnswer3"))
             {
                 #region Button 3 Logic
-                if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer3.Attributes["class"] = "correct option";
                     QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                     Quiz _quiz = new Quiz();
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                     ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
@@ -1085,14 +1092,14 @@ namespace LevelsPro.PlayerPanel
                 else // for wrong answer
                 {
                     btnAnswer3.Attributes["class"] = "wrong option";
-                    if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer2.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1108,14 +1115,14 @@ namespace LevelsPro.PlayerPanel
                         }
                        
                     }
-                    else if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer1.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1131,14 +1138,14 @@ namespace LevelsPro.PlayerPanel
                         }
                        
                     }
-                    else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer4.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1161,14 +1168,14 @@ namespace LevelsPro.PlayerPanel
             else if (Optselected.Equals("btnAnswer4"))
             {
                 #region Button 4 Logic
-                if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                 {
                     btnAnswer4.Attributes["class"] = "correct option";
                     QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                     Quiz _quiz = new Quiz();
                     _quiz.UserID = Convert.ToInt32(Session["userid"]);
                     _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                    _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                     ViewState["QuestionScore"] = Convert.ToInt32(ltScore.Text);
                     _quiz.AchievedPoints = Convert.ToInt32(ltScore.Text);
                     _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
@@ -1189,14 +1196,14 @@ namespace LevelsPro.PlayerPanel
                 {
                     btnAnswer4.Attributes["class"] = "wrong option";
 
-                    if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer2.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1212,14 +1219,14 @@ namespace LevelsPro.PlayerPanel
                         }
                        
                     }
-                    else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer3.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1235,14 +1242,14 @@ namespace LevelsPro.PlayerPanel
                         }
                       
                     }
-                    else if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"]))
+                    else if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"]))
                     {
                         btnAnswer1.Attributes["class"] = "correct option";
                         QuizScoreInsertBLL insertpoints = new QuizScoreInsertBLL();
                         Quiz _quiz = new Quiz();
                         _quiz.UserID = Convert.ToInt32(Session["userid"]);
                         _quiz.QuizID = Convert.ToInt32(Request.QueryString["quizid"]);
-                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[counter]]["QuestionID"]);
+                        _quiz.QuestionID = Convert.ToInt32(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["QuestionID"]);
                         _quiz.AchievedPoints = 0;
                         _quiz.Elapsed = Convert.ToInt32(lblTimeQuestion.Text);
                         _quiz.IsCorrect = 0;
@@ -1272,7 +1279,7 @@ namespace LevelsPro.PlayerPanel
             TimerQuestion.Enabled = false;
            
             #region QuizPlayLog Entry
-            if (counter == 0)
+            if (Int32.Parse(ViewState["counter"].ToString()) == 0)
             {
                 Common.Quiz _quiz = new Quiz();
                 _quiz.UserID = Convert.ToInt32(Session["userid"]);
@@ -1342,9 +1349,9 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnNext_Click(object sender, EventArgs e)
         {
-            if (QuestionLimit == 1)
+            if (Int32.Parse(ViewState["QuestionLimit"].ToString()) == 1)
             {
-                check = 1; 
+                ViewState["check"] = 1; 
             }
             btnAnswer1.Attributes["Class"] = "qbtn option";
             btnAnswer2.Attributes["Class"] = "qbtn option";
@@ -1749,7 +1756,7 @@ namespace LevelsPro.PlayerPanel
                     #region First Reduce Choice Logic
                     if (MyNumber.Equals(1))
                     {
-                        if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             btnAnswer1.OnClientClick = "return false;";
@@ -1760,7 +1767,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     else if (MyNumber.Equals(2))
                     {
-                        if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             btnAnswer2.OnClientClick = "return false;";
@@ -1772,7 +1779,7 @@ namespace LevelsPro.PlayerPanel
 
                     else if (MyNumber.Equals(3))
                     {
-                        if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             btnAnswer3.OnClientClick = "return false;";
@@ -1784,7 +1791,7 @@ namespace LevelsPro.PlayerPanel
 
                     else if (MyNumber.Equals(4))
                     {
-                        if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             btnAnswer4.OnClientClick = "return false;";
@@ -1803,7 +1810,7 @@ namespace LevelsPro.PlayerPanel
                     #region Second Reduce Choice Logic
                     if (MyNumber.Equals(1))
                     {
-                        if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer1.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             if (ReduceOption1 == false)
@@ -1816,7 +1823,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     else if (MyNumber.Equals(2))
                     {
-                        if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer2.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             if (ReduceOption2 == false)
@@ -1830,7 +1837,7 @@ namespace LevelsPro.PlayerPanel
 
                     else if (MyNumber.Equals(3))
                     {
-                        if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer3.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             if (ReduceOption3 == false)
@@ -1844,7 +1851,7 @@ namespace LevelsPro.PlayerPanel
 
                     else if (MyNumber.Equals(4))
                     {
-                        if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[counter]]["CorrectAnswer"].ToString())) { }
+                        if (btnAnswer4.Text.Equals(dt.Rows[RandomArray[Int32.Parse(ViewState["counter"].ToString())]]["CorrectAnswer"].ToString())) { }
                         else
                         {
                             if (ReduceOption1 == false)
@@ -1891,7 +1898,7 @@ namespace LevelsPro.PlayerPanel
             }
             else
             {
-                if (check == 1)
+                if (Int32.Parse(ViewState["check"].ToString()) == 1)
                 {
                     ReplaceQuestion.OnClientClick = "javascript:alert('You are at the last question of the quiz, you cannot use this Lifeline');";
                 }
@@ -1905,16 +1912,16 @@ namespace LevelsPro.PlayerPanel
                     {
                         if (dt.Rows.Count > Convert.ToInt32(dt.Rows[0]["NoQuestions"]))
                         {
-                            QuestionLimit = QuestionLimit + 1;
+                            ViewState["QuestionLimit"] = Int32.Parse(ViewState["QuestionLimit"].ToString()) + 1;
                         }
                         else
                         {
-                            QuestionLimit = dt.Rows.Count;
+                            ViewState["QuestionLimit"] = dt.Rows.Count;
                         }
                     }
-                    if (QuestionLimit == 1)
+                    if (Int32.Parse(ViewState["QuestionLimit"].ToString()) == 1)
                     {
-                        check = 1;
+                        ViewState["check"] = 1;
                         // btnNext.Text = "Done";
                     }
 
