@@ -54,7 +54,6 @@ namespace DataAccess.Insert
                                             new MySqlParameter("?p_KPIID",User.KPIID),
                                             new MySqlParameter("?p_Score",User.Score),
                                           new MySqlParameter("?p_Measure",User.Measure),
-                                          new MySqlParameter("?p_EntryDate",User.EntryDate),
                                           new MySqlParameter("?p_AwardID",User.AwardID)
                                           };
 

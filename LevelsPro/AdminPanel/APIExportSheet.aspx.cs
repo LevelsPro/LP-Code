@@ -448,6 +448,7 @@ namespace LevelsPro.AdminPanel
                         int KPIScore = Convert.ToInt32(gr.Cells[3].Text);
                         KPIText = KPIText.Trim();
 
+                        
                         for (int i = 0; i < dtTarget.Rows.Count; i++)
                         {
                             int TargetText = Convert.ToInt32(dtTarget.Rows[i]["Award_ID"].ToString());
@@ -480,7 +481,6 @@ namespace LevelsPro.AdminPanel
                             
                         }
 
-                        user.EntryDate = Convert.ToDateTime(gr.Cells[1].Text);
                         user.Measure = gr.Cells[4].Text;
                         score.User = user;
 
