@@ -90,6 +90,7 @@
     <Compile Include="Insert\MatchPlayLogBLL.cs" />
     <Compile Include="Insert\DataSetLevelsInsertBLL.cs" />
     <Compile Include="Insert\DataSetsInsertBLL.cs" />
+    <Compile Include="Insert\QuizResultInsertBLL..cs" />
     <Compile Include="Insert\RoundInsertBLL.cs" />
     <Compile Include="Insert\DataElementInsertBLL.cs" />
     <Compile Include="Insert\MatchInsertBLL.cs" />

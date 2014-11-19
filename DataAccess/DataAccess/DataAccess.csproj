@@ -113,6 +113,7 @@
     <Compile Include="Insert\MatchPlayLogDAL.cs" />
     <Compile Include="Insert\DataSetLevelsInsertDAL.cs" />
     <Compile Include="Insert\DataSetsInsertDAL.cs" />
+    <Compile Include="Insert\QuizResultInsertDAL.cs" />
     <Compile Include="Insert\RoundInsertDAL.cs" />
     <Compile Include="Insert\DataElementInsertDAL.cs" />
     <Compile Include="Insert\LifeLineInsertDAL.cs" />

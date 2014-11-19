@@ -39,7 +39,7 @@ namespace LevelsPro.PlayerPanel
         public  bool ReduceOption2 = false;
         public  bool ReduceOption3 = false;
         public  bool ReduceOption4 = false;
-        public  bool QuizPlayLogEntry = false;
+       
         public  int NumberofQuestions;
         public  DataSet dsLifeLine;
         public  int ReduceChoicesCounter=0;
@@ -79,6 +79,7 @@ namespace LevelsPro.PlayerPanel
             ViewState["check"] = 0;
             ViewState["QuestionLimit"] = 0;
             ViewState["PlayAvailable"] = false;
+            ViewState["QuizPlayLogEntry"] = false;
 
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!(Page.IsPostBack))
@@ -1299,7 +1300,7 @@ namespace LevelsPro.PlayerPanel
                     throw ex;
                 }
 
-                QuizPlayLogEntry = true;
+                ViewState["QuizPlayLogEntry"] = true;
             }
             #endregion
 
