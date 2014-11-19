@@ -26,6 +26,7 @@ namespace LevelsPro.PlayerPanel
         public DataView dv_New;
         public DataView dvLog;
         public DataSet dtLog;
+        public DataTable dtTopScores; //for User's best and TOp Score Logic
         public DataTable dtMandatoryQuizes; // for to check which quizes are mandatory .. and to highlight them
         public int TimeCheck_counter;
         private static string pageURL;
@@ -120,7 +121,9 @@ namespace LevelsPro.PlayerPanel
            
             dt_New = Games_Selection.ResultSet.Tables[1];
             dt = dv.ToTable();
-            
+
+            dtTopScores = Games_Selection.ResultSet.Tables[6];
+
             dt.Columns.Add("QuizTime", typeof(DateTime));
 
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -228,22 +231,29 @@ namespace LevelsPro.PlayerPanel
 
                 DataRow[] drTimeCheck = dvTimeCheck.ToTable().Select();
 
-                DataRow[] drs = dvSelect.ToTable().Select("QuizPoints = max(QuizPoints)");
+                
 
+                DataView UserScore = dtTopScores.DefaultView;
+                UserScore.RowFilter = "QuizID =" + ltQuizID.Text.Trim() + " AND UserID = " + Session["userid"].ToString();
+                DataRow[] drs = UserScore.ToTable().Select();
+                
                 if (drs.Length > 0)
                 {
-                    ltUserBest.Text = drs[0]["QuizPoints"].ToString();
+                    ltUserBest.Text = drs[0]["Total"].ToString();
                 }
 
                 DataView dvSelectTop = dt.DefaultView;
 
                 dvSelectTop.RowFilter = "QuizID =" + ltQuizID.Text.Trim();
 
-                DataRow[] drsTop = dvSelectTop.ToTable().Select("QuizPoints = max(QuizPoints)");
+                DataView TopScore = dtTopScores.DefaultView;
+                TopScore.RowFilter = "QuizID =" + ltQuizID.Text.Trim();
+
+                DataRow[] drsTop = TopScore.ToTable().Select("Total = max(Total)");
 
                 if (drsTop.Length > 0)
                 {
-                    ltTopScore.Text = drsTop[0]["QuizPoints"].ToString() + " " + drsTop[0]["FullName"].ToString();
+                    ltTopScore.Text = drsTop[0]["Total"].ToString() + " " + drsTop[0]["U_FirstName"].ToString() + " " + drsTop[0]["U_LastName"].ToString();
                 }
 
                

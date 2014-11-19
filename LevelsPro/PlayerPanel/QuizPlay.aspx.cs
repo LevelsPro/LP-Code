@@ -1687,6 +1687,7 @@ namespace LevelsPro.PlayerPanel
                 if (dtQuiz.Rows[0]["KPI_ID"].ToString().Equals("") || dtQuiz.Rows[0]["KPI_ID"].ToString().Equals(null)) { ViewState["LinkedKPIID"] = 0; }
                 else
                 {
+                    Session["LinkedKPIID"] = Convert.ToInt32(dtQuiz.Rows[0]["KPI_ID"]);
                     ViewState["LinkedKPIID"] = Convert.ToInt32(dtQuiz.Rows[0]["KPI_ID"]);
                     DataView dv_TargetScore = Quiz_Selection.ResultSet.Tables[5].DefaultView;
                     dv_TargetScore.RowFilter = "User_ID =" + Convert.ToInt32(Session["userid"]) + "AND Type_ID =" + Convert.ToInt32(ViewState["LinkedKPIID"]);

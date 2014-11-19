@@ -99,6 +99,7 @@ namespace LevelsPro.PlayerPanel
             _quiz.UserID = Convert.ToInt32(Session["userid"]);
             _quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
             _quiz.Total = Convert.ToInt32(lblTotal.Text);
+            _quiz.KPIID = Convert.ToInt32(Session["LinkedKPIID"].ToString());
 
             QuizResultInsertBLL QuizResult = new QuizResultInsertBLL();
             try

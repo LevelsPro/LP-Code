@@ -49,7 +49,8 @@ namespace DataAccess.Insert
         {
             MySqlParameter[] parameters = {new MySqlParameter("?p_userid",Quiz.UserID),
                                            new MySqlParameter("?p_quizid",Quiz.QuizID),
-                                           new MySqlParameter("?p_total",Quiz.Total)
+                                           new MySqlParameter("?p_total",Quiz.Total),
+                                           new MySqlParameter("?p_KPI",Quiz.KPIID)
                                           };
                                             
             Parameters = parameters;
