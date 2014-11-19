@@ -462,6 +462,7 @@ namespace LevelsPro.AdminPanel
                                 {
                                     user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
                                     user.Score = Convert.ToInt32(gr.Cells[3].Text);
+                                    user.AwardID = awardid;
                                     break;
 
                                 }
@@ -469,12 +470,14 @@ namespace LevelsPro.AdminPanel
                                 {
                                     user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
                                     user.Score = Convert.ToInt32(gr.Cells[3].Text);
+                                    user.AwardID = awardid;
                                     break;
                                 }
                                 else if (KPIScore > TargetValue)
                                 {
                                     user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
                                     user.Score = TargetValue;
+                                    user.AwardID = awardid;
                                     break;
                                 }
                             }
