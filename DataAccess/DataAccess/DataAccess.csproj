@@ -102,6 +102,7 @@
     <Compile Include="Delete\UserImageDeleteDAL.cs" />
     <Compile Include="Insert\AwardImageInsertDAL.cs" />
     <Compile Include="Insert\AwardInsertDAL.cs" />
+    <Compile Include="Insert\AwardScoreInsertDAL.cs" />
     <Compile Include="Insert\BulkInsertQuizQuestionsDAL.cs" />
     <Compile Include="Insert\CategoryInsertDAL.cs" />
     <Compile Include="Insert\ContestInsertDAL.cs" />

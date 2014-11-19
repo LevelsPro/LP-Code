@@ -135,7 +135,8 @@ namespace DataAccess
             sp_InsertMatchScore,
             sp_InsertContestPosition,
             sp_InsertMatchLevels,
-            sp_InsertQuizResult
+            sp_InsertQuizResult,
+            sp_InsertScoreAward
         }
         public enum Duplicate
         {

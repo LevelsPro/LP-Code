@@ -81,6 +81,7 @@
     <Compile Include="Delete\UserImageDeleteBLL.cs" />
     <Compile Include="Duplicate\ContestDuplicateBLL.cs" />
     <Compile Include="Insert\AwardImageInsertBLL.cs" />
+    <Compile Include="Insert\AwardScoreInsertBLL.cs" />
     <Compile Include="Insert\BulkInsertQuizQuestionsBLL.cs" />
     <Compile Include="Insert\CategoryInsertBLL.cs" />
     <Compile Include="Insert\BulkInsertMatchDataSetsBLL.cs" />

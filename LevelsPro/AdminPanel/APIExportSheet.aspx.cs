@@ -57,6 +57,9 @@ namespace LevelsPro.AdminPanel
             {
                 foreach (GridViewRow gr in gvAPI.Rows)
                 {
+                    if (gr.Cells[5].Text.Equals("KPI"))
+                    {
+                    
                     bool check = false;
                     UserLevelPercentBLL userlevelP = new UserLevelPercentBLL();
                     Common.User _userPercent = new Common.User();
@@ -409,12 +412,96 @@ namespace LevelsPro.AdminPanel
                         }
                         #endregion
 
+                    }
+
             
+
+                    }
+                    else if (gr.Cells[5].Text.Equals("Award"))
+                    {
+                        DataSet dsTarget = new DataSet();
+                        Common.User _userPercent = new Common.User();
+                        _userPercent.UserID = Convert.ToInt32(gr.Cells[0].Text);
+                        int userid = Convert.ToInt32(gr.Cells[0].Text);
+                        int awardid=Convert.ToInt32(gr.Cells[6].Text);
+                        _userPercent.AwardID = Convert.ToInt32(gr.Cells[6].Text);
+                        TargetViewBLL Target = new TargetViewBLL();
+                        try
+                        {
+                            Target.Invoke();
+                            dsTarget = Target.ResultSet;
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+
+                        DataView dvTarget = dsTarget.Tables[1].DefaultView;
+                        dvTarget.RowFilter = "Award_ID = " + awardid;
+
+                        DataTable dtTarget = dvTarget.ToTable();
+                        AwardScoreInsertBLL score = new AwardScoreInsertBLL();
+                        Common.User user = new Common.User();
+
+                        user.UserID = userid;
+
+                        String KPIText = gr.Cells[2].Text;
+                        int KPIScore = Convert.ToInt32(gr.Cells[3].Text);
+                        KPIText = KPIText.Trim();
+
+                        for (int i = 0; i < dtTarget.Rows.Count; i++)
+                        {
+                            String TargetText = dtTarget.Rows[i]["KPI_ID"].ToString();
+                            TargetText = TargetText.Trim();
+
+                            if (KPIText.Equals(TargetText))
+                            {
+                                int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
+
+                                if (KPIScore < TargetValue)
+                                {
+                                    user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                                    user.Score = Convert.ToInt32(gr.Cells[3].Text);
+                                    break;
+
+                                }
+                                else if (KPIScore == TargetValue)
+                                {
+                                    user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                                    user.Score = Convert.ToInt32(gr.Cells[3].Text);
+                                    break;
+                                }
+                                else if (KPIScore > TargetValue)
+                                {
+                                    user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                                    user.Score = TargetValue;
+                                    break;
+                                }
+                            }
+                            
+                        }
+
+                        user.EntryDate = Convert.ToDateTime(gr.Cells[1].Text);
+                        user.Measure = gr.Cells[4].Text;
+                        score.User = user;
+
+                        try
+                        {
+                            score.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+
 
                     }
                 }
 
+
+
             }
+
         
         }
         #endregion
