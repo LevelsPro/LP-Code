@@ -231,32 +231,47 @@ namespace LevelsPro.PlayerPanel
 
                 DataRow[] drTimeCheck = dvTimeCheck.ToTable().Select();
 
-                
 
-                DataView UserScore = dtTopScores.DefaultView;
-                UserScore.RowFilter = "QuizID =" + ltQuizID.Text.Trim() + " AND UserID = " + Session["userid"].ToString();
-                DataRow[] drs = UserScore.ToTable().Select();
-                
+                DataRow[] drs = dvSelect.ToTable().Select("QuizPoints = max(QuizPoints)");
+
                 if (drs.Length > 0)
                 {
-                    ltUserBest.Text = drs[0]["Total"].ToString();
+                    ltUserBest.Text = drs[0]["QuizPoints"].ToString();
                 }
 
                 DataView dvSelectTop = dt.DefaultView;
 
                 dvSelectTop.RowFilter = "QuizID =" + ltQuizID.Text.Trim();
 
-                DataView TopScore = dtTopScores.DefaultView;
-                TopScore.RowFilter = "QuizID =" + ltQuizID.Text.Trim();
-
-                DataRow[] drsTop = TopScore.ToTable().Select("Total = max(Total)");
+                DataRow[] drsTop = dvSelectTop.ToTable().Select("QuizPoints = max(QuizPoints)");
 
                 if (drsTop.Length > 0)
                 {
-                    ltTopScore.Text = drsTop[0]["Total"].ToString() + " " + drsTop[0]["U_FirstName"].ToString() + " " + drsTop[0]["U_LastName"].ToString();
+                    ltTopScore.Text = drsTop[0]["QuizPoints"].ToString() + " " + drsTop[0]["FullName"].ToString();
                 }
 
-               
+                #region Quiz Top Score & Your best Logic
+                DataView UserScore = dtTopScores.DefaultView;
+                UserScore.RowFilter = "QuizID =" + ltQuizID.Text.Trim() + " AND UserID = " + Session["userid"].ToString();
+                DataRow[] drsQuiz = UserScore.ToTable().Select();
+
+                if (drsQuiz.Length > 0)
+                {
+                    ltUserBest.Text = drsQuiz[0]["Total"].ToString();
+                }
+
+
+                DataView TopScore = dtTopScores.DefaultView;
+                TopScore.RowFilter = "QuizID =" + ltQuizID.Text.Trim();
+
+                DataRow[] drsTopQuiz = TopScore.ToTable().Select("Total = max(Total)");
+
+                if (drsTopQuiz.Length > 0)
+                {
+                    ltTopScore.Text = drsTopQuiz[0]["Total"].ToString() + " " + drsTopQuiz[0]["U_FirstName"].ToString() + " " + drsTopQuiz[0]["U_LastName"].ToString();
+                }
+                #endregion
+
                 String DateString = System.DateTime.Now.ToShortDateString();
                 dvLog.RowFilter = "QuizID =" + Convert.ToInt32(ltQuizID.Text.Trim()) + " AND UserID = " + Convert.ToInt32(Session["userid"].ToString()); //+ " AND QuizTime = " + DateString
 
