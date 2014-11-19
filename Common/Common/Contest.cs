@@ -29,8 +29,8 @@ namespace Common
         SqlInt32 _score;        
         SqlString _measure;        
         SqlString _entrydate;
-
         SqlString _where;
+        SqlDateTime _ImportDate;
         private MySqlTransaction _sqlTrans;
 
         #endregion
@@ -40,6 +40,11 @@ namespace Common
         }
 
         #region Properties
+        public SqlDateTime ImportDate
+        {
+            get { return _ImportDate; }
+            set { _ImportDate = value; }
+        }
         public SqlInt32 ContestID
         {
             get { return _contestid; }

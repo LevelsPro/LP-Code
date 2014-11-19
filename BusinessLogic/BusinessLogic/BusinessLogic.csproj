@@ -85,6 +85,7 @@
     <Compile Include="Insert\BulkInsertQuizQuestionsBLL.cs" />
     <Compile Include="Insert\CategoryInsertBLL.cs" />
     <Compile Include="Insert\BulkInsertMatchDataSetsBLL.cs" />
+    <Compile Include="Insert\ContestPerformanceInsertBLL.cs" />
     <Compile Include="Insert\ContestPositionInsertBLL.cs" />
     <Compile Include="Insert\MatchLevelsInsertBLL.cs" />
     <Compile Include="Insert\MatchScoreInsertBLL.cs" />

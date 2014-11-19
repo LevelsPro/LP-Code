@@ -59,7 +59,7 @@ namespace LevelsPro.AdminPanel
                 {
                     if (gr.Cells[5].Text.Equals("KPI"))
                     {
-                    
+                        #region Updating Level Performance
                     bool check = false;
                     UserLevelPercentBLL userlevelP = new UserLevelPercentBLL();
                     Common.User _userPercent = new Common.User();
@@ -414,11 +414,12 @@ namespace LevelsPro.AdminPanel
 
                     }
 
-            
 
+                        #endregion
                     }
                     else if (gr.Cells[5].Text.Equals("Award"))
                     {
+                        #region Updating Award Performance
                         DataSet dsTarget = new DataSet();
                         Common.User _userPercent = new Common.User();
                         _userPercent.UserID = Convert.ToInt32(gr.Cells[0].Text);
@@ -496,11 +497,36 @@ namespace LevelsPro.AdminPanel
 
                         }
 
+                        #endregion
+                    }
+                    else if (gr.Cells[5].Text.Equals("Contest"))
+                    {
+                        #region Updating Contest Performance
 
+                        Contest contest = new Contest();
+                        contest.ContestID = Int32.Parse(gr.Cells[5].ToString());
+                        contest.UserID = Int32.Parse(gr.Cells[0].ToString());
+                        contest.KPIID = Int32.Parse(gr.Cells[2].ToString());
+                        contest.Points = Int32.Parse(gr.Cells[3].ToString());
+                        contest.ImportDate = System.DateTime.Now.Date;
 
+                        ContestPerformanceInsertBLL contestPerform = new ContestPerformanceInsertBLL();
+                        
+                        try
+                        {
+                            contestPerform.Contest = contest;
+                            contestPerform.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            // Catching and Logging Exception Here...
+                        }
+                        finally
+                        {
+                        }
+                        #endregion
                     }
                 }
-
 
 
             }

@@ -107,6 +107,7 @@
     <Compile Include="Insert\CategoryInsertDAL.cs" />
     <Compile Include="Insert\ContestInsertDAL.cs" />
     <Compile Include="Insert\BulkInsertMatchDataSetsDAL.cs" />
+    <Compile Include="Insert\ContestPerformanceInsertDAL.cs" />
     <Compile Include="Insert\ContestPositionInsertDAL.cs" />
     <Compile Include="Duplicate\ContestDuplicateDAL.cs" />
     <Compile Include="Insert\MatchLevelsInsertDAL.cs" />

@@ -101,6 +101,7 @@ namespace DataAccess
             sp_InsertReward,
             sp_InsertAwards,
             sp_InsertContest,
+            sp_InsertContestPerformance,
             sp_InsertTarget,
             sp_InsertImage,
             sp_InsertUser,
