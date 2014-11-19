@@ -27,39 +27,39 @@ namespace LevelsPro.PlayerPanel
         
         
         
-        public  int[] RandomArray;
+        public static int[] RandomArray;
         static String Optselected = "";
         static DataTable dt_Questions;
         static DataTable dt = new DataTable();
        
         public Random a = new Random(System.DateTime.Now.Ticks.GetHashCode());
         public List<int> randomList = new List<int>();
-        public  int MyNumber = 0;
-        public  bool ReduceOption1 = false;
-        public  bool ReduceOption2 = false;
-        public  bool ReduceOption3 = false;
-        public  bool ReduceOption4 = false;
-       
-        public  int NumberofQuestions;
-        public  DataSet dsLifeLine;
-        public  int ReduceChoicesCounter=0;
-        public  int ReplaceQuestionCounter = 0;
-        public  int AddSecondsCounter = 0;
+        public static int MyNumber = 0;
+        public static bool ReduceOption1 = false;
+        public static bool ReduceOption2 = false;
+        public static bool ReduceOption3 = false;
+        public static bool ReduceOption4 = false;
+
+        public static int NumberofQuestions;
+        public static DataSet dsLifeLine;
+        public static int ReduceChoicesCounter = 0;
+        public static int ReplaceQuestionCounter = 0;
+        public static int AddSecondsCounter = 0;
         private int checkSeconds = 0;
-        private int CurrenLevel;
-        private int LinkedKPIID;
-        private int TotalPlayerScore;
+        private static int CurrenLevel;
+        private static int LinkedKPIID;
+        private static int TotalPlayerScore;
         private Common.User user = new Common.User();
         //
-        public int counters = 0;
-        public int timeSec = 0;//int.Parse(lblTimeQuestion.Text);
-        public Decimal score = 0;//int.Parse(ltScore.Text);
-        public int deduction = 0;//int.Parse(hdDeductionTime.Value);
+        static int counters = 0;
+        static int timeSec = 0;//int.Parse(lblTimeQuestion.Text);
+        static Decimal score = 0;//int.Parse(ltScore.Text);
+        static int deduction = 0;//int.Parse(hdDeductionTime.Value);
         public DataView dvLog;
         public DataSet dtLog;
-        public int sec = 0;
-        public Decimal scoreTemp = 0;
-        public Decimal values = 0;
+        static int sec = 0;
+        static Decimal scoreTemp = 0;
+        static Decimal values = 0;
         
         private static string pageURL;
         private ILog log;
