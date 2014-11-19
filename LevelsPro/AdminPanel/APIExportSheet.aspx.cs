@@ -450,10 +450,10 @@ namespace LevelsPro.AdminPanel
 
                         for (int i = 0; i < dtTarget.Rows.Count; i++)
                         {
-                            String TargetText = dtTarget.Rows[i]["KPI_ID"].ToString();
-                            TargetText = TargetText.Trim();
+                            int TargetText = Convert.ToInt32(dtTarget.Rows[i]["Award_ID"].ToString());
+                            //TargetText = TargetText.Trim();
 
-                            if (KPIText.Equals(TargetText))
+                            if (awardid == TargetText)
                             {
                                 int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
 
