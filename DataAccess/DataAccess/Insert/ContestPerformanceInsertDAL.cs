@@ -53,7 +53,7 @@ namespace DataAccess.Insert
                                            new MySqlParameter("?p_userid",Contest.UserID),
                                            new MySqlParameter("?p_kpiid",Contest.KPIID),
                                            new MySqlParameter("?p_score",Contest.Points),
-                                           new MySqlParameter("?p_importdate",Contest.ImportDate)
+                                           new MySqlParameter("?p_importdate",Contest.EntryDate)
                                           };
 
             Parameters = parameters;

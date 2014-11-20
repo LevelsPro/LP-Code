@@ -504,11 +504,11 @@ namespace LevelsPro.AdminPanel
                         #region Updating Contest Performance
 
                         Contest contest = new Contest();
-                        contest.ContestID = Int32.Parse(gr.Cells[5].ToString());
-                        contest.UserID = Int32.Parse(gr.Cells[0].ToString());
-                        contest.KPIID = Int32.Parse(gr.Cells[2].ToString());
-                        contest.Points = Int32.Parse(gr.Cells[3].ToString());
-                        contest.ImportDate = System.DateTime.Now.Date;
+                        contest.ContestID = Convert.ToInt32(gr.Cells[6].Text);
+                        contest.UserID = Convert.ToInt32(gr.Cells[0].Text);
+                        contest.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                        contest.Points = Convert.ToInt32(gr.Cells[3].Text);
+                        contest.EntryDate = System.DateTime.Now.ToLongDateString();
 
                         ContestPerformanceInsertBLL contestPerform = new ContestPerformanceInsertBLL();
                         
