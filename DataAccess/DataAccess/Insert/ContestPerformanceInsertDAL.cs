@@ -49,11 +49,11 @@ namespace DataAccess.Insert
         }
         public void Build()
         {
-            MySqlParameter[] parameters = {new MySqlParameter("?p_ContestID",Contest.ContestID),
-                                           new MySqlParameter("?p_UserID",Contest.UserID),
-                                           new MySqlParameter("?p_KPIID",Contest.KPIID),
-                                           new MySqlParameter("?p_Score",Contest.Points),
-                                           new MySqlParameter("?p_LastUpdate",Contest.ImportDate)
+            MySqlParameter[] parameters = {new MySqlParameter("?p_contestid",Contest.ContestID),
+                                           new MySqlParameter("?p_userid",Contest.UserID),
+                                           new MySqlParameter("?p_kpiid",Contest.KPIID),
+                                           new MySqlParameter("?p_score",Contest.Points),
+                                           new MySqlParameter("?p_importdate",Contest.ImportDate)
                                           };
 
             Parameters = parameters;
