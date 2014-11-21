@@ -64,7 +64,7 @@ namespace LevelsPro.AdminPanel
                     {
                         #region Updating Level Performance
 
-                        dvuserid.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
+                        dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
                         dtuserid = dvuserid.ToTable();
 
                         if (dtuserid.Rows.Count == 1)
@@ -434,7 +434,7 @@ namespace LevelsPro.AdminPanel
                         #region Updating Award Performance
                         DataSet dsTarget = new DataSet();
 
-                        dvuserid.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
+                        dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
                         dtuserid = dvuserid.ToTable();
 
                         Common.User _userPercent = new Common.User();
@@ -519,7 +519,7 @@ namespace LevelsPro.AdminPanel
                     {
                         #region Updating Contest Performance
 
-                        dvuserid.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
+                        dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
                         dtuserid = dvuserid.ToTable();
 
                         Contest contest = new Contest();
