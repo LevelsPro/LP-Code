@@ -166,6 +166,15 @@ namespace LevelsPro.AdminPanel {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvToDate;
         
         /// <summary>
+        /// cvToDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cvToDate;
+        
+        /// <summary>
         /// lblContestParameters control.
         /// </summary>
         /// <remarks>

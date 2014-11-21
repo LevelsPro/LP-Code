@@ -1636,6 +1636,13 @@ a.view{width:10%; float:right; font-size:20px; padding-right:16px;}
     margin-top: 0;
     margin-bottom: 19px;
 }
+span#ContentPlaceHolder1_cvToDate {
+    float: left;
+    font-size: 13px;
+    color: red;
+    font-weight: bold;
+    margin-top: 5px;
+}
 .create-reward{
 	/*width:200px;*/
 	text-align:center;

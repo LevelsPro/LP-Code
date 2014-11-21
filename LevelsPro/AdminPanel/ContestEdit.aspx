@@ -69,7 +69,9 @@
                     PopupButtonID="txtToDate" TargetControlID="txtToDate">
                 </ajaxToolkit:CalendarExtender>
                 <asp:RequiredFieldValidator ID="rfvToDate" runat="server" ErrorMessage="Provide To Date"
-                    ControlToValidate="txtToDate" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>                
+                    ControlToValidate="txtToDate" Display="Dynamic" SetFocusOnError="True" ValidationGroup="Insertion"> * </asp:RequiredFieldValidator>
+                <asp:CompareValidator ID="cvToDate" runat="server" ControlToCompare="txtFromDate" ControlToValidate="txtToDate" CultureInvariantValues="true"
+                    ErrorMessage="To Date should be greater than From Date." Operator="GreaterThanEqual" SetFocusOnError="true" Type="Date"></asp:CompareValidator>
                 </span>
                 <div class="clear">
                 </div>
