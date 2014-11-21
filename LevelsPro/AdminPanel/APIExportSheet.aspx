@@ -35,7 +35,12 @@
         <asp:Button ID="btnImpToGrid" runat="server" CssClass="green-btn admin-edit fl" Text="<%$ Resources:TestSiteResources, UploadToGrid %>"
             OnClick="btnImpToGrid_Click" Width="160px" />&nbsp;      &nbsp;&nbsp;  
         <asp:Button ID="btnImport" runat="server" CssClass="green-btn admin-edit fl" Text="<%$ Resources:TestSiteResources, Import %>"
-            OnClick="btnImport_Click" /><br /><br /><br /><br />
+            OnClick="btnImport_Click" /><br />
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+            ConnectionString="<%$ ConnectionStrings:LevelsproCS %>" 
+            ProviderName="<%$ ConnectionStrings:LevelsproCS.ProviderName %>" 
+            SelectCommand="Select UserID, U_EmpID from tblUser"></asp:SqlDataSource>
+        <br /><br /><br />
         <asp:GridView ID="gvAPI" runat="server" AutoGenerateColumns="true" Width="100%">
                     </asp:GridView>
         <div class="manager-cont" id="scrollbar1">
