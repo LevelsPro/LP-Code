@@ -53,8 +53,8 @@ namespace LevelsPro.AdminPanel
         #region  send record to score table
         protected void btnImport_Click(object sender, EventArgs e)
         {
-            DataView dv = userdata.Select(DataSourceSelectArguments.Empty) as DataView;
-            DataTable dt = new DataTable(); 
+            DataView dvuserid = userdata.Select(DataSourceSelectArguments.Empty) as DataView;
+            DataTable dtuserid = new DataTable(); 
 
             if (gvAPI.Rows.Count > 0)
             {
@@ -64,10 +64,10 @@ namespace LevelsPro.AdminPanel
                     {
                         #region Updating Level Performance
 
-                        dv.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
-                        dt = dv.ToTable();
+                        dvuserid.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
+                        dtuserid = dvuserid.ToTable();
 
-                        if (dt.Rows.Count == 1)
+                        if (dtuserid.Rows.Count == 1)
                         {
 
                             bool check = false;
@@ -76,7 +76,7 @@ namespace LevelsPro.AdminPanel
 
                            // _userPercent.UserID = Convert.ToInt32(gr.Cells[0].Text);
 
-                            _userPercent.UserID = Convert.ToInt32(dt.Rows[0]["UserID"]);
+                            _userPercent.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
 
                             userlevelP.User = _userPercent;
 
@@ -94,7 +94,7 @@ namespace LevelsPro.AdminPanel
                                 DataSet dsTarget = new DataSet();
                                 String UserPoints = "0";
 
-                                int UserID = Convert.ToInt32(dt.Rows[0]["UserID"]);
+                                int UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
                                 int LevelID = Convert.ToInt32(userlevelP.ResultSet.Tables[0].Rows[0]["current_level"]);
 
                                 TargetViewBLL Target = new TargetViewBLL();
@@ -433,9 +433,13 @@ namespace LevelsPro.AdminPanel
                     {
                         #region Updating Award Performance
                         DataSet dsTarget = new DataSet();
+
+                        dvuserid.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
+                        dtuserid = dvuserid.ToTable();
+
                         Common.User _userPercent = new Common.User();
-                        _userPercent.UserID = Convert.ToInt32(gr.Cells[0].Text);
-                        int userid = Convert.ToInt32(gr.Cells[0].Text);
+                        _userPercent.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]); 
+                        int userid = Convert.ToInt32(dtuserid.Rows[0]["UserID"]); 
                         int awardid=Convert.ToInt32(gr.Cells[6].Text);
                         _userPercent.AwardID = Convert.ToInt32(gr.Cells[6].Text);
                         TargetViewBLL Target = new TargetViewBLL();
@@ -515,9 +519,12 @@ namespace LevelsPro.AdminPanel
                     {
                         #region Updating Contest Performance
 
+                        dvuserid.RowFilter = "U_EmpID=" + Convert.ToInt32(gr.Cells[0].Text);
+                        dtuserid = dvuserid.ToTable();
+
                         Contest contest = new Contest();
                         contest.ContestID = Convert.ToInt32(gr.Cells[6].Text);
-                        contest.UserID = Convert.ToInt32(gr.Cells[0].Text);
+                        contest.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
                         contest.KPIID = Convert.ToInt32(gr.Cells[2].Text);
                         contest.Points = Convert.ToInt32(gr.Cells[3].Text);
                         contest.EntryDate = System.DateTime.Now.ToLongDateString();
