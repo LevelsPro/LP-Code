@@ -630,6 +630,9 @@
     <Content Include="PlayerPanel\Images\qbtns-disabled-bg-white.png" />
     <Content Include="PlayerPanel\Images\qbtns-disabled-blue-bg.png" />
     <Content Include="PlayerPanel\Images\qbtns-wrong-nox-bg.png" />
+    <Content Include="PlayerPanel\Images\stars_bronze.png" />
+    <Content Include="PlayerPanel\Images\stars_gold.png" />
+    <Content Include="PlayerPanel\Images\stars_silver.png" />
     <Content Include="PlayerPanel\Images\star_cont.png" />
     <Content Include="PlayerPanel\MatchPlay.aspx" />
     <Content Include="PlayerPanel\MatchSelection.aspx" />

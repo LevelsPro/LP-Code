@@ -330,6 +330,33 @@ ul.position-list li:first-child {
     display: block;
     height: 50%;
 }
+
+.position-list span.rank1 {
+    background: url(../images/stars_gold.png) no-repeat;
+    background-size: contain;
+    background-position: 45% 50%;
+    width: 100%;
+    display: block;
+    height: 50%;
+}
+
+.position-list span.rank2 {
+    background: url(../images/stars_silver.png) no-repeat;
+    background-size: contain;
+    background-position: 45% 50%;
+    width: 100%;
+    display: block;
+    height: 50%;
+}
+
+.position-list span.rank3 {
+    background: url(../images/stars_bronze.png) no-repeat;
+    background-size: contain;
+    background-position: 45% 50%;
+    width: 100%;
+    display: block;
+    height: 50%;
+}
 .position-list span.rank span {
     top: 25px;
     position: absolute;
@@ -339,6 +366,10 @@ ul.position-list li:first-child {
     text-shadow: 2px 2px 2px rgba(145, 43, 41, 1), 2px -2px 2px rgba(145, 43, 41, 1), -2px 2px 2px rgba(145, 43, 41, 1), -2px -2px 2px rgba(145, 43, 41, 1);
     left: 70px;
     padding-top: 0;
+}
+
+.position-list span.rank1 span, .position-list span.rank2 span, .position-list span.rank3 span {
+    display: none;
 }
 .position-list span.rank p {
     top: 0!important;
@@ -520,6 +551,34 @@ ul.position-list li:first-child {
 	height: 100%;
 	margin-top: 0!important;
 }
+
+.header-container .sec-left .strip .msg-r span.rank1 {
+	background: url(../images/stars_gold.png) no-repeat;
+	background-size: contain;
+	background-position: 18% 50%;
+	width: 100%;
+	display: block;
+	height: 100%;
+	margin-top: 0!important;
+}
+.header-container .sec-left .strip .msg-r span.rank2 {
+	background: url(../images/stars_silver.png) no-repeat;
+	background-size: contain;
+	background-position: 18% 50%;
+	width: 100%;
+	display: block;
+	height: 100%;
+	margin-top: 0!important;
+}
+.header-container .sec-left .strip .msg-r span.rank3 {
+	background: url(../images/stars_bronze.png) no-repeat;
+	background-size: contain;
+	background-position: 18% 50%;
+	width: 100%;
+	display: block;
+	height: 100%;
+	margin-top: 0!important;
+}
 .header-container .sec-left .strip .msg-r span.st {
 	font-family: 'avengeance_mightiest_avengeRg';
 	width: 100%;
@@ -553,6 +612,10 @@ ul.position-list li:first-child {
     left: 23px!important;
     font-size: 20px;
 }
+.header-container .sec-left .strip .msg-r span.rank1 span, .header-container .sec-left .strip .msg-r span.rank2 span, .header-container .sec-left .strip .msg-r span.rank3 span
+{
+    display: none;
+}
 .level-cont-grey {
 	border-radius: 10px;	
 	margin-bottom: 10px;
@@ -576,8 +639,8 @@ ul.position-list li:first-child {
 .level-cont-grey .strip {
 	display: block;
 	background: #fff;
-	width: 60px;
-	height: 60px;
+	width: 65px;
+	height: 65px;
 	margin: 0 auto;
 	top: 10px;
 	padding: 0;
@@ -593,6 +656,30 @@ ul.position-list li:first-child {
 	background: url(../images/star_cont.png) no-repeat;
 	background-size: contain;
 	background-position: 18% 50%;
+	width: 100%;
+	display: block;
+	height: 100%;
+}
+
+.level-cont-grey span.rank1 {
+	background: url(../images/stars_gold.png) no-repeat;
+	background-size: contain;
+	width: 100%;
+	display: block;
+	height: 100%;
+}
+
+.level-cont-grey span.rank2 {
+	background: url(../images/stars_silver.png) no-repeat;
+	background-size: contain;
+	width: 100%;
+	display: block;
+	height: 100%;
+}
+
+.level-cont-grey span.rank3 {
+	background: url(../images/stars_bronze.png) no-repeat;
+	background-size: contain;
 	width: 100%;
 	display: block;
 	height: 100%;
@@ -616,6 +703,10 @@ ul.position-list li:first-child {
 	left: 30px;
 	padding-top: 0;
 }
+.level-cont-grey span.rank1 span, .level-cont-grey span.rank2 span, .level-cont-grey span.rank3 span 
+{
+    display:none;
+}
 .level-cont-grey span.st span p {
 	padding: 0;
 	margin: 0;
@@ -635,7 +726,7 @@ ul.position-list li:first-child {
 .level-cont-grey .lvl-desc span.lvl {
 	font-size: 24px;
 	margin: 0px;
-	margin-left: 25px;
+	margin-left: 15px;
 	width: 340px;
 	text-align: left;
 	font-weight: bold;
@@ -643,7 +734,7 @@ ul.position-list li:first-child {
 .level-cont-grey .lvl-desc .desc {
 	font-size: 22px;
 	margin-top: 5px;
-	margin-left: 25px;
+	margin-left: 15px;
 	width: 64%;
 }
 .level-cont-grey .lvl-desc .lvl-points {
