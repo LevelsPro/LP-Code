@@ -36,7 +36,7 @@
             OnClick="btnImpToGrid_Click" Width="160px" />&nbsp;      &nbsp;&nbsp;  
         <asp:Button ID="btnImport" runat="server" CssClass="green-btn admin-edit fl" Text="<%$ Resources:TestSiteResources, Import %>"
             OnClick="btnImport_Click" /><br />
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+        <asp:SqlDataSource ID="userdata" runat="server" 
             ConnectionString="<%$ ConnectionStrings:LevelsproCS %>" 
             ProviderName="<%$ ConnectionStrings:LevelsproCS.ProviderName %>" 
             SelectCommand="Select UserID, U_EmpID from tblUser"></asp:SqlDataSource>
