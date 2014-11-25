@@ -54,6 +54,14 @@
         {
             float: left;
         }
+        .style1
+        {
+            font-size: smaller;
+        }
+        .style2
+        {
+            font-size: medium;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -223,8 +231,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 <div class="clear">
+                <br />
+
+                <strong><span class="style1">
+                    </span><span class="style2">(Image Size: 100px * 100px)</span></strong>
                 </div>
             </div>
         </asp:Panel>

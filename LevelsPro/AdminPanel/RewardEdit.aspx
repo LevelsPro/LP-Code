@@ -181,7 +181,7 @@
                                             </table>
                                     </div>
                                     <div class="clear">
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="scrollbar" style="width: 355px; float: right;">
@@ -194,22 +194,14 @@
                             </div>
                         </div>
                         <div class="clear">
+                        <br />
+
+                                    <strong><span class="style1">
+                                    </span><span class="style2">(Image Size: 100px * 100px)</span></strong>
+                                    </div>
                         </div>
                     </div>
-                    <%--<div class="fl-wrapper mt10">
-                <div class="strip">
-                    <asp:Label ID="lblActive" runat="server" Text="<%$ Resources:TestSiteResources, Active %>"
-                        class="edit-left"></asp:Label>
-                    <asp:CheckBox ID="cbActive" runat="server" class="edit-right tl" />
-                    <div class="clear">
-                    </div>
-                </div>--%>
                 </asp:Panel>
-                <%--<div class="m0 ub-div">
-            <asp:Button ID="btnUpdateInfo" runat="server" Text="<%$ Resources:TestSiteResources, UpdateProfileB %>"
-                ValidationGroup="Insertion" OnClick="btnUpdateInfo_Click" CssClass="green-btn update-btn" />
-        </div>--%>
-                <%--</div>--%>
                 <div class="strip">
                     <asp:Button ID="btnAddReward" runat="server" class="edit-left" CssClass="green-btn admin-edit fr"
                         Text="<%$ Resources:TestSiteResources, Add %>" ValidationGroup="Insertion" OnClick="btnAddReward_Click1" />

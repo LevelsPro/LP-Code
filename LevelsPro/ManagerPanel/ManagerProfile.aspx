@@ -211,6 +211,10 @@
                         </div>
                     </div>
                     <div class="clear">
+                    <br />
+
+                    <strong><span class="style1">
+                    </span><span class="style2">(Image Size: 100px * 100px)</span></strong>
                     </div>
                 </div>
                 <table align="center">

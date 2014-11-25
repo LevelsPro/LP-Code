@@ -154,6 +154,10 @@
                     <asp:Button ID="btnAddImage" runat="server" class="green-btn create-reward change-img fr"
                         Text="<%$ Resources:TestSiteResources, AddImage %>" Visible="false" />
                     <div class="clear">
+                    <br />
+
+                    <strong><span class="style1">
+                    </span><span class="style2">(Image Size: 284px * 223px)</span></strong>
                     </div>
                 </div>
                  
