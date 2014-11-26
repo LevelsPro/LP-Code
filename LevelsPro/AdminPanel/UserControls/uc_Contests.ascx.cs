@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using BusinessLogic.Select;
 using System.Data;
 using Common;
+using System.Web.UI.HtmlControls;
 
 namespace LevelsPro.AdminPanel.UserControls
 {
@@ -55,22 +56,7 @@ namespace LevelsPro.AdminPanel.UserControls
 
         protected void dlViewContests_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            //DataSet dsPointsTable = new DataSet();
-            /*Contest _contestid = new Contest();
-            ContestPlayersScoreBLL contestplayerscore = new ContestPlayersScoreBLL();
-            Label lblcontid = (Label)e.Item.FindControl("lblcontestid");
-            _contestid.ContestID = Convert.ToInt32(lblcontid.Text);
-            contestplayerscore.Contest = _contestid;
-            contestplayerscore.Invoke();
-             DataView dv =  contestplayerscore.ResultSet.Tables[0].DefaultView;
-            dv.RowFilter = "user_id="+Convert.ToInt32(Session["userid"]);
-             DataTable dt = dv.ToTable();
-             if (dt != null && dt.Rows.Count > 0)
-            {
-                Label lbl = (Label)e.Item.FindControl("lblRank");
-                lbl.Text = dt.Rows[0]["contest_rank"].ToString();
-
-            }*/
+            
         }
     }
 }

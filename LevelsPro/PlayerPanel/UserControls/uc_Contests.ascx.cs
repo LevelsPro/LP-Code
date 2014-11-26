@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using BusinessLogic.Select;
 using System.Data;
 using Common;
+using System.Web.UI.HtmlControls;
 
 namespace LevelsPro.PlayerPanel.UserControls
 {
@@ -53,24 +54,18 @@ namespace LevelsPro.PlayerPanel.UserControls
             Response.Redirect("ContestDetails.aspx");
         }
 
-        protected void dlViewContests_ItemDataBound(object sender, DataListItemEventArgs e)
+        protected void lvViewContests_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            //DataSet dsPointsTable = new DataSet();
-            /*Contest _contestid = new Contest();
-            ContestPlayersScoreBLL contestplayerscore = new ContestPlayersScoreBLL();
-            Label lblcontid = (Label)e.Item.FindControl("lblcontestid");
-            _contestid.ContestID = Convert.ToInt32(lblcontid.Text);
-            contestplayerscore.Contest = _contestid;
-            contestplayerscore.Invoke();
-             DataView dv =  contestplayerscore.ResultSet.Tables[0].DefaultView;
-            dv.RowFilter = "user_id="+Convert.ToInt32(Session["userid"]);
-             DataTable dt = dv.ToTable();
-             if (dt != null && dt.Rows.Count > 0)
+            HiddenField lbl = (HiddenField)e.Item.FindControl("hfToDate");
+            if (lbl.Value != "")
             {
-                Label lbl = (Label)e.Item.FindControl("lblRank");
-                lbl.Text = dt.Rows[0]["contest_rank"].ToString();
+                if (Convert.ToDateTime(lbl.Value) >= DateTime.Today)
+                {
+                    LinkButton link = (LinkButton)e.Item.FindControl("lnkbtnContestDetail");
 
-            }*/
+                    link.CssClass = "level-cont-green-selected";
+                }                
+            }
         }
     }
 }

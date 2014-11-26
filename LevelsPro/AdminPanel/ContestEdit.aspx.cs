@@ -307,10 +307,7 @@ namespace LevelsPro.AdminPanel
                     contest.SiteID = Convert.ToInt32(ddlStore_ID.SelectedValue);
                 }
 
-                if (ddlRoles_ID.SelectedIndex > 0)
-                {
-                    contest.RoleID = Convert.ToInt32(ddlRoles_ID.SelectedValue);
-                }
+                contest.RoleID = Convert.ToInt32(ddlRoles_ID.SelectedValue);
 
                 MySqlConnection scon = new MySqlConnection(ConfigurationManager.ConnectionStrings["SQLCONN"].ToString());
                 scon.Open();

@@ -281,7 +281,7 @@ ul.position-list li:first-child {
 }
 .position-list li a {
     display: block;
-    height: 100px;
+    height: 150px;
 }
 .position-list li a .strip {
     display: block;
@@ -391,6 +391,8 @@ ul.position-list li:first-child {
     background: -ms-linear-gradient(top,  #e6e2e3 0%,#a9aaad 49%,#c0c1c5 100%);
     background: linear-gradient(to bottom,  #e6e2e3 0%,#a9aaad 49%,#c0c1c5 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e2e3', endColorstr='#c0c1c5',GradientType=0 );
+    margin-left: 142px;
+    margin-right: 10px;
 }
 .contest-footer-container span.contest-title 
 {

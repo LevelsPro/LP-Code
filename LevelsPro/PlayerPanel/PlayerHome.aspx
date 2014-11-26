@@ -306,25 +306,24 @@
                                 <div class="clear">
                                 </div>
                             </div>
-                            <div class="contest-footer-container" id="scrollbar2">
-                                <div class="viewport">
-                                    <uc:Contests ID="Contest1" runat="server" />
-                                </div>
-                                <div class="scrollbar">
-                                    <div class="track">
-                                        <div class="thumb">
-                                            <div class="end">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
                         </div>
                     </div>
                     <div class="clear">
                     </div>
                     <div class="clear">
+                    </div>
+                    <div class="contest-footer-container" id="scrollbar2">
+                        <div class="viewport">
+                            <uc:Contests ID="Contest1" runat="server" />
+                        </div>
+                        <div class="scrollbar">
+                            <div class="track">
+                                <div class="thumb">
+                                    <div class="end">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <asp:UpdateProgress ID="uprogressHome" runat="server" DisplayAfter="0" AssociatedUpdatePanelID="upHome">
                         <ProgressTemplate>
