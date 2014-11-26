@@ -111,70 +111,33 @@ namespace LevelsPro.UserControls
             ModalPopupExtender mpe = this.Parent.FindControl("mpeSecurityQuestionsDiv") as ModalPopupExtender;
             if (Session["useridForgot"] != null && Session["useridForgot"].ToString() != "")
             {
-               // DataSet dsCheck = new DataSet();
-
-              //  dsCheck = LoadQuestionAnswers();
-
-
-                //if (dsCheck != null && dsCheck.Tables.Count > 0 && dsCheck.Tables[0] != null && dsCheck.Tables[0].Rows.Count > 0)
-               // {
                 bool PasswordVerification1 = PasswordEncrypt.ValidatePassword(txtAnswer1.Text, answer1);
                 bool PasswordVerification2 = PasswordEncrypt.ValidatePassword(txtAnswer2.Text, answer2);
                 bool PasswordVerification3 = PasswordEncrypt.ValidatePassword(txtAnswer3.Text, answer3);
 
-                    //if ((answer1 == txtAnswer1.Text) && (answer2 == txtAnswer2.Text) && (answer3 == txtAnswer3.Text))
                 if ((PasswordVerification1 == true) && (PasswordVerification2 == true) && (PasswordVerification3 == true))
                     {
                         lblMeassage.Visible = false;
-                        //if (Session["useridForgot"] != null && Session["useridForgot"].ToString() != "")
-                        //{
-                            //ModalPopupExtender mpe = this.Parent.FindControl("mpeAnswers") as ModalPopupExtender;
-                            mpe.Hide();
-
-                            //uc_SetPassword chk = this.Parent.FindControl("ucSetNewPassword") as uc_SetPassword;
-                           // chk.LoadData(Convert.ToInt32(Session["useridForgot"]));
-                            ModalPopupExtender mpeSetNewPass = this.Parent.FindControl("mpeSetNewPassword") as ModalPopupExtender;
-                            mpeSetNewPass.Show();
-                            answer1 = "";
-                            answer2 = "";
-                            answer3 = "";
-                        //}
+                        mpe.Hide();
+                        ModalPopupExtender mpeSetNewPass = this.Parent.FindControl("mpeSetNewPassword") as ModalPopupExtender;
+                        mpeSetNewPass.Show();
+                        answer1 = "";
+                        answer2 = "";
+                        answer3 = "";
                     }
                     else
                     {
                         lblMeassage.Visible = true;
                         lblMeassage.ForeColor = Color.Red;
-                        lblMeassage.Text = "Answers are not matched.";
-                        //ModalPopupExtender mpe = this.Parent.FindControl("mpeAnswers") as ModalPopupExtender;
-                        
+                        lblMeassage.Text = "Answers are not matched, please try again or contact your system administrator";
                         txtAnswer1.Text = "";
                         txtAnswer2.Text = "";
                         txtAnswer3.Text = "";
                         mpe.Show();
-
-                        //DataSet dsQuestions = new DataSet();
-                        //dsQuestions = LoadQuestionAnswers();
-
-                        //if (dsQuestions != null && dsQuestions.Tables.Count > 0 && dsQuestions.Tables[0] != null && dsQuestions.Tables[0].Rows.Count > 0)
-                        //{
-                        //    ddlQuestion1.SelectedValue = dsQuestions.Tables[0].Rows[0]["Question_ID"].ToString();
-                        //    ddlQuestion1.Enabled = false;
-                        //    ddlQuestion1.Visible = true;
-                        //    ddlQuestion2.SelectedValue = dsQuestions.Tables[0].Rows[1]["Question_ID"].ToString();
-                        //    ddlQuestion2.Enabled = false;
-                        //    ddlQuestion2.Visible = true;
-                        //    ddlQuestion3.SelectedValue = dsQuestions.Tables[0].Rows[2]["Question_ID"].ToString();
-                        //    ddlQuestion3.Visible = true;
-                        //    ddlQuestion3.Enabled = false;
-                        //}
-                        // divChangePwd.Visible = false;
                     }
-               // }
             }
             else
             {
-
-                //ModalPopupExtender mpe = this.Parent.FindControl("mpeSecurityQuestionsDiv") as ModalPopupExtender;
                 if (ddlQuestion1.SelectedValue == ddlQuestion2.SelectedValue || ddlQuestion2.SelectedValue == ddlQuestion3.SelectedValue || ddlQuestion3.SelectedValue == ddlQuestion1.SelectedValue || ddlQuestion1.SelectedIndex == 0 || ddlQuestion2.SelectedIndex == 0 || ddlQuestion3.SelectedIndex == 0)
                 {
                     lblMeassage.Visible = true;
@@ -228,9 +191,6 @@ namespace LevelsPro.UserControls
                     catch (Exception)
                     {
                         sqlTrans.Rollback();
-                        // lblMeassage.Visible = true;
-                        //lblMeassage.Text = "Cannot add information.";
-
                     }
                     finally
                     {

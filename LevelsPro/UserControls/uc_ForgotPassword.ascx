@@ -24,11 +24,11 @@
         <div class="green-wrapper pop-btn">
           <asp:Button ID="btnReset" runat="server" class="green" 
                 Text="<%$ Resources:TestSiteResources, RequestReset %>" 
-                onclick="btnReset_Click" />
+                onclick="btnReset_Click" Visible="False" />
            <%-- <input type="button" class="green" value="Request Reset" />--%>
         </div>
         <div class="green-wrapper pop-btn">
-            <asp:Button ID="btnSecurity" runat="server" class="green" Text="<%$ Resources:TestSiteResources, SecurityQuestions %>" ValidationGroup="forgetpass"
+            <asp:Button ID="btnSecurity" runat="server" class="green" Text="Request Reset" ValidationGroup="forgetpass"
                 OnClick="btnSecurity_Click" />
         </div>
         <div class="green-wrapper pop-btn">

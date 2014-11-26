@@ -237,7 +237,7 @@
         </div>
     </div>
      <div class="answer-title">
-     <asp:Label ID="lblMeassage" runat="server" Visible="false"></asp:Label>
+     <asp:Label ID="lblMeassage" runat="server" Visible="False" Font-Size="Small"></asp:Label>
     </div>
 </div>
 
