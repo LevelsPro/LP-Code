@@ -845,6 +845,7 @@
     <Content Include="PlayerPanel\Scripts\jquery-ui.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.ba-resize.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.min.js" />
+    <Content Include="PlayerPanel\Scripts\jquery.tinyscrollbar.js" />
     <Content Include="PlayerPanel\Scripts\jquery.tinyscrollbar.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.ui.touch-punch.min.js" />
     <Content Include="PlayerPanel\Scripts\jquery.uniform.js" />

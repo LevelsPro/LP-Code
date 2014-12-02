@@ -558,21 +558,26 @@ namespace LevelsPro.PlayerPanel
         }
         protected void lnkbtnLogout_Click1(object sender, EventArgs e)
         {
-            LoginUpdateBLL loginuser = new LoginUpdateBLL();
-            Common.User user = new Common.User();
-            user.UserID = Convert.ToInt32(Session["userid"]);
-            loginuser.Users = user;
-            try
-            {
-                loginuser.Invoke();
-            }
-            catch (Exception ex)
-            {
-                
-                throw ex;
-            }
-            Session.Abandon();
-            Response.Redirect("~/Index.aspx");
+            //if (Session.)
+            //{
+               
+                LoginUpdateBLL loginuser = new LoginUpdateBLL();
+                Common.User user = new Common.User();
+                user.UserID = Convert.ToInt32(Session["userid"]);
+                loginuser.Users = user;
+                try
+                {
+                    loginuser.Invoke();
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+                Session.Abandon();
+                Response.Redirect("~/Index.aspx");
+            //}
         }
 
         protected void lkbChang_Click(object sender, EventArgs e)

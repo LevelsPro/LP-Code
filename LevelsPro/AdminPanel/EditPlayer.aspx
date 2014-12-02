@@ -62,9 +62,6 @@
                         CssClass="edit-left"></asp:Label>
                     <asp:TextBox ID="txtEmpID" runat="server" ValidationGroup="Insertion" MaxLength="50"
                         CssClass="edit-right"></asp:TextBox>
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" Display="Dynamic"
-                        ErrorMessage="Enter Only Alphanumeric :" SetFocusOnError="True" ValidationExpression="^[a-zA-Z0-9]*$"
-                        ValidationGroup="Insertion" ControlToValidate="txtEmpID">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter Only Alphanumeric</asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtEmpID"
                         Display="Dynamic" ErrorMessage="Enter User Name" SetFocusOnError="True" ValidationGroup="Insertion">*</asp:RequiredFieldValidator>
                     

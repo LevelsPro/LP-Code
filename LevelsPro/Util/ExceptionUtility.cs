@@ -110,191 +110,199 @@ namespace LevelsPro.Util
         /// <param name="server"></param>
         internal static void GenerateExpResponse(string sourcePage, RedirectionStrategy redirectionStrategy, HttpSessionState session, HttpServerUtility server, HttpResponse response, ILog log, Exception exp)
         {
-            string role = (string)session["role"];
-            ManageExceptionEntry(sourcePage,session);
-            //+Moiz: Logs Error
-            ExceptionLogString(exp,session);
-            log.Error(session["ExpLogString"]);
-            //-Moiz
-            if (role != null)
+            if (session["role"] != null || session != null)
             {
-                #region Player
-                if (role.ToLower().Equals(PLAYER))
+
+                string role = (string)session["role"];
+                ManageExceptionEntry(sourcePage, session);
+                //+Moiz: Logs Error
+                ExceptionLogString(exp, session);
+                log.Error(session["ExpLogString"]);
+                //-Moiz
+                if (role != null)
                 {
-                    #region playerhome
-                    //If the request is from playerhome.aspx
-                    if (sourcePage.ToLower().Contains("home"))
+                    #region Player
+                    if (role.ToLower().Equals(PLAYER))
                     {
-                        if (redirectionStrategy == RedirectionStrategy.local)
+                        #region playerhome
+                        //If the request is from playerhome.aspx
+                        if (sourcePage.ToLower().Contains("home"))
                         {
- 
-                            if (ExceptionCount(sourcePage,session) > 2)
+                            if (redirectionStrategy == RedirectionStrategy.local)
                             {
-                                SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage,session);
+
+                                if (ExceptionCount(sourcePage, session) > 2)
+                                {
+                                    SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
+                                    RemoveExceptionEntry(sourcePage, session);
+                                    LogoutUser(sourcePage, session, response);
+                                }
+                                else
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                    server.Transfer(sourcePage, false);
+                                }
+                            }
+                            else
+                            {
+                                SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
+                                RemoveExceptionEntry(sourcePage, session);
                                 LogoutUser(sourcePage, session, response);
                             }
-                            else
-                            {
-                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                                server.Transfer(sourcePage,false);
-                            }
                         }
+                        #endregion
+
+                        #region rest of pages
                         else
                         {
-                            SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
-                            RemoveExceptionEntry(sourcePage, session);
-                            LogoutUser(sourcePage, session, response);
-                        }
-                    }
-                    #endregion
-
-                    #region rest of pages
-                    else
-                    {
-                        if (redirectionStrategy == RedirectionStrategy.local)
-                        {
-                            if (ExceptionCount(sourcePage, session) > 2)
+                            if (redirectionStrategy == RedirectionStrategy.local)
                             {
-                                SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage, session);
-                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage,role.ToLower()),session);
-                                response.Redirect(DefaultErrorPage,false);
+                                if (ExceptionCount(sourcePage, session) > 2)
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
+                                    RemoveExceptionEntry(sourcePage, session);
+                                    SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                                    response.Redirect(DefaultErrorPage, false);
+                                }
+                                else
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                    server.Transfer(sourcePage, false);
+                                }
                             }
                             else
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                                server.Transfer(sourcePage, false);
-                            }
-                        }
-                        else
-                        {
-                            SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                            RemoveExceptionEntry(sourcePage, session);
-                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
-                            response.Redirect(DefaultErrorPage,false);
-                        }
-
-                    }
-                    #endregion
-                }
-                #endregion
-                else if (role.ToLower().Equals(MANAGER))
-                {
-                    if (sourcePage.ToLower().Contains("performance"))
-                    {
-                        if (redirectionStrategy == RedirectionStrategy.local)
-                        {
-
-                            if (ExceptionCount(sourcePage, session) > 2)
-                            {
-                                SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
-                                RemoveExceptionEntry(sourcePage, session);
-                                LogoutManager(sourcePage,session, response);
-                            }
-                            else
-                            {
-                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                                server.Transfer(sourcePage, false);
-                            }
-                        }
-                        else
-                        {
-                            SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
-                            RemoveExceptionEntry(sourcePage, session);
-                            LogoutManager(sourcePage, session, response);
-                        }
-                    }
-                    #region rest of pages
-                    else
-                    {
-                        if (redirectionStrategy == RedirectionStrategy.local)
-                        {
-                            if (ExceptionCount(sourcePage, session) > 2)
-                            {
-                                SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
                                 RemoveExceptionEntry(sourcePage, session);
                                 SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                                 response.Redirect(DefaultErrorPage, false);
                             }
+
+                        }
+                        #endregion
+                    }
+                    #endregion
+                    else if (role.ToLower().Equals(MANAGER))
+                    {
+                        if (sourcePage.ToLower().Contains("performance"))
+                        {
+                            if (redirectionStrategy == RedirectionStrategy.local)
+                            {
+
+                                if (ExceptionCount(sourcePage, session) > 2)
+                                {
+                                    SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
+                                    RemoveExceptionEntry(sourcePage, session);
+                                    LogoutManager(sourcePage, session, response);
+                                }
+                                else
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                    server.Transfer(sourcePage, false);
+                                }
+                            }
+                            else
+                            {
+                                SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
+                                RemoveExceptionEntry(sourcePage, session);
+                                LogoutManager(sourcePage, session, response);
+                            }
+                        }
+                        #region rest of pages
+                        else
+                        {
+                            if (redirectionStrategy == RedirectionStrategy.local)
+                            {
+                                if (ExceptionCount(sourcePage, session) > 2)
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
+                                    RemoveExceptionEntry(sourcePage, session);
+                                    SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                                    response.Redirect(DefaultErrorPage, false);
+                                }
+                                else
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                    server.Transfer(sourcePage, false);
+                                }
+                            }
                             else
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                                server.Transfer(sourcePage, false);
+                                RemoveExceptionEntry(sourcePage, session);
+                                SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                                response.Redirect(DefaultErrorPage, false);
                             }
-                        }
-                        else
-                        {
-                            SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                            RemoveExceptionEntry(sourcePage, session);
-                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
-                            response.Redirect(DefaultErrorPage, false);
-                        }
 
+                        }
+                        #endregion
                     }
-                    #endregion
-                }
-                else if (role.ToLower().Equals(ADMIN))
-                {
-                    if (sourcePage.ToLower().Contains("home"))
+                    else if (role.ToLower().Equals(ADMIN))
                     {
-                        if (redirectionStrategy == RedirectionStrategy.local)
+                        if (sourcePage.ToLower().Contains("home"))
                         {
-
-                            if (ExceptionCount(sourcePage, session) > 2)
+                            if (redirectionStrategy == RedirectionStrategy.local)
                             {
-                                SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
+
+                                if (ExceptionCount(sourcePage, session) > 2)
+                                {
+                                    SetLoginErrorMessage(ErrorMessageUtility.constantErrorMessage);
+                                    RemoveExceptionEntry(sourcePage, session);
+                                    LogoutAdmin(sourcePage, session, response);
+                                }
+                                else
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                    server.Transfer(sourcePage, false);
+                                }
+                            }
+                            else
+                            {
+                                SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
                                 RemoveExceptionEntry(sourcePage, session);
                                 LogoutAdmin(sourcePage, session, response);
                             }
+                        }
+                        #region rest of pages
+                        else
+                        {
+                            if (redirectionStrategy == RedirectionStrategy.local)
+                            {
+                                if (ExceptionCount(sourcePage, session) > 2)
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
+                                    RemoveExceptionEntry(sourcePage, session);
+                                    SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
+                                    response.Redirect(DefaultErrorPage, false);
+                                }
+                                else
+                                {
+                                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                                    server.Transfer(sourcePage, false);
+                                }
+                            }
                             else
                             {
                                 SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                                server.Transfer(sourcePage, false);
-                            }
-                        }
-                        else
-                        {
-                            SetLoginErrorMessage(ErrorMessageUtility.homeMessage);
-                            RemoveExceptionEntry(sourcePage, session);
-                            LogoutAdmin(sourcePage, session, response);
-                        }
-                    }
-                    #region rest of pages
-                    else
-                    {
-                        if (redirectionStrategy == RedirectionStrategy.local)
-                        {
-                            if (ExceptionCount(sourcePage, session) > 2)
-                            {
-                                SetErrorMessage(session, ErrorMessageUtility.constantErrorMessage);
                                 RemoveExceptionEntry(sourcePage, session);
                                 SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
                                 response.Redirect(DefaultErrorPage, false);
                             }
-                            else
-                            {
-                                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                                server.Transfer(sourcePage, false);
-                            }
-                        }
-                        else
-                        {
-                            SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                            RemoveExceptionEntry(sourcePage, session);
-                            SetRemoteRedirectionURL(ProvideRedirectionURL(sourcePage, role.ToLower()), session);
-                            response.Redirect(DefaultErrorPage, false);
-                        }
 
+                        }
+                        #endregion
                     }
-                    #endregion
+                }
+                else
+                {
+                    SetErrorMessage(session, ErrorMessageUtility.genericMessage);
                 }
             }
             else
             {
-                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+                //WebMessageBoxUtil.Show("Your Session has expired, you'll be redirected to Login Page momentarily.");
+                response.Redirect("Index.aspx");
             }
-           
         }
 
         internal static void CheckForErrorMessage(HttpSessionState session)
