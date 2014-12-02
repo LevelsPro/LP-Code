@@ -768,7 +768,7 @@ namespace LevelsPro.PlayerPanel
 
         protected void btnAnswer4_Click(object sender, EventArgs e)
         {
-            if (Int32.Parse(Session["cntans4"].ToString()) + 1 == 0)
+            if (Int32.Parse(Session["cntans4"].ToString()) == 0)
             {
                 btnAnswer4.Attributes["Class"] = "yellow option";
                 btnAnswer1.Attributes["Class"] = "qbtn option";
