@@ -1,7 +1,4 @@
-﻿
-
-
-<%@ Page Title="" Language="C#" MasterPageFile="~/ManagerPanel/Manager.master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ManagerPanel/Manager.master" AutoEventWireup="true"
     EnableEventValidation="false" CodeBehind="SwapRole.aspx.cs" Inherits="LevelsPro.ManagerPanel.SwapRole" %>
 
 

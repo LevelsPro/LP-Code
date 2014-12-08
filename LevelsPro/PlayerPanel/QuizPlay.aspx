@@ -2,6 +2,18 @@
     CodeBehind="QuizPlay.aspx.cs" Inherits="LevelsPro.PlayerPanel.QuizPlay" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-57350527-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -11,48 +23,11 @@
             $('.filled-area').css("width", faw);
 
         });
-
-//        function abc() {
-//                        var counter = 0;
-//                        var startTime = new Date().getTime();
-//                        var timeSec = parseInt($('#<%=lblTimeQuestion.ClientID%>').html());           
-//                        var score = parseInt($('#<%=ltScore.ClientID%>').html());
-//                        var deduction = parseInt($('#<%=hdDeductionTime.ClientID%>').val());
-//                        var sec = timeSec;
-//                        var scoreTemp = score / (timeSec - deduction);
-//                        var values = 100 - (100 / timeSec);
-//                        var interval = setInterval(function () {
-//                            counter = counter + 1;
-//                            if (counter > deduction) {
-//                                score = score - scoreTemp;
-//                            }
-//                            $('#<%=ltScore.ClientID%>').html(Math.round(score).toString());
-//                            $('#progressBar').css({ 'width': values + '%' });
-//                            values = values - (100 / timeSec);
-//                            sec -= 1;
-//                            $('#<%=lblTimeQuestion.ClientID%>').html(sec.toString());
-
-//                            if (new Date().getTime() - startTime >= (timeSec * 1000)) {
-//                                Stop(interval);
-//                                $('#<%=lblTimeQuestion.ClientID%>').html(0);
-//                                $('#progressBar').css({ 'width': '0%' });
-//                                $('#<%=ltScore.ClientID%>').html(0);
-//                                return;
-//                            }
-//                            function Stop(interval) {
-//                                clearInterval(interval);
-//                            }
-//                        }, 1000);
-//    }
-
-
-
-
-
-    </script>
+</script>
     <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
     <link href="Styles/website.css" rel="stylesheet" type="text/css" />
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <div class="top-b">
