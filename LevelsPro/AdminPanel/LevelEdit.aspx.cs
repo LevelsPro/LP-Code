@@ -242,8 +242,8 @@ namespace LevelsPro.AdminPanel
             DataView dv = Target.ResultSet.Tables[0].DefaultView;
 
             dv.RowFilter = "Role_ID=" + RoleID.ToString() + "AND Level_ID =" + LevelID.ToString();
-           
 
+            dv.Sort = "KPI_name";
 
 
             gvTarget.DataSource = dv.ToTable();

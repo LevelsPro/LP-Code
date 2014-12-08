@@ -133,6 +133,7 @@ namespace LevelsPro.PlayerPanel
                     }
                     if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
                     {
+                        progress.ResultSet.Tables[0].DefaultView.Sort = "KPI_name";
                         if (progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString().Equals("0"))
                         {
 
