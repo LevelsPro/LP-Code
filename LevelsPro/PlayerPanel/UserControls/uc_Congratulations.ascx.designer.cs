@@ -94,24 +94,6 @@ namespace LevelsPro.PlayerPanel.UserControls {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl TweeterFailureDiv;
         
         /// <summary>
-        /// imgbtnFacebook control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgbtnFacebook;
-        
-        /// <summary>
-        /// imgbtnTwiter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgbtnTwiter;
-        
-        /// <summary>
         /// btnDone control.
         /// </summary>
         /// <remarks>
