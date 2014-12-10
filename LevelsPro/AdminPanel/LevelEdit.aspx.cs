@@ -542,6 +542,7 @@ namespace LevelsPro.AdminPanel
                        
                     }
 
+                    //gvTarget Sort Logic
                     foreach (GridViewRow Row in gvTarget.Rows)
                     {
                         DropDownList kpidropdown = Row.FindControl("ddlKPI") as DropDownList;
@@ -597,8 +598,7 @@ namespace LevelsPro.AdminPanel
                     }
                     }
             }
-            else
-                if (ViewState["roleid"] != null && ViewState["roleid"].ToString() != "" && ViewState["count"] != null && ViewState["count"].ToString() != "")
+            else if (ViewState["roleid"] != null && ViewState["roleid"].ToString() != "" && ViewState["count"] != null && ViewState["count"].ToString() != "")
                 {
                     lblmessage.Visible = true;
 
@@ -803,6 +803,7 @@ namespace LevelsPro.AdminPanel
             ddlKPI.Items.Insert(0, li);
         }
         #endregion
+
         #region delete goal
         protected void btnDeleteGoal_Click(object sender, EventArgs e)
         {
@@ -942,6 +943,7 @@ namespace LevelsPro.AdminPanel
             }
         }
         #endregion
+
         protected void ddlGame_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlGame.SelectedIndex > 0)
