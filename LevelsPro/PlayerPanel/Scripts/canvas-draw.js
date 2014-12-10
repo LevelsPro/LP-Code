@@ -3,6 +3,18 @@
 
 
 
+function isTouchDevice() {
+    return typeof window.ontouchstart !== 'undefined';
+}
+alert(isTouchDevice());
+
+if (isTouchDevice()) {
+    alert("Touch Device");
+}
+
+else {
+    alert("Not a touch Device");                                                        
+}
 
 
 
@@ -51,74 +63,83 @@ $(document).ready(function () {
 	});
 
 
+    function b() {
+        var a = setInterval(function () {
+            var rcolumn = $('.lof').height();
+            $(".awpoints").height(rcolumn - 22);
+            clearInterval(a);
+            b();
+        }, 100);
+    }
+    b();
 
 
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 1000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 1000);
 
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 2000);
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 3000);
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 4000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 2000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 3000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 4000);
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 5000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 5000);
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 7000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 7000);
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 6000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 6000);
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 8000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 8000);
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 9000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 9000);
 
-setTimeout(function () {
-                        
-	 var rcolumn = $('.lof').height();
-        $(".awpoints").height(rcolumn - 22);
-                        }, 10000);
+//setTimeout(function () {
+//                        
+//	 var rcolumn = $('.lof').height();
+//        $(".awpoints").height(rcolumn - 22);
+//                        }, 10000);
 
-    $('.mappad').resize(function () {
+//    $('.mappad').resize(function () {
 
-        var secrh = $('.sec-right').height();
-        $(".pd-desc").height(secrh - 38);
+//        var secrh = $('.sec-right').height();
+//        $(".pd-desc").height(secrh - 38);
 
-    });
+//    });
 
 	
 	 

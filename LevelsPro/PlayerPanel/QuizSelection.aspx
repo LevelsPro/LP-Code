@@ -17,6 +17,27 @@
 
         });
     </script>
+     <script>
+
+         function isTouchDevice() {
+             return typeof window.ontouchstart !== 'undefined';
+         }
+         $(document).ready(function () {
+
+             alert(isTouchDevice());
+
+             if (!isTouchDevice()) {
+                 alert("Not a touch Device");
+                 $(".scrollbar").css("z-index", "1");
+             }
+
+             
+
+         });
+            
+       
+        
+    </script>
     <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
     <link href="Styles/website.css" rel="stylesheet" type="text/css" />
 </asp:Content>

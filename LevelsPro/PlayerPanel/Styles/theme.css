@@ -40,6 +40,7 @@ body {
 .container{
 	width:100%;
 	margin:0px auto;
+	
 	}
 	
 .top-banner{
@@ -2158,6 +2159,7 @@ and (min-width : 500px) {
 	background: url(../images/bar-ptrn.png) top repeat-x;
     height: 41px;
     padding: 7px 9px 3px 9px;
+    position:relative;
 	}
 	
 .user-nt{
@@ -2586,6 +2588,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	margin-top:20px;
 	margin-right:20px;
 	margin-left:17px;
+	position:relative;
 	}
 	
 .qs-item{
@@ -2595,6 +2598,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	padding:11px;
 	margin-bottom:6px;
 	position:relative;
+	margin-right:47px;
 	}
 	
 .qs-mid{
@@ -3849,7 +3853,7 @@ ul.element-list li{
 	
 }
 
-@media all and (max-width:662px) and (min-width: 481px) 
+@media all and (max-width:662px) and (min-width: 150px) 
 {
     
     .qs-mid
