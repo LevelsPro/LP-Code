@@ -42,10 +42,6 @@
         Cannot tweet, please try later</p>
 </div>
 <div class="social-btns-cont">
-    <asp:ImageButton ID="imgbtnFacebook" runat="server" src="images/post-on-facebook.png"
-        Width="329" Height="62" OnClick="imgbtnFacebook_Click" Visible="False" />
-    <asp:ImageButton ID="imgbtnTwiter" runat="server" src="images/post-on-twitter.png"
-        Width="329" Height="62" OnClick="imgbtnTwiter_Click" Visible="False" />
     <div class="green-wrapper frdb donebtn">
         <asp:Button ID="btnDone" runat="server" CssClass="green" Text="Done" OnClick="btnDone_Click" />
     </div>

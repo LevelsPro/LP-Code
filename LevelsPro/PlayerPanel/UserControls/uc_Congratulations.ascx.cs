@@ -48,6 +48,9 @@ namespace LevelsPro.PlayerPanel.UserControls
             successDiv.Visible = false;
             TweeterFailureDiv.Visible = false;
             TweeterSuccessDiv.Visible = false;
+
+            #region Unused Facebook & Twitter Code
+            /*
             if (Session["check1"]!=null && Convert.ToInt32(Session["check1"]) > 0)
             {
                 Session["check1"] = "0";
@@ -107,6 +110,8 @@ namespace LevelsPro.PlayerPanel.UserControls
             //{
             //    imgbtnTwiter_Click(null, null);
             //}
+            */
+            #endregion
         }
 
         protected void btnDone_Click(object sender, EventArgs e)
@@ -240,162 +245,5 @@ namespace LevelsPro.PlayerPanel.UserControls
             }
         }
 
-        protected void imgbtnFacebook_Click(object sender, ImageClickEventArgs e)
-        {
-            int fbck = 0;
-            try
-            {
-                
-               // ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Success", "<script type='text/javascript'>Nothing(); function Nothing(){alert('Nothing');} </script>", false);
-                string app_id = ConfigurationManager.AppSettings["FacebookAppID"].ToString();//app id we created
-                string app_secret = ConfigurationManager.AppSettings["FacebookAppSecretID"].ToString();// app secret
-                string scope = ConfigurationManager.AppSettings["FacebookScope"].ToString();// the permission to grant me for the facebook user
-
-                if (Request["code"] == null) // ask facebook for the code
-                {
-                    Response.Redirect(string.Format(
-                        "https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri={1}&scope={2}",
-                        app_id, Request.Url.AbsoluteUri + "?from=sharebutton", scope));
-                }
-                else
-                {
-                    Session["check1"] = 0;
-                    fbck++;
-                    Dictionary<string, string> tokens = new Dictionary<string, string>(); //parameters returned from facebook
-
-                    string url = string.Format("https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&scope={2}&code={3}&client_secret={4}",
-                        app_id, Request.Url.AbsoluteUri, scope, Request["code"].ToString(), app_secret);
-
-                    HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-                    //  read response at get the access code to post the on behalf of the user
-                    using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                    {
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
-
-                        string vals = reader.ReadToEnd();
-
-                        foreach (string token in vals.Split('&'))
-                        {
-
-                            tokens.Add(token.Substring(0, token.IndexOf("=")),
-                                token.Substring(token.IndexOf("=") + 1, token.Length - token.IndexOf("=") - 1));
-                        }
-                    }
-
-                    string access_token = tokens["access_token"];// acess token never expire but user can deauthrize the app
-
-                    var client = new FacebookClient(access_token); //acess token which we tailored up in the code
-
-                    object objFB = client.Post("/me/feed", new { message = "You have successfully achieved Level: " + (Convert.ToInt32(Level.Substring(6))) + " (LevelsPro)" });
-                    //object objFB = client.Post("/me/feed", new { message = "You have successfully achieved: " + lblLevel.Text.Trim() + " (LevelsPro)" });
-                    if (objFB != null)
-                    {
-                        Session["check"] = "0";
-                        Session["check1"] = "0";
-                        PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-                        // make collection editable
-                        isreadonly.SetValue(this.Request.QueryString, false, null);
-                        // remove
-                        this.Request.QueryString.Remove("from");
-
-                        //Request.QueryString.Clear();
-                        //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Success", "<script>alert('You have successfully shared on facebook.')</script>", false);
-                        successDiv.Visible = true;
-                        ModalPopupExtender mpe = this.Parent.FindControl("mpeCongratsMessageDiv") as ModalPopupExtender;
-                        mpe.Show();
-                    }
-                    else
-                    {
-                        //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot share on facebook, please try later!')</script>", false);
-                        FailureDiv.Visible = true;
-                        ModalPopupExtender mpe = this.Parent.FindControl("mpeCongratsMessageDiv") as ModalPopupExtender;
-                        mpe.Show();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot share same status on facebook, please try again later!')</script>", false);
-                FailureDiv.Visible = true;
-                if (fbck > 0)
-                {
-                    Session["check"] = "1";
-                    Response.Redirect("PlayerHome.aspx");
-                }
-                Session["check1"] = "1";
-                ModalPopupExtender mpe = this.Parent.FindControl("mpeCongratsMessageDiv") as ModalPopupExtender;
-                mpe.Show();
-            }
-        }
-
-        protected void imgbtnTwiter_Click(object sender, ImageClickEventArgs e)
-        {
-
-            Session["windowcheck"] = "1";
-            Response.Redirect("PlayerHome.aspx");
-
-            //if (auth.IsAuthorized)
-            //{
-            //    TweetLevel();
-            //}
-            //else
-            //{
-            //    Uri objUri;
-            //    if (Request.Url.PathAndQuery.Contains("fromtwitter") == false)
-            //    {
-            //        objUri = new Uri(Request.Url + "?fromtwitter=1");
-            //    }
-            //    else
-            //    {
-            //        objUri = Request.Url;
-            //    }
-
-            //    auth.BeginAuthorization(objUri);
-            //}
-        }
-
-        private void TweetLevel()
-        {
-            try
-            {
-                using (var twitterCtx = new TwitterContext(auth))
-                {
-                    //var twitterCtx = new TwitterContext(auth);
-
-                    var tweet = twitterCtx.UpdateStatus("You have achieved " + lblLevel.Text + " (LevelsPro)");
-
-                    if (tweet != null)
-                    {
-
-                        //Request.QueryString.Clear();
-                        //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Success", "<script>alert('You have successfully tweeted.')</script>", false);
-                        TweeterSuccessDiv.Visible = true;
-                        ModalPopupExtender mpe = this.Parent.FindControl("mpeCongratsMessageDiv") as ModalPopupExtender;
-                        mpe.Show();
-                    }
-                    else
-                    {
-                        //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot tweet, please try later!')</script>", false);
-                        TweeterFailureDiv.Visible = true;
-                        ModalPopupExtender mpe = this.Parent.FindControl("mpeCongratsMessageDiv") as ModalPopupExtender;
-                        mpe.Show();
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                //ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Failure", "<script>alert('Cannot tweet same status on twitter, please try again later!')</script>", false);
-                TweeterFailureDiv.Visible = true;
-                ModalPopupExtender mpe = this.Parent.FindControl("mpeCongratsMessageDiv") as ModalPopupExtender;
-                mpe.Show();
-            }
-
-            PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-            // make collection editable
-            isreadonly.SetValue(this.Request.QueryString, false, null);
-            // remove
-            this.Request.QueryString.Remove("fromtwitter");
-        }
     }
 }

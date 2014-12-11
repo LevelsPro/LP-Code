@@ -5,9 +5,22 @@
 <%@ Register TagPrefix="uc" TagName="Profile" Src="~/PlayerPanel/UserControls/uc_Profile.ascx" %>
 <%@ Register TagPrefix="uc" TagName="AwardDetails" Src="~/PlayerPanel/UserControls/uc_AwardDetails.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <%--<link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />--%>
+
     <link href="Styles/theme.css" rel="stylesheet" type="text/css" />
     <link href="Styles/website.css" rel="stylesheet" type="text/css" />
+    
+    <script type="text/javascript">
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-57350527-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -94,7 +107,8 @@
                 </div>
   
             </div>
-            <div class="manager-cont fl-wrapper" id="scrollbar1">
+            <div class="fl-wrapper">
+            <div class="manager-cont" id="scrollbar1">
                 <div class="scrollbar">
                     <div class="track">
                         <div class="thumb">
@@ -131,6 +145,7 @@
 
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

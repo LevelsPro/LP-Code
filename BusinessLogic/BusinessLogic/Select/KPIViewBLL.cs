@@ -28,6 +28,8 @@ namespace BusinessLogic.Select
             set
             {
                 _resultSet = value;
+                _resultSet.Tables[0].DefaultView.Sort = "KPI_name";
+
             }
         }
     }

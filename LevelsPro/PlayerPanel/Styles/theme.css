@@ -1949,7 +1949,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#474748', end
 	
 .fl-wrapper{
 	-webkit-border-radius: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 0px 10px 10px;
 	border:1px solid #b0b0b0;
 	background:#FFF;
 	border-bottom:none;
@@ -2346,7 +2346,8 @@ and (min-width : 500px) {
 	}	
 
 .manager-cont{
-	margin:11px;
+	margin:11px 11px 11px 11px;
+	position:relative;
 	}
 	
 .fl-wrapper{
@@ -2356,6 +2357,7 @@ and (min-width : 500px) {
 	background: #FFF;
 	border-bottom: none;
 	padding:10px 10px 25px 10px;
+	margin-right:11px;
 	}
 	
 .msg-ico{
@@ -2598,7 +2600,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 	padding:11px;
 	margin-bottom:6px;
 	position:relative;
-	margin-right:47px;
+	margin-right:58px;
 	}
 	
 .qs-mid{

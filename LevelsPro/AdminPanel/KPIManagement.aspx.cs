@@ -75,6 +75,7 @@ namespace LevelsPro.AdminPanel
             {
                 throw ex;
             }
+            
             dlKPI.DataSource = kpi.ResultSet;
             dlKPI.DataBind();
         }

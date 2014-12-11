@@ -3,18 +3,7 @@
 
 
 
-function isTouchDevice() {
-    return typeof window.ontouchstart !== 'undefined';
-}
-alert(isTouchDevice());
 
-if (isTouchDevice()) {
-    alert("Touch Device");
-}
-
-else {
-    alert("Not a touch Device");                                                        
-}
 
 
 
@@ -56,8 +45,7 @@ $(document).ready(function () {
 
 
 
- $('.mapb').resize(function(){
-	alert("resize test");	
+ $('.mapb').resize(function(){	
 	 var rcolumn = $('.lof').height();
         $(".awpoints").height(rcolumn - 22);
 	});
