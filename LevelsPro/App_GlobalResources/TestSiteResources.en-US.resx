@@ -1761,4 +1761,12 @@
   <data name="LeaderBoards" xml:space="preserve">
     <value>Leaderboards</value>
   </data>
+  <data name="ContestLocation" xml:space="preserve">
+    <value>Location</value>
+    <comment>Contest Edit Form</comment>
+  </data>
+  <data name="ContestRole" xml:space="preserve">
+    <value>Role</value>
+    <comment>Contest Edit Form</comment>
+  </data>
 </root>

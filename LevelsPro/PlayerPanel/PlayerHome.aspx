@@ -325,6 +325,8 @@
                     </div>
                     <div class="clear">
                     </div>
+                    
+                    <% if (PlayerHasContests()) {%>
                     <div class="contest-footer-container" id="scrollbar2">
                         <div class="viewport">
                             <uc:Contests ID="Contest1" runat="server" />
@@ -359,6 +361,8 @@
                             </div>
                         </ProgressTemplate>
                     </asp:UpdateProgress>
+                    <% } %>
+
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
