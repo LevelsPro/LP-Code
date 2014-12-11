@@ -72,7 +72,8 @@
                 <div class="clear">
                 </div>
             </div>
-            <div class="manager-cont fl-wrapper" id="scrollbar1">
+            <div class="fl-wrapper">
+                <div class="manager-cont" id="scrollbar1">
                 <div class="scrollbar">
                     <div class="track">
                         <div class="thumb">
@@ -84,7 +85,7 @@
                 <div class="viewport msgs">
                     <div class="overview">
                         <asp:DataList ID="dlViewAwards" runat="server" RepeatColumns="1" RepeatDirection="Vertical"
-                            RepeatLayout="Table" Width="100%" OnItemDataBound="dlViewAwards_ItemDataBound">
+                            RepeatLayout="Flow"  Width="100%" OnItemDataBound="dlViewAwards_ItemDataBound">
                             <ItemTemplate>
                                 <table>
                                     <tr>
@@ -116,6 +117,7 @@
                         </asp:DataList>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

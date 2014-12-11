@@ -85,7 +85,8 @@
                 <div class="clear">
                 </div>
             </div>
-            <div class="manager-cont fl-wrapper" id="scrollbar1">
+            <div class="fl-wrapper">
+                <div class="manager-cont" id="scrollbar1">
                 <div class="scrollbar">
                     <div class="track">
                         <div class="thumb">
@@ -121,6 +122,7 @@
                         </asp:DataList>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

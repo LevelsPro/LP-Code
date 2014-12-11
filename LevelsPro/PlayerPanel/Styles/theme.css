@@ -40,7 +40,7 @@ body {
 .container{
 	width:100%;
 	margin:0px auto;
-	
+	min-width:640px;
 	}
 	
 .top-banner{
@@ -2346,7 +2346,7 @@ and (min-width : 500px) {
 	}	
 
 .manager-cont{
-	margin:11px 11px 11px 11px;
+	margin:11px 0px 11px 11px;
 	position:relative;
 	}
 	
@@ -2356,8 +2356,8 @@ and (min-width : 500px) {
 	border: 1px solid #b0b0b0;
 	background: #FFF;
 	border-bottom: none;
-	padding:10px 10px 25px 10px;
-	margin-right:11px;
+	padding:10px 0px 25px 10px;
+	margin:0 11px;
 	}
 	
 .msg-ico{
@@ -2383,7 +2383,10 @@ and (min-width : 500px) {
 	border-bottom:2px solid #ababab;
 	margin-bottom:23px;
 	padding-bottom:23px;
+	
 	}
+	
+span.award-cont{display:block;margin-right:51px;}
 	
 .award-cont .heading{
 	font-size:34px;
@@ -2588,7 +2591,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00abff', end
 
 .qs-cont{
 	margin-top:20px;
-	margin-right:20px;
+	/*margin-right:20px;*/
 	margin-left:17px;
 	position:relative;
 	}
@@ -4000,3 +4003,13 @@ and (max-device-width : 480px) {*/
 	
 	}
 	
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+{ 
+
+    .container, .body{display:none;}
+    /* Retina-specific stuff here */
+}
