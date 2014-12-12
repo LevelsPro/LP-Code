@@ -13,41 +13,6 @@
     font-style: normal;
 }
 
-@media screen and (max-width: 1000px) 
-{
-    .level-cont-grey 
-    {
-        width:75% !important;
-        display:block; 
-    }
-    .lvl {
-        font-size: 15px !important;
-        width:70% !important;
-        height:70% !important;
-        white-space: nowrap;
-        margin-left: 5px !important;
-    }    
-    .lvl-desc {
-        font-size: 16px !important;
-        width:70% !important;
-        height:70% !important;
-        white-space: nowrap !important;
-        padding: 10px !important;
-    }
-    .desc {
-        font-size: 12px !important;
-        margin-left: -20px !important;
-    }  
-    .lvl-points 
-    {
-        top: 5px !important;
-        font-size: 12px !important;
-        margin-left: -15px !important;
-        margin-top: -15px !important;
-    }       
-
-}
-
 body {
     margin:0px;
     padding:0px;
@@ -294,7 +259,6 @@ ul.position-list {
     list-style: none;
     padding: 0;
     height: auto;
-    white-space: nowrap;
 }
 ul.position-list li {
     display: inline-block;
@@ -3290,8 +3254,7 @@ select.up-login{
 	
 .lvl-desc{
 	width:76%;
-	/*background:#FFF url(../images/lvl-arrow.png) 98% center no-repeat;*/
-	background:#FFF 98% center no-repeat;
+	background:#FFF url(../images/lvl-arrow.png) 98% center no-repeat;
 	border:2px solid #ababab;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;

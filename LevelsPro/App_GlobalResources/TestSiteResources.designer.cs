@@ -754,15 +754,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Location.
-        /// </summary>
-        internal static string ContestLocation {
-            get {
-                return ResourceManager.GetString("ContestLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Contest Management.
         /// </summary>
         internal static string ContestManagement {
@@ -786,15 +777,6 @@ namespace Resources {
         internal static string ContestParameters {
             get {
                 return ResourceManager.GetString("ContestParameters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Role.
-        /// </summary>
-        internal static string ContestRole {
-            get {
-                return ResourceManager.GetString("ContestRole", resourceCulture);
             }
         }
         

@@ -94,7 +94,7 @@
             </div>
             <!-- KPI -->
             <div class="strip">
-                <asp:Label ID="lblStoreName" runat="server" class="edit-left32" Text="<%$ Resources:TestSiteResources, Location %>"></asp:Label>
+                <asp:Label ID="lblStoreName" runat="server" class="edit-left32" Text="Who Plays"></asp:Label>
                 <span class="edit-right32 tl">
                     <asp:DropDownList ID="ddlStore_ID" runat="server" CssClass="combo-fw" ValidationGroup="Insertion"
                         MaxLength="10" AutoCompleteType="Disabled" onfocus="disableautocompletion(this.id);">
@@ -105,7 +105,7 @@
             </div>
             <!-- Store -->
             <div class="strip no-bottom-border">
-                <asp:Label ID="lblRolesName" runat="server" class="edit-left32" Text="<%$ Resources:TestSiteResources, Role %>"></asp:Label>
+                <asp:Label ID="lblRolesName" runat="server" class="edit-left32" Text="Who Plays"></asp:Label>
                 <span class="edit-right32 tl">
                     <asp:DropDownList ID="ddlRoles_ID" runat="server" CssClass="combo-fw" ValidationGroup="Insertion"
                         MaxLength="10" AutoCompleteType="Disabled" onfocus="disableautocompletion(this.id);">

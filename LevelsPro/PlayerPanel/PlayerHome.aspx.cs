@@ -22,52 +22,13 @@ using LevelsPro.Util;
 using Common.Utils;
 using log4net;
 
-// modified by jseas
 namespace LevelsPro.PlayerPanel
 {
     public partial class PlayerHome : AuthorizedPage
     {
-        #region init
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-        }
-        #endregion
-
-        #region attributes - constants - properties
-
-        #region attributes
-        private string usr, pwd, role, pageURL;
+        private string usr, pwd, role,pageURL;
         public DataSet dsaward;
         private ILog log;
-        #endregion
-
-        #region constants
-        public const string PlayerHasCon = "playerHasContests";
-        #endregion
-
-        #region properties
-        public bool PlayerHasContests()
-        {
-            var hasContests = false;
-            try
-            {
-                if (Session[PlayerHasCon] != null && !string.IsNullOrEmpty(Convert.ToString(Session[PlayerHasCon])))
-                {
-                    hasContests = Convert.ToString(Session[PlayerHasCon]).ToLower().Equals("true");
-                }
-            }
-            catch (Exception ex)
-            {
-                hasContests = true;
-            }
-            return hasContests;
-        }
-        #endregion
-
-        #endregion
-
-        #region page load
         // private WebAuthorizer auth; // twitter Authorizer
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -75,7 +36,7 @@ namespace LevelsPro.PlayerPanel
             System.Uri url = Request.Url;
             pageURL = url.AbsolutePath.ToString();
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+                       
             {
                 if (Convert.ToInt32(Session["FirstTimeLogin"]) == 1)
                 {
@@ -94,11 +55,11 @@ namespace LevelsPro.PlayerPanel
                         Session["PlayerLevelImage"] = ds.Tables[0].Rows[0]["ImageName"].ToString();
                         Session["AllLevelsPlayer"] = ds.Tables[1];
 
-
+                        
                         Session["userrole"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                         Session["rolename"] = ds.Tables[0].Rows[0]["RoleName"].ToString();
                         Session["TipsLinkage"] = "false";
-
+                       
                         Session["UserRoleID"] = ds.Tables[0].Rows[0]["U_RolesID"];
                         Session["role"] = "Player";
                         Session["checkforlogout"] = 0;
@@ -116,7 +77,7 @@ namespace LevelsPro.PlayerPanel
 
 
                         Session["U_Points"] = ds.Tables[0].Rows[0]["U_Points"];
-
+                     
 
                         if (ds.Tables[0].Rows[0]["ManagerEmail"] != null)
                         {
@@ -130,17 +91,17 @@ namespace LevelsPro.PlayerPanel
                     catch (Exception ex)
                     {
 
-
+                        
                         throw ex;
                     }
                 }
 
                 Session["FirstTimeLogin"] = 1;
 
-
+                
                 string Thumbpath = ConfigurationManager.AppSettings["PlayersThumbPath"].ToString();
                 string path = ConfigurationManager.AppSettings["RolePath"].ToString();
-
+                
                 MessagesViewBLL messageview = new MessagesViewBLL();
 
                 try
@@ -149,7 +110,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
-
+                    
                     throw ex;
                 }
 
@@ -170,13 +131,13 @@ namespace LevelsPro.PlayerPanel
                 {
                     ContentPlaceHolder myContent = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
                     myContent.FindControl("noti").Visible = false;
-
+                 
                 }
 
 
                 lblScore.Text = Session["U_Points"].ToString();
                 Session["U_Points"] = lblScore.Text;
-
+                
 
 
                 UserImageViewBLL UserImage = new UserImageViewBLL();
@@ -193,7 +154,7 @@ namespace LevelsPro.PlayerPanel
                 }
                 catch (Exception ex)
                 {
-
+                    
                     throw ex;
                 }
                 DataView dvImage1 = UserImage.ResultSet.Tables[0].DefaultView;
@@ -206,30 +167,30 @@ namespace LevelsPro.PlayerPanel
                 }
 
 
-
+              
 
                 if (!IsPostBack)
                 {
-
+                   
                     if (Session["userid"] != null && Session["userid"].ToString() != "")
                     {
-                        lblFullName.Text = Session["displayname"].ToString();
+                        lblFullName.Text = Session["displayname"].ToString();                        
 
                         if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                         {
                             if (Session["MyCulture"].ToString() == "fr-FR")
                             {
-
+                                
                             }
                             else
                             {
-
+                                
                             }
                         }
 
-
+                        
                         lblUserRole.Text = Session["rolename"].ToString();
-
+                        
                         if (Session["userid"] != null && Session["userid"].ToString() != "")
                         {
                             /////////by atizaz
@@ -246,12 +207,12 @@ namespace LevelsPro.PlayerPanel
                             }
                             catch (Exception ex)
                             {
-
+                                
                                 throw ex;
                             }
 
                             dsaward = award.ResultSet;
-
+                          
                             if (award.ResultSet != null && award.ResultSet.Tables.Count > 0 && award.ResultSet.Tables[1] != null && award.ResultSet.Tables[1].Rows.Count > 0)
                             {
                                 DataView dv1 = award.ResultSet.Tables[1].DefaultView;
@@ -267,7 +228,7 @@ namespace LevelsPro.PlayerPanel
 
                                     user.UserID = Convert.ToInt32(Session["userid"]);
                                     user.AwardID = AwardID;
-
+                                   
                                     popup.User = user;
                                     try
                                     {
@@ -275,7 +236,7 @@ namespace LevelsPro.PlayerPanel
                                     }
                                     catch (Exception ex)
                                     {
-
+                                       
                                         throw ex;
                                     }
 
@@ -286,10 +247,10 @@ namespace LevelsPro.PlayerPanel
 
                             }
 
-
+                            
                             if (award.ResultSet != null && award.ResultSet.Tables.Count > 0 && award.ResultSet.Tables[0] != null && award.ResultSet.Tables[0].Rows.Count > 0)
                             {
-
+                              
                                 foreach (DataRow dr in award.ResultSet.Tables[0].Rows)
                                 {
                                     if (dr["popup_showed"].ToString() == "False" && dr["Award_Manual"].ToString() == "True")
@@ -299,7 +260,7 @@ namespace LevelsPro.PlayerPanel
                                             ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "manual");
                                             mpeAwardCongratsMessageDiv.Show();
 
-                                            String URL = "https://twitter.com/intent/tweet?source=webclient&text=you+have+sucessfully+achieved+award+" + dr["Award_Name"].ToString() + "+.+via+%40LevelsPro";
+                                            String URL = "https://twitter.com/intent/tweet?source=webclient&text=you+have+sucessfully+achieved+award+"+dr["Award_Name"].ToString()+"+.+via+%40LevelsPro";
                                             Page page = HttpContext.Current.CurrentHandler as Page;
                                             Page.ClientScript.RegisterStartupScript(this.GetType(), "myScript", "windowpop('" + URL + "');", true);
                                             Session["windowcheck"] = "0";
@@ -308,10 +269,10 @@ namespace LevelsPro.PlayerPanel
                                         {
                                             ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "manual");
                                             mpeAwardCongratsMessageDiv.Show();
-
+                                            
                                         }
-
-
+                                       
+                                        
                                     }
                                     if (dr["popup_showed"].ToString() == "False" && dr["Award_Manual"].ToString() == "False" && Convert.ToDecimal(dr["Percentage"]) >= 100)
                                     {
@@ -319,7 +280,7 @@ namespace LevelsPro.PlayerPanel
                                         {
                                             ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "auto");
                                             mpeAwardCongratsMessageDiv.Show();
-                                            String URL = "https://twitter.com/intent/tweet?source=webclient&text=you+have+sucessfully+achieved+award+" + dr["Award_Name"].ToString() + "+.+via+%40LevelsPro";
+                                            String URL = "https://twitter.com/intent/tweet?source=webclient&text=you+have+sucessfully+achieved+award+"+dr["Award_Name"].ToString()+"+.+via+%40LevelsPro";
                                             Page page = HttpContext.Current.CurrentHandler as Page;
                                             Page.ClientScript.RegisterStartupScript(this.GetType(), "myScript", "windowpop('" + URL + "');", true);
                                             Session["windowcheck"] = "0";
@@ -328,7 +289,7 @@ namespace LevelsPro.PlayerPanel
                                         {
                                             ucAwardCongrats.LoadData(Convert.ToInt32(dr["award_id"]), dr["Award_Name"].ToString(), "auto");
                                             mpeAwardCongratsMessageDiv.Show();
-
+                                            
                                         }
                                     }
                                 }
@@ -337,32 +298,32 @@ namespace LevelsPro.PlayerPanel
                             #endregion
                             /////////////////////
 
-
-
-                            if (Convert.ToInt32(Session["LevelPosition"]) > 0)
+                            
+                               
+                            if(Convert.ToInt32( Session["LevelPosition"]) > 0)
                             {
                                 Session["CurLevel"] = Session["UserCurrentLevel"].ToString();
                                 LevelStar.ImageUrl = "images/star_yellow_" + Session["LevelPosition"].ToString() + ".png";
-
+                                
 
 
                                 TotalPlayerScoreViewBLL progress = new TotalPlayerScoreViewBLL();
 
-
+                                
                                 Common.User user = new Common.User();
 
                                 user.UserID = Convert.ToInt32(Session["userid"]);
                                 user.CurrentLevel = Convert.ToInt32(Session["UserCurrentLevel"]);//
                                 progress.User = user;
-
+                                
                                 try
                                 {
                                     progress.Invoke();
-
+                                    
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    
                                     throw ex;
                                 }
                                 if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
@@ -385,72 +346,72 @@ namespace LevelsPro.PlayerPanel
                                     {
                                         lblPerformance.Text = "0%";
                                     }
-
+                                    
 
                                     #region Display of multiple popups (by Haseeb)
 
-                                    GetPopupShowed_LevelPerformanceBLL Popup = new GetPopupShowed_LevelPerformanceBLL();
-                                    DataSet dSpopUp = new DataSet();
+                                        GetPopupShowed_LevelPerformanceBLL Popup = new GetPopupShowed_LevelPerformanceBLL();
+                                        DataSet dSpopUp = new DataSet();
 
-                                    try
-                                    {
-                                        Popup.Invoke();
-                                        dSpopUp = Popup.ResultSet;
-                                    }
-                                    catch (Exception ex)
-                                    {
-
-                                        throw ex;
-                                    }
-
-
-                                    DataView dVpopUp = dSpopUp.Tables[0].DefaultView;
-                                    dVpopUp.RowFilter = "user_id = " + Convert.ToInt32(Session["userid"]) + "And level_achieved = 1 AND popup_showed = 0";
-                                    DataTable dTpopUp = dVpopUp.ToTable();
-
-
-
-                                    if (dTpopUp.Rows.Count > 0)
-                                    {
-                                        if (Convert.ToInt32(dTpopUp.Rows[0]["popup_showed"]) == 0)
+                                        try
                                         {
-                                            #region Checking Level Name and bonus
+                                            Popup.Invoke();
+                                            dSpopUp = Popup.ResultSet;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            
+                                            throw ex;
+                                        }
 
-                                            DataTable dTFulllevel = (DataTable)Session["AllLevelsPlayer"];
-                                            dTFulllevel.DefaultView.RowFilter = "Level_ID = " + Convert.ToInt32(dTpopUp.Rows[0]["current_level"]);
-                                            dTFulllevel = dTFulllevel.DefaultView.ToTable();
-                                            String LevelName = "";
-                                            String Bonus = "";
-                                            if (dTFulllevel.Rows.Count == 1)
+
+                                        DataView dVpopUp = dSpopUp.Tables[0].DefaultView;
+                                        dVpopUp.RowFilter = "user_id = " + Convert.ToInt32(Session["userid"]) + "And level_achieved = 1 AND popup_showed = 0";
+                                        DataTable dTpopUp = dVpopUp.ToTable();
+
+
+                                        
+                                        if (dTpopUp.Rows.Count > 0)
+                                        {
+                                            if (Convert.ToInt32(dTpopUp.Rows[0]["popup_showed"]) == 0)
                                             {
-                                                LevelName = dTFulllevel.Rows[0]["Level_Position"].ToString();
-                                                Bonus = dTFulllevel.Rows[0]["Points"].ToString();
-                                            }
-                                            #endregion
+                                                #region Checking Level Name and bonus
+                                                
+                                                DataTable dTFulllevel =(DataTable)Session["AllLevelsPlayer"];
+                                                dTFulllevel.DefaultView.RowFilter = "Level_ID = " + Convert.ToInt32(dTpopUp.Rows[0]["current_level"]);
+                                                dTFulllevel = dTFulllevel.DefaultView.ToTable();
+                                                String LevelName = "";
+                                                String Bonus = "";
+                                                if (dTFulllevel.Rows.Count == 1)
+                                                {
+                                                    LevelName = dTFulllevel.Rows[0]["Level_Position"].ToString();
+                                                    Bonus = dTFulllevel.Rows[0]["Points"].ToString();
+                                                }
+                                                #endregion
 
-                                            ucCongratsMessage.LoadData("Level " + LevelName, dTpopUp.Rows[0]["current_level"].ToString(), Bonus);
-                                            if (Convert.ToInt32(Session["windowcheck"]) == 1)
-                                            {
-                                                Session["windowcheck"] = "0";
-                                                mpeCongratsMessageDiv.Show();
-                                                String URL = "https://twitter.com/intent/tweet?source=webclient&text=you+have+achieved+Level+" + LevelName + "+.+via+%40LevelsPro";
-                                                Page page = HttpContext.Current.CurrentHandler as Page;
-                                                Page.ClientScript.RegisterStartupScript(this.GetType(), "myScript", "windowpop('" + URL + "');", true);
+                                                ucCongratsMessage.LoadData("Level " + LevelName, dTpopUp.Rows[0]["current_level"].ToString(), Bonus);
+                                                if (Convert.ToInt32(Session["windowcheck"]) == 1)
+                                                {
+                                                    Session["windowcheck"] = "0";
+                                                    mpeCongratsMessageDiv.Show();
+                                                    String URL = "https://twitter.com/intent/tweet?source=webclient&text=you+have+achieved+Level+" + LevelName + "+.+via+%40LevelsPro";
+                                                    Page page = HttpContext.Current.CurrentHandler as Page;
+                                                    Page.ClientScript.RegisterStartupScript(this.GetType(), "myScript", "windowpop('" + URL + "');", true);
 
 
-                                            }
-                                            else
-                                            {
-                                                mpeCongratsMessageDiv.Show();
+                                                }
+                                                else
+                                                {
+                                                    mpeCongratsMessageDiv.Show();
+                                                }
                                             }
                                         }
+                                       
+
+                                        #endregion
+                                      
                                     }
-
-
-                                    #endregion
-
-                                }
-
+                                
 
                             }
                             else
@@ -461,21 +422,21 @@ namespace LevelsPro.PlayerPanel
                         }
                         else
                         {
-
+                            
                         }
 
                         if (Session["PlayerLevelImage"] != null || !Session["PlayerLevelImage"].ToString().Equals(""))
                         {
 
                             string imagepath = Session["PlayerLevelImage"].ToString();
-                            Session["imagePath"] = path + imagepath;
-                            MapImage.Src = path + imagepath;
-                        }
-                        else
-                        {
-                            MapImage.Src = "images/map.png";
-                        }
-
+                               Session["imagePath"] = path + imagepath;
+                                MapImage.Src = path + imagepath;
+                            }
+                            else
+                            {
+                                MapImage.Src = "images/map.png";
+                            }
+                        
 
                         DataSet ds = dsaward;
 
@@ -489,7 +450,7 @@ namespace LevelsPro.PlayerPanel
 
                             if (dtAw != null && dtAw.Rows.Count > 0)
                             {
-
+                                
                                 lblTotal.Text = dtAw.Rows.Count.ToString() + ' ' + Resources.TestSiteResources.Total;
                             }
                         }
@@ -509,8 +470,8 @@ namespace LevelsPro.PlayerPanel
                         }
                         catch (Exception ex)
                         {
-                            ExceptionUtility.ExceptionLogString(ex, Session);
-                            Session["ExpLogString"] += " Aditional Info: The page has been redirected to login";
+                            ExceptionUtility.ExceptionLogString(ex,Session);
+                            Session["ExpLogString"]+= " Aditional Info: The page has been redirected to login";
                             log.Error(Session["ExpLogString"]);
                             Response.Redirect("~/Login.aspx");
                         }
@@ -518,29 +479,32 @@ namespace LevelsPro.PlayerPanel
                 }
             }
             ExceptionUtility.CheckForErrorMessage(Session);
-        }
-        #endregion
 
-        #region page error
+        }
+
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
-            // Void Page_Load(System.Object, System.EventArgs)
+           // Void Page_Load(System.Object, System.EventArgs)
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log,exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
         }
-        #endregion
 
-        #region user interface events
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+        }
+
         protected void btnEditProfile_Click(object sender, EventArgs e)
         {
             Response.Redirect("PlayerProfile.aspx?userid=1");
@@ -567,7 +531,7 @@ namespace LevelsPro.PlayerPanel
             Response.Redirect("ProgressDetails.aspx");
         }
 
-
+        
         protected void lbtnAwards_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/PlayerPanel/ViewAwards.aspx", false);
@@ -594,27 +558,37 @@ namespace LevelsPro.PlayerPanel
         }
         protected void lnkbtnLogout_Click1(object sender, EventArgs e)
         {
-            LoginUpdateBLL loginuser = new LoginUpdateBLL();
-            Common.User user = new Common.User();
-            user.UserID = Convert.ToInt32(Session["userid"]);
-            loginuser.Users = user;
-            try
-            {
-                loginuser.Invoke();
-            }
-            catch (Exception ex)
-            {
+            //if (Session.)
+            //{
+               
+                LoginUpdateBLL loginuser = new LoginUpdateBLL();
+                Common.User user = new Common.User();
+                user.UserID = Convert.ToInt32(Session["userid"]);
+                loginuser.Users = user;
+                try
+                {
+                    loginuser.Invoke();
+                }
+                catch (Exception ex)
+                {
 
-                throw ex;
-            }
-            Session.Abandon();
-            Response.Redirect("~/Index.aspx");
+                    throw ex;
+                }
+
+                Session.Abandon();
+                Response.Redirect("~/Index.aspx");
+            //}
         }
 
         protected void lkbChang_Click(object sender, EventArgs e)
         {
             mpeChangePassDiv.Show();
         }
-        #endregion
+
+       
+
+       
+
+       
     }
 }
