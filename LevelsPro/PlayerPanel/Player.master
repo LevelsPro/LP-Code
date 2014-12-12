@@ -70,13 +70,7 @@
 
         });
 
-        var dpr = window.devicePixelRatio;
-        if (dpr == 2) {
-            alert("DPI" + dpr);
-        }
-        else {
-            alert("not a Retina Device");
-        }
+       
     </script>
    
 </body>

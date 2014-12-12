@@ -205,7 +205,7 @@
                 <img src="images/logo.png" />
             </div>
             <div class="banner">
-                <div style="color: White;">
+                <div style="color: White;position:relative;">
                     <asp:LinkButton ID="lkbChang" runat="server" Text="<%$ Resources:TestSiteResources, ChangePassword %>"
                         OnClick="lkbChang_Click" ForeColor="White"></asp:LinkButton>
                     |

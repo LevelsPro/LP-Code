@@ -33,8 +33,8 @@
             <div class="green-ar-wrapper fl">
                 <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, HomeAdmin %>"
                     PostBackUrl="~/PlayerPanel/PlayerHome.aspx" class="green-ar"></asp:Button>
-            </div>
-            <asp:Label ID="lblName" runat="server" class="user-nt"></asp:Label>
+            </div><div class="user-nt">
+            <asp:Label ID="lblName" runat="server" ></asp:Label></div>
             <div class="green-wrapper logout">
                 <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
                     class="green" OnClick="btnLogout_Click"></asp:Button>

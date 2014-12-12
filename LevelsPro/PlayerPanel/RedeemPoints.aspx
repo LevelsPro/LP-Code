@@ -102,8 +102,8 @@
     <div class="body-cont">
 	<uc:Profile ID="ViewProfile" runat="server" />
 	
-
-		<div class="redemption-holder" id="scrollbar1">
+    
+		<div class="redemption-holder redemption" id="scrollbar1">
 				
 				<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
 		<div class="viewport redemption">
