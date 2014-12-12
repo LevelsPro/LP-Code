@@ -71,6 +71,7 @@ namespace LevelsPro.PlayerPanel
         {
             string path = ConfigurationSettings.AppSettings["AwardsPath"].ToString();
             string Thumbpath = ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString();
+            
             if (Session["userid"] != null && Session["userid"].ToString() != "")
             {
                 ViewProfile.LoadData();
@@ -100,7 +101,7 @@ namespace LevelsPro.PlayerPanel
                     DataView dv = auto.ResultSet.Tables[0].DefaultView;
 
                     dv.RowFilter = "Percentage >= 100 OR Award_Manual ='True'";
-
+                    dv.Sort = "awarded_date";
                     DataTable dt = dv.ToTable();
 
                     if (dt != null && dt.Rows.Count > 0)

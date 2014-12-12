@@ -100,7 +100,7 @@ namespace LevelsPro.PlayerPanel
 
                     //dv.RowFilter = "(Percentage >= 100 OR AchievedAward = 'yes') AND AwardCategoryID=23";
                     dv.RowFilter = "Award_Manual = 1"; //AND AchievedAward = 'yes'
-
+                    dv.Sort = "awarded_date";
                     DataTable dt = dv.ToTable();
 
                     if (dt != null && dt.Rows.Count > 0)
