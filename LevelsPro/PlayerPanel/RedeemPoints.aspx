@@ -143,7 +143,7 @@
 	<asp:UpdateProgress ID="uprogressHome" runat="server" DisplayAfter="0" AssociatedUpdatePanelID="upRedeem">
                 <ProgressTemplate>
                     <div style="background-color: Teal; filter: alpha(opacity=80); opacity: 0.80; width: 100%;
-                        top: 0px; left: 0px; position: fixed; height: 100%;">
+                        top: 0px; left: 0px; position: fixed; height: 100%; z-index:9999;">
                     </div>
                     <div class="updateProgress">
                         <table width="100%">

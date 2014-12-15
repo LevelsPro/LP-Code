@@ -4020,3 +4020,8 @@ and (max-device-width : 568px)
     .container, .body{display:none;}
     /* Retina-specific stuff here */
 }
+
+.updateProgress
+{
+    z-index:99999;
+    }
