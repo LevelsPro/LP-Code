@@ -107,6 +107,8 @@
 				
 				<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
 		<div class="viewport redemption">
+            <div style="width:100px;position:absolute; top:-50px; height:100px; right:-50px;"></div>
+            <div style="width:100px;position:absolute; bottom:-50px; height:100px; right:-50px;"></div>
 			 <div class="overview">
 				
 			<asp:DataList ID="dlRewards" runat="server" DataKeyField="Reward_ID" OnItemCommand="dlRewards_ItemCommand"
