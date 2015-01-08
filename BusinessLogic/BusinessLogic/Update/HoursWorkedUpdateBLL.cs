@@ -6,29 +6,29 @@ using DataAccess.Update;
 
 namespace BusinessLogic.Update
 {
-  public  class QuizUpdateBLL : Transaction
+    public class HoursWorkedUpdateBLL:Transaction
     {
-        private Common.Quiz _quiz;
-        public QuizUpdateBLL()
+        private Common.User _user;
+        public HoursWorkedUpdateBLL()
         {
         }
         public void Invoke()
         {
-            QuizUpdateDAL updateData = new QuizUpdateDAL();
-            updateData.Quiz = this.Quiz;
+            HoursWorkedUpdateDAL updateData = new HoursWorkedUpdateDAL();
+            updateData.User = this.User;
             updateData.Update();
         }
 
-        public Common.Quiz Quiz
+        public Common.User User
         {
             get
             {
-                return _quiz;
+                return _user;
             }
             set
             {
-                _quiz = value;
+                _user = value;
             }
         }
-}
+    }
 }

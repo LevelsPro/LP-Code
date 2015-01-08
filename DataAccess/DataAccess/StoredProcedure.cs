@@ -188,6 +188,7 @@ namespace DataAccess
             sp_UpdateSite,
             sp_UpdateQuiz,
             sp_UpdateQuestions,
+            sp_UpdateWorkedHours,
             sp_UpdateMessageStatus,
             sp_levels_UpdateTargets,
             sp_level_UpdateLevelInfo,

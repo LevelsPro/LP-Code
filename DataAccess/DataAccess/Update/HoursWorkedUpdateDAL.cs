@@ -13,7 +13,7 @@ namespace DataAccess.Update
 
         public HoursWorkedUpdateDAL()
         {
-            StoredProcedureName = StoredProcedure.Update.sp_Update_UserTargetAchieved.ToString();
+            StoredProcedureName = StoredProcedure.Update.sp_UpdateWorkedHours.ToString();
         }
         public void Update()
         {

@@ -60,7 +60,35 @@ namespace LevelsPro.AdminPanel
             {
                 foreach (GridViewRow gr in gvAPI.Rows)
                 {
-                    if (gr.Cells[5].Text.Equals("KPI"))
+                    if (gr.Cells[2].Text.Equals("HoursWorked"))
+                    {
+
+                        #region Updating Hours Worked Performance
+
+                        dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
+                        dtuserid = dvuserid.ToTable();
+
+                        User user = new User();
+                        user.Hours = Convert.ToInt32(gr.Cells[1].Text);
+                        user.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
+
+                        HoursWorkedUpdateBLL HoursPerform = new HoursWorkedUpdateBLL();
+
+                        try
+                        {
+                            HoursPerform.User = user;
+                            HoursPerform.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            // Catching and Logging Exception Here...
+                        }
+                        finally
+                        {
+                        }
+                        #endregion
+                    }
+                    else if (gr.Cells[5].Text.Equals("KPI"))
                     {
                         #region Updating Level Performance
 
@@ -545,10 +573,6 @@ namespace LevelsPro.AdminPanel
                         }
                         #endregion
                     }
-                    else if (gr.Cells[3].Text.Equals("HoursWorked"))
-                    {
-                    }
-
                 }
 
 
