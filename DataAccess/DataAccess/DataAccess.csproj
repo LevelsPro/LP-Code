@@ -236,6 +236,7 @@
     <Compile Include="Update\CategoryUpdateDAL.cs" />
     <Compile Include="Update\ContestUpdateDAL.cs" />
     <Compile Include="Update\DataSetUpdateDAL.cs" />
+    <Compile Include="Update\HoursWorkedUpdateDAL.cs" />
     <Compile Include="Update\RoundUpdateDAL.cs" />
     <Compile Include="Update\DataElementUpdateDAL.cs" />
     <Compile Include="Update\LoginUpdateDAL.cs" />
