@@ -2,7 +2,10 @@
 #scrollbar1 {   }
 #scrollbar1 .viewport { width: 730px; height: 700px; overflow: hidden; position: relative; }
 #scrollbar1 .pd-cont { width: 673px !important; height: 400px; overflow: hidden; position: relative; }
-#scrollbar1 .overview { list-style: none; position: absolute; left: 0; top: 0; padding: 0; margin: 0; }
+#scrollbar1 .overview { list-style: none; position: absolute; left: 0; top: 0; padding: 0; margin: 0;
+    height: 356px;
+    width: 101%;
+}
 #scrollbar1 .forum-cont { width: 550px !important; height: 400px; overflow: hidden; position: relative; }
 #scrollbar1 .qs-cont { width: 550px !important; height: 400px; overflow: hidden; position: relative; }
 #scrollbar1 .lvl-exp { height: 542px; overflow: hidden; position: relative; }

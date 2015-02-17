@@ -52,7 +52,8 @@ namespace DataAccess.Insert
                                           new MySqlParameter("?p_LevelID",Target.LevelID),
                                            new MySqlParameter("?p_RoleID",Target.RoleID),
                                            new MySqlParameter("?p_Description",Target.Description),
-                                           new MySqlParameter("?p_Points",Target.Points)
+                                           new MySqlParameter("?p_Points",Target.Points),
+                                           new MySqlParameter("?p_Order",Target.TargetOrder)
                                           };
             Parameters = parameters;
         }

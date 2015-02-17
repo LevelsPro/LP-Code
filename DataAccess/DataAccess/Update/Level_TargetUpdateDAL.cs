@@ -51,7 +51,8 @@ namespace DataAccess.Update
             MySqlParameter[] parameters = {new MySqlParameter("?p_TargetID",Target.TargetID),
                                               new MySqlParameter("?p_TargetValue",Target.TargetValue),
                                          new MySqlParameter("?p_KpiID",Target.KPIID),
-                                          new MySqlParameter("?p_Points",Target.Points) 
+                                          new MySqlParameter("?p_Points",Target.Points),
+                                          new MySqlParameter("?p_Order",Target.TargetOrder)
                                           };
             Parameters = parameters;
         }

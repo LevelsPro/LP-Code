@@ -15,6 +15,7 @@ using System.Configuration;
 using System.IO;
 using LevelsPro.Util;
 using log4net;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
@@ -243,7 +244,7 @@ namespace LevelsPro.AdminPanel
 
             dv.RowFilter = "Role_ID=" + RoleID.ToString() + "AND Level_ID =" + LevelID.ToString();
 
-            dv.Sort = "KPI_name";
+            dv.Sort = "TOrder";
 
 
             gvTarget.DataSource = dv.ToTable();
@@ -548,6 +549,7 @@ namespace LevelsPro.AdminPanel
                         DropDownList kpidropdown = Row.FindControl("ddlKPI") as DropDownList;
                         TextBox valuetextbox = Row.FindControl("txtTargetValue") as TextBox;
                         TextBox pointstextbox = Row.FindControl("txtPoints") as TextBox;
+                        TextBox orderTextBox = Row.FindControl("txtOrder") as TextBox;
                         Label targetidlabel = Row.FindControl("lblTargetID") as Label;
 
                         Level_TargetUpdateBLL UpdateLevelTarget = new Level_TargetUpdateBLL();
@@ -560,6 +562,19 @@ namespace LevelsPro.AdminPanel
                         if (pointstextbox.Text.Trim() != "")
                         {
                             target.Points = Convert.ToInt32(pointstextbox.Text.Trim());
+                        }
+                        if (orderTextBox.Text.Trim() != "")
+                        {
+                            int res = 0;
+                            if (int.TryParse(orderTextBox.Text.Trim(), out res))
+                            {
+                                target.TargetOrder = res;
+                            }
+                            else 
+                            {
+                                WebMessageBoxUtil.Show("Invalid value for Order. Kindly use numbers");
+                                return;
+                            }
                         }
                         target.TargetID = Convert.ToInt32(targetidlabel.Text);
 
@@ -672,8 +687,10 @@ namespace LevelsPro.AdminPanel
                                     target.TargetValue = Convert.ToInt32(txtTargetValue.Text.Trim());
                                     target.RoleID = Convert.ToInt32(ViewState["roleid"]);
                                     target.LevelID = Convert.ToInt32(ViewState["levelid"]);
+                                    
                                     target.KPIID = Convert.ToInt32(ddlKPI.SelectedValue);
                                     target.Points = Convert.ToInt32(txtPoints.Text.Trim());
+                                    
                                     target.Description = "";
 
                                     TargetInsertBLL insertTarget = new TargetInsertBLL();
@@ -729,6 +746,17 @@ namespace LevelsPro.AdminPanel
                     target.LevelID = Convert.ToInt32(ViewState["levelid"]);
                     target.KPIID = Convert.ToInt32(ddlKPI.SelectedValue);
                     target.Points = Convert.ToInt32(txtPoints.Text.Trim());
+                    int res = 0;
+                    if (int.TryParse(txtNewOrder.Text.Trim(), out res))
+                    {
+                        target.TargetOrder = res;
+                    }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Invalid value for Order. Kindly use numbers");
+                        return;
+                    }
+                   
                     target.Description = "";
 
                     TargetInsertBLL insertTarget = new TargetInsertBLL();

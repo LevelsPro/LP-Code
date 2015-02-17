@@ -189,14 +189,14 @@
                             <asp:Label ID="lblddlKPIValue" runat="server" Visible="false" Text='<%# Eval("KPI_ID") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="KPI" HeaderStyle-Width="290px">
+                    <asp:TemplateField HeaderText="KPI" HeaderStyle-Width="240px">
                         <ItemTemplate>
                             <%--<asp:Label ID="lblRoleID" runat="server" Text='<%# Eval("Role_ID") %>'></asp:Label>--%>
                             <asp:DropDownList ID="ddlKPI" runat="server" CssClass="combo-fw">
                             </asp:DropDownList>
                         </ItemTemplate>
                         <HeaderStyle CssClass="kpi fl" />
-                        <ItemStyle CssClass="kpi fl" Width="290px" />
+                        <ItemStyle CssClass="kpi fl" Width="240px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<%$ Resources:TestSiteResources,  Value %>">
                         <ItemTemplate>
@@ -207,8 +207,8 @@
                                 Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                                 ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                         </ItemTemplate>
-                        <HeaderStyle CssClass="value fl" Width="80px" />
-                        <ItemStyle CssClass="value fl" Width="80px" />
+                        <HeaderStyle CssClass="value fl" Width="75px" />
+                        <ItemStyle CssClass="value fl" Width="75px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<%$ Resources:TestSiteResources,  Reward %>">
                         <ItemTemplate>
@@ -219,8 +219,19 @@
                                 Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                                 ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                         </ItemTemplate>
-                        <HeaderStyle CssClass="reward fl" Width="95px" />
-                        <ItemStyle CssClass="reward fl" Width="95px" />
+                        <HeaderStyle CssClass="reward fl" Width="75px" />
+                        <ItemStyle CssClass="reward fl" Width="75px" />
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Order" Visible="True">
+                        <ItemTemplate>
+                             <asp:TextBox ID="txtOrder" runat="server" MaxLength="100" Text='<%# Eval("TOrder") %>'
+                                ValidationGroup="Insertion" CssClass="combo-fw"></asp:TextBox>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ControlToValidate="txtPoints"
+                                Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
+                                ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
+                        </ItemTemplate>
+                        <HeaderStyle CssClass="reward fl" Width="75px" />
+                        <ItemStyle CssClass="reward fl" Width="75px" />
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
@@ -236,6 +247,9 @@
                     <div class="reward fl">
                       <asp:Label ID="Label8" runat="server" Text="<%$ Resources:TestSiteResources,  Reward %>"></asp:Label>
                         </div>
+                    <div class="reward fl">
+                      <asp:Label ID="Label5" runat="server" Text="Order"></asp:Label>
+                    </div>
                     <div class="clear">
                     </div>
                     <div class="kpi fl">
@@ -252,9 +266,17 @@
                             ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                     </div>
                     <div class="value fl">
-                        <asp:TextBox ID="txtPoints" runat="server" MaxLength="100" Text='<%# Eval("TPoints") %>'
+                        <asp:TextBox ID="txtPoints" runat="server" MaxLength="50" Text='<%# Eval("TPoints") %>'
                             ValidationGroup="Insertion" CssClass="combo-fw"></asp:TextBox>
+                        
                         <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtPoints"
+                            Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
+                            ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
+                    </div>
+                     <div class="value fl">
+                      <asp:TextBox ID="txtNewOrder" runat="server" MaxLength="50" Text='<%# Eval("TOrder") %>'
+                            ValidationGroup="Insertion" CssClass="combo-fw"></asp:TextBox>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtNewOrder"
                             Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                             ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                     </div>

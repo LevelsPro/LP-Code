@@ -18,6 +18,9 @@ namespace Common
         SqlInt32 _siteid;
         SqlString _description;
         SqlInt32 _points;
+        SqlInt32 _targetOrder;
+
+        
 
         #endregion
 
@@ -31,11 +34,19 @@ namespace Common
             get { return _targetid; }
             set { _targetid = value; }
         }
+        
         public SqlInt32 TargetValue
         {
             get { return _targetvalue; }
             set { _targetvalue = value; }
         }
+
+        public SqlInt32 TargetOrder
+        {
+            get { return _targetOrder; }
+            set { _targetOrder = value; }
+        }
+
         public SqlInt32 KPIID
         {
             get { return _kpiid; }
