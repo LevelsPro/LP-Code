@@ -170,7 +170,8 @@
         </div>
         <div class="viewport edit-levels">
             <asp:GridView ID="gvTarget" runat="server" CaptionAlign="Top" CssClass="overview"
-                DataKeyNames="Target_ID" AutoGenerateColumns="False" Width="100%" OnRowDataBound="gvTarget_RowDataBound">
+                DataKeyNames="Target_ID" AutoGenerateColumns="False" Width="100%" 
+                OnRowDataBound="gvTarget_RowDataBound" >
                 <%--OnSelectedIndexChanged="gvTarget_SelectedIndexChanged"
                     OnRowDataBound="gvTarget_RowDataBound"--%>
                 <Columns>
@@ -195,8 +196,8 @@
                             <asp:DropDownList ID="ddlKPI" runat="server" CssClass="combo-fw">
                             </asp:DropDownList>
                         </ItemTemplate>
-                        <HeaderStyle CssClass="kpi fl" />
-                        <ItemStyle CssClass="kpi fl" Width="240px" />
+                        <HeaderStyle CssClass="kpiSmall fl" />
+                        <ItemStyle CssClass="kpiSmall fl" Width="240px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<%$ Resources:TestSiteResources,  Value %>">
                         <ItemTemplate>
@@ -207,8 +208,8 @@
                                 Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                                 ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                         </ItemTemplate>
-                        <HeaderStyle CssClass="value fl" Width="75px" />
-                        <ItemStyle CssClass="value fl" Width="75px" />
+                        <HeaderStyle CssClass="valueSmall fl" Width="75px" />
+                        <ItemStyle CssClass="valueSmall fl" Width="75px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<%$ Resources:TestSiteResources,  Reward %>">
                         <ItemTemplate>
@@ -219,8 +220,8 @@
                                 Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                                 ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                         </ItemTemplate>
-                        <HeaderStyle CssClass="reward fl" Width="75px" />
-                        <ItemStyle CssClass="reward fl" Width="75px" />
+                        <HeaderStyle CssClass="rewardSmall fl" Width="75px" />
+                        <ItemStyle CssClass="rewardSmall fl" Width="75px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Order" Visible="True">
                         <ItemTemplate>
@@ -230,33 +231,45 @@
                                 Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                                 ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                         </ItemTemplate>
-                        <HeaderStyle CssClass="reward fl" Width="75px" />
-                        <ItemStyle CssClass="reward fl" Width="75px" />
+                        <HeaderStyle CssClass="rewardSmall fl" Width="75px" />
+                        <ItemStyle CssClass="rewardSmall fl" Width="75px" />
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>
         <asp:Panel ID="pnlAddGoal" runat="server" Visible="false">
-            <div>
-                <div>
-                    <div class="kpi fl">
+        <table>
+           <tr>
+                <td>
+                    <div class="kpiSmall fl">
                          KPI</div>
-                    <div class="value fl">
+                </td>
+                <td>
+                    <div class="valueSmall fl">
                         <asp:Label ID="Label7" runat="server" Text="<%$ Resources:TestSiteResources,  Value %>"></asp:Label>
                         </div>
-                    <div class="reward fl">
+                </td>
+                <td>
+                    <div class="rewardSmall fl">
                       <asp:Label ID="Label8" runat="server" Text="<%$ Resources:TestSiteResources,  Reward %>"></asp:Label>
                         </div>
-                    <div class="reward fl">
+                </td>
+                <td>
+                    <div class="rewardSmall fl">
                       <asp:Label ID="Label5" runat="server" Text="Order"></asp:Label>
                     </div>
-                    <div class="clear">
-                    </div>
-                    <div class="kpi fl">
+               </td>
+               </tr>
+               <tr>
+                    <td>
+                    <div class="kpiSmall fl">
+                    <%----%>
                         <asp:DropDownList ID="ddlKPI" runat="server" CssClass="combo-fw">
                         </asp:DropDownList>
                     </div>
-                    <div class="value fl">
+                    </td>
+                    <td>
+                    <div class="valueSmall fl">
                         <asp:TextBox ID="txtTargetValue" Text='<%# Eval("Target_Value") %>' runat="server"
                             MaxLength="100" ValidationGroup="Insertion" CssClass="combo-fw"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvTargetValue" runat="server" ErrorMessage="Provide Target Value"
@@ -265,7 +278,9 @@
                             Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                             ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                     </div>
-                    <div class="value fl">
+                    </td>
+                    <td>
+                    <div class="valueSmall fl">
                         <asp:TextBox ID="txtPoints" runat="server" MaxLength="50" Text='<%# Eval("TPoints") %>'
                             ValidationGroup="Insertion" CssClass="combo-fw"></asp:TextBox>
                         
@@ -273,20 +288,27 @@
                             Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                             ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                     </div>
-                     <div class="value fl">
+                    </td>
+                    <td>
+                     <div class="valueSmall fl">
                       <asp:TextBox ID="txtNewOrder" runat="server" MaxLength="50" Text='<%# Eval("TOrder") %>'
                             ValidationGroup="Insertion" CssClass="combo-fw"></asp:TextBox>
                         <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtNewOrder"
                             Display="Dynamic" ErrorMessage="Enter only Numbers" SetFocusOnError="True" ValidationExpression="^[0-9]+$"
                             ValidationGroup="Insertion">*</asp:RegularExpressionValidator>
                     </div>
+                    </td>
+                    <td>
                     <div class="fl">
                         <asp:ImageButton ID="ImgCancel" ImageUrl="~/AdminPanel/Images/del-img.png" Width="26px"
                     Height="26px" runat="server" onclick="ImgCancel_Click" />
                     </div>
-                </div>
+                    </td>
+                    </tr>
+               
                  
-            </div>
+           
+            </table>
         </asp:Panel>
     </div>
     <br />

@@ -1979,6 +1979,26 @@ span#ContentPlaceHolder1_cvToDate {
 	margin-right:10px;
 	}
 	
+.kpiSmall{
+   
+	font-size:19px;
+	color:#616161;
+	margin-bottom:10px;
+	margin-right:10px;
+}
+	.valueSmall{
+	width:100px;
+	font-size:19px;
+	color:#616161;
+	margin-bottom:10px;
+	margin-right:10px;
+	}
+	.rewardSmall{
+	width:109px;
+	font-size:19px;
+	color:#616161;
+	margin-bottom:10px;
+	}
 .value{
 	width:100px;
 	font-size:24px;
@@ -1999,7 +2019,10 @@ span#ContentPlaceHolder1_cvToDate {
 	font-size:20px;
 	}
 	
-	
+	.combo-Small-fw
+	{
+	    font-size:19px;
+	    }
 .nav-cont{
        width:227px;
        margin-left:0px;   
