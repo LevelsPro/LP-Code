@@ -595,6 +595,14 @@ namespace LevelsPro.AdminPanel
 
 
                     }
+                    try
+                    {
+                        LoadData(Convert.ToInt32(ViewState["roleid"]),Convert.ToInt32( ViewState["levelid"]));
+                    }
+                    catch (Exception exp)
+                    {
+                        throw exp;
+                    }
                 }
                 else
                 {
@@ -789,6 +797,8 @@ namespace LevelsPro.AdminPanel
                         
                     }
                 }
+           // LoadData(Convert.ToInt32(ViewState["roleid"]), Convert.ToInt32(ViewState["levelid"]));
+            
         }
         #endregion
 

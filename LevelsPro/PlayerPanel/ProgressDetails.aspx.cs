@@ -131,9 +131,34 @@ namespace LevelsPro.PlayerPanel
                     {
                         throw ex;
                     }
+
+                    TargetViewBLL target = new TargetViewBLL();
+
+                    try
+                    {
+                        target.Invoke();
+                    }
+                    catch (Exception ex) 
+                    {
+                        throw ex;
+                    }
                     if (progress.ResultSet != null && progress.ResultSet.Tables.Count > 0 && progress.ResultSet.Tables[0] != null && progress.ResultSet.Tables[0].Rows.Count > 0)
                     {
-                        progress.ResultSet.Tables[0].DefaultView.Sort = "KPI_name";
+                        //DataColumn newCol= new DataColumn(
+                        progress.ResultSet.Tables[0].Columns.Add("targetOrder",typeof(int));
+                        foreach (DataRow row in progress.ResultSet.Tables[0].Rows)
+                        {
+                            foreach (DataRow rowInner in target.ResultSet.Tables[0].Rows) 
+                            {
+                                if (row["Target_ID"].Equals(rowInner["Target_ID"])) 
+                                {
+                                    row["targetOrder"] = rowInner["TOrder"];
+                                }
+                            }
+                            
+                        }
+                       // progress.ResultSet.Tables[0].DefaultView.Sort = "KPI_name";
+                        progress.ResultSet.Tables[0].DefaultView.Sort = "targetOrder";
                         if (progress.ResultSet.Tables[0].Rows[0]["CheckNoProgress"].ToString().Equals("0"))
                         {
 
