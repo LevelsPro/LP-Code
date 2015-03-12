@@ -459,7 +459,9 @@ namespace LevelsPro.AdminPanel
                     }
                     else if (gr.Cells[5].Text.Equals("Award"))
                     {
-                        #region Updating Award Performance
+                        if(Convert.ToInt32(gr.Cells[6].Text.ToString()) > 0)
+                        {
+                            #region Updating Award Performance
                         DataSet dsTarget = new DataSet();
 
                         dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
@@ -542,27 +544,20 @@ namespace LevelsPro.AdminPanel
                         }
 
                         #endregion
+                        }
                     }
                     else if (gr.Cells[5].Text.Equals("Contest"))
                     {
                         #region Updating Contest Performance
 
-                        dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
-                        dtuserid = dvuserid.ToTable();
-
-                        Contest contest = new Contest();
-                        contest.ContestID = Convert.ToInt32(gr.Cells[6].Text);
-                        contest.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
-                        contest.KPIID = Convert.ToInt32(gr.Cells[2].Text);
-                        contest.Points = Convert.ToInt32(gr.Cells[3].Text);
-                        contest.EntryDate = System.DateTime.Now.ToLongDateString();
-
-                        ContestPerformanceInsertBLL contestPerform = new ContestPerformanceInsertBLL();
-                        
+                        #region Getting Contest ID
+                        getContestIDBLL CID = new getContestIDBLL();
+                        KPI kpi = new KPI();
+                        kpi.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                        CID.KPI = kpi;
                         try
                         {
-                            contestPerform.Contest = contest;
-                            contestPerform.Invoke();
+                            CID.Invoke();
                         }
                         catch (Exception ex)
                         {
@@ -571,13 +566,54 @@ namespace LevelsPro.AdminPanel
                         finally
                         {
                         }
+
+                        DataTable dtCID = new DataTable();
+                        if (CID.ResultSet != null)
+                        {
+                            dtCID = CID.ResultSet.Tables[0];
+                        }
+                        #endregion
+
+                        #region Running Insert Procedure for all the Contest ID being found
+                        for (int i = 0; i < dtCID.Rows.Count; i++)
+                        {
+                            dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
+                            dtuserid = dvuserid.ToTable();
+
+                            Contest contest = new Contest();
+                            contest.ContestID = Convert.ToInt32(dtCID.Rows[i][0].ToString());
+                            contest.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
+                            contest.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                            contest.Points = Convert.ToInt32(gr.Cells[3].Text);
+                            contest.EntryDate = Convert.ToString(gr.Cells[1].Text);
+
+                            ContestPerformanceInsertBLL contestPerform = new ContestPerformanceInsertBLL();
+
+                            try
+                            {
+                                contestPerform.Contest = contest;
+                                contestPerform.Invoke();
+                            }
+                            catch (Exception ex)
+                            {
+                                // Catching and Logging Exception Here...
+                            }
+                            finally
+                            {
+                            }
+
+                        }
+                        #endregion
+                        
+                        
                         #endregion
                     }
                 }
 
 
             }
-
+            gvAPI.DataSource = null;
+            gvAPI.DataBind();
         
         }
         #endregion
@@ -624,14 +660,66 @@ namespace LevelsPro.AdminPanel
                         }
                     }
                 }
-
-
-
-
-
             }
 
+            #region Populate Award ID
+            int counterType = 0;
 
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i][5].ToString().ToLower().Equals("award"))
+                {
+                    counterType++;
+                }
+            }
+
+            if (counterType > 0)
+            {
+                dt.Columns.Add("AwardID", typeof(System.Int32));
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    #region Getting Award ID
+                        getContestIDBLL CID = new getContestIDBLL();
+                        KPI kpi = new KPI();
+                        kpi.KPIID = Convert.ToInt32(dt.Rows[i][2].ToString());
+                        CID.KPI = kpi;
+                        try
+                        {
+                            CID.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            // Catching and Logging Exception Here...
+                        }
+                        finally
+                        {
+                        }
+
+                        DataTable dtCID = new DataTable();
+                        if (CID.ResultSet != null)
+                        {
+                            dtCID = CID.ResultSet.Tables[1];
+                        }
+
+                        for (int x = 0; x < dtCID.Rows.Count; x++)
+                        {
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                            {
+                                if (dt.Rows[j][2].ToString().Equals(dtCID.Rows[x][1].ToString()))
+                                {
+                                    dt.Rows[j]["AwardID"] = Convert.ToInt32(dtCID.Rows[x][0]);
+                                }
+                                else
+                                {
+                                    dt.Rows[j]["AwardID"] = 0;
+                                }
+                            }
+                        }
+                    #endregion
+                }
+            }
+            #endregion
+            
             gvAPI.DataSource = dt;
             gvAPI.DataBind();
         }

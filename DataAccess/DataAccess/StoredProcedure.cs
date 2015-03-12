@@ -90,7 +90,8 @@ namespace DataAccess
             sp_GetContestLeaderBoard,
             sp_GetUsersInfoByID,
             sp_GetContestPlayerLeaderBoard,
-            sp_MatchLevels
+            sp_MatchLevels,
+            sp_GetContestID
         }
         public enum Insert
         {

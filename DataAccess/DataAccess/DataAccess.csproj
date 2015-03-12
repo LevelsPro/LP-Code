@@ -163,6 +163,7 @@
     <Compile Include="Select\ContestPositionListViewDAL.cs" />
     <Compile Include="Select\ContestLeaderBoardViewDAL.cs" />
     <Compile Include="Select\ContestPlayerLeaderBoardViewDAL.cs" />
+    <Compile Include="Select\getContestIDDAL.cs" />
     <Compile Include="Select\MatchLevelsDAL.cs" />
     <Compile Include="Select\UsersInfoByIDDAL.cs" />
     <Compile Include="Select\GetGamesPlayLogDAL.cs" />
