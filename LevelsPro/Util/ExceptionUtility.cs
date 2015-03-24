@@ -70,6 +70,7 @@ namespace LevelsPro.Util
                 {"/AdminPanel/AdminHome","~/Index.aspx"},
                 {"/AdminPanel/AssignAwards.aspx","/AdminPanel/PlayerManagement.aspx"},
                 {"/AdminPanel/AwardEdit.aspx","/AdminPanel/AwardManagement.aspx"},
+                {"/AdminPanel/APIExportSheet.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/AwardManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/ContestManagement.aspx","/AdminPanel/AdminHome.aspx"},
                 {"/AdminPanel/EditPlayer.aspx","/AdminPanel/PlayerManagement.aspx"},
