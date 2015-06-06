@@ -16,25 +16,1598 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary view structure for view `v_userlevelscores`
+-- Table structure for table `awardperformance`
 --
 
-DROP TABLE IF EXISTS `v_userlevelscores`;
-/*!50001 DROP VIEW IF EXISTS `v_userlevelscores`*/;
+DROP TABLE IF EXISTS `awardperformance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `awardperformance` (
+  `AwardID` int(11) DEFAULT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `KPIID` int(11) DEFAULT NULL,
+  `Value` int(11) DEFAULT NULL,
+  `LastUpdated` datetime DEFAULT NULL,
+  `AP_ID` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`AP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `contestperformance`
+--
+
+DROP TABLE IF EXISTS `contestperformance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contestperformance` (
+  `CP_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ContestID` int(11) DEFAULT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `KPIID` int(11) DEFAULT NULL,
+  `Value` int(11) DEFAULT NULL,
+  `LastUpdated` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`CP_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2723 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `daily_report`
+--
+
+DROP TABLE IF EXISTS `daily_report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `daily_report` (
+  `id` int(11) NOT NULL,
+  `year` int(5) NOT NULL,
+  `month` int(2) DEFAULT NULL,
+  `day` int(2) DEFAULT NULL,
+  `total_emplyees` int(11) DEFAULT NULL,
+  `total_managers` int(11) DEFAULT NULL,
+  `total_sales` int(11) DEFAULT NULL,
+  `total_hours_worked` int(11) DEFAULT NULL,
+  `total_hours_login` int(11) DEFAULT NULL,
+  `total_number_login` int(11) DEFAULT NULL,
+  `total_questions` int(11) DEFAULT NULL,
+  `total_quizzes` int(11) DEFAULT NULL,
+  `total_levels` int(11) DEFAULT NULL,
+  `total_sites` int(11) DEFAULT NULL,
+  `total_roles` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `event_report`
+--
+
+DROP TABLE IF EXISTS `event_report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `event_report` (
+  `Id` int(11) NOT NULL,
+  `userid` int(11) DEFAULT NULL,
+  `entry_date` datetime DEFAULT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  `area` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `tbluser` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `events_history`
+--
+
+DROP TABLE IF EXISTS `events_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_history` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `entry_date` datetime DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `area` varchar(45) DEFAULT NULL,
+  `active` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `kpi_history`
+--
+
+DROP TABLE IF EXISTS `kpi_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kpi_history` (
+  `Id` int(11) NOT NULL,
+  `User_ID` int(11) DEFAULT NULL,
+  `Level_ID` int(11) DEFAULT NULL,
+  `KPI_ID` int(11) DEFAULT NULL,
+  `Start_Date` datetime DEFAULT NULL,
+  `Finish_Date` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `User_ID` (`User_ID`),
+  KEY `Level_ID` (`Level_ID`),
+  KEY `KPI_ID` (`KPI_ID`),
+  CONSTRAINT `KPI_ID` FOREIGN KEY (`KPI_ID`) REFERENCES `tblkpi` (`KPI_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Level_ID` FOREIGN KEY (`Level_ID`) REFERENCES `tbllevel` (`Level_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `User_ID` FOREIGN KEY (`User_ID`) REFERENCES `tbluser` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `level_history`
+--
+
+DROP TABLE IF EXISTS `level_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `level_history` (
+  `Id` int(11) NOT NULL,
+  `Level_ID_level` int(11) DEFAULT NULL,
+  `User_ID_Level` int(11) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `finish_date` datetime DEFAULT NULL,
+  `Duration` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `User_ID_Level` (`User_ID_Level`),
+  KEY `Level_ID_level` (`Level_ID_level`),
+  CONSTRAINT `Level_ID_level` FOREIGN KEY (`Level_ID_level`) REFERENCES `tbllevel` (`Level_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `User_ID_Level` FOREIGN KEY (`User_ID_Level`) REFERENCES `tbluser` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `login_duration`
+--
+
+DROP TABLE IF EXISTS `login_duration`;
+/*!50001 DROP VIEW IF EXISTS `login_duration`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_userlevelscores` AS SELECT 
- 1 AS `UserID`,
- 1 AS `Role_ID`,
- 1 AS `Level_ID`,
- 1 AS `KPI_ID`,
- 1 AS `Target_ID`,
- 1 AS `Level_Name`,
- 1 AS `KPI_name`,
- 1 AS `Target_Value`,
- 1 AS `score`,
- 1 AS `current_percentage`,
- 1 AS `Points`*/;
+/*!50001 CREATE VIEW `login_duration` AS SELECT 
+ 1 AS `start_id`,
+ 1 AS `start_date`,
+ 1 AS `finish_id`,
+ 1 AS `finish_date`,
+ 1 AS `duration_minutes`,
+ 1 AS `duration_hours`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `login_history`
+--
+
+DROP TABLE IF EXISTS `login_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `login_history` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID_login` int(11) DEFAULT NULL,
+  `login_date` datetime DEFAULT NULL,
+  `logout_date` datetime DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `User_ID_login` (`User_ID_login`),
+  CONSTRAINT `User_ID_login` FOREIGN KEY (`User_ID_login`) REFERENCES `tbluser` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `month_report`
+--
+
+DROP TABLE IF EXISTS `month_report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `month_report` (
+  `month` int(2) NOT NULL,
+  `year` int(11) DEFAULT NULL,
+  `total_emplyees` int(11) DEFAULT NULL,
+  `total_managers` int(11) DEFAULT NULL,
+  `total_sales` int(11) DEFAULT NULL,
+  `total_hours_worked` int(11) DEFAULT NULL,
+  `total_hours_login` int(11) DEFAULT NULL,
+  `total_questions` int(11) DEFAULT NULL,
+  `total_quizzes` int(11) DEFAULT NULL,
+  `total_levels` int(11) DEFAULT NULL,
+  `total_sites` int(11) DEFAULT NULL,
+  `total_roles` int(11) DEFAULT NULL,
+  PRIMARY KEY (`month`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `questions_history`
+--
+
+DROP TABLE IF EXISTS `questions_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questions_history` (
+  `Id` int(11) NOT NULL,
+  `User_ID_Question` int(11) DEFAULT NULL,
+  `Question_ID_QH` int(11) DEFAULT NULL,
+  `UserSelection` varchar(255) DEFAULT NULL,
+  `Duration` int(11) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `finish_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `User_ID_Question` (`User_ID_Question`),
+  KEY `Question_ID_QH` (`Question_ID_QH`),
+  CONSTRAINT `User_ID_Question` FOREIGN KEY (`User_ID_Question`) REFERENCES `tbluser` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `quiz_history`
+--
+
+DROP TABLE IF EXISTS `quiz_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quiz_history` (
+  `Id` int(11) NOT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `Total_Questions` int(11) DEFAULT NULL,
+  `Times_Played` int(11) DEFAULT NULL,
+  `Duration` int(11) DEFAULT NULL,
+  `Entry_Date` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `rewards_history`
+--
+
+DROP TABLE IF EXISTS `rewards_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rewards_history` (
+  `Id` int(11) NOT NULL,
+  `Reward_ID` int(11) DEFAULT NULL,
+  `User_ID` int(11) DEFAULT NULL,
+  `Reward_Date` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `roles_history`
+--
+
+DROP TABLE IF EXISTS `roles_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles_history` (
+  `Id` int(11) NOT NULL,
+  `Role_ID` int(11) DEFAULT NULL,
+  `Total Users` int(11) DEFAULT NULL,
+  `Entry_Date` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblawardimages`
+--
+
+DROP TABLE IF EXISTS `tblawardimages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblawardimages` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Award_Image` varchar(100) DEFAULT NULL,
+  `Award_Thumbnail` varchar(100) DEFAULT NULL,
+  `Active` int(11) DEFAULT '1',
+  `Award_ID` int(11) DEFAULT NULL,
+  `Uploaded_Date` date DEFAULT NULL,
+  `Current_Image` int(11) DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblawards`
+--
+
+DROP TABLE IF EXISTS `tblawards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblawards` (
+  `Award_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Award_Name` varchar(100) NOT NULL,
+  `Award_Desc` varchar(200) DEFAULT NULL,
+  `KPIID` int(11) DEFAULT NULL,
+  `Target_Value` int(11) DEFAULT NULL,
+  `Award_Manual` int(11) DEFAULT '0',
+  `Active` tinyint(4) DEFAULT '1',
+  `AwardCategoryID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Award_ID`),
+  UNIQUE KEY `Award_Name` (`Award_Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontestlog`
+--
+
+DROP TABLE IF EXISTS `tblcontestlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontestlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lastrun` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontestperformance`
+--
+
+DROP TABLE IF EXISTS `tblcontestperformance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontestperformance` (
+  `ContestID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `KPI_ID` int(11) NOT NULL,
+  `Value` int(11) NOT NULL,
+  `LastUpdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CP_ID` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`CP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontestposition`
+--
+
+DROP TABLE IF EXISTS `tblcontestposition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontestposition` (
+  `ContestId` int(11) DEFAULT NULL,
+  `Award_ID` int(11) DEFAULT NULL,
+  `Position` int(11) DEFAULT NULL,
+  `Points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontests`
+--
+
+DROP TABLE IF EXISTS `tblcontests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontests` (
+  `ContestId` int(11) NOT NULL AUTO_INCREMENT,
+  `ContestName` varchar(255) NOT NULL,
+  `FromDate` date DEFAULT NULL,
+  `ToDate` date DEFAULT NULL,
+  `KPI_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ContestId`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontestscores`
+--
+
+DROP TABLE IF EXISTS `tblcontestscores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontestscores` (
+  `User_ID` int(11) NOT NULL DEFAULT '0',
+  `ContestId` int(11) NOT NULL DEFAULT '0',
+  `Score` int(11) DEFAULT NULL,
+  `Entry_Date` datetime DEFAULT NULL,
+  PRIMARY KEY (`User_ID`,`ContestId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontestsroles`
+--
+
+DROP TABLE IF EXISTS `tblcontestsroles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontestsroles` (
+  `ContestId` int(11) DEFAULT NULL,
+  `Role_Id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblcontestssites`
+--
+
+DROP TABLE IF EXISTS `tblcontestssites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblcontestssites` (
+  `ContestId` int(11) DEFAULT NULL,
+  `Site_Id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbldataelement`
+--
+
+DROP TABLE IF EXISTS `tbldataelement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbldataelement` (
+  `ElementID` int(11) NOT NULL AUTO_INCREMENT,
+  `MatchID` int(11) DEFAULT NULL,
+  `ElementName` varchar(250) DEFAULT NULL,
+  `IsPicture` int(11) DEFAULT '0',
+  `CreatedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ElementID`)
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblkpi`
+--
+
+DROP TABLE IF EXISTS `tblkpi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblkpi` (
+  `KPI_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `KPI_name` varchar(100) NOT NULL,
+  `KPI_measure` varchar(100) DEFAULT NULL,
+  `KPI_type` int(11) DEFAULT NULL,
+  `Active` tinyint(4) DEFAULT '1',
+  `KPI_Category` int(11) DEFAULT NULL,
+  `KPI_Descp` varchar(500) DEFAULT NULL,
+  `TipsDESC` varchar(500) DEFAULT NULL,
+  `TipsLINK` varchar(500) DEFAULT NULL,
+  `TypeLevel` varchar(10) DEFAULT NULL,
+  `TypeAward` varchar(10) DEFAULT NULL,
+  `TypeContest` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`KPI_ID`),
+  UNIQUE KEY `KPI_name` (`KPI_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblkpitemp`
+--
+
+DROP TABLE IF EXISTS `tblkpitemp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblkpitemp` (
+  `EMP_ID` int(11) NOT NULL,
+  `ExtractionDate` datetime DEFAULT NULL,
+  `KPI_ID` int(11) DEFAULT NULL,
+  `Performance` int(11) DEFAULT NULL,
+  `KPI_Type` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`EMP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbllevel`
+--
+
+DROP TABLE IF EXISTS `tbllevel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbllevel` (
+  `Level_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Level_Name` varchar(100) DEFAULT NULL,
+  `Role_ID` int(11) DEFAULT NULL,
+  `Active` tinyint(1) DEFAULT '1',
+  `Level_Position` tinyint(2) NOT NULL,
+  `BaseHours` int(11) DEFAULT NULL,
+  `Level_date` date DEFAULT NULL,
+  `Points` int(11) DEFAULT NULL,
+  `Reach` varchar(45) DEFAULT NULL,
+  `CurrentlyIn` varchar(45) DEFAULT NULL,
+  `Game` varchar(50) DEFAULT NULL,
+  `ImageName` varchar(100) DEFAULT NULL,
+  `ImageThumbnail` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Level_ID`),
+  KEY `Role_ID` (`Role_ID`),
+  CONSTRAINT `Role_ID` FOREIGN KEY (`Role_ID`) REFERENCES `tblroles` (`Role_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbllevelgame`
+--
+
+DROP TABLE IF EXISTS `tbllevelgame`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbllevelgame` (
+  `GameID` int(11) NOT NULL AUTO_INCREMENT,
+  `GameName` varchar(50) DEFAULT NULL,
+  `Active` int(4) DEFAULT '1',
+  PRIMARY KEY (`GameID`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbllevelgameddl`
+--
+
+DROP TABLE IF EXISTS `tbllevelgameddl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbllevelgameddl` (
+  `GameDropdownID` int(11) NOT NULL AUTO_INCREMENT,
+  `GameDropdownName` varchar(50) DEFAULT NULL,
+  `GameID` int(11) DEFAULT NULL,
+  `Active` int(4) DEFAULT '1',
+  PRIMARY KEY (`GameDropdownID`)
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbllevelperformance`
+--
+
+DROP TABLE IF EXISTS `tbllevelperformance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbllevelperformance` (
+  `levelPerformanceId` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `current_level` int(11) NOT NULL,
+  `next_level` int(11) NOT NULL,
+  `last_level` int(11) NOT NULL,
+  `level_achieved` tinyint(4) NOT NULL,
+  `achieved_date` date DEFAULT NULL,
+  `target_scores` int(11) NOT NULL,
+  `achieved_scores` int(11) NOT NULL,
+  `popup_showed` tinyint(4) NOT NULL DEFAULT '0',
+  `Worked_Hour` int(11) DEFAULT '0',
+  PRIMARY KEY (`levelPerformanceId`)
+) ENGINE=MyISAM AUTO_INCREMENT=157 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbllifelines`
+--
+
+DROP TABLE IF EXISTS `tbllifelines`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbllifelines` (
+  `LifeLine_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `DateUsed` varchar(50) DEFAULT NULL,
+  `ReduceChoices_LifeLine` int(11) DEFAULT NULL,
+  `ReplaceQuestion_LifeLine` int(11) DEFAULT NULL,
+  `AddCounter_LifeLine` int(11) DEFAULT NULL,
+  PRIMARY KEY (`LifeLine_ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbllog`
+--
+
+DROP TABLE IF EXISTS `tbllog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbllog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `contestId` int(11) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `lastrun` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15453 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmap`
+--
+
+DROP TABLE IF EXISTS `tblmap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmap` (
+  `Role_ID` int(11) DEFAULT NULL,
+  `Level_ID` int(11) DEFAULT NULL,
+  `Dimension_top` int(11) DEFAULT NULL,
+  `Dimension_left` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmapping`
+--
+
+DROP TABLE IF EXISTS `tblmapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmapping` (
+  `User_ID` int(11) NOT NULL,
+  `MappingTable_ID` int(11) NOT NULL,
+  `Type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`User_ID`,`MappingTable_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmatch`
+--
+
+DROP TABLE IF EXISTS `tblmatch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmatch` (
+  `MatchID` int(11) NOT NULL AUTO_INCREMENT,
+  `MatchName` varchar(250) DEFAULT NULL,
+  `PointsForCompletation` int(11) DEFAULT NULL,
+  `MaxPlaysPerDay` int(11) DEFAULT NULL,
+  `NoOfDataSet` int(11) DEFAULT NULL,
+  `NoOfRounds` int(11) DEFAULT NULL,
+  `CreatedDate` datetime DEFAULT NULL,
+  `MatchImage` varchar(100) DEFAULT NULL,
+  `MatchImageThumbnail` varchar(100) DEFAULT NULL,
+  `KPI_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`MatchID`)
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmatchdatasetlevels`
+--
+
+DROP TABLE IF EXISTS `tblmatchdatasetlevels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmatchdatasetlevels` (
+  `DataSetID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmatchdatasets`
+--
+
+DROP TABLE IF EXISTS `tblmatchdatasets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmatchdatasets` (
+  `DataSetID` int(11) NOT NULL AUTO_INCREMENT,
+  `DataSetElementsData` varchar(500) DEFAULT NULL,
+  `SiteID` int(11) DEFAULT NULL,
+  `MatchID` int(11) NOT NULL,
+  `CreatedDate` datetime DEFAULT NULL,
+  `DataSetImage` varchar(100) DEFAULT NULL,
+  `DataSetImageThumbnail` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`DataSetID`)
+) ENGINE=MyISAM AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmatchlevels`
+--
+
+DROP TABLE IF EXISTS `tblmatchlevels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmatchlevels` (
+  `MatchID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmatchplaylog`
+--
+
+DROP TABLE IF EXISTS `tblmatchplaylog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmatchplaylog` (
+  `LogID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `MatchID` int(11) DEFAULT NULL,
+  `MatchTime` varchar(100) DEFAULT NULL,
+  `MatchPlays` int(11) DEFAULT '0',
+  PRIMARY KEY (`LogID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1307 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblmessages`
+--
+
+DROP TABLE IF EXISTS `tblmessages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblmessages` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `From_UserID` int(11) DEFAULT NULL,
+  `To_UserID` int(11) DEFAULT NULL,
+  `Message_Subject` varchar(100) DEFAULT NULL,
+  `Message_Text` varchar(1000) DEFAULT NULL,
+  `Sent_Date` datetime DEFAULT NULL,
+  `IsRead` tinyint(1) DEFAULT '0',
+  `IsReply` tinyint(1) DEFAULT '0',
+  `RepliedMessageID` int(11) DEFAULT NULL,
+  `Active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1131 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblpostlikes`
+--
+
+DROP TABLE IF EXISTS `tblpostlikes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblpostlikes` (
+  `LikeID` int(11) NOT NULL AUTO_INCREMENT,
+  `LikeDate` datetime DEFAULT NULL,
+  `LikedBy` int(11) DEFAULT NULL,
+  `PostID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`LikeID`),
+  KEY `LikedBy` (`LikedBy`),
+  KEY `PostID` (`PostID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblpostrepliedlikes`
+--
+
+DROP TABLE IF EXISTS `tblpostrepliedlikes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblpostrepliedlikes` (
+  `RepliedLikeID` int(11) NOT NULL AUTO_INCREMENT,
+  `RepliedLikeDate` datetime DEFAULT NULL,
+  `LikedBy` int(11) DEFAULT NULL,
+  `LikeID` int(11) DEFAULT NULL,
+  `PostID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`RepliedLikeID`),
+  KEY `LikedByFK` (`LikedBy`),
+  KEY `LikeIDFK` (`LikeID`),
+  KEY `PostIDFK` (`PostID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblpostreplies`
+--
+
+DROP TABLE IF EXISTS `tblpostreplies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblpostreplies` (
+  `ReplyID` int(11) NOT NULL AUTO_INCREMENT,
+  `ReplyMessage` varchar(200) DEFAULT NULL,
+  `RepliedBy` int(11) DEFAULT NULL,
+  `ReplyDate` datetime DEFAULT NULL,
+  `PostID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ReplyID`),
+  KEY `RepliedByFK` (`RepliedBy`),
+  KEY `PostIDFK` (`PostID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblposts`
+--
+
+DROP TABLE IF EXISTS `tblposts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblposts` (
+  `PostID` int(11) NOT NULL AUTO_INCREMENT,
+  `PostTitle` varchar(200) DEFAULT NULL,
+  `PostMessage` varchar(255) DEFAULT NULL,
+  `CreateDate` datetime DEFAULT NULL,
+  `CreatedBy` int(11) DEFAULT NULL,
+  `PostTypeID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`PostID`),
+  KEY `CreatedByFK` (`CreatedBy`),
+  KEY `PosTypeIDFK` (`PostTypeID`),
+  KEY `RoleIDFK` (`RoleID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblposttypes`
+--
+
+DROP TABLE IF EXISTS `tblposttypes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblposttypes` (
+  `PostTypeID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) DEFAULT NULL,
+  `CreateDate` datetime DEFAULT NULL,
+  `CreatedBy` int(11) DEFAULT NULL,
+  `ModifiedDate` datetime DEFAULT NULL,
+  `ModifiedBy` int(11) DEFAULT NULL,
+  PRIMARY KEY (`PostTypeID`),
+  KEY `UserIDFK_C` (`CreatedBy`),
+  KEY `UserIDFK_M` (`ModifiedBy`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquestionlevels`
+--
+
+DROP TABLE IF EXISTS `tblquestionlevels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquestionlevels` (
+  `QuestionID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquiz`
+--
+
+DROP TABLE IF EXISTS `tblquiz`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquiz` (
+  `QuizID` int(11) NOT NULL AUTO_INCREMENT,
+  `QuizName` varchar(250) DEFAULT NULL,
+  `NoOfQuestions` int(11) DEFAULT NULL,
+  `TimePerQuestion` int(11) DEFAULT NULL,
+  `TimesPlayablePerDay` int(11) DEFAULT NULL,
+  `PointsPerQuestion` int(11) DEFAULT NULL,
+  `TimeBeforePointsDeduction` int(11) DEFAULT NULL,
+  `CreatedDate` datetime DEFAULT NULL,
+  `QuizImage` varchar(100) DEFAULT NULL,
+  `QuizImageThumbnail` varchar(100) DEFAULT NULL,
+  `KPI_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`QuizID`)
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquizcategory`
+--
+
+DROP TABLE IF EXISTS `tblquizcategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquizcategory` (
+  `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `CategoryName` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`CategoryID`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquizlevels`
+--
+
+DROP TABLE IF EXISTS `tblquizlevels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquizlevels` (
+  `QuizID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquizplaylog`
+--
+
+DROP TABLE IF EXISTS `tblquizplaylog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquizplaylog` (
+  `LogID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `QuizTime` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`LogID`)
+) ENGINE=MyISAM AUTO_INCREMENT=4438 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquizquestions`
+--
+
+DROP TABLE IF EXISTS `tblquizquestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquizquestions` (
+  `QuestionID` int(11) NOT NULL AUTO_INCREMENT,
+  `QuestionText` varchar(200) NOT NULL,
+  `QuestionExplanation` varchar(300) DEFAULT NULL,
+  `Answer1` varchar(100) NOT NULL,
+  `Answer2` varchar(100) NOT NULL,
+  `Answer3` varchar(100) NOT NULL,
+  `Answer4` varchar(100) NOT NULL,
+  `CorrectAnswer` varchar(100) NOT NULL,
+  `Category` int(11) DEFAULT NULL,
+  `SiteID` int(11) DEFAULT NULL,
+  `QuizID` int(11) NOT NULL,
+  `QuestionImage` varchar(100) DEFAULT NULL,
+  `QuestionImageThumbnail` varchar(100) DEFAULT NULL,
+  `ShortQuestion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`QuestionID`)
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblquizresulttotal`
+--
+
+DROP TABLE IF EXISTS `tblquizresulttotal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblquizresulttotal` (
+  `ResultID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `Total` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ResultID`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblredeem`
+--
+
+DROP TABLE IF EXISTS `tblredeem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblredeem` (
+  `Redeem_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(11) NOT NULL,
+  `Reward_ID` int(11) NOT NULL,
+  `Redeem_Points` int(11) NOT NULL,
+  `Redeem_Date` datetime NOT NULL,
+  PRIMARY KEY (`Redeem_ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblreferencedata`
+--
+
+DROP TABLE IF EXISTS `tblreferencedata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblreferencedata` (
+  `ReferenceData_ID` int(11) NOT NULL,
+  `Reference_Code` varchar(50) DEFAULT NULL,
+  `Item_Code` varchar(50) DEFAULT NULL,
+  `Description` varchar(200) DEFAULT NULL,
+  `Sort_Order` int(11) DEFAULT NULL,
+  `Active` tinyint(4) DEFAULT NULL,
+  `Parent_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ReferenceData_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrewardimages`
+--
+
+DROP TABLE IF EXISTS `tblrewardimages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrewardimages` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Reward_Image` varchar(100) DEFAULT NULL,
+  `Reward_Thumbnail` varchar(100) DEFAULT NULL,
+  `Active` int(1) DEFAULT '1',
+  `Reward_ID` int(11) DEFAULT NULL,
+  `Uploaded_Date` date DEFAULT NULL,
+  `Current_Image` int(1) DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrewards`
+--
+
+DROP TABLE IF EXISTS `tblrewards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrewards` (
+  `Reward_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Reward_Name` varchar(100) NOT NULL,
+  `Reward_Descp` varchar(200) DEFAULT NULL,
+  `Reward_Cost` int(11) DEFAULT NULL,
+  `Active` tinyint(1) DEFAULT '1',
+  `Reward_Type` int(11) DEFAULT '0',
+  PRIMARY KEY (`Reward_ID`),
+  UNIQUE KEY `Reward_Name` (`Reward_Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblroles`
+--
+
+DROP TABLE IF EXISTS `tblroles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblroles` (
+  `Role_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Role_Name` varchar(100) DEFAULT NULL,
+  `Active` tinyint(4) DEFAULT '1',
+  `ActiveUpdatedDate` date DEFAULT NULL,
+  PRIMARY KEY (`Role_ID`),
+  UNIQUE KEY `Role_Name` (`Role_Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblround`
+--
+
+DROP TABLE IF EXISTS `tblround`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblround` (
+  `RoundID` int(11) NOT NULL AUTO_INCREMENT,
+  `MatchID` int(11) NOT NULL,
+  `RoundNumber` int(11) DEFAULT NULL,
+  `RoundName` varchar(100) DEFAULT NULL,
+  `NoOfDataSets` int(11) DEFAULT NULL,
+  `TimePerRound` int(11) DEFAULT NULL,
+  `PointsPerRound` int(11) DEFAULT NULL,
+  `CreatedDate` datetime DEFAULT NULL,
+  `ShowHint` int(11) DEFAULT '0',
+  PRIMARY KEY (`RoundID`)
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_cube_gamefacts`
+--
+
+DROP TABLE IF EXISTS `tblrw_cube_gamefacts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_cube_gamefacts` (
+  `FactID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `QuestionID` int(11) DEFAULT NULL,
+  `MatchID` int(11) DEFAULT NULL,
+  `KpiID` int(11) DEFAULT NULL,
+  `PointsAchieved` int(11) DEFAULT NULL,
+  `ElaspedTime` int(11) DEFAULT NULL,
+  `IsCorrect` int(11) DEFAULT NULL,
+  `GameTime` datetime DEFAULT NULL,
+  `ReduceChoices_LifeLine` int(11) DEFAULT NULL,
+  `ReplaceQuestion_LifeLine` int(11) DEFAULT NULL,
+  `AddCounter_LifeLine` int(11) DEFAULT NULL,
+  PRIMARY KEY (`FactID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_kpidim`
+--
+
+DROP TABLE IF EXISTS `tblrw_kpidim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_kpidim` (
+  `KpiID` int(11) NOT NULL,
+  `KpiName` varchar(300) DEFAULT NULL,
+  `Measure` varchar(300) DEFAULT NULL,
+  `Category` varchar(200) DEFAULT NULL,
+  `Description` varchar(500) DEFAULT NULL,
+  `TypeLevel` varchar(10) DEFAULT NULL,
+  `TypeAward` varchar(10) DEFAULT NULL,
+  `TypeContest` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`KpiID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_leveldim`
+--
+
+DROP TABLE IF EXISTS `tblrw_leveldim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_leveldim` (
+  `LevelID` int(11) NOT NULL,
+  `LevelName` varchar(200) DEFAULT NULL,
+  `BaseHours` int(11) DEFAULT NULL,
+  `Points` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`LevelID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_matchdatasetdim`
+--
+
+DROP TABLE IF EXISTS `tblrw_matchdatasetdim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_matchdatasetdim` (
+  `DatasetID` int(11) NOT NULL,
+  `DatasetElements` varchar(500) DEFAULT NULL,
+  `SiteName` varchar(200) DEFAULT NULL,
+  `MatchID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`DatasetID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_matchdim`
+--
+
+DROP TABLE IF EXISTS `tblrw_matchdim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_matchdim` (
+  `MatchID` int(11) NOT NULL,
+  `KpiID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL,
+  `MatchName` varchar(300) DEFAULT NULL,
+  `CompletionPoints` int(11) DEFAULT NULL,
+  `TimesPlayable` int(11) DEFAULT NULL,
+  `NoOfDataSet` int(11) DEFAULT NULL,
+  `NoOfRounds` int(11) DEFAULT NULL,
+  PRIMARY KEY (`MatchID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_questiondim`
+--
+
+DROP TABLE IF EXISTS `tblrw_questiondim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_questiondim` (
+  `QuesID` int(11) NOT NULL,
+  `Text` varchar(300) DEFAULT NULL,
+  `Explanation` varchar(500) DEFAULT NULL,
+  `Answer1` varchar(300) DEFAULT NULL,
+  `Answer2` varchar(300) DEFAULT NULL,
+  `Answer3` varchar(300) DEFAULT NULL,
+  `Answer4` varchar(300) DEFAULT NULL,
+  `CorrectAnswer` varchar(300) DEFAULT NULL,
+  `CategoryName` varchar(200) DEFAULT NULL,
+  `SiteName` varchar(200) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`QuesID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_quizdim`
+--
+
+DROP TABLE IF EXISTS `tblrw_quizdim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_quizdim` (
+  `QuizID` int(11) NOT NULL,
+  `KpiID` int(11) DEFAULT NULL,
+  `RoleID` int(11) DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL,
+  `QuizName` varchar(200) DEFAULT NULL,
+  `NoOfQuestions` int(11) DEFAULT NULL,
+  `TimePerQuestion` int(11) DEFAULT NULL,
+  `TimesPlayable` int(11) DEFAULT NULL,
+  `PointsQuestion` int(11) DEFAULT NULL,
+  `DeductionTimeDelay` int(11) DEFAULT NULL,
+  PRIMARY KEY (`QuizID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_roledim`
+--
+
+DROP TABLE IF EXISTS `tblrw_roledim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_roledim` (
+  `RoleID` int(11) NOT NULL,
+  `RoleName` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`RoleID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblrw_userdim`
+--
+
+DROP TABLE IF EXISTS `tblrw_userdim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblrw_userdim` (
+  `UserID` int(11) NOT NULL,
+  `EMPID` varchar(100) DEFAULT NULL,
+  `SystemRole` varchar(50) DEFAULT NULL,
+  `UserRole` int(11) DEFAULT NULL,
+  `UserLevel` int(11) DEFAULT NULL,
+  `UserName` varchar(500) DEFAULT NULL,
+  `SiteName` varchar(500) DEFAULT NULL,
+  `UserPoints` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblscores`
+--
+
+DROP TABLE IF EXISTS `tblscores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblscores` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(11) NOT NULL,
+  `U_Type` varchar(50) DEFAULT NULL,
+  `Type_ID` int(11) DEFAULT NULL,
+  `Score` int(11) DEFAULT NULL,
+  `Measure` varchar(50) DEFAULT NULL,
+  `Entry_Date` datetime DEFAULT NULL,
+  `LevelID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=442 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblsecurityanswers`
+--
+
+DROP TABLE IF EXISTS `tblsecurityanswers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblsecurityanswers` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `Question_ID` int(11) DEFAULT NULL,
+  `Answer` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=213 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblsecurityquestions`
+--
+
+DROP TABLE IF EXISTS `tblsecurityquestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblsecurityquestions` (
+  `Question_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Question_Text` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`Question_ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblsite`
+--
+
+DROP TABLE IF EXISTS `tblsite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblsite` (
+  `site_id` int(11) NOT NULL AUTO_INCREMENT,
+  `site_name` varchar(50) NOT NULL,
+  `site_type` varchar(50) NOT NULL,
+  `site_address` varchar(150) NOT NULL,
+  `Active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`site_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbltarget`
+--
+
+DROP TABLE IF EXISTS `tbltarget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbltarget` (
+  `Target_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Target_Value` int(11) DEFAULT NULL,
+  `KPI_ID` int(11) DEFAULT NULL,
+  `Level_ID` int(11) DEFAULT NULL,
+  `Role_ID` int(11) DEFAULT NULL,
+  `Active` tinyint(1) DEFAULT '1',
+  `Target_Desc` varchar(500) DEFAULT NULL,
+  `Points` int(11) DEFAULT NULL,
+  `Target_Order` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Target_ID`),
+  KEY `RoleID` (`Role_ID`),
+  KEY `LevelID` (`Level_ID`),
+  KEY `KPIID` (`KPI_ID`),
+  CONSTRAINT `KPIID` FOREIGN KEY (`KPI_ID`) REFERENCES `tblkpi` (`KPI_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `LevelID` FOREIGN KEY (`Level_ID`) REFERENCES `tbllevel` (`Level_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `RoleID` FOREIGN KEY (`Role_ID`) REFERENCES `tblroles` (`Role_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblteam`
+--
+
+DROP TABLE IF EXISTS `tblteam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblteam` (
+  `team_id` int(11) NOT NULL AUTO_INCREMENT,
+  `team_name` varchar(50) DEFAULT NULL,
+  `team_leader` int(11) DEFAULT NULL,
+  PRIMARY KEY (`team_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbluser`
+--
+
+DROP TABLE IF EXISTS `tbluser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbluser` (
+  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `U_EmpID` varchar(200) NOT NULL,
+  `U_Name` varchar(50) NOT NULL,
+  `U_SysRole` varchar(50) NOT NULL,
+  `U_RolesID` int(11) NOT NULL,
+  `U_Password` varchar(100) DEFAULT NULL,
+  `U_FirstName` varchar(50) DEFAULT NULL,
+  `U_LastName` varchar(20) DEFAULT NULL,
+  `U_NickName` varchar(50) DEFAULT NULL,
+  `Active` tinyint(4) DEFAULT '1',
+  `U_Email` varchar(45) DEFAULT NULL,
+  `U_SiteID` int(11) DEFAULT NULL,
+  `U_TeamID` int(11) DEFAULT NULL,
+  `ActiveUpdatedDate` datetime DEFAULT NULL,
+  `U_EmpNo` int(11) DEFAULT NULL,
+  `ManagerID` int(11) DEFAULT '0',
+  `Display_Name` int(11) NOT NULL DEFAULT '1',
+  `U_Points` int(11) NOT NULL DEFAULT '0',
+  `LastLogin` datetime DEFAULT NULL,
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `U_Name` (`U_Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbluserawardachieved`
+--
+
+DROP TABLE IF EXISTS `tbluserawardachieved`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbluserawardachieved` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `Award_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbluserawards`
+--
+
+DROP TABLE IF EXISTS `tbluserawards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbluserawards` (
+  `userAwardsId` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `award_id` int(11) DEFAULT NULL,
+  `awarded_date` datetime DEFAULT NULL,
+  `manual` tinyint(1) DEFAULT NULL,
+  `awardedBy` int(11) DEFAULT NULL,
+  `target_scores` int(11) DEFAULT NULL,
+  `achieved_scores` int(11) DEFAULT NULL,
+  `popup_showed` tinyint(1) DEFAULT '0',
+  `kpi_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`userAwardsId`)
+) ENGINE=MyISAM AUTO_INCREMENT=621 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbluserimages`
+--
+
+DROP TABLE IF EXISTS `tbluserimages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbluserimages` (
+  `U_UserIDImage` int(11) NOT NULL AUTO_INCREMENT,
+  `Active` tinyint(4) NOT NULL DEFAULT '1',
+  `UserID` int(11) NOT NULL,
+  `U_UploadDate` date NOT NULL,
+  `U_Current` tinyint(4) NOT NULL DEFAULT '0',
+  `Player_Image` varchar(100) DEFAULT NULL,
+  `Player_Thumbnail` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`U_UserIDImage`),
+  KEY `UserID` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblusermatchpoints`
+--
+
+DROP TABLE IF EXISTS `tblusermatchpoints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblusermatchpoints` (
+  `UserMatchPointsID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `MatchID` int(11) DEFAULT NULL,
+  `PointsAchieved` int(11) DEFAULT NULL,
+  `ElaspedTime` int(11) DEFAULT NULL,
+  `IsCorrect` tinyint(4) DEFAULT NULL,
+  `MatchTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`UserMatchPointsID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1486 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblusermatchpointstemperory`
+--
+
+DROP TABLE IF EXISTS `tblusermatchpointstemperory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblusermatchpointstemperory` (
+  `UserMatchPointsID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `MatchID` int(11) DEFAULT NULL,
+  `PointsAchieved` int(11) DEFAULT NULL,
+  `ElaspedTime` int(11) DEFAULT NULL,
+  `IsCorrect` tinyint(4) DEFAULT NULL,
+  `MatchTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`UserMatchPointsID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1486 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbluserquizpoints`
+--
+
+DROP TABLE IF EXISTS `tbluserquizpoints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbluserquizpoints` (
+  `UserQuizPointsID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `QuestionID` int(11) DEFAULT NULL,
+  `PointsAchieved` int(11) DEFAULT NULL,
+  `ElaspedTime` int(11) DEFAULT NULL,
+  `IsCorrect` tinyint(1) DEFAULT NULL,
+  `QuizTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`UserQuizPointsID`)
+) ENGINE=MyISAM AUTO_INCREMENT=8336 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbluserquizpointstemperory`
+--
+
+DROP TABLE IF EXISTS `tbluserquizpointstemperory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbluserquizpointstemperory` (
+  `UserQuizPointsID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `QuizID` int(11) DEFAULT NULL,
+  `QuestionID` int(11) DEFAULT NULL,
+  `PointsAchieved` int(11) DEFAULT NULL,
+  `ElaspedTime` int(11) DEFAULT NULL,
+  `IsCorrect` int(11) DEFAULT NULL,
+  `QuizTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`UserQuizPointsID`)
+) ENGINE=MyISAM AUTO_INCREMENT=8336 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tblusertargetachieved`
+--
+
+DROP TABLE IF EXISTS `tblusertargetachieved`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblusertargetachieved` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `Target_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=255 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `testxml`
+--
+
+DROP TABLE IF EXISTS `testxml`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `testxml` (
+  `TestID` int(11) NOT NULL,
+  `TestName` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tmpcontest`
+--
+
+DROP TABLE IF EXISTS `tmpcontest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tmpcontest` (
+  `User_ID` int(11) NOT NULL,
+  `U_Name` varchar(255) NOT NULL,
+  `Player_Thumbnail` varchar(255) NOT NULL,
+  `Role_Name` varchar(255) NOT NULL,
+  `Site_Name` varchar(255) NOT NULL,
+  `ContestID` int(11) NOT NULL,
+  `ContestName` varchar(255) NOT NULL,
+  `Score` int(11) NOT NULL,
+  `KPI_measure` varchar(255) NOT NULL,
+  `position` int(11) NOT NULL,
+  `rank` int(11) NOT NULL,
+  `times` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `total_hours_worked`
+--
+
+DROP TABLE IF EXISTS `total_hours_worked`;
+/*!50001 DROP VIEW IF EXISTS `total_hours_worked`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `total_hours_worked` AS SELECT 
+ 1 AS `sum(Worked_Hour)`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -62,32 +1635,15 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `login_duration`
+-- Temporary view structure for view `total_sales`
 --
 
-DROP TABLE IF EXISTS `login_duration`;
-/*!50001 DROP VIEW IF EXISTS `login_duration`*/;
+DROP TABLE IF EXISTS `total_sales`;
+/*!50001 DROP VIEW IF EXISTS `total_sales`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `login_duration` AS SELECT 
- 1 AS `start_id`,
- 1 AS `start_date`,
- 1 AS `finish_id`,
- 1 AS `finish_date`,
- 1 AS `duration_minutes`,
- 1 AS `duration_hours`*/;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `total_hours_worked`
---
-
-DROP TABLE IF EXISTS `total_hours_worked`;
-/*!50001 DROP VIEW IF EXISTS `total_hours_worked`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `total_hours_worked` AS SELECT 
- 1 AS `sum(Worked_Hour)`*/;
+/*!50001 CREATE VIEW `total_sales` AS SELECT 
+ 1 AS `sum(score)`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -100,18 +1656,6 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `total_sites` AS SELECT 
  1 AS `count(*)`*/;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `total_sales`
---
-
-DROP TABLE IF EXISTS `total_sales`;
-/*!50001 DROP VIEW IF EXISTS `total_sales`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `total_sales` AS SELECT 
- 1 AS `sum(score)`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -128,148 +1672,74 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Final view structure for view `v_userlevelscores`
+-- Temporary view structure for view `v_userlevelscores`
 --
 
+DROP TABLE IF EXISTS `v_userlevelscores`;
 /*!50001 DROP VIEW IF EXISTS `v_userlevelscores`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_userlevelscores` AS select `tbluser`.`UserID` AS `UserID`,`tbltarget`.`Role_ID` AS `Role_ID`,`tbltarget`.`Level_ID` AS `Level_ID`,`tbltarget`.`KPI_ID` AS `KPI_ID`,`tbltarget`.`Target_ID` AS `Target_ID`,`tbllevel`.`Level_Name` AS `Level_Name`,`tblkpi`.`KPI_name` AS `KPI_name`,`tbltarget`.`Target_Value` AS `Target_Value`,(select ifnull(sum(`tblscores`.`Score`),0) AS `score` from `tblscores` where ((`tblscores`.`Type_ID` = `tbltarget`.`KPI_ID`) and (`tblscores`.`LevelID` = `tbltarget`.`Level_ID`) and (`tblscores`.`User_ID` = `tbluser`.`UserID`) and (`tblscores`.`U_Type` = 'KPI'))) AS `score`,ceiling((((select ifnull(sum(`tblscores`.`Score`),0) AS `score` from `tblscores` where ((`tblscores`.`Type_ID` = `tbltarget`.`KPI_ID`) and (`tblscores`.`User_ID` = `tbluser`.`UserID`) and (`tblscores`.`LevelID` = `tbltarget`.`Level_ID`) and (`tblscores`.`U_Type` = 'KPI'))) / `tbltarget`.`Target_Value`) * 100)) AS `current_percentage`,`tbltarget`.`Points` AS `Points` from (((`tbltarget` join `tbllevel` on((`tbltarget`.`Level_ID` = `tbllevel`.`Level_ID`))) join `tblkpi` on((`tbltarget`.`KPI_ID` = `tblkpi`.`KPI_ID`))) join `tbluser` on((`tbltarget`.`Role_ID` = `tbluser`.`U_RolesID`))) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_userlevelscores` AS SELECT 
+ 1 AS `UserID`,
+ 1 AS `Role_ID`,
+ 1 AS `Level_ID`,
+ 1 AS `KPI_ID`,
+ 1 AS `Target_ID`,
+ 1 AS `Level_Name`,
+ 1 AS `KPI_name`,
+ 1 AS `Target_Value`,
+ 1 AS `score`,
+ 1 AS `current_percentage`,
+ 1 AS `Points`*/;
+SET character_set_client = @saved_cs_client;
 
 --
--- Final view structure for view `total_levels`
+-- Table structure for table `week_report`
 --
 
-/*!50001 DROP VIEW IF EXISTS `total_levels`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `total_levels` AS select count(0) AS `count(*)` from `tbllevel` where (`tbllevel`.`Active` = 1) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
+DROP TABLE IF EXISTS `week_report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `week_report` (
+  `week` int(2) NOT NULL,
+  `month` int(11) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  `total_emplyees` int(11) DEFAULT NULL,
+  `total_managers` int(11) DEFAULT NULL,
+  `total_sales` int(11) DEFAULT NULL,
+  `total_hours_worked` int(11) DEFAULT NULL,
+  `total_hours_login` int(11) DEFAULT NULL,
+  `total_questions` int(11) DEFAULT NULL,
+  `total_quizzes` int(11) DEFAULT NULL,
+  `total_levels` int(11) DEFAULT NULL,
+  `total_sites` int(11) DEFAULT NULL,
+  `total_roles` int(11) DEFAULT NULL,
+  PRIMARY KEY (`week`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Final view structure for view `total_questions`
+-- Table structure for table `year_report`
 --
 
-/*!50001 DROP VIEW IF EXISTS `total_questions`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `total_questions` AS select count(0) AS `count(*)` from `tblquizquestions` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `login_duration`
---
-
-/*!50001 DROP VIEW IF EXISTS `login_duration`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `login_duration` AS select `s`.`Id` AS `start_id`,`s`.`entry_date` AS `start_date`,`f`.`Id` AS `finish_id`,`f`.`entry_date` AS `finish_date`,((`f`.`entry_date` - `s`.`entry_date`) / 100) AS `duration_minutes`,(((`f`.`entry_date` - `s`.`entry_date`) / 100) / 60) AS `duration_hours` from (`event_report` `s` join `event_report` `f`) where ((`s`.`userid` = 55) and (`f`.`userid` = 55) and (`s`.`description` = 'login') and (`f`.`description` = 'logout')) order by `start_id`,`duration_minutes` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `total_hours_worked`
---
-
-/*!50001 DROP VIEW IF EXISTS `total_hours_worked`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `total_hours_worked` AS select sum(`tbllevelperformance`.`Worked_Hour`) AS `sum(Worked_Hour)` from `tbllevelperformance` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `total_sites`
---
-
-/*!50001 DROP VIEW IF EXISTS `total_sites`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `total_sites` AS select count(0) AS `count(*)` from `tblsite` where (`tblsite`.`Active` = 1) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `total_sales`
---
-
-/*!50001 DROP VIEW IF EXISTS `total_sales`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `total_sales` AS select sum(`v_userlevelscores`.`score`) AS `sum(score)` from `v_userlevelscores` where (`v_userlevelscores`.`KPI_ID` = 69) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `total_users`
---
-
-/*!50001 DROP VIEW IF EXISTS `total_users`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `total_users` AS select `tblroles`.`Role_Name` AS `Role`,count(`tbluser`.`UserID`) AS `total` from (`tbluser` left join `tblroles` on((`tbluser`.`U_RolesID` = `tblroles`.`Role_ID`))) group by `tblroles`.`Role_Name` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
+DROP TABLE IF EXISTS `year_report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `year_report` (
+  `year` int(5) NOT NULL,
+  `total_emplyees` int(11) DEFAULT NULL,
+  `total_managers` int(11) DEFAULT NULL,
+  `total_sales` int(11) DEFAULT NULL,
+  `total_hours_worked` int(11) DEFAULT NULL,
+  `total_hours_login` int(11) DEFAULT NULL,
+  `total_questions` int(11) DEFAULT NULL,
+  `total_quizzes` int(11) DEFAULT NULL,
+  `total_levels` int(11) DEFAULT NULL,
+  `total_sites` int(11) DEFAULT NULL,
+  `total_roles` int(11) DEFAULT NULL,
+  PRIMARY KEY (`year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping events for database 'levelspro'
@@ -9622,6 +11092,150 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `login_duration`
+--
+
+/*!50001 DROP VIEW IF EXISTS `login_duration`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `login_duration` AS select `s`.`Id` AS `start_id`,`s`.`entry_date` AS `start_date`,`f`.`Id` AS `finish_id`,`f`.`entry_date` AS `finish_date`,((`f`.`entry_date` - `s`.`entry_date`) / 100) AS `duration_minutes`,(((`f`.`entry_date` - `s`.`entry_date`) / 100) / 60) AS `duration_hours` from (`event_report` `s` join `event_report` `f`) where ((`s`.`userid` = 55) and (`f`.`userid` = 55) and (`s`.`description` = 'login') and (`f`.`description` = 'logout')) order by `start_id`,`duration_minutes` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `total_hours_worked`
+--
+
+/*!50001 DROP VIEW IF EXISTS `total_hours_worked`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `total_hours_worked` AS select sum(`tbllevelperformance`.`Worked_Hour`) AS `sum(Worked_Hour)` from `tbllevelperformance` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `total_levels`
+--
+
+/*!50001 DROP VIEW IF EXISTS `total_levels`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `total_levels` AS select count(0) AS `count(*)` from `tbllevel` where (`tbllevel`.`Active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `total_questions`
+--
+
+/*!50001 DROP VIEW IF EXISTS `total_questions`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `total_questions` AS select count(0) AS `count(*)` from `tblquizquestions` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `total_sales`
+--
+
+/*!50001 DROP VIEW IF EXISTS `total_sales`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `total_sales` AS select sum(`v_userlevelscores`.`score`) AS `sum(score)` from `v_userlevelscores` where (`v_userlevelscores`.`KPI_ID` = 69) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `total_sites`
+--
+
+/*!50001 DROP VIEW IF EXISTS `total_sites`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `total_sites` AS select count(0) AS `count(*)` from `tblsite` where (`tblsite`.`Active` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `total_users`
+--
+
+/*!50001 DROP VIEW IF EXISTS `total_users`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `total_users` AS select `tblroles`.`Role_Name` AS `Role`,count(`tbluser`.`UserID`) AS `total` from (`tbluser` left join `tblroles` on((`tbluser`.`U_RolesID` = `tblroles`.`Role_ID`))) group by `tblroles`.`Role_Name` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_userlevelscores`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_userlevelscores`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_userlevelscores` AS select `tbluser`.`UserID` AS `UserID`,`tbltarget`.`Role_ID` AS `Role_ID`,`tbltarget`.`Level_ID` AS `Level_ID`,`tbltarget`.`KPI_ID` AS `KPI_ID`,`tbltarget`.`Target_ID` AS `Target_ID`,`tbllevel`.`Level_Name` AS `Level_Name`,`tblkpi`.`KPI_name` AS `KPI_name`,`tbltarget`.`Target_Value` AS `Target_Value`,(select ifnull(sum(`tblscores`.`Score`),0) AS `score` from `tblscores` where ((`tblscores`.`Type_ID` = `tbltarget`.`KPI_ID`) and (`tblscores`.`LevelID` = `tbltarget`.`Level_ID`) and (`tblscores`.`User_ID` = `tbluser`.`UserID`) and (`tblscores`.`U_Type` = 'KPI'))) AS `score`,ceiling((((select ifnull(sum(`tblscores`.`Score`),0) AS `score` from `tblscores` where ((`tblscores`.`Type_ID` = `tbltarget`.`KPI_ID`) and (`tblscores`.`User_ID` = `tbluser`.`UserID`) and (`tblscores`.`LevelID` = `tbltarget`.`Level_ID`) and (`tblscores`.`U_Type` = 'KPI'))) / `tbltarget`.`Target_Value`) * 100)) AS `current_percentage`,`tbltarget`.`Points` AS `Points` from (((`tbltarget` join `tbllevel` on((`tbltarget`.`Level_ID` = `tbllevel`.`Level_ID`))) join `tblkpi` on((`tbltarget`.`KPI_ID` = `tblkpi`.`KPI_ID`))) join `tbluser` on((`tbltarget`.`Role_ID` = `tbluser`.`U_RolesID`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -9632,4 +11246,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-06-03 15:35:49
+-- Dump completed on 2015-06-05 21:28:09
