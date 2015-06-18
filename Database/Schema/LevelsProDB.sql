@@ -359,7 +359,7 @@ CREATE TABLE `tblcontestperformance` (
   `UserID` int(11) NOT NULL,
   `KPI_ID` int(11) NOT NULL,
   `Value` int(11) NOT NULL,
-  `LastUpdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `LastUpdate` datetime NOT NULL,
   `CP_ID` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`CP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1814,7 +1814,8 @@ DELIMITER ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
+/*DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `fu_RaiseError`(p_MESSAGE VARCHAR(255)) RETURNS int(11)
 BEGIN
 
 
@@ -1832,7 +1833,7 @@ BEGIN
 
 
 END ;;
-DELIMITER ;
+DELIMITER ;*/
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
@@ -1846,7 +1847,8 @@ DELIMITER ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
+/*DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `SPLIT_STR`(x VARCHAR(255), delim VARCHAR(12), pos INT) RETURNS varchar(255) CHARSET utf8
 BEGIN
 
 
@@ -1854,7 +1856,7 @@ BEGIN
 RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos), LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1), delim, '');
 
 END ;;
-DELIMITER ;
+DELIMITER ;*/
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
@@ -2296,14 +2298,22 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_AutoUpdateWorkHour`(p_WorkedHour int, p_user_id int)
-BEGIN
-	#Routine body goes here...
-
-	UPDATE tbllevelperformance 
-	SET tbllevelperformance.Worked_Hour = tbllevelperformance.Worked_Hour + p_WorkedHour
-	WHERE tbllevelperformance.user_id = p_UserID
-	AND tbllevelperformance.level_achieved = 0;
-
+BEGIN
+
+	#Routine body goes here...
+
+
+
+	UPDATE tbllevelperformance 
+
+	SET tbllevelperformance.Worked_Hour = tbllevelperformance.Worked_Hour + p_WorkedHour
+
+	WHERE tbllevelperformance.user_id = p_UserID
+
+	AND tbllevelperformance.level_achieved = 0;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2650,16 +2660,20 @@ CREATE  PROCEDURE `sp_DeleteContest`(p_ContestID int)
 BEGIN
 
 DELETE FROM contestperformance 
-WHERE ContestID = p_ContestID;
-
+WHERE ContestID = p_ContestID;
+
+
+
 DELETE FROM tblcontestssites
 WHERE ContestID = p_ContestID;
 
 DELETE FROM tblcontestsroles
 WHERE ContestID = p_ContestID;
 
-DELETE FROM tblContest WHERE Contest_ID = p_ContestID ;
-
+DELETE FROM tblContest WHERE Contest_ID = p_ContestID ;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2783,18 +2797,30 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_deletelevel`(p_LevelID int,p_LevelPosition int,p_RoleID int)
-BEGIN
-IF ( NOT EXISTS(SELECT * FROM tblLevelPerformance WHERE current_level = p_LevelID or next_level =p_LevelID or last_level =p_LevelID ))
-	THEN
-delete from tblLevel where Level_ID = p_LevelID;
-UPDATE tbllevel
-set tbllevel.Level_Position = (tbllevel.Level_Position - 1)
-Where tbllevel.Role_ID = p_RoleID AND tbllevel.Level_Position > p_LevelPosition
- ;
-ELSE
-		CALL DuplicatePRO;
-END IF;
-
+BEGIN
+
+IF ( NOT EXISTS(SELECT * FROM tblLevelPerformance WHERE current_level = p_LevelID or next_level =p_LevelID or last_level =p_LevelID ))
+
+	THEN
+
+delete from tblLevel where Level_ID = p_LevelID;
+
+UPDATE tbllevel
+
+set tbllevel.Level_Position = (tbllevel.Level_Position - 1)
+
+Where tbllevel.Role_ID = p_RoleID AND tbllevel.Level_Position > p_LevelPosition
+
+ ;
+
+ELSE
+
+		CALL DuplicatePRO;
+
+END IF;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2917,10 +2943,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_DeleteQuestionLevel`(p_QuestionID int)
-BEGIN
-	
-DELETE FROM tblQuestionLevels WHERE tblQuestionLevels.QuestionID = p_QuestionID;
-
+BEGIN
+
+	
+
+DELETE FROM tblQuestionLevels WHERE tblQuestionLevels.QuestionID = p_QuestionID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2963,8 +2993,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_DeleteQuizLevels`(p_QuizID INT)
-BEGIN
-	DELETE FROM tblquizlevels  WHERE tblquizlevels.QuizID = p_QuizID;
+BEGIN
+
+	DELETE FROM tblquizlevels  WHERE tblquizlevels.QuizID = p_QuizID;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3310,87 +3342,168 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetAutomaticAwards`(p_UserID INT)
-BEGIN
-	/*SELECT
-tblAwards.Award_ID,
-tblAwards.Award_Name,
-tblAwards.Award_Desc,
-tblKPI.KPI_name,
-tblAwards.KPIID,
-tblAwards.Target_Value,
-SUM(tblScores.Score) AS Score
-,(((IFNULL(sum(tblScores.Score),0)) / tblAwards.Target_Value) * 100) AS Percentage,
-'automatic' AS Type
-,'' AS awarded_date
-,(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image
-FROM
-tblAwards
-
-INNER JOIN tblKPI ON tblAwards.KPIID = tblKPI.KPI_ID
-INNER JOIN tblScores ON tblAwards.KPIID = tblScores.Type_ID AND tblScores.User_ID = p_UserID AND tblScores.U_Type = 'KPI'
-WHERE tblAwards.Award_Manual = 0 AND tblAwards.KPIID = tblScores.Type_ID AND tblScores.User_ID = p_UserID AND tblScores.U_Type = 'KPI'
-
-UNION
-
-SELECT
-tblAwards.Award_ID,
-tblAwards.Award_Name,
-tblAwards.Award_Desc
-,'' AS KPI_name,
-tblAwards.KPIID,
-tblAwards.Target_Value,
-'' AS Score
-,'' AS Percentage
-,'manual' AS Type
-,tblUserAwards.awarded_date
-,(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image
-FROM
-tblAwards
-INNER JOIN tblUserAwards ON tblAwards.Award_ID = tblUserAwards.award_id
-INNER JOIN tblAwardImages ON tblAwards.Award_ID = tblAwardImages.Award_ID
-WHERE tblAwards.Award_Manual = 1  AND tblUserAwards.user_id = p_UserID*/
-
-
-
-/*SELECT
-tblAwards.Award_ID,
-tblAwards.Award_Name,
-tblAwards.Award_Desc,
-tblAwards.KPIID,
-tblAwards.Target_Value,
-tblAwards.Award_Manual,
-tblAwards.Active,
-tblAwards.AwardCategoryID,
-
-(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image,
-(select 'yes' from tblUserAwards where award_id=tblAwards.Award_ID and tblUserAwards.user_id=p_UserID ) AS AchievedAward,
-( Select  IFNULL((((IFNULL(sum(tblScores.Score),0)) / tblAwards.Target_Value) * 100),0) from tblScores where tblScores.User_ID=p_UserID and tblScores.Type_ID=tblAwards.KPIID and tblScores.U_Type='KPI'  ) AS Percentage,
-( Select  IFNULL(sum(tblScores.Score),0) from tblScores where tblScores.User_ID=p_UserID  and tblScores.Type_ID=tblAwards.KPIID and tblScores.U_Type='KPI'  ) AS Scores,
-(select awarded_date from tblUserAwards where award_id=tblAwards.Award_ID and  tblUserAwards.user_id=p_UserID ) AS awarded_date,
-(select popup_showed from tblUserAwards where award_id=tblAwards.Award_ID and  tblUserAwards.user_id=p_UserID ) AS popup_showed,
-tblKPI.KPI_name
-FROM
-tblAwards
-LEFT OUTER JOIN  tblKPI ON tblAwards.KPIID = tblKPI.KPI_ID
-where tblAwards.Active = 1*/
-
-select tblAwards.Award_Name,tblUserAwards.popup_showed,tblUserAwards.awarded_date,tblUserAwards.user_id,tblUserAwards.manual as Award_Manual,tblUserAwards.award_id,
-( Select  IFNULL((((IFNULL(sum(tblUserAwards.achieved_scores),0)) / tblAwards.Target_Value) * 100),0) from tblUserAwards where tblUserAwards.user_id=p_UserID and tblUserAwards.award_id=tblAwards.Award_ID) AS Percentage,
-(Select  IFNULL(sum(tblUserAwards.achieved_scores),0) from tblUserAwards where tblUserAwards.user_id=p_UserID  and tblUserAwards.award_id=tblAwards.Award_ID ) AS Scores,
-(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image,
-(Select AwardCategoryID FROM tblAwards Where tblAwards.Award_ID = tblUserAwards.award_id) as AwardCategoryID
-
-from tblAwards,tblUserAwards
-
-Where tblAwards.Award_ID = tblUserAwards.award_id and tblUserAwards.user_id=p_UserID
-;
-
-SELECT Award_Manual ,Target_Value,Award_ID,Award_Name,Award_Desc,AwardCategoryID,
-(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image,
-(Select   IFNULL(sum(tblUserAwards.achieved_scores),0) from tblUserAwards where tblUserAwards.user_id=p_UserID  and tblUserAwards.award_id=tblAwards.Award_ID  ) AS Scores,
- ( Select  IFNULL((((IFNULL(sum(tblUserAwards.achieved_scores),0)) / tblAwards.Target_Value) * 100),0) from tblUserAwards where tblUserAwards.user_id=p_UserID  and tblUserAwards.award_id=tblAwards.Award_ID ) AS Percentage 
-from tblAwards;
-
+BEGIN
+
+	/*SELECT
+
+tblAwards.Award_ID,
+
+tblAwards.Award_Name,
+
+tblAwards.Award_Desc,
+
+tblKPI.KPI_name,
+
+tblAwards.KPIID,
+
+tblAwards.Target_Value,
+
+SUM(tblScores.Score) AS Score
+
+,(((IFNULL(sum(tblScores.Score),0)) / tblAwards.Target_Value) * 100) AS Percentage,
+
+'automatic' AS Type
+
+,'' AS awarded_date
+
+,(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image
+
+FROM
+
+tblAwards
+
+
+
+INNER JOIN tblKPI ON tblAwards.KPIID = tblKPI.KPI_ID
+
+INNER JOIN tblScores ON tblAwards.KPIID = tblScores.Type_ID AND tblScores.User_ID = p_UserID AND tblScores.U_Type = 'KPI'
+
+WHERE tblAwards.Award_Manual = 0 AND tblAwards.KPIID = tblScores.Type_ID AND tblScores.User_ID = p_UserID AND tblScores.U_Type = 'KPI'
+
+
+
+UNION
+
+
+
+SELECT
+
+tblAwards.Award_ID,
+
+tblAwards.Award_Name,
+
+tblAwards.Award_Desc
+
+,'' AS KPI_name,
+
+tblAwards.KPIID,
+
+tblAwards.Target_Value,
+
+'' AS Score
+
+,'' AS Percentage
+
+,'manual' AS Type
+
+,tblUserAwards.awarded_date
+
+,(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image
+
+FROM
+
+tblAwards
+
+INNER JOIN tblUserAwards ON tblAwards.Award_ID = tblUserAwards.award_id
+
+INNER JOIN tblAwardImages ON tblAwards.Award_ID = tblAwardImages.Award_ID
+
+WHERE tblAwards.Award_Manual = 1  AND tblUserAwards.user_id = p_UserID*/
+
+
+
+
+
+
+
+/*SELECT
+
+tblAwards.Award_ID,
+
+tblAwards.Award_Name,
+
+tblAwards.Award_Desc,
+
+tblAwards.KPIID,
+
+tblAwards.Target_Value,
+
+tblAwards.Award_Manual,
+
+tblAwards.Active,
+
+tblAwards.AwardCategoryID,
+
+
+
+(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image,
+
+(select 'yes' from tblUserAwards where award_id=tblAwards.Award_ID and tblUserAwards.user_id=p_UserID ) AS AchievedAward,
+
+( Select  IFNULL((((IFNULL(sum(tblScores.Score),0)) / tblAwards.Target_Value) * 100),0) from tblScores where tblScores.User_ID=p_UserID and tblScores.Type_ID=tblAwards.KPIID and tblScores.U_Type='KPI'  ) AS Percentage,
+
+( Select  IFNULL(sum(tblScores.Score),0) from tblScores where tblScores.User_ID=p_UserID  and tblScores.Type_ID=tblAwards.KPIID and tblScores.U_Type='KPI'  ) AS Scores,
+
+(select awarded_date from tblUserAwards where award_id=tblAwards.Award_ID and  tblUserAwards.user_id=p_UserID ) AS awarded_date,
+
+(select popup_showed from tblUserAwards where award_id=tblAwards.Award_ID and  tblUserAwards.user_id=p_UserID ) AS popup_showed,
+
+tblKPI.KPI_name
+
+FROM
+
+tblAwards
+
+LEFT OUTER JOIN  tblKPI ON tblAwards.KPIID = tblKPI.KPI_ID
+
+where tblAwards.Active = 1*/
+
+
+
+select tblAwards.Award_Name,tblUserAwards.popup_showed,tblUserAwards.awarded_date,tblUserAwards.user_id,tblUserAwards.manual as Award_Manual,tblUserAwards.award_id,
+
+( Select  IFNULL((((IFNULL(sum(tblUserAwards.achieved_scores),0)) / tblAwards.Target_Value) * 100),0) from tblUserAwards where tblUserAwards.user_id=p_UserID and tblUserAwards.award_id=tblAwards.Award_ID) AS Percentage,
+
+(Select  IFNULL(sum(tblUserAwards.achieved_scores),0) from tblUserAwards where tblUserAwards.user_id=p_UserID  and tblUserAwards.award_id=tblAwards.Award_ID ) AS Scores,
+
+(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image,
+
+(Select AwardCategoryID FROM tblAwards Where tblAwards.Award_ID = tblUserAwards.award_id) as AwardCategoryID
+
+
+
+from tblAwards,tblUserAwards
+
+
+
+Where tblAwards.Award_ID = tblUserAwards.award_id and tblUserAwards.user_id=p_UserID
+
+;
+
+
+
+SELECT Award_Manual ,Target_Value,Award_ID,Award_Name,Award_Desc,AwardCategoryID,
+
+(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblAwards.Award_ID) as Award_Image,
+
+(Select   IFNULL(sum(tblUserAwards.achieved_scores),0) from tblUserAwards where tblUserAwards.user_id=p_UserID  and tblUserAwards.award_id=tblAwards.Award_ID  ) AS Scores,
+
+ ( Select  IFNULL((((IFNULL(sum(tblUserAwards.achieved_scores),0)) / tblAwards.Target_Value) * 100),0) from tblUserAwards where tblUserAwards.user_id=p_UserID  and tblUserAwards.award_id=tblAwards.Award_ID ) AS Percentage 
+
+from tblAwards;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3492,11 +3605,16 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetAwardID`(p_kpiID int)
-BEGIN
-	SELECT Award_ID
-	From tblawards
-	Where tblawards.KPIID = p_kpiID;
-
+BEGIN
+
+	SELECT Award_ID
+
+	From tblawards
+
+	Where tblawards.KPIID = p_kpiID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3543,8 +3661,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetCategory`()
-BEGIN
-Select * from tblQuizCategory;
+BEGIN
+
+Select * from tblQuizCategory;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3562,13 +3682,15 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetContest`(p_Where VARCHAR(10000))
-BEGIN
+BEGIN
+
 
 DECLARE p_Select VARCHAR(2000);
 DECLARE p_Order VARCHAR(100);
 DECLARE p_Inter VARCHAR(1000);
 DECLARE p_FinalQuery varchar(8000);
-
+
+
 SET p_Select = 
 'SELECT a.ContestId, a.ContestName, a.FromDate, a.ToDate, a.KPI_ID, b.Role_Id, c.Site_Id
 FROM tblcontests a
@@ -3584,8 +3706,10 @@ SET @p_FinalQuery = CONCAT(p_Inter,p_Order);
 PREPARE result from @p_FinalQuery;
 EXECUTE result;
 DEALLOCATE PREPARE result;
-
-
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3603,15 +3727,24 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetContestID`(p_kpiID int)
-BEGIN
-	SELECT ContestId
-	From tblcontests
-	Where tblcontests.KPI_ID = p_kpiID;
-
-	SELECT tblawards.Award_ID, tblawards.KPIID
-	From tblawards
-	Where tblawards.KPIID = p_kpiID;
-
+BEGIN
+
+	SELECT ContestId
+
+	From tblcontests
+
+	Where tblcontests.KPI_ID = p_kpiID;
+
+
+
+	SELECT tblawards.Award_ID, tblawards.KPIID
+
+	From tblawards
+
+	Where tblawards.KPIID = p_kpiID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -4518,25 +4651,38 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetDataElement`(p_Where VARCHAR(10000))
-BEGIN	
-
-DECLARE p_Select VARCHAR(2000);
-DECLARE p_FinalQuery varchar(8000);
-
-SET p_Select = 
+BEGIN	
+
+
+
+DECLARE p_Select VARCHAR(2000);
+
+DECLARE p_FinalQuery varchar(8000);
+
+
+
+SET p_Select = 
+
 'SELECT 
 	ElementID,
     MatchID,
     ElementName,
 	IsPicture,
     CreatedDate
-FROM tbldataelement';
-
-SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-PREPARE result from @p_FinalQuery;
-EXECUTE result;
-DEALLOCATE PREPARE result;
-
+FROM tbldataelement';
+
+
+
+SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+PREPARE result from @p_FinalQuery;
+
+EXECUTE result;
+
+DEALLOCATE PREPARE result;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -4554,16 +4700,26 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetDataSet`(p_Where VARCHAR(10000), p_Status int)
-BEGIN
-
-DECLARE p_Select VARCHAR(2000);
-
-DECLARE p_FinalQuery varchar(8000);
-
-IF(p_Status =1)
-THEN
-
-	SET p_Select = 
+BEGIN
+
+
+
+DECLARE p_Select VARCHAR(2000);
+
+
+
+DECLARE p_FinalQuery varchar(8000);
+
+
+
+IF(p_Status =1)
+
+THEN
+
+
+
+	SET p_Select = 
+
 		'SELECT 
 			DataSetID,
 			DataSetElementsData,
@@ -4573,22 +4729,38 @@ THEN
 			DataSetImage,
 			DataSetImageThumbnail
 		FROM tblmatchdatasets
-		INNER JOIN tblmatchdatasetlevels ON tblmatchdatasets.DataSetID = tblmatchdatasetlevels.DataSetID';
-
-	SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-
-	PREPARE result from @p_FinalQuery;
-
-	EXECUTE result;
-
-	DEALLOCATE PREPARE result;
-
-END IF;
-
-IF(p_Status =0)
-THEN
-
-	SET p_Select = 
+		INNER JOIN tblmatchdatasetlevels ON tblmatchdatasets.DataSetID = tblmatchdatasetlevels.DataSetID';
+
+
+
+	SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+
+
+	PREPARE result from @p_FinalQuery;
+
+
+
+	EXECUTE result;
+
+
+
+	DEALLOCATE PREPARE result;
+
+
+
+END IF;
+
+
+
+IF(p_Status =0)
+
+THEN
+
+
+
+	SET p_Select = 
+
 			'SELECT 
 				DataSetID,
 				DataSetElementsData,
@@ -4597,18 +4769,30 @@ THEN
 				CreatedDate,
 				DataSetImage,
 				DataSetImageThumbnail
-			FROM tblmatchdatasets';
-
-	SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-
-	PREPARE result from @p_FinalQuery;
-
-	EXECUTE result;
-
-	DEALLOCATE PREPARE result;
-
-END IF;
-
+			FROM tblmatchdatasets';
+
+
+
+	SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+
+
+	PREPARE result from @p_FinalQuery;
+
+
+
+	EXECUTE result;
+
+
+
+	DEALLOCATE PREPARE result;
+
+
+
+END IF;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -4732,183 +4916,360 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetGames_Player`(p_RoleID int,p_LevelID int)
-BEGIN
-	
-(SELECT  
-	SUM(PointsAchieved) AS QuizPoints, 
-	tblQuiz.QuizID, 
-	tblQuiz.QuizName,
-	tblQuiz.QuizImageThumbnail,
-	tblUser.UserID, 
-	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
-	'Quiz' AS GameType,
-	tblQuiz.CreatedDate
-FROM tblUserQuizPoints
-Right JOIN tblQuiz 
-ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
-Left JOIN tblUser 
-ON tblUserQuizPoints.UserID = tblUser.UserID
-GROUP BY 
-	QuizID,
-	UserID)
-UNION
-(SELECT 
-	UserMatchPoints.PointsAchieved AS QuizPoints, 
-	tblmatch.MatchID AS QuizID, 
-	tblmatch.MatchName AS QuizName,
-	tblmatch.MatchImageThumbnail AS QuizImageThumbnail,
-	tblUser.UserID, 
-	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
-	'Match' AS GameType,
-	tblmatch.CreatedDate
-FROM tblmatch
-LEFT JOIN
-(SELECT 
-	MAX(PointsAchieved) AS PointsAchieved, UserID, MatchID FROM tblusermatchpoints 
-GROUP BY
-	UserID, MatchID) AS UserMatchPoints ON tblmatch.MatchID = UserMatchPoints.MatchID
-LEFT JOIN tblUser 
-ON UserMatchPoints.UserID = tblUser.UserID)
-ORDER BY
-	CreatedDate DESC;
-
-(Select 
-	tblUserQuizPoints.UserQuizPointsID,
-	tblUserQuizPoints.UserID,
-	tblUserQuizPoints.QuizID,
-	tblUserQuizPoints.QuestionID,
-	tblUserQuizPoints.PointsAchieved,
-	tblUserQuizPoints.ElaspedTime,
-	tblUserQuizPoints.IsCorrect,
-	tblUserQuizPoints.QuizTime,
-	'Quiz' AS GameType
-from tblUserQuizPoints)
-UNION
-(SELECT 
-	tblusermatchpoints.UserMatchPointsID AS UserQuizPointsID,
-	tblusermatchpoints.UserID,
-	tblusermatchpoints.MatchID AS QuizID,
-	'' AS QuestionID,
-	tblusermatchpoints.PointsAchieved,
-	tblusermatchpoints.ElaspedTime,
-	tblusermatchpoints.IsCorrect,
-	tblusermatchpoints.MatchTime AS QuizTime,
-	'Match' AS GameType
-FROM tblusermatchpoints)
-ORDER BY
-	QuizTime DESC;
-
-(SELECT * FROM tblUserQuizPointsTemperory
-INNER JOIN tblQuizQuestions 
-ON tblUserQuizPointsTemperory.QuestionID= tblQuizQuestions.QuestionID)
-UNION
-(SELECT 
-	tblUserMatchPointsTemperory.UserMatchPointsID AS UserQuizPointsID,
-	tblUserMatchPointsTemperory.UserID,
-	tblUserMatchPointsTemperory.MatchID AS QuizID,
-	'' AS QuestionID,
-	tblUserMatchPointsTemperory.PointsAchieved,
-	tblUserMatchPointsTemperory.ElaspedTime,
-	tblUserMatchPointsTemperory.IsCorrect,
-	tblUserMatchPointsTemperory.MatchTime AS QuizTime,
-	tblmatchdatasets.DataSetID,
-	tblmatchdatasets.DataSetElementsData AS QuestionText,
-	'' AS QuestionExplanation,
-	'' AS Answer1,
-	'' AS Answer2,
-	'' AS Answer3,
-	'' AS Answer4,
-	'' AS CorrectAnswer,
-	0 AS Category,
-	tblmatchdatasets.SiteID,
-	tblmatchdatasets.MatchID AS QuizID,
-	tblmatchdatasets.DataSetImage AS QuestionImage,
-	tblmatchdatasets.DataSetImageThumbnail AS QuestionImageThumbnail,
-	'' AS ShortQuestion
-FROM 
-	tblUserMatchPointsTemperory
-INNER JOIN tblmatchdatasets 
-ON tblUserMatchPointsTemperory.MatchID = tblmatchdatasets.MatchID)
-ORDER by
-	QuizTime DESC;
-
-(SELECT  
-	SUM(PointsAchieved) AS QuizPoints, 
-	tblQuiz.QuizID, 
-	tblQuiz.QuizName,
-	tblQuiz.QuizImageThumbnail,
-	tblUser.UserID, 
-	tblQuiz.TimesPlayablePerDay, 
-	tblQuiz.KPI_ID,
-	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
-	'Quiz' AS GameType,
-	 '0' AS Mandatory,
-	tblQuiz.CreatedDate
-FROM tblUserQuizPoints
-Right JOIN tblQuiz 
-ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
-Left JOIN tblUser 
-ON tblUserQuizPoints.UserID = tblUser.UserID
-INNER JOIN tblquizlevels 
-ON tblquiz.QuizID = tblquizlevels.QuizID
-WHERE tblquizlevels.RoleID = p_RoleID AND tblquizlevels.LevelID =p_LevelID
-GROUP BY 
-	QuizID)
-UNION
-(SELECT 
-	UserMatchPoints.PointsAchieved AS QuizPoints, 
-	tblmatch.MatchID AS QuizID, 
-	tblmatch.MatchName AS QuizName,
-	tblmatch.MatchImageThumbnail AS QuizImageThumbnail,
-	tblUser.UserID, 
-	tblmatch.MaxPlaysPerDay AS TimesPlayablePerDay, 
-	tblmatch.KPI_ID,
-	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
-	'Match' AS GameType,
-	'0' AS Mandatory,
-	tblmatch.CreatedDate
-FROM tblmatch
-LEFT JOIN
-(SELECT 
-	MAX(PointsAchieved) AS PointsAchieved, UserID, MatchID FROM tblusermatchpoints 
-GROUP BY
-	UserID, MatchID) AS UserMatchPoints ON tblmatch.MatchID = UserMatchPoints.MatchID
-LEFT JOIN tblUser 
-ON UserMatchPoints.UserID = tblUser.UserID
-INNER JOIN tblmatchlevels 
-ON tblmatch.MatchID = tblmatchlevels.MatchID
-WHERE tblmatchlevels.RoleID = p_RoleID AND tblmatchlevels.LevelID =p_LevelID
-GROUP BY 
-	QuizID)
-ORDER BY
-	CreatedDate DESC;
-
-(Select 
-	tblquiz.QuizID
-FROM tblquiz 
-INNER JOIN tbltarget
-ON tblquiz.KPI_ID = tbltarget.KPI_ID
-WHERE 
-	tbltarget.Level_ID = p_LevelID AND 
-	tbltarget.Role_ID= p_RoleID)
-UNION
-(Select 
-	tblmatch.MatchID AS QuizID
-FROM tblmatch 
-INNER JOIN tbltarget
-ON tblmatch.KPI_ID = tbltarget.KPI_ID
-WHERE 
-	tbltarget.Level_ID = p_LevelID AND 
-	tbltarget.Role_ID= p_RoleID) ;
-
-Select Score, tblscores.User_ID, tblscores.Type_ID
-from tblScores
-Where U_Type ='KPI' AND LevelID = p_LevelID ;
-
-SELECT tblquizresulttotal.*, tbluser.U_FirstName, tbluser.U_LastName FROM tblquizresulttotal
-INNER JOIN tbluser
-ON tblquizresulttotal.UserID = tbluser.UserID;
-
+BEGIN
+
+	
+
+(SELECT  
+
+	SUM(PointsAchieved) AS QuizPoints, 
+
+	tblQuiz.QuizID, 
+
+	tblQuiz.QuizName,
+
+	tblQuiz.QuizImageThumbnail,
+
+	tblUser.UserID, 
+
+	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
+
+	'Quiz' AS GameType,
+
+	tblQuiz.CreatedDate
+
+FROM tblUserQuizPoints
+
+Right JOIN tblQuiz 
+
+ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
+
+Left JOIN tblUser 
+
+ON tblUserQuizPoints.UserID = tblUser.UserID
+
+GROUP BY 
+
+	QuizID,
+
+	UserID)
+
+UNION
+
+(SELECT 
+
+	UserMatchPoints.PointsAchieved AS QuizPoints, 
+
+	tblmatch.MatchID AS QuizID, 
+
+	tblmatch.MatchName AS QuizName,
+
+	tblmatch.MatchImageThumbnail AS QuizImageThumbnail,
+
+	tblUser.UserID, 
+
+	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
+
+	'Match' AS GameType,
+
+	tblmatch.CreatedDate
+
+FROM tblmatch
+
+LEFT JOIN
+
+(SELECT 
+
+	MAX(PointsAchieved) AS PointsAchieved, UserID, MatchID FROM tblusermatchpoints 
+
+GROUP BY
+
+	UserID, MatchID) AS UserMatchPoints ON tblmatch.MatchID = UserMatchPoints.MatchID
+
+LEFT JOIN tblUser 
+
+ON UserMatchPoints.UserID = tblUser.UserID)
+
+ORDER BY
+
+	CreatedDate DESC;
+
+
+
+(Select 
+
+	tblUserQuizPoints.UserQuizPointsID,
+
+	tblUserQuizPoints.UserID,
+
+	tblUserQuizPoints.QuizID,
+
+	tblUserQuizPoints.QuestionID,
+
+	tblUserQuizPoints.PointsAchieved,
+
+	tblUserQuizPoints.ElaspedTime,
+
+	tblUserQuizPoints.IsCorrect,
+
+	tblUserQuizPoints.QuizTime,
+
+	'Quiz' AS GameType
+
+from tblUserQuizPoints)
+
+UNION
+
+(SELECT 
+
+	tblusermatchpoints.UserMatchPointsID AS UserQuizPointsID,
+
+	tblusermatchpoints.UserID,
+
+	tblusermatchpoints.MatchID AS QuizID,
+
+	'' AS QuestionID,
+
+	tblusermatchpoints.PointsAchieved,
+
+	tblusermatchpoints.ElaspedTime,
+
+	tblusermatchpoints.IsCorrect,
+
+	tblusermatchpoints.MatchTime AS QuizTime,
+
+	'Match' AS GameType
+
+FROM tblusermatchpoints)
+
+ORDER BY
+
+	QuizTime DESC;
+
+
+
+(SELECT * FROM tblUserQuizPointsTemperory
+
+INNER JOIN tblQuizQuestions 
+
+ON tblUserQuizPointsTemperory.QuestionID= tblQuizQuestions.QuestionID)
+
+UNION
+
+(SELECT 
+
+	tblUserMatchPointsTemperory.UserMatchPointsID AS UserQuizPointsID,
+
+	tblUserMatchPointsTemperory.UserID,
+
+	tblUserMatchPointsTemperory.MatchID AS QuizID,
+
+	'' AS QuestionID,
+
+	tblUserMatchPointsTemperory.PointsAchieved,
+
+	tblUserMatchPointsTemperory.ElaspedTime,
+
+	tblUserMatchPointsTemperory.IsCorrect,
+
+	tblUserMatchPointsTemperory.MatchTime AS QuizTime,
+
+	tblmatchdatasets.DataSetID,
+
+	tblmatchdatasets.DataSetElementsData AS QuestionText,
+
+	'' AS QuestionExplanation,
+
+	'' AS Answer1,
+
+	'' AS Answer2,
+
+	'' AS Answer3,
+
+	'' AS Answer4,
+
+	'' AS CorrectAnswer,
+
+	0 AS Category,
+
+	tblmatchdatasets.SiteID,
+
+	tblmatchdatasets.MatchID AS QuizID,
+
+	tblmatchdatasets.DataSetImage AS QuestionImage,
+
+	tblmatchdatasets.DataSetImageThumbnail AS QuestionImageThumbnail,
+
+	'' AS ShortQuestion
+
+FROM 
+
+	tblUserMatchPointsTemperory
+
+INNER JOIN tblmatchdatasets 
+
+ON tblUserMatchPointsTemperory.MatchID = tblmatchdatasets.MatchID)
+
+ORDER by
+
+	QuizTime DESC;
+
+
+
+(SELECT  
+
+	SUM(PointsAchieved) AS QuizPoints, 
+
+	tblQuiz.QuizID, 
+
+	tblQuiz.QuizName,
+
+	tblQuiz.QuizImageThumbnail,
+
+	tblUser.UserID, 
+
+	tblQuiz.TimesPlayablePerDay, 
+
+	tblQuiz.KPI_ID,
+
+	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
+
+	'Quiz' AS GameType,
+
+	 '0' AS Mandatory,
+
+	tblQuiz.CreatedDate
+
+FROM tblUserQuizPoints
+
+Right JOIN tblQuiz 
+
+ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
+
+Left JOIN tblUser 
+
+ON tblUserQuizPoints.UserID = tblUser.UserID
+
+INNER JOIN tblquizlevels 
+
+ON tblquiz.QuizID = tblquizlevels.QuizID
+
+WHERE tblquizlevels.RoleID = p_RoleID AND tblquizlevels.LevelID =p_LevelID
+
+GROUP BY 
+
+	QuizID)
+
+UNION
+
+(SELECT 
+
+	UserMatchPoints.PointsAchieved AS QuizPoints, 
+
+	tblmatch.MatchID AS QuizID, 
+
+	tblmatch.MatchName AS QuizName,
+
+	tblmatch.MatchImageThumbnail AS QuizImageThumbnail,
+
+	tblUser.UserID, 
+
+	tblmatch.MaxPlaysPerDay AS TimesPlayablePerDay, 
+
+	tblmatch.KPI_ID,
+
+	CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
+
+	'Match' AS GameType,
+
+	'0' AS Mandatory,
+
+	tblmatch.CreatedDate
+
+FROM tblmatch
+
+LEFT JOIN
+
+(SELECT 
+
+	MAX(PointsAchieved) AS PointsAchieved, UserID, MatchID FROM tblusermatchpoints 
+
+GROUP BY
+
+	UserID, MatchID) AS UserMatchPoints ON tblmatch.MatchID = UserMatchPoints.MatchID
+
+LEFT JOIN tblUser 
+
+ON UserMatchPoints.UserID = tblUser.UserID
+
+INNER JOIN tblmatchlevels 
+
+ON tblmatch.MatchID = tblmatchlevels.MatchID
+
+WHERE tblmatchlevels.RoleID = p_RoleID AND tblmatchlevels.LevelID =p_LevelID
+
+GROUP BY 
+
+	QuizID)
+
+ORDER BY
+
+	CreatedDate DESC;
+
+
+
+(Select 
+
+	tblquiz.QuizID
+
+FROM tblquiz 
+
+INNER JOIN tbltarget
+
+ON tblquiz.KPI_ID = tbltarget.KPI_ID
+
+WHERE 
+
+	tbltarget.Level_ID = p_LevelID AND 
+
+	tbltarget.Role_ID= p_RoleID)
+
+UNION
+
+(Select 
+
+	tblmatch.MatchID AS QuizID
+
+FROM tblmatch 
+
+INNER JOIN tbltarget
+
+ON tblmatch.KPI_ID = tbltarget.KPI_ID
+
+WHERE 
+
+	tbltarget.Level_ID = p_LevelID AND 
+
+	tbltarget.Role_ID= p_RoleID) ;
+
+
+
+Select Score, tblscores.User_ID, tblscores.Type_ID
+
+from tblScores
+
+Where U_Type ='KPI' AND LevelID = p_LevelID ;
+
+
+
+SELECT tblquizresulttotal.*, tbluser.U_FirstName, tbluser.U_LastName FROM tblquizresulttotal
+
+INNER JOIN tbluser
+
+ON tblquizresulttotal.UserID = tbluser.UserID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -4955,21 +5316,36 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetKPI`()
-BEGIN
-
-SELECT tblKPI.KPI_ID,tblKPI.KPI_name,
-
-			tblKPI.KPI_measure,tblKPI.KPI_type,tblKPI.Active, tblkpi.TipsDESC, tblkpi.TipsLINK, tblReferenceData.Description AS KPI_Type_Name,tblKPI.KPI_Category ,tblKPI.KPI_Descp,tblkpi.TypeLevel
-,tblkpi.TypeAward,tblkpi.TypeContest
-
-FROM tblKPI
-
-INNER JOIN tblReferenceData ON
-
-tblKPI.KPI_type = tblReferenceData.ReferenceData_ID
-
-WHERE tblReferenceData.Active = 1;
-
+BEGIN
+
+
+
+SELECT tblKPI.KPI_ID,tblKPI.KPI_name,
+
+
+
+			tblKPI.KPI_measure,tblKPI.KPI_type,tblKPI.Active, tblkpi.TipsDESC, tblkpi.TipsLINK, tblReferenceData.Description AS KPI_Type_Name,tblKPI.KPI_Category ,tblKPI.KPI_Descp,tblkpi.TypeLevel
+
+,tblkpi.TypeAward,tblkpi.TypeContest
+
+
+
+FROM tblKPI
+
+
+
+INNER JOIN tblReferenceData ON
+
+
+
+tblKPI.KPI_type = tblReferenceData.ReferenceData_ID
+
+
+
+WHERE tblReferenceData.Active = 1;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5041,19 +5417,32 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetLevelPerformance`()
-BEGIN
-	
-SELECT 
-			 user_id,
-(SELECT Level_Position from tblLevel WHERE tblLevelPerformance.last_level = tblLevel.Level_ID) as  previos_level,
-			 (SELECT Level_Position from tblLevel WHERE tblLevelPerformance.current_level = tblLevel.Level_ID) as  current_level,
-			 (SELECT Level_Position from tblLevel WHERE tblLevelPerformance.next_level = tblLevel.Level_ID) as next_level,
-(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.next_level and tblLevel.Active = 1) as nextlevel_name,
-(SELECT (tblLevelGameDDL.GameDropdownName) AS Reach from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.Reach = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevel.Active = 1) as nextlevel,
-(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevel.Active = 1) as currentlevel_name	,
-(SELECT (tblLevelGameDDL.GameDropdownName) AS CurrentlyIn from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.CurrentlyIn = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevel.Active = 1) as currentlevel		
- from tblLevelPerformance WHERE level_achieved = 0;
-
+BEGIN
+
+	
+
+SELECT 
+
+			 user_id,
+
+(SELECT Level_Position from tblLevel WHERE tblLevelPerformance.last_level = tblLevel.Level_ID) as  previos_level,
+
+			 (SELECT Level_Position from tblLevel WHERE tblLevelPerformance.current_level = tblLevel.Level_ID) as  current_level,
+
+			 (SELECT Level_Position from tblLevel WHERE tblLevelPerformance.next_level = tblLevel.Level_ID) as next_level,
+
+(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.next_level and tblLevel.Active = 1) as nextlevel_name,
+
+(SELECT (tblLevelGameDDL.GameDropdownName) AS Reach from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.Reach = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevel.Active = 1) as nextlevel,
+
+(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevel.Active = 1) as currentlevel_name	,
+
+(SELECT (tblLevelGameDDL.GameDropdownName) AS CurrentlyIn from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.CurrentlyIn = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevel.Active = 1) as currentlevel		
+
+ from tblLevelPerformance WHERE level_achieved = 0;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5071,10 +5460,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetLevelperformance_PopupShowed`()
-BEGIN
-
-Select * from tblLevelPerformance;
-
+BEGIN
+
+
+
+Select * from tblLevelPerformance;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5092,21 +5485,36 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetLevels`()
-BEGIN
-
-SELECT  tblLevel.Level_ID,
-				Level_Name,
-				tblRoles.Role_Name,
-			  tblRoles.Role_ID,
-				tblLevel.Active,
-				tblLevel.Level_Position,
-				BaseHours,
-				tblLevel.Points
-FROM tblLevel
-INNER JOIN tblRoles ON 
-	tblLevel.Role_ID = tblRoles.Role_ID
-WHERE tblRoles.Active = 1 
-ORDER BY tblLevel.Level_Position ASC;
+BEGIN
+
+
+
+SELECT  tblLevel.Level_ID,
+
+				Level_Name,
+
+				tblRoles.Role_Name,
+
+			  tblRoles.Role_ID,
+
+				tblLevel.Active,
+
+				tblLevel.Level_Position,
+
+				BaseHours,
+
+				tblLevel.Points
+
+FROM tblLevel
+
+INNER JOIN tblRoles ON 
+
+	tblLevel.Role_ID = tblRoles.Role_ID
+
+WHERE tblRoles.Active = 1 
+
+ORDER BY tblLevel.Level_Position ASC;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5124,54 +5532,102 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetLevelsByRole`(IN `p_RoleID` int)
-BEGIN
-
-
-
-SELECT  tblLevel.Level_ID,
-
-				Level_Name,
-
-				tblRoles.Role_Name,
-
-			  tblRoles.Role_ID,
-
-				tblLevel.Active,
-
-				CONCAT('Level ',CONVERT(tblLevel.Level_Position , CHARACTER(10)))    as Level_Position,
-         tbllevel.Level_Position AS lvlPosition,
-
-				tblLevel.Level_Position AS Level_PositionID,
-
-				BaseHours,
-
-ImageThumbnail,
-ImageName,
-
-				tblLevel.Points,
-
-				tblLevel.Role_ID,
-
-CONCAT(Level_Name,' | ','Level ',CONVERT(tblLevel.Level_Position , CHARACTER(10)))    as LevelName,
-
-	tblLevel.CurrentlyIn,
-
-	tblLevel.Reach,
-
-	tblLevel.Game
-
-FROM tblLevel
-
-INNER JOIN tblRoles ON 
-
-	tblLevel.Role_ID = tblRoles.Role_ID
-
-
-
-WHERE tblRoles.Active = 1 and tblLevel.Role_ID=p_RoleID
-
-ORDER BY tblLevel.Level_Position ASC;
-
+BEGIN
+
+
+
+
+
+
+
+SELECT  tblLevel.Level_ID,
+
+
+
+				Level_Name,
+
+
+
+				tblRoles.Role_Name,
+
+
+
+			  tblRoles.Role_ID,
+
+
+
+				tblLevel.Active,
+
+
+
+				CONCAT('Level ',CONVERT(tblLevel.Level_Position , CHARACTER(10)))    as Level_Position,
+
+         tbllevel.Level_Position AS lvlPosition,
+
+
+
+				tblLevel.Level_Position AS Level_PositionID,
+
+
+
+				BaseHours,
+
+
+
+ImageThumbnail,
+
+ImageName,
+
+
+
+				tblLevel.Points,
+
+
+
+				tblLevel.Role_ID,
+
+
+
+CONCAT(Level_Name,' | ','Level ',CONVERT(tblLevel.Level_Position , CHARACTER(10)))    as LevelName,
+
+
+
+	tblLevel.CurrentlyIn,
+
+
+
+	tblLevel.Reach,
+
+
+
+	tblLevel.Game
+
+
+
+FROM tblLevel
+
+
+
+INNER JOIN tblRoles ON 
+
+
+
+	tblLevel.Role_ID = tblRoles.Role_ID
+
+
+
+
+
+
+
+WHERE tblRoles.Active = 1 and tblLevel.Role_ID=p_RoleID
+
+
+
+ORDER BY tblLevel.Level_Position ASC;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5189,10 +5645,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetLifeLines`()
-BEGIN
-
-Select * From tblLifeLines;
-
+BEGIN
+
+
+
+Select * From tblLifeLines;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5210,41 +5670,76 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetManualAssignedAwards`(p_UserID INT)
-BEGIN
-
-	SELECT tblUserAwards.award_id,
-tblUserAwards.userAwardsId,
-
- tblUserAwards.achieved_scores,tblUserAwards.target_scores,
-
-				tblUserAwards.awarded_date,tblUserAwards.awardedBy,tblUserAwards.manual,
-
-				tblUserAwards.userAwardsId,tblUserAwards.user_id,
-
-				tblAwards.Award_Name,
-
-				tblAwards.Award_ID,
-
-				CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
-
-				tblUserAwards.popup_showed,
-
-				tblUserAwards.awarded_date,
-
-				(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblUserAwards.award_id) as Award_Thumbnail
-
-	FROM tblUserAwards 
-
-	INNER JOIN tblAwards ON 
-
-	tblUserAwards.award_id = tblAwards.Award_ID
-
-	INNER JOIN tblUser ON
-
-	tblUserAwards.user_id = tblUser.UserID
-
-	WHERE tblUserAwards.manual = 1 AND tblUserAwards.user_id = p_UserID;
-
+BEGIN
+
+
+
+	SELECT tblUserAwards.award_id,
+
+tblUserAwards.userAwardsId,
+
+
+
+ tblUserAwards.achieved_scores,tblUserAwards.target_scores,
+
+
+
+				tblUserAwards.awarded_date,tblUserAwards.awardedBy,tblUserAwards.manual,
+
+
+
+				tblUserAwards.userAwardsId,tblUserAwards.user_id,
+
+
+
+				tblAwards.Award_Name,
+
+
+
+				tblAwards.Award_ID,
+
+
+
+				CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
+
+
+
+				tblUserAwards.popup_showed,
+
+
+
+				tblUserAwards.awarded_date,
+
+
+
+				(SELECT Award_Image FROM tblAwardImages WHERE Current_Image = 1 AND Active = 1 AND tblAwardImages.Award_ID = tblUserAwards.award_id) as Award_Thumbnail
+
+
+
+	FROM tblUserAwards 
+
+
+
+	INNER JOIN tblAwards ON 
+
+
+
+	tblUserAwards.award_id = tblAwards.Award_ID
+
+
+
+	INNER JOIN tblUser ON
+
+
+
+	tblUserAwards.user_id = tblUser.UserID
+
+
+
+	WHERE tblUserAwards.manual = 1 AND tblUserAwards.user_id = p_UserID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5343,7 +5838,7 @@ IF(p_DataElements = 2)
 THEN
 	SELECT 
 		tblmatchdatasets.DataSetID,
-		SPLIT_STR(DataSetElementsData, '|', 1) as DataElement1,
+    REPLACE(SUBSTRING(SUBSTRING_INDEX(DataSetElementsData, '|', 1), LENGTH(SUBSTRING_INDEX(DataSetElementsData, '|', 1 -1)) + 1), '|', '') as DataElement1,
 		'' as DataElement2,
 		'' as DataElement3,
 		DataSetElementsData,
@@ -5373,8 +5868,8 @@ IF(p_DataElements = 3)
 THEN
 	SELECT 
 		tblmatchdatasets.DataSetID,
-		SPLIT_STR(DataSetElementsData, '|', 1) as DataElement1,
-		SPLIT_STR(DataSetElementsData, '|', 2) as DataElement2,
+    REPLACE(SUBSTRING(SUBSTRING_INDEX(DataSetElementsData, '|', 1), LENGTH(SUBSTRING_INDEX(DataSetElementsData, '|', 1 -1)) + 1), '|', '') as DataElement1,
+    REPLACE(SUBSTRING(SUBSTRING_INDEX(DataSetElementsData, '|', 2), LENGTH(SUBSTRING_INDEX(DataSetElementsData, '|', 2 -1)) + 1), '|', '') as DataElement2,
 		'' as DataElement3,
 		DataSetElementsData,
 		SiteID,   
@@ -5403,9 +5898,9 @@ IF(p_DataElements = 4)
 THEN
 	SELECT 
 		tblmatchdatasets.DataSetID,
-		SPLIT_STR(DataSetElementsData, '|', 1) as DataElement1,
-		SPLIT_STR(DataSetElementsData, '|', 2) as DataElement2,
-		SPLIT_STR(DataSetElementsData, '|', 3) as DataElement3,
+		REPLACE(SUBSTRING(SUBSTRING_INDEX(DataSetElementsData, '|', 1), LENGTH(SUBSTRING_INDEX(DataSetElementsData, '|', 1 -1)) + 1), '|', '') as DataElement1,
+    REPLACE(SUBSTRING(SUBSTRING_INDEX(DataSetElementsData, '|', 2), LENGTH(SUBSTRING_INDEX(DataSetElementsData, '|', 2 -1)) + 1), '|', '') as DataElement2,
+    REPLACE(SUBSTRING(SUBSTRING_INDEX(DataSetElementsData, '|', 3), LENGTH(SUBSTRING_INDEX(DataSetElementsData, '|', 3 -1)) + 1), '|', '') as DataElement3,
 		DataSetElementsData,
 		SiteID,   
 		MatchID,
@@ -5560,34 +6055,62 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetPlayerLevelPercent`(p_UserID INT)
-BEGIN
-
-	SELECT  tblLevelPerformance.levelPerformanceId, tblLevelPerformance.current_level,tblLevel.Level_Position,tblLevelPerformance.last_level,tblLevelPerformance.next_level,
-
-				/*(SELECT levels.popup_showed FROM tblLevelPerformance levels 
-
-				WHERE levels.current_level = tblLevelPerformance.last_level AND levels.user_id = p_UserID AND levels.level_achieved = 1) AS popup_showed,*/
-
-				tblLevelPerformance.popup_showed,
-
-				(SELECT lvl.Points FROM tblLevel lvl 
-
-				WHERE lvl.Level_ID = tblLevelPerformance.current_level AND lvl.Active = 1) AS Bonus,
-
-				(SELECT leve.Level_Name  FROM tblLevel leve WHERE leve.Level_ID = tblLevelPerformance.current_level) AS CurrentLevelName,
-
-					IFNULL(((achieved_scores/target_scores) * 100),0) AS Percentage					
-
-	FROM tblLevelPerformance
-
-	INNER JOIN tblLevel ON
-
-	tblLevelPerformance.current_level = tblLevel.Level_ID
-
-	WHERE tblLevelPerformance.user_id = p_UserID AND tblLevelPerformance.level_achieved = 0;
-
-
-
+BEGIN
+
+
+
+	SELECT  tblLevelPerformance.levelPerformanceId, tblLevelPerformance.current_level,tblLevel.Level_Position,tblLevelPerformance.last_level,tblLevelPerformance.next_level,
+
+
+
+				/*(SELECT levels.popup_showed FROM tblLevelPerformance levels 
+
+
+
+				WHERE levels.current_level = tblLevelPerformance.last_level AND levels.user_id = p_UserID AND levels.level_achieved = 1) AS popup_showed,*/
+
+
+
+				tblLevelPerformance.popup_showed,
+
+
+
+				(SELECT lvl.Points FROM tblLevel lvl 
+
+
+
+				WHERE lvl.Level_ID = tblLevelPerformance.current_level AND lvl.Active = 1) AS Bonus,
+
+
+
+				(SELECT leve.Level_Name  FROM tblLevel leve WHERE leve.Level_ID = tblLevelPerformance.current_level) AS CurrentLevelName,
+
+
+
+					IFNULL(((achieved_scores/target_scores) * 100),0) AS Percentage					
+
+
+
+	FROM tblLevelPerformance
+
+
+
+	INNER JOIN tblLevel ON
+
+
+
+	tblLevelPerformance.current_level = tblLevel.Level_ID
+
+
+
+	WHERE tblLevelPerformance.user_id = p_UserID AND tblLevelPerformance.level_achieved = 0;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5805,31 +6328,56 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetQuiz`(p_Where VARCHAR(10000))
-BEGIN	
-
-DECLARE p_Select VARCHAR(2000);
-DECLARE p_FinalQuery varchar(8000);
-
-SET p_Select = 
-' SELECT 
-			QuizID,
-			QuizName ,
-			NoOfQuestions,
-			TimePerQuestion,
-			TimesPlayablePerDay,
-			TimeBeforePointsDeduction,
-			PointsPerQuestion,
-			CreatedDate,
-			QuizImage,
-			QuizImageThumbnail,
-			KPI_ID
-	  FROM tblQuiz ';
-
-SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-PREPARE result from @p_FinalQuery;
-EXECUTE result;
-DEALLOCATE PREPARE result;
-
+BEGIN	
+
+
+
+DECLARE p_Select VARCHAR(2000);
+
+DECLARE p_FinalQuery varchar(8000);
+
+
+
+SET p_Select = 
+
+' SELECT 
+
+			QuizID,
+
+			QuizName ,
+
+			NoOfQuestions,
+
+			TimePerQuestion,
+
+			TimesPlayablePerDay,
+
+			TimeBeforePointsDeduction,
+
+			PointsPerQuestion,
+
+			CreatedDate,
+
+			QuizImage,
+
+			QuizImageThumbnail,
+
+			KPI_ID
+
+	  FROM tblQuiz ';
+
+
+
+SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+PREPARE result from @p_FinalQuery;
+
+EXECUTE result;
+
+DEALLOCATE PREPARE result;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5847,10 +6395,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetQuizPlayLog`()
-BEGIN
-
-Select * from tblQuizPlayLog;
-
+BEGIN
+
+
+
+Select * from tblQuizPlayLog;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -5868,126 +6420,246 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetQuizQuestions`(p_Where VARCHAR(10000),p_Status int)
-BEGIN
-
-
-
-
-
-DECLARE p_Select VARCHAR(2000);
-
-DECLARE p_FinalQuery varchar(8000);
-
-if(p_Status =1)
-
-then
-
-SET p_Select = 
-
- ' SELECT 
-
-			tblQuizQuestions.QuestionID,
-
-			QuestionText ,
-
-      ShortQuestion,
-
-			QuestionExplanation,
-
-			Answer1,
-
-			Answer2,
-
-			Answer3,
-
-			Answer4,
-
-			CorrectAnswer,
-
-			Category,
-
-			SiteID,			
-
-			QuizID,
-
-			QuestionImage,
-
-			QuestionImageThumbnail
-
-	  FROM tblQuizQuestions
-
-		INNER JOIN tblQuestionLevels ON tblQuizQuestions.QuestionID = tblQuestionLevels.QuestionID
-
- ';
-
-
-
-SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-
-PREPARE result from @p_FinalQuery;
-
-EXECUTE result;
-
-DEALLOCATE PREPARE result;
-
-END IF;
-
-IF(p_Status =0)
-
-then
-
-SET p_Select = 
-
- ' SELECT 
-
-			tblQuizQuestions.QuestionID,
-
-			QuestionText ,
-
-      ShortQuestion,
-
-			QuestionExplanation,
-
-			Answer1,
-
-			Answer2,
-
-			Answer3,
-
-			Answer4,
-
-			CorrectAnswer,
-
-			Category,
-
-			SiteID,			
-
-			QuizID,
-
-			QuestionImage,
-
-			QuestionImageThumbnail
-
-	  FROM tblQuizQuestions
-
- ';
-
-
-
-SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-
-PREPARE result from @p_FinalQuery;
-
-EXECUTE result;
-
-DEALLOCATE PREPARE result;
-
-
-
-
-
-END IF;
-
+BEGIN
+
+
+
+
+
+
+
+
+
+
+
+DECLARE p_Select VARCHAR(2000);
+
+
+
+DECLARE p_FinalQuery varchar(8000);
+
+
+
+if(p_Status =1)
+
+
+
+then
+
+
+
+SET p_Select = 
+
+
+
+ ' SELECT 
+
+
+
+			tblQuizQuestions.QuestionID,
+
+
+
+			QuestionText ,
+
+
+
+      ShortQuestion,
+
+
+
+			QuestionExplanation,
+
+
+
+			Answer1,
+
+
+
+			Answer2,
+
+
+
+			Answer3,
+
+
+
+			Answer4,
+
+
+
+			CorrectAnswer,
+
+
+
+			Category,
+
+
+
+			SiteID,			
+
+
+
+			QuizID,
+
+
+
+			QuestionImage,
+
+
+
+			QuestionImageThumbnail
+
+
+
+	  FROM tblQuizQuestions
+
+
+
+		INNER JOIN tblQuestionLevels ON tblQuizQuestions.QuestionID = tblQuestionLevels.QuestionID
+
+
+
+ ';
+
+
+
+
+
+
+
+SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+
+
+PREPARE result from @p_FinalQuery;
+
+
+
+EXECUTE result;
+
+
+
+DEALLOCATE PREPARE result;
+
+
+
+END IF;
+
+
+
+IF(p_Status =0)
+
+
+
+then
+
+
+
+SET p_Select = 
+
+
+
+ ' SELECT 
+
+
+
+			tblQuizQuestions.QuestionID,
+
+
+
+			QuestionText ,
+
+
+
+      ShortQuestion,
+
+
+
+			QuestionExplanation,
+
+
+
+			Answer1,
+
+
+
+			Answer2,
+
+
+
+			Answer3,
+
+
+
+			Answer4,
+
+
+
+			CorrectAnswer,
+
+
+
+			Category,
+
+
+
+			SiteID,			
+
+
+
+			QuizID,
+
+
+
+			QuestionImage,
+
+
+
+			QuestionImageThumbnail
+
+
+
+	  FROM tblQuizQuestions
+
+
+
+ ';
+
+
+
+
+
+
+
+SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+
+
+PREPARE result from @p_FinalQuery;
+
+
+
+EXECUTE result;
+
+
+
+DEALLOCATE PREPARE result;
+
+
+
+
+
+
+
+
+
+
+
+END IF;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6005,35 +6677,64 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetQuizQuestion_Player`(p_QuizID int, p_RoleID int, p_LevelID int)
-BEGIN	
-SELECT 
-   tblQuizQuestions.QuestionID,
-   QuestionText ,
-   ShortQuestion,
-   QuestionExplanation,
-   Answer1,
-   Answer2,
-   Answer3,
-   Answer4,
-   CorrectAnswer,
-   Category,
-   SiteID,   
-   QuizID,
-tblQuestionLevels.LevelID,
-(select TimesPlayablePerDay from tblQuiz Where QuizID=p_QuizID) as LimitGame,
-(select TimeBeforePointsDeduction from tblQuiz Where QuizID=p_QuizID) as DeductionTime,
-(select NoOfQuestions from tblQuiz Where QuizID=p_QuizID) as NoQuestions,
-(select TimePerQuestion from tblQuiz Where QuizID=p_QuizID) as timeQuestion,
-
-(select PointsPerQuestion from tblQuiz Where QuizID=p_QuizID) as QuestionPoints,
-   QuestionImage,
-   QuestionImageThumbnail
-   FROM tblQuizQuestions
-  INNER JOIN tblQuestionLevels ON tblQuizQuestions.QuestionID = tblQuestionLevels.QuestionID
-
-  WHERE QuizID = p_QuizID AND tblQuestionLevels.RoleID = p_RoleID ;
-
-Select * from tblUserQuizPoints;
+BEGIN	
+
+SELECT 
+
+   tblQuizQuestions.QuestionID,
+
+   QuestionText ,
+
+   ShortQuestion,
+
+   QuestionExplanation,
+
+   Answer1,
+
+   Answer2,
+
+   Answer3,
+
+   Answer4,
+
+   CorrectAnswer,
+
+   Category,
+
+   SiteID,   
+
+   QuizID,
+
+tblQuestionLevels.LevelID,
+
+(select TimesPlayablePerDay from tblQuiz Where QuizID=p_QuizID) as LimitGame,
+
+(select TimeBeforePointsDeduction from tblQuiz Where QuizID=p_QuizID) as DeductionTime,
+
+(select NoOfQuestions from tblQuiz Where QuizID=p_QuizID) as NoQuestions,
+
+(select TimePerQuestion from tblQuiz Where QuizID=p_QuizID) as timeQuestion,
+
+
+
+(select PointsPerQuestion from tblQuiz Where QuizID=p_QuizID) as QuestionPoints,
+
+   QuestionImage,
+
+   QuestionImageThumbnail
+
+   FROM tblQuizQuestions
+
+  INNER JOIN tblQuestionLevels ON tblQuizQuestions.QuestionID = tblQuestionLevels.QuestionID
+
+
+
+  WHERE QuizID = p_QuizID AND tblQuestionLevels.RoleID = p_RoleID ;
+
+
+
+Select * from tblUserQuizPoints;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6051,43 +6752,80 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetQuiz_Player`(p_RoleID int,p_LevelID int)
-BEGIN
-	
-SELECT  SUM(PointsAchieved) AS QuizPoints, tblQuiz.QuizID, tblQuiz.QuizName,tblQuiz.QuizImageThumbnail,tblUser.UserID, 
-CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName
-FROM tblUserQuizPoints
-Right JOIN tblQuiz ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
-Left JOIN tblUser ON tblUserQuizPoints.UserID = tblUser.UserID
-GROUP BY QuizID,UserID;
-
-Select * from tblUserQuizPoints ;
-
-select * from tblUserQuizPointsTemperory
-inner join tblQuizQuestions on tblUserQuizPointsTemperory.QuestionID= tblQuizQuestions.QuestionID
-ORDER BY tblUserQuizPointsTemperory.UserQuizPointsID ASC;
-
-
-SELECT  SUM(PointsAchieved) AS QuizPoints, tblQuiz.QuizID, tblQuiz.QuizName,tblQuiz.QuizImageThumbnail,tblUser.UserID, tblQuiz.TimesPlayablePerDay, tblQuiz.KPI_ID,
-
-CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName
-FROM tblUserQuizPoints
-Right JOIN tblQuiz ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
-Left JOIN tblUser ON tblUserQuizPoints.UserID = tblUser.UserID
-INNER JOIN tblquizlevels ON tblquiz.QuizID = tblquizlevels.QuizID
-WHERE tblquizlevels.RoleID = p_RoleID AND tblquizlevels.LevelID =p_LevelID
-GROUP BY QuizID;
-
-Select tblquiz.QuizID
-FROM tblquiz INNER JOIN tbltarget
-ON tblquiz.KPI_ID = tbltarget.KPI_ID
-WHERE tbltarget.Level_ID = p_LevelID AND tbltarget.Role_ID= p_RoleID ;
-
-Select Score, tblscores.User_ID, tblscores.Type_ID
-from tblScores
-Where U_Type ='KPI' AND LevelID = p_LevelID ;
-
-SELECT * FROM tblquizresulttotal;
-
+BEGIN
+
+	
+
+SELECT  SUM(PointsAchieved) AS QuizPoints, tblQuiz.QuizID, tblQuiz.QuizName,tblQuiz.QuizImageThumbnail,tblUser.UserID, 
+
+CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName
+
+FROM tblUserQuizPoints
+
+Right JOIN tblQuiz ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
+
+Left JOIN tblUser ON tblUserQuizPoints.UserID = tblUser.UserID
+
+GROUP BY QuizID,UserID;
+
+
+
+Select * from tblUserQuizPoints ;
+
+
+
+select * from tblUserQuizPointsTemperory
+
+inner join tblQuizQuestions on tblUserQuizPointsTemperory.QuestionID= tblQuizQuestions.QuestionID
+
+ORDER BY tblUserQuizPointsTemperory.UserQuizPointsID ASC;
+
+
+
+
+
+SELECT  SUM(PointsAchieved) AS QuizPoints, tblQuiz.QuizID, tblQuiz.QuizName,tblQuiz.QuizImageThumbnail,tblUser.UserID, tblQuiz.TimesPlayablePerDay, tblQuiz.KPI_ID,
+
+
+
+CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName
+
+FROM tblUserQuizPoints
+
+Right JOIN tblQuiz ON tblUserQuizPoints.QuizID = tblQuiz.QuizID
+
+Left JOIN tblUser ON tblUserQuizPoints.UserID = tblUser.UserID
+
+INNER JOIN tblquizlevels ON tblquiz.QuizID = tblquizlevels.QuizID
+
+WHERE tblquizlevels.RoleID = p_RoleID AND tblquizlevels.LevelID =p_LevelID
+
+GROUP BY QuizID;
+
+
+
+Select tblquiz.QuizID
+
+FROM tblquiz INNER JOIN tbltarget
+
+ON tblquiz.KPI_ID = tbltarget.KPI_ID
+
+WHERE tbltarget.Level_ID = p_LevelID AND tbltarget.Role_ID= p_RoleID ;
+
+
+
+Select Score, tblscores.User_ID, tblscores.Type_ID
+
+from tblScores
+
+Where U_Type ='KPI' AND LevelID = p_LevelID ;
+
+
+
+SELECT * FROM tblquizresulttotal;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6151,14 +6889,22 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetReward`()
-BEGIN
-
-Select *,
-(SELECT Reward_Image FROM tblRewardImages WHERE Current_Image = 1 AND Active = 1 AND tblRewardImages.Reward_ID = tblRewards.Reward_ID) as Reward_Image,
-(SELECT Reward_Thumbnail FROM tblRewardImages WHERE Current_Image = 1 AND Active = 1 AND tblRewardImages.Reward_ID = tblRewards.Reward_ID) as Reward_Thumbnail
- from tblRewards  ORDER BY tblRewards.Reward_Cost;
-
-
+BEGIN
+
+
+
+Select *,
+
+(SELECT Reward_Image FROM tblRewardImages WHERE Current_Image = 1 AND Active = 1 AND tblRewardImages.Reward_ID = tblRewards.Reward_ID) as Reward_Image,
+
+(SELECT Reward_Thumbnail FROM tblRewardImages WHERE Current_Image = 1 AND Active = 1 AND tblRewardImages.Reward_ID = tblRewards.Reward_ID) as Reward_Thumbnail
+
+ from tblRewards  ORDER BY tblRewards.Reward_Cost;
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6209,29 +6955,52 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetRewardUser`(p_UserID INT)
-BEGIN
-SELECT tblRedeem.Reward_ID,
- 			tblRedeem.Redeem_Date,tblRedeem.User_ID,
-
-				tblRewards.Reward_Name,
-
-				tblRewards.Reward_ID,
-
-				CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
-
-				(SELECT Reward_Image FROM tblRewardImages WHERE Current_Image = 1 AND Active = 1 AND tblRewardImages.Reward_ID = tblRedeem.Reward_ID) as Reward_Thumbnail
-
-	FROM tblRedeem 
-
-	INNER JOIN tblRewards ON 
-
-	tblRedeem.Reward_ID = tblRewards.Reward_ID
-
-	INNER JOIN tblUser ON
-
-	tblRedeem.User_ID = tblUser.UserID
-
-	WHERE tblRedeem.User_ID = p_UserID;
+BEGIN
+
+SELECT tblRedeem.Reward_ID,
+
+ 			tblRedeem.Redeem_Date,tblRedeem.User_ID,
+
+
+
+				tblRewards.Reward_Name,
+
+
+
+				tblRewards.Reward_ID,
+
+
+
+				CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName,
+
+
+
+				(SELECT Reward_Image FROM tblRewardImages WHERE Current_Image = 1 AND Active = 1 AND tblRewardImages.Reward_ID = tblRedeem.Reward_ID) as Reward_Thumbnail
+
+
+
+	FROM tblRedeem 
+
+
+
+	INNER JOIN tblRewards ON 
+
+
+
+	tblRedeem.Reward_ID = tblRewards.Reward_ID
+
+
+
+	INNER JOIN tblUser ON
+
+
+
+	tblRedeem.User_ID = tblUser.UserID
+
+
+
+	WHERE tblRedeem.User_ID = p_UserID;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6272,12 +7041,18 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetRound`(p_Where VARCHAR(10000))
-BEGIN	
-
-DECLARE p_Select VARCHAR(2000);
-DECLARE p_FinalQuery varchar(8000);
-
-SET p_Select = 
+BEGIN	
+
+
+
+DECLARE p_Select VARCHAR(2000);
+
+DECLARE p_FinalQuery varchar(8000);
+
+
+
+SET p_Select = 
+
 'SELECT 
 	RoundID,
     MatchID,
@@ -6288,13 +7063,20 @@ SET p_Select =
 	PointsPerRound,
 	CreatedDate,
 	ShowHint
-FROM tblRound';
-
-SET @p_FinalQuery = CONCAT(p_Select,p_Where);
-PREPARE result from @p_FinalQuery;
-EXECUTE result;
-DEALLOCATE PREPARE result;
-
+FROM tblRound';
+
+
+
+SET @p_FinalQuery = CONCAT(p_Select,p_Where);
+
+PREPARE result from @p_FinalQuery;
+
+EXECUTE result;
+
+DEALLOCATE PREPARE result;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6368,32 +7150,58 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetTarget`()
-BEGIN
-
-SELECT Target_ID,Target_Value,tblTarget.KPI_ID,tblTarget.Level_ID,tblTarget.Role_ID,tblTarget.Active,BaseHours,tblLevel.Points, tblLevel.Level_Position, tblTarget.Points as TPoints
-
-				,tblKPI.KPI_name,tblLevel.Level_Name,tblRoles.Role_Name,tblTarget.Target_Desc,Level_Name,CurrentlyIn,Reach,Game,ImageThumbnail,ImageName,tbltarget.Target_Order as TOrder
-
-FROM tblTarget
-
-INNER JOIN tblKPI ON
-
-tblTarget.KPI_ID = tblKPI.KPI_ID
-
-INNER JOIN tblLevel ON
-
-tblTarget.Level_ID = tblLevel.Level_ID
-
-INNER JOIN tblRoles ON
-
-tblTarget.Role_ID = tblRoles.Role_ID
-
-WHERE tblKPI.Active = 1 AND tblLevel.Active = 1 AND tblRoles.Active = 1 ORDER BY tbltarget.Target_Order ASC;
-
-
-SELECT tblawards.Target_Value ,tblawards.Award_ID,tblawards.KPIID from tblawards
-where tblawards.Award_Manual=0 ;
-
+BEGIN
+
+
+
+SELECT Target_ID,Target_Value,tblTarget.KPI_ID,tblTarget.Level_ID,tblTarget.Role_ID,tblTarget.Active,BaseHours,tblLevel.Points, tblLevel.Level_Position, tblTarget.Points as TPoints
+
+
+
+				,tblKPI.KPI_name,tblLevel.Level_Name,tblRoles.Role_Name,tblTarget.Target_Desc,Level_Name,CurrentlyIn,Reach,Game,ImageThumbnail,ImageName,tbltarget.Target_Order as TOrder
+
+
+
+FROM tblTarget
+
+
+
+INNER JOIN tblKPI ON
+
+
+
+tblTarget.KPI_ID = tblKPI.KPI_ID
+
+
+
+INNER JOIN tblLevel ON
+
+
+
+tblTarget.Level_ID = tblLevel.Level_ID
+
+
+
+INNER JOIN tblRoles ON
+
+
+
+tblTarget.Role_ID = tblRoles.Role_ID
+
+
+
+WHERE tblKPI.Active = 1 AND tblLevel.Active = 1 AND tblRoles.Active = 1 ORDER BY tbltarget.Target_Order ASC;
+
+
+
+
+
+SELECT tblawards.Target_Value ,tblawards.Award_ID,tblawards.KPIID from tblawards
+
+where tblawards.Award_Manual=0 ;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6411,24 +7219,42 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetTargetDescription`()
-BEGIN
-
-
-
-SELECT (SELECT KPI_name from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as KPIName,
-
-(SELECT KPI_Descp from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as KPIDesc,
-(SELECT TipsDESC from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as TipsDesc,
-(SELECT TipsLINK from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as TipsLink,	
-
-				Target_ID,
-
-				Target_Desc
-
- from tblTarget;
-
-
-
+BEGIN
+
+
+
+
+
+
+
+SELECT (SELECT KPI_name from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as KPIName,
+
+
+
+(SELECT KPI_Descp from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as KPIDesc,
+
+(SELECT TipsDESC from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as TipsDesc,
+
+(SELECT TipsLINK from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as TipsLink,	
+
+
+
+				Target_ID,
+
+
+
+				Target_Desc
+
+
+
+ from tblTarget;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6506,78 +7332,150 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetUser`(p_Where VARCHAR(10000))
-BEGIN
-
-DECLARE p_Select VARCHAR(2000);
-
-DECLARE p_FinalQuery varchar(8000);
-
-
-
-SET p_Select = 
-
-' SELECT UserID, U_EmpID, U_FirstName ,U_Points,	
-
-(SELECT CONCAT(tblUser.U_FirstName,'' '',tblUser.U_LastName)) as FullName,
-
-	U_Name,
-
-	U_LastName ,
-
-	U_NickName,
-
-	Display_Name,
-
-	tblUser.Active,
-
-    tblRoles.Role_Name,
-
-		tblUser.U_RolesID,
-
-tblUser.U_SysRole,
-
-tblUser.U_Email,
-
-tblUser.U_SiteID,
-
-tblUser.ManagerID,(Select Worked_Hour from tblLevelPerformance 
-
-Where user_id = tblUser.UserID and level_achieved =0) as WorkedHour,
-
-(Select current_level from tblLevelPerformance 
-
-Where user_id = tblUser.UserID and level_achieved =0) as LevelID,
-
-(SELECT Player_Thumbnail FROM tblUserImages WHERE UserID = tblUser.UserID AND U_Current = 1) AS Player_Thumbnail,
-
-(Select IFNULL(tblLevel.Level_Position,0) from tblLevelPerformance 
-
-INNER JOIN tblLevel ON tblLevelPerformance.current_level = tblLevel.Level_ID
-
-Where user_id = tblUser.UserID and level_achieved =0) AS Level
-
-FROM tblUser
-
-INNER JOIN tblRoles ON
-
-tblUser.U_RolesID = tblRoles.Role_ID ';
-
-
-
-/*SET @p_FinalQuery = CONCAT(p_Select,p_Where,' AND tblRoles.Active = 1 AND tblUser.U_SysRole <> ''Admin'' ORDER BY FullName');*/
-
-SET @p_FinalQuery = CONCAT(p_Select,p_Where,' AND tblRoles.Active = 1  ORDER BY FullName');
-
-PREPARE result from @p_FinalQuery;
-
-EXECUTE result;
-
-DEALLOCATE PREPARE result;
-
-
-
-
-
+BEGIN
+
+
+
+DECLARE p_Select VARCHAR(2000);
+
+
+
+DECLARE p_FinalQuery varchar(8000);
+
+
+
+
+
+
+
+SET p_Select = 
+
+
+
+' SELECT UserID, U_EmpID, U_FirstName ,U_Points,	
+
+
+
+(SELECT CONCAT(tblUser.U_FirstName,'' '',tblUser.U_LastName)) as FullName,
+
+
+
+	U_Name,
+
+
+
+	U_LastName ,
+
+
+
+	U_NickName,
+
+
+
+	Display_Name,
+
+
+
+	tblUser.Active,
+
+
+
+    tblRoles.Role_Name,
+
+
+
+		tblUser.U_RolesID,
+
+
+
+tblUser.U_SysRole,
+
+
+
+tblUser.U_Email,
+
+
+
+tblUser.U_SiteID,
+
+
+
+tblUser.ManagerID,(Select Worked_Hour from tblLevelPerformance 
+
+
+
+Where user_id = tblUser.UserID and level_achieved =0) as WorkedHour,
+
+
+
+(Select current_level from tblLevelPerformance 
+
+
+
+Where user_id = tblUser.UserID and level_achieved =0) as LevelID,
+
+
+
+(SELECT Player_Thumbnail FROM tblUserImages WHERE UserID = tblUser.UserID AND U_Current = 1) AS Player_Thumbnail,
+
+
+
+(Select IFNULL(tblLevel.Level_Position,0) from tblLevelPerformance 
+
+
+
+INNER JOIN tblLevel ON tblLevelPerformance.current_level = tblLevel.Level_ID
+
+
+
+Where user_id = tblUser.UserID and level_achieved =0) AS Level
+
+
+
+FROM tblUser
+
+
+
+INNER JOIN tblRoles ON
+
+
+
+tblUser.U_RolesID = tblRoles.Role_ID ';
+
+
+
+
+
+
+
+/*SET @p_FinalQuery = CONCAT(p_Select,p_Where,' AND tblRoles.Active = 1 AND tblUser.U_SysRole <> ''Admin'' ORDER BY FullName');*/
+
+
+
+SET @p_FinalQuery = CONCAT(p_Select,p_Where,' AND tblRoles.Active = 1  ORDER BY FullName');
+
+
+
+PREPARE result from @p_FinalQuery;
+
+
+
+EXECUTE result;
+
+
+
+DEALLOCATE PREPARE result;
+
+
+
+
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6777,108 +7675,210 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetUserScoreAdmin`(p_UserID int,p_LevelID int)
-BEGIN
-
-
-
-IF (EXISTS(SELECT * FROM tbltarget WHERE tbltarget.Level_ID = p_LevelID))
-	THEN
-
-Select v_UserLevelScores1.*,(CASE WHEN v_UserLevelScores1.current_percentage < 80 THEN 'red' WHEN v_UserLevelScores1.current_percentage > 80 AND v_UserLevelScores1.current_percentage <90 THEN 'Yellow' ELSE 'Green' END) AS PlayerStatus 
-
-,tblLevel.Points as target_scores
-
-,(SELECT DATE_ADD(Level_date,INTERVAL BaseHours HOUR) from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1) as TargetDate
-
-,(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.last_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1) as previouslevel_name,	
-
-(SELECT (tblLevelGameDDL.GameDropdownName) AS Reach from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.Reach = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as Reach,	
-
-(SELECT (tblLevelGameDDL.GameDropdownName) AS CurrentlyIn from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.CurrentlyIn = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as CurrentlyIn,		
-
-	(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1) as currentlevel_name,	
-
-	(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.next_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1 ) as nextlevel_name
-
-,(select (IFNULL(sum(current_percentage),0)) / Count(*) from v_UserLevelScores where Level_ID=v_UserLevelScores1.Level_ID and UserID=v_UserLevelScores1.UserID) as Performance 
-
-
-
-,tblLevel.Points  as Bonus,
-"0" as CheckNoProgress /*(SELECT tblLevel.Points from tblLevel where tblLevel.Level_ID = tblLevelPerformance.next_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1)*/
-
-from v_UserLevelScores as  v_UserLevelScores1
-
-LEFT OUTER JOIN tblLevelPerformance on v_UserLevelScores1.Level_ID = tblLevelPerformance.current_level
-
-LEFT OUTER JOIN tblLevel on v_UserLevelScores1.Level_ID = tblLevel.Level_ID
-
-where v_UserLevelScores1.Level_ID=p_LevelID and v_UserLevelScores1.UserID=p_UserID AND tblLevelPerformance.level_achieved = 0  AND tblLevelPerformance.user_id = p_UserID ORDER BY v_UserLevelScores1.KPI_name;
-
-
-	ELSE
-
-Select tbllevel.Level_Name,tbllevel.Points  as Bonus ,"1" as CheckNoProgress,tbllevel.BaseHours,tbllevel.Level_Position,tblroles.Role_Name,
-(Select tbluser.U_Points from tbluser where tbluser.UserID = p_UserID) AS Points,
-(Select CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) from tbluser WHERE tbluser.UserID = p_UserID) AS PlayerName,
-(SELECT (tblLevelGameDDL.GameDropdownName) AS Reach from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.Reach = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as Reach,	
-
-(SELECT (tblLevelGameDDL.GameDropdownName) AS CurrentlyIn from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.CurrentlyIn = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as CurrentlyIn
-
-from tbllevel INNER JOIN tblroles ON tbllevel.Role_ID =tblroles.Role_ID
-Where tbllevel.Level_ID = p_LevelID;
-
-	END IF;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-/*
-
-	SELECT tblLevelPerformance.user_id,
-
-					tblScores.Score,
-
-					tblTarget.Target_Value,
-
-					tblLevelPerformance.target_scores,
-
-					CEIL (((Score/Target_Value)*100)) as current_percentage,
-
-					tblTarget.KPI_ID,
-
-					(SELECT KPI_name from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as KPIName,				
-
-				  (SELECT tblLevel.Level_Name from tblLevel where tblLevelPerformance.current_level = tblLevel.Level_ID) as LevelName,
-
-					tblTarget.Level_ID
-
- FROM tblScores INNER JOIN tblTarget ON tblScores.Type_ID = tblTarget.KPI_ID AND tblScores.U_Type = 'KPI' and tblScores.User_ID = p_UserID
-
-  INNER JOIN tblLevelPerformance on tblTarget.Level_ID = tblLevelPerformance.current_level
-
-where tblLevelPerformance.user_id = p_UserID;
-
-*/
-
-
-
-
-
-
-
+BEGIN
+
+
+
+
+
+
+
+IF (EXISTS(SELECT * FROM tbltarget WHERE tbltarget.Level_ID = p_LevelID))
+
+	THEN
+
+
+
+Select v_UserLevelScores1.*,(CASE WHEN v_UserLevelScores1.current_percentage < 80 THEN 'red' WHEN v_UserLevelScores1.current_percentage > 80 AND v_UserLevelScores1.current_percentage <90 THEN 'Yellow' ELSE 'Green' END) AS PlayerStatus 
+
+
+
+,tblLevel.Points as target_scores
+
+
+
+,(SELECT DATE_ADD(Level_date,INTERVAL BaseHours HOUR) from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1) as TargetDate
+
+
+
+,(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.last_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1) as previouslevel_name,	
+
+
+
+(SELECT (tblLevelGameDDL.GameDropdownName) AS Reach from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.Reach = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as Reach,	
+
+
+
+(SELECT (tblLevelGameDDL.GameDropdownName) AS CurrentlyIn from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.CurrentlyIn = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as CurrentlyIn,		
+
+
+
+	(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.current_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1) as currentlevel_name,	
+
+
+
+	(SELECT tblLevel.Level_Name from tblLevel WHERE tblLevel.Level_ID = tblLevelPerformance.next_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1 ) as nextlevel_name
+
+
+
+,(select (IFNULL(sum(current_percentage),0)) / Count(*) from v_UserLevelScores where Level_ID=v_UserLevelScores1.Level_ID and UserID=v_UserLevelScores1.UserID) as Performance 
+
+
+
+
+
+
+
+,tblLevel.Points  as Bonus,
+
+"0" as CheckNoProgress /*(SELECT tblLevel.Points from tblLevel where tblLevel.Level_ID = tblLevelPerformance.next_level and tblLevelPerformance.user_id = p_UserID and tblLevel.Active = 1)*/
+
+
+
+from v_UserLevelScores as  v_UserLevelScores1
+
+
+
+LEFT OUTER JOIN tblLevelPerformance on v_UserLevelScores1.Level_ID = tblLevelPerformance.current_level
+
+
+
+LEFT OUTER JOIN tblLevel on v_UserLevelScores1.Level_ID = tblLevel.Level_ID
+
+
+
+where v_UserLevelScores1.Level_ID=p_LevelID and v_UserLevelScores1.UserID=p_UserID AND tblLevelPerformance.level_achieved = 0  AND tblLevelPerformance.user_id = p_UserID ORDER BY v_UserLevelScores1.KPI_name;
+
+
+
+
+
+	ELSE
+
+
+
+Select tbllevel.Level_Name,tbllevel.Points  as Bonus ,"1" as CheckNoProgress,tbllevel.BaseHours,tbllevel.Level_Position,tblroles.Role_Name,
+
+(Select tbluser.U_Points from tbluser where tbluser.UserID = p_UserID) AS Points,
+
+(Select CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) from tbluser WHERE tbluser.UserID = p_UserID) AS PlayerName,
+
+(SELECT (tblLevelGameDDL.GameDropdownName) AS Reach from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.Reach = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as Reach,	
+
+
+
+(SELECT (tblLevelGameDDL.GameDropdownName) AS CurrentlyIn from tblLevel INNER JOIN tblLevelGameDDL ON tblLevel.CurrentlyIn = tblLevelGameDDL.GameDropdownID WHERE tblLevel.Level_ID = p_LevelID and tblLevel.Active = 1) as CurrentlyIn
+
+
+
+from tbllevel INNER JOIN tblroles ON tbllevel.Role_ID =tblroles.Role_ID
+
+Where tbllevel.Level_ID = p_LevelID;
+
+
+
+	END IF;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+/*
+
+
+
+	SELECT tblLevelPerformance.user_id,
+
+
+
+					tblScores.Score,
+
+
+
+					tblTarget.Target_Value,
+
+
+
+					tblLevelPerformance.target_scores,
+
+
+
+					CEIL (((Score/Target_Value)*100)) as current_percentage,
+
+
+
+					tblTarget.KPI_ID,
+
+
+
+					(SELECT KPI_name from tblKPI where tblKPI.KPI_ID = tblTarget.KPI_ID) as KPIName,				
+
+
+
+				  (SELECT tblLevel.Level_Name from tblLevel where tblLevelPerformance.current_level = tblLevel.Level_ID) as LevelName,
+
+
+
+					tblTarget.Level_ID
+
+
+
+ FROM tblScores INNER JOIN tblTarget ON tblScores.Type_ID = tblTarget.KPI_ID AND tblScores.U_Type = 'KPI' and tblScores.User_ID = p_UserID
+
+
+
+  INNER JOIN tblLevelPerformance on tblTarget.Level_ID = tblLevelPerformance.current_level
+
+
+
+where tblLevelPerformance.user_id = p_UserID;
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -6993,91 +7993,176 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetUsersInfoTemp`(p_Name Varchar(50))
-BEGIN
-
-if((SELECT tbluser.U_SysRole from tbluser where tblUser.U_Name =p_Name) = 'Player' )
-THEN
-
-
-Select
-tblUser.UserID,tblUser.U_Name,tblUser.U_SysRole,tblUser.U_RolesID,tblUser.U_Password,tblUser.U_FirstName,tblUser.U_LastName,tblUser.U_NickName,tblUser.Active,tblUser.U_Email,tblUser.U_SiteID
-,tblUser.U_EmpNo,tblUser.ManagerID,tblUser.Display_Name,tblUser.U_Points,tblUser.ActiveUpdatedDate,M.U_Email AS ManagerEmail,tblRoles.Role_Name as RoleName,tblSite.site_name AS SiteName,
-tblLevelPerformance.current_level,tblLevel.Level_Position,tblLevel.Level_Name,tbllevel.Points,tbllevel.ImageName
-
-
-
-from tblUser INNER JOIN
-
-tblRoles ON tblUser.U_RolesID = tblRoles.Role_ID 
-
-INNER JOIN
-
-tblSite ON tblUser.U_SiteID = tblSite.site_id
-
-LEFT OUTER JOIN
-
-tblUser M ON  tblUser.ManagerID= M.UserID
-
-INNER JOIN tbllevelperformance ON 
-
-tblLevelPerformance.user_id = tblUser.UserID
-
-INNER JOIN tbllevel ON tblLevelPerformance.current_level = tblLevel.Level_ID
-
-
-
-WHERE tblUser.U_Name =p_Name and tblUser.Active =1 and tblLevelPerformance.level_achieved = 0;
-
-
-
-SELECT  tblLevel.Level_ID,
-				Level_Name,
-				tblRoles.Role_Name,
-			  tblRoles.Role_ID,
-				tblLevel.Active,
-				tblLevel.Level_Position,
-				BaseHours,
-				tblLevel.Points
-FROM tblLevel
-INNER JOIN tblRoles ON 
-	tblLevel.Role_ID = tblRoles.Role_ID
-WHERE tblRoles.Active = 1 
-ORDER BY tblLevel.Level_Position ASC;
-
-
-
-ELSE
-
-
-Select  
-
-tblUser.UserID,tblUser.U_Name,tblUser.U_SysRole,tblUser.U_RolesID,tblUser.U_Password,tblUser.U_FirstName,tblUser.U_LastName,tblUser.U_NickName,tblUser.Active,tblUser.U_Email,tblUser.U_SiteID
-
-,tblUser.U_EmpNo,tblUser.ManagerID,tblUser.Display_Name,tblUser.U_Points,tblUser.ActiveUpdatedDate,M.U_Email AS ManagerEmail,tblRoles.Role_Name as RoleName,tblSite.site_name AS SiteName
-
-
-
-from tblUser INNER JOIN
-
-tblRoles ON tblUser.U_RolesID = tblRoles.Role_ID 
-
-INNER JOIN
-
-tblSite ON tblUser.U_SiteID = tblSite.site_id
-
-LEFT OUTER JOIN
-
-tblUser M ON  tblUser.ManagerID= M.UserID
-
-
-WHERE tblUser.U_Name =p_Name and tblUser.Active =1;
-
-
-
-END IF;
-
-
-
+BEGIN
+
+
+
+if((SELECT tbluser.U_SysRole from tbluser where tblUser.U_Name =p_Name) = 'Player' )
+
+THEN
+
+
+
+
+
+Select
+
+tblUser.UserID,tblUser.U_Name,tblUser.U_SysRole,tblUser.U_RolesID,tblUser.U_Password,tblUser.U_FirstName,tblUser.U_LastName,tblUser.U_NickName,tblUser.Active,tblUser.U_Email,tblUser.U_SiteID
+
+,tblUser.U_EmpNo,tblUser.ManagerID,tblUser.Display_Name,tblUser.U_Points,tblUser.ActiveUpdatedDate,M.U_Email AS ManagerEmail,tblRoles.Role_Name as RoleName,tblSite.site_name AS SiteName,
+
+tblLevelPerformance.current_level,tblLevel.Level_Position,tblLevel.Level_Name,tbllevel.Points,tbllevel.ImageName
+
+
+
+
+
+
+
+from tblUser INNER JOIN
+
+
+
+tblRoles ON tblUser.U_RolesID = tblRoles.Role_ID 
+
+
+
+INNER JOIN
+
+
+
+tblSite ON tblUser.U_SiteID = tblSite.site_id
+
+
+
+LEFT OUTER JOIN
+
+
+
+tblUser M ON  tblUser.ManagerID= M.UserID
+
+
+
+INNER JOIN tbllevelperformance ON 
+
+
+
+tblLevelPerformance.user_id = tblUser.UserID
+
+
+
+INNER JOIN tbllevel ON tblLevelPerformance.current_level = tblLevel.Level_ID
+
+
+
+
+
+
+
+WHERE tblUser.U_Name =p_Name and tblUser.Active =1 and tblLevelPerformance.level_achieved = 0;
+
+
+
+
+
+
+
+SELECT  tblLevel.Level_ID,
+
+				Level_Name,
+
+				tblRoles.Role_Name,
+
+			  tblRoles.Role_ID,
+
+				tblLevel.Active,
+
+				tblLevel.Level_Position,
+
+				BaseHours,
+
+				tblLevel.Points
+
+FROM tblLevel
+
+INNER JOIN tblRoles ON 
+
+	tblLevel.Role_ID = tblRoles.Role_ID
+
+WHERE tblRoles.Active = 1 
+
+ORDER BY tblLevel.Level_Position ASC;
+
+
+
+
+
+
+
+ELSE
+
+
+
+
+
+Select  
+
+
+
+tblUser.UserID,tblUser.U_Name,tblUser.U_SysRole,tblUser.U_RolesID,tblUser.U_Password,tblUser.U_FirstName,tblUser.U_LastName,tblUser.U_NickName,tblUser.Active,tblUser.U_Email,tblUser.U_SiteID
+
+
+
+,tblUser.U_EmpNo,tblUser.ManagerID,tblUser.Display_Name,tblUser.U_Points,tblUser.ActiveUpdatedDate,M.U_Email AS ManagerEmail,tblRoles.Role_Name as RoleName,tblSite.site_name AS SiteName
+
+
+
+
+
+
+
+from tblUser INNER JOIN
+
+
+
+tblRoles ON tblUser.U_RolesID = tblRoles.Role_ID 
+
+
+
+INNER JOIN
+
+
+
+tblSite ON tblUser.U_SiteID = tblSite.site_id
+
+
+
+LEFT OUTER JOIN
+
+
+
+tblUser M ON  tblUser.ManagerID= M.UserID
+
+
+
+
+
+WHERE tblUser.U_Name =p_Name and tblUser.Active =1;
+
+
+
+
+
+
+
+END IF;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7120,46 +8205,86 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_GetUserTargetScoreAdmin`(p_UserID int,p_LevelID int)
-BEGIN
-
-
-
-Select v_UserLevelScores1.*,
-
-(select (IFNULL(sum(current_percentage),0)) / Count(*) from v_UserLevelScores where Level_ID=v_UserLevelScores1.Level_ID and UserID=v_UserLevelScores1.UserID) as Performance ,
-
-(Select 'yes' from tblUserTargetAchieved where Target_ID=v_UserLevelScores1.Target_ID and UserID=p_UserID) as achieved,CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName 
-
-,tblRoles.Role_Name,tblLevel.Level_Name,tblLevel.Level_Position,tblUser.U_Name
-
-
-
-from v_UserLevelScores as  v_UserLevelScores1
-
-LEFT JOIN tblUser ON v_UserLevelScores1.UserID = tblUser.UserID
-
-LEFT JOIN tblRoles ON v_UserLevelScores1.Role_ID = tblRoles.Role_ID
-
-LEFT JOIN tblLevel ON v_UserLevelScores1.Level_ID = tblLevel.Level_ID
-
-where v_UserLevelScores1.Level_ID=p_LevelID 
-
-and v_UserLevelScores1.UserID=p_UserID
-
-
-
-
-
- /*AND tblLevelPerformance.level_achieved = 0 
-
- AND tblUserTargetAchieved.Target_Achieved = 0
-
- AND tblLevelPerformance.user_id = p_UserID*/
-
-;
-
-
-
+BEGIN
+
+
+
+
+
+
+
+Select v_UserLevelScores1.*,
+
+
+
+(select (IFNULL(sum(current_percentage),0)) / Count(*) from v_UserLevelScores where Level_ID=v_UserLevelScores1.Level_ID and UserID=v_UserLevelScores1.UserID) as Performance ,
+
+
+
+(Select 'yes' from tblUserTargetAchieved where Target_ID=v_UserLevelScores1.Target_ID and UserID=p_UserID) as achieved,CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName) AS FullName 
+
+
+
+,tblRoles.Role_Name,tblLevel.Level_Name,tblLevel.Level_Position,tblUser.U_Name
+
+
+
+
+
+
+
+from v_UserLevelScores as  v_UserLevelScores1
+
+
+
+LEFT JOIN tblUser ON v_UserLevelScores1.UserID = tblUser.UserID
+
+
+
+LEFT JOIN tblRoles ON v_UserLevelScores1.Role_ID = tblRoles.Role_ID
+
+
+
+LEFT JOIN tblLevel ON v_UserLevelScores1.Level_ID = tblLevel.Level_ID
+
+
+
+where v_UserLevelScores1.Level_ID=p_LevelID 
+
+
+
+and v_UserLevelScores1.UserID=p_UserID
+
+
+
+
+
+
+
+
+
+
+
+ /*AND tblLevelPerformance.level_achieved = 0 
+
+
+
+ AND tblUserTargetAchieved.Target_Achieved = 0
+
+
+
+ AND tblLevelPerformance.user_id = p_UserID*/
+
+
+
+;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7235,14 +8360,22 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertCategory`(p_CategoryName Varchar(100))
-BEGIN
-IF ( NOT EXISTS(SELECT * FROM tblQuizCategory WHERE CategoryName = p_CategoryName))
-	THEN
-		INSERT INTO tblQuizCategory (CategoryName)
-		VALUES (p_CategoryName);
-	ELSE
-		CALL DuplicatePRO;
-	END IF; 
+BEGIN
+
+IF ( NOT EXISTS(SELECT * FROM tblQuizCategory WHERE CategoryName = p_CategoryName))
+
+	THEN
+
+		INSERT INTO tblQuizCategory (CategoryName)
+
+		VALUES (p_CategoryName);
+
+	ELSE
+
+		CALL DuplicatePRO;
+
+	END IF; 
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7260,10 +8393,13 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertContest`(p_ContestName varchar(100),p_FromDate varchar(10), p_ToDate varchar(10), p_KPIID INT, p_RoleID INT, p_SiteID INT, out p_Cid int)
-BEGIN
+BEGIN
 
-insert into tblContests(ContestName,FromDate,ToDate,KPI_ID )
-values(p_ContestName,STR_TO_DATE(p_FromDate, '%m/%d/%Y'),STR_TO_DATE(p_ToDate, '%m/%d/%Y'),p_KPIID);
+
+insert into tblContests(ContestName,FromDate,ToDate,KPI_ID )
+
+values(p_ContestName,STR_TO_DATE(p_FromDate, '%m/%d/%Y'),STR_TO_DATE(p_ToDate, '%m/%d/%Y'),p_KPIID);
+
 
 SET p_Cid = LAST_INSERT_ID();
 
@@ -7273,7 +8409,8 @@ VALUES (p_Cid,p_SiteId);
 
 DELETE FROM tblcontestsroles WHERE ContestId = p_Cid;
 INSERT INTO tblcontestsroles (ContestId,Role_Id)
-VALUES (p_Cid, p_RoleID);
+VALUES (p_Cid, p_RoleID);
+
 
 IF (p_RoleID <> 0)
 THEN
@@ -7297,7 +8434,8 @@ ELSEIF (p_RoleID = 0) THEN
 			u.Active = 1 AND i.U_Current = 1 AND u.U_SiteID = p_SiteId;
 
 END IF;
-
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7315,29 +8453,52 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertContestPerformance`(p_contestid int, p_userid int ,p_kpiid int ,p_score int ,p_importdate varchar(200))
-BEGIN
-IF ( NOT EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND ContestID = p_contestid AND KPIID = p_kpiid))
-THEN
-	INSERT into contestperformance(contestperformance.ContestID,contestperformance.UserID,contestperformance.KPIID,contestperformance.`Value`,contestperformance.LastUpdated)
-  values(p_contestid,p_userid,p_kpiid,p_score,p_importdate);
-
-ELSEIF(EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND ContestID = p_contestid AND KPIID = p_kpiid))
-		THEN
-
-UPDATE contestperformance INNER JOIN tblkpi ON contestperformance.KPIID = tblkpi.KPI_ID
-SET contestperformance.`Value` = CASE 
-																 WHEN tblkpi.KPI_measure LIKE '%max%'  AND contestperformance.`Value` < p_score 
-																			 THEN p_score
-																 WHEN tblkpi.KPI_measure NOT LIKE '%max%'
-																			 THEN contestperformance.`Value` + p_score
-																 ELSE 
-																			 contestperformance.`Value`
-																 END
-WHERE contestperformance.UserID = p_userid AND contestperformance.KPIID = p_kpiid AND contestperformance.ContestID = p_contestid;
-
-
-END IF;
-
+BEGIN
+
+IF ( NOT EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND ContestID = p_contestid AND KPIID = p_kpiid))
+
+THEN
+
+	INSERT into contestperformance(contestperformance.ContestID,contestperformance.UserID,contestperformance.KPIID,contestperformance.`Value`,contestperformance.LastUpdated)
+
+  values(p_contestid,p_userid,p_kpiid,p_score,p_importdate);
+
+
+
+ELSEIF(EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND ContestID = p_contestid AND KPIID = p_kpiid))
+
+		THEN
+
+
+
+UPDATE contestperformance INNER JOIN tblkpi ON contestperformance.KPIID = tblkpi.KPI_ID
+
+SET contestperformance.`Value` = CASE 
+
+																 WHEN tblkpi.KPI_measure LIKE '%max%'  AND contestperformance.`Value` < p_score 
+
+																			 THEN p_score
+
+																 WHEN tblkpi.KPI_measure NOT LIKE '%max%'
+
+																			 THEN contestperformance.`Value` + p_score
+
+																 ELSE 
+
+																			 contestperformance.`Value`
+
+																 END
+
+WHERE contestperformance.UserID = p_userid AND contestperformance.KPIID = p_kpiid AND contestperformance.ContestID = p_contestid;
+
+
+
+
+
+END IF;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7378,10 +8539,13 @@ DELIMITER ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertDataElement`(p_MatchID INT, p_ElementName VARCHAR(250), p_IsPicture INT)
 BEGIN
-
+
+
 	INSERT INTO tbldataelement (MatchID,ElementName,IsPicture,CreatedDate)
-	VALUES (p_MatchID,p_ElementName,p_IsPicture,now());
-	
+	VALUES (p_MatchID,p_ElementName,p_IsPicture,now());
+
+	
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7505,16 +8669,26 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertKPI`(p_Descp Varchar(500),p_KpiName varchar(100),p_KpiMeasure varchar(100), p_KpiType varchar(100),p_KpiCategory varchar(50), p_KpiTipsDESC varchar(500), p_KpiTipsLINK varchar(500),p_TypeLevel varchar(10),p_TypeAward varchar(10),p_TypeContest varchar(10))
-BEGIN
-
-INSERT INTO tblKPI(KPI_name,KPI_measure,KPI_type,KPI_Category,KPI_Descp,TipsDESC,TipsLINK,TypeLevel,TypeAward,TypeContest)
-
-
-
-VALUES (p_KpiName,p_KpiMeasure,p_KpiType,p_KpiCategory,p_Descp,p_KpiTipsDESC, p_KpiTipsLINK,p_TypeLevel,p_TypeAward,p_TypeContest);
-
-
-
+BEGIN
+
+
+
+INSERT INTO tblKPI(KPI_name,KPI_measure,KPI_type,KPI_Category,KPI_Descp,TipsDESC,TipsLINK,TypeLevel,TypeAward,TypeContest)
+
+
+
+
+
+
+
+VALUES (p_KpiName,p_KpiMeasure,p_KpiType,p_KpiCategory,p_Descp,p_KpiTipsDESC, p_KpiTipsLINK,p_TypeLevel,p_TypeAward,p_TypeContest);
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7531,23 +8705,39 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE  PROCEDURE `sp_InsertLevel`(p_LevelName varchar(100),p_RoleID int, 
-p_levelImage varchar(100),p_levelthumbnail varchar(100),  p_LevelPosition int, p_BaseHours int, 				p_Points int,p_CurrentlyIn varchar(45),
+CREATE  PROCEDURE `sp_InsertLevel`(p_LevelName varchar(100),p_RoleID int, 
+
+p_levelImage varchar(100),p_levelthumbnail varchar(100),  p_LevelPosition int, p_BaseHours int, 				p_Points int,p_CurrentlyIn varchar(45),
+
 													 p_Reach varchar(45), p_Game varchar(50),OUT p_LevelID INT)
-BEGIN
-
-IF ( NOT EXISTS(SELECT * FROM tblLevel WHERE Level_Name = p_LevelName AND Role_ID = p_RoleID))
-	THEN
-
-insert into tblLevel(Level_Name,Role_ID, Level_Position,BaseHours,Level_date,ImageName,ImageThumbnail,Points,CurrentlyIn,Reach,Game)
-values(p_LevelName,p_RoleID,p_LevelPosition,p_BaseHours,CurDate(),p_levelImage,p_levelthumbnail, p_Points,p_CurrentlyIn,p_Reach,p_Game);
-
-
-SET p_LevelID = LAST_INSERT_ID();
-	ELSE
-		CALL DuplicatePRO;
-	END IF;
-
+BEGIN
+
+
+
+IF ( NOT EXISTS(SELECT * FROM tblLevel WHERE Level_Name = p_LevelName AND Role_ID = p_RoleID))
+
+	THEN
+
+
+
+insert into tblLevel(Level_Name,Role_ID, Level_Position,BaseHours,Level_date,ImageName,ImageThumbnail,Points,CurrentlyIn,Reach,Game)
+
+values(p_LevelName,p_RoleID,p_LevelPosition,p_BaseHours,CurDate(),p_levelImage,p_levelthumbnail, p_Points,p_CurrentlyIn,p_Reach,p_Game);
+
+
+
+
+
+SET p_LevelID = LAST_INSERT_ID();
+
+	ELSE
+
+		CALL DuplicatePRO;
+
+	END IF;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7612,14 +8802,21 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE  PROCEDURE `sp_InsertLifeLine`(UserID int , QuizID int, DateUsed varchar(50), 
-											  ReduceChoices_LifeLine int, ReplaceQuestion_LifeLine int,
+CREATE  PROCEDURE `sp_InsertLifeLine`(UserID int , QuizID int, DateUsed varchar(50), 
+
+											  ReduceChoices_LifeLine int, ReplaceQuestion_LifeLine int,
+
 											  AddCounter_LifeLine int)
-BEGIN
-Insert into tbllifelines(UserID,QuizID,DateUsed,ReduceChoices_LifeLine,ReplaceQuestion_LifeLine,AddCounter_LifeLine) 
-Values (UserID,QuizID,DateUsed,ReduceChoices_LifeLine,ReplaceQuestion_LifeLine,AddCounter_LifeLine);
-
-
+BEGIN
+
+Insert into tbllifelines(UserID,QuizID,DateUsed,ReduceChoices_LifeLine,ReplaceQuestion_LifeLine,AddCounter_LifeLine) 
+
+Values (UserID,QuizID,DateUsed,ReduceChoices_LifeLine,ReplaceQuestion_LifeLine,AddCounter_LifeLine);
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7666,11 +8863,16 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertMatchLevels`(p_MatchID INT, p_RoleID INT, p_LevelID INT)
-BEGIN
-	
-	INSERT INTO tblmatchlevels(MatchID ,RoleID,LevelID)
-	VALUES (p_MatchID,p_RoleID,p_LevelID);
-
+BEGIN
+
+	
+
+	INSERT INTO tblmatchlevels(MatchID ,RoleID,LevelID)
+
+	VALUES (p_MatchID,p_RoleID,p_LevelID);
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7866,23 +9068,40 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertQuestionLevels`(p_QuestionID INT, p_RoleID INT, p_LevelID INT)
-BEGIN
-	/*
-IF (EXISTS(SELECT * FROM tblQuestionLevels WHERE QuestionID = p_QuestionID AND RoleID = p_RoleID))
-	THEN
-		DELETE FROM tblQuestionLevels WHERE QuestionID = p_QuestionID AND RoleID = p_RoleID; 
-		INSERT INTO tblQuestionLevels (QuestionID,RoleID,LevelID)
-		VALUES (p_QuestionID,p_RoleID,p_LevelID);
-	ELSE
-		INSERT INTO tblQuestionLevels (QuestionID,RoleID,LevelID)
-		VALUES (p_QuestionID,p_RoleID,p_LevelID);
-	END IF;*/
-
-
-		INSERT INTO tblQuestionLevels (QuestionID,RoleID,LevelID)
-		VALUES (p_QuestionID,p_RoleID,p_LevelID);
-	
-
+BEGIN
+
+	/*
+
+IF (EXISTS(SELECT * FROM tblQuestionLevels WHERE QuestionID = p_QuestionID AND RoleID = p_RoleID))
+
+	THEN
+
+		DELETE FROM tblQuestionLevels WHERE QuestionID = p_QuestionID AND RoleID = p_RoleID; 
+
+		INSERT INTO tblQuestionLevels (QuestionID,RoleID,LevelID)
+
+		VALUES (p_QuestionID,p_RoleID,p_LevelID);
+
+	ELSE
+
+		INSERT INTO tblQuestionLevels (QuestionID,RoleID,LevelID)
+
+		VALUES (p_QuestionID,p_RoleID,p_LevelID);
+
+	END IF;*/
+
+
+
+
+
+		INSERT INTO tblQuestionLevels (QuestionID,RoleID,LevelID)
+
+		VALUES (p_QuestionID,p_RoleID,p_LevelID);
+
+	
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7900,24 +9119,42 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertQuestions`(p_QuestionText Varchar(200),p_ShortQuestion varchar(100), p_QuestionExplanation VARCHAR(300), p_Answer1 VarChar(100),p_Answer2 VarChar(100), p_Answer3 VarChar(100), p_Answer4 VarChar(100), p_CorrectAnswer VarChar(100), p_Category INT, p_SiteID INT, p_QuizID int, p_QuestionImage VARCHAR(100), p_QuestionImageThumbnail VarChar(100),out p_Qid int)
-BEGIN
-/*
-IF ( NOT EXISTS(SELECT * FROM tblQuizQuestions WHERE QuestionText = p_QuestionText))
-	THEN
-		INSERT INTO tblQuizQuestions (QuestionText,ShortQuestion,QuestionExplanation,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,Category,SiteID,QuizID,QuestionImage,QuestionImageThumbnail)
-		VALUES (p_QuestionText,p_ShortQuestion,p_QuestionExplanation,p_Answer1,p_Answer2,p_Answer3,p_Answer4,p_CorrectAnswer,p_Category , p_SiteID,p_QuizID,p_QuestionImage,p_QuestionImageThumbnail);
-	ELSE
-		CALL DuplicatePRO;
-	END IF;
-
-*/
-INSERT INTO tblQuizQuestions (QuestionText,ShortQuestion,QuestionExplanation,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,Category,SiteID,QuizID,QuestionImage,QuestionImageThumbnail)
-VALUES (p_QuestionText,p_ShortQuestion,p_QuestionExplanation,p_Answer1,p_Answer2,p_Answer3,p_Answer4,p_CorrectAnswer,p_Category , p_SiteID,p_QuizID,p_QuestionImage,p_QuestionImageThumbnail);
-	
-
-SET p_Qid = LAST_INSERT_ID();/*OUT p_Qid int
-p_QuestionText Varchar(200),p_ShortQuestion varchar(100), p_QuestionExplanation VARCHAR(300), p_Answer1 VarChar(100),p_Answer2 VarChar(100), p_Answer3 VarChar(100), p_Answer4 VarChar(100), p_CorrectAnswer VarChar(100), p_Category INT, p_SiteID INT, p_QuizID int, p_QuestionImage VARCHAR(100), p_QuestionImageThumbnail VarChar(100)
-*/
+BEGIN
+
+/*
+
+IF ( NOT EXISTS(SELECT * FROM tblQuizQuestions WHERE QuestionText = p_QuestionText))
+
+	THEN
+
+		INSERT INTO tblQuizQuestions (QuestionText,ShortQuestion,QuestionExplanation,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,Category,SiteID,QuizID,QuestionImage,QuestionImageThumbnail)
+
+		VALUES (p_QuestionText,p_ShortQuestion,p_QuestionExplanation,p_Answer1,p_Answer2,p_Answer3,p_Answer4,p_CorrectAnswer,p_Category , p_SiteID,p_QuizID,p_QuestionImage,p_QuestionImageThumbnail);
+
+	ELSE
+
+		CALL DuplicatePRO;
+
+	END IF;
+
+
+
+*/
+
+INSERT INTO tblQuizQuestions (QuestionText,ShortQuestion,QuestionExplanation,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,Category,SiteID,QuizID,QuestionImage,QuestionImageThumbnail)
+
+VALUES (p_QuestionText,p_ShortQuestion,p_QuestionExplanation,p_Answer1,p_Answer2,p_Answer3,p_Answer4,p_CorrectAnswer,p_Category , p_SiteID,p_QuizID,p_QuestionImage,p_QuestionImageThumbnail);
+
+	
+
+
+
+SET p_Qid = LAST_INSERT_ID();/*OUT p_Qid int
+
+p_QuestionText Varchar(200),p_ShortQuestion varchar(100), p_QuestionExplanation VARCHAR(300), p_Answer1 VarChar(100),p_Answer2 VarChar(100), p_Answer3 VarChar(100), p_Answer4 VarChar(100), p_CorrectAnswer VarChar(100), p_Category INT, p_SiteID INT, p_QuizID int, p_QuestionImage VARCHAR(100), p_QuestionImageThumbnail VarChar(100)
+
+*/
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7934,18 +9171,29 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE  PROCEDURE `sp_InsertQuiz`(p_QuizName VARCHAR(250), p_NoOfQuestions INT,	p_TimePerQuestion INT, p_TimesPlayablePerDay INT, 
-p_TimeBeforePointsDeduction INT, p_PointsPerQuestion INT, p_QuizImage VARCHAR(100),  p_QuizImageThumbnail VARCHAR(100),
+CREATE  PROCEDURE `sp_InsertQuiz`(p_QuizName VARCHAR(250), p_NoOfQuestions INT,	p_TimePerQuestion INT, p_TimesPlayablePerDay INT, 
+
+p_TimeBeforePointsDeduction INT, p_PointsPerQuestion INT, p_QuizImage VARCHAR(100),  p_QuizImageThumbnail VARCHAR(100),
+
 p_KPIID int,out p_Qid int)
-BEGIN
-IF ( NOT EXISTS(SELECT * FROM tblQuiz WHERE QuizName = p_QuizName))
-	THEN
-		INSERT INTO tblQuiz (QuizName,NoOfQuestions,TimePerQuestion,TimesPlayablePerDay,TimeBeforePointsDeduction,PointsPerQuestion,CreatedDate,QuizImage,QuizImageThumbnail,KPI_ID)
-		VALUES (p_QuizName,p_NoOfQuestions,p_TimePerQuestion,p_TimesPlayablePerDay,p_TimeBeforePointsDeduction,p_PointsPerQuestion,NOW(),p_QuizImage,p_QuizImageThumbnail,p_KPIID);
-    SET p_Qid = LAST_INSERT_ID();
-	ELSE
-		CALL DuplicatePRO;
-	END IF;
+BEGIN
+
+IF ( NOT EXISTS(SELECT * FROM tblQuiz WHERE QuizName = p_QuizName))
+
+	THEN
+
+		INSERT INTO tblQuiz (QuizName,NoOfQuestions,TimePerQuestion,TimesPlayablePerDay,TimeBeforePointsDeduction,PointsPerQuestion,CreatedDate,QuizImage,QuizImageThumbnail,KPI_ID)
+
+		VALUES (p_QuizName,p_NoOfQuestions,p_TimePerQuestion,p_TimesPlayablePerDay,p_TimeBeforePointsDeduction,p_PointsPerQuestion,NOW(),p_QuizImage,p_QuizImageThumbnail,p_KPIID);
+
+    SET p_Qid = LAST_INSERT_ID();
+
+	ELSE
+
+		CALL DuplicatePRO;
+
+	END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7963,11 +9211,16 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertQuizLevels`(p_QuizID INT, p_RoleID INT, p_LevelID INT)
-BEGIN
-	
-		INSERT INTO tblquizlevels(QuizID ,RoleID,LevelID)
-		VALUES (p_QuizID,p_RoleID,p_LevelID);
-
+BEGIN
+
+	
+
+		INSERT INTO tblquizlevels(QuizID ,RoleID,LevelID)
+
+		VALUES (p_QuizID,p_RoleID,p_LevelID);
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -7985,10 +9238,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertQuizPlayLog`(UserID int, QuizID int, QuizTime varchar(100))
-BEGIN
-
-Insert into tblQuizPlayLog(UserID, QuizID, QuizTime) Values(UserID, QuizID, QuizTime);
-
+BEGIN
+
+
+
+Insert into tblQuizPlayLog(UserID, QuizID, QuizTime) Values(UserID, QuizID, QuizTime);
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8006,44 +9263,82 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertQuizResult`(p_userid int,p_quizid int,p_total int, p_KPI int)
-BEGIN
-IF ( NOT EXISTS(SELECT * FROM tblquizresulttotal WHERE UserID = p_userid AND QuizID = p_quizid))
-THEN
-	INSERT into tblquizresulttotal(UserID,QuizID,Total)
-  values(p_userid,p_quizid,p_total);
-
-ELSEIF((SELECT Total FROM tblquizresulttotal WHERE UserID = p_userid AND QuizID = p_quizid)< p_total)
-		THEN
-UPDATE tblquizresulttotal
-SET Total = p_total
-WHERE UserID = p_userid AND QuizID = p_quizid;
-END IF;
-
-
-#------ Updating Contest Performance --------------#
-
-IF ( NOT EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND KPIID = p_KPI ))
-THEN
-	INSERT into contestperformance(contestperformance.ContestID,contestperformance.UserID,contestperformance.KPIID,contestperformance.`Value`,contestperformance.LastUpdated)
-  values(p_contestid,p_userid,p_KPI ,p_total,p_importdate);
-
-ELSEIF(EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND KPIID = p_KPI))
-		THEN
-
-UPDATE contestperformance INNER JOIN tblkpi ON contestperformance.KPIID = tblkpi.KPI_ID
-SET contestperformance.`Value` = CASE 
-																 WHEN tblkpi.KPI_measure LIKE '%max%'  AND contestperformance.`Value` < p_total 
-																			 THEN p_total
-																 WHEN tblkpi.KPI_measure NOT LIKE '%max%'
-																			 THEN contestperformance.`Value` + p_total
-																 ELSE 
-																			 contestperformance.`Value`
-																 END
-WHERE contestperformance.UserID = p_userid AND contestperformance.KPIID = p_KPI ;
-
-END IF;
-
-
+BEGIN
+
+IF ( NOT EXISTS(SELECT * FROM tblquizresulttotal WHERE UserID = p_userid AND QuizID = p_quizid))
+
+THEN
+
+	INSERT into tblquizresulttotal(UserID,QuizID,Total)
+
+  values(p_userid,p_quizid,p_total);
+
+
+
+ELSEIF((SELECT Total FROM tblquizresulttotal WHERE UserID = p_userid AND QuizID = p_quizid)< p_total)
+
+		THEN
+
+UPDATE tblquizresulttotal
+
+SET Total = p_total
+
+WHERE UserID = p_userid AND QuizID = p_quizid;
+
+END IF;
+
+
+
+
+
+#------ Updating Contest Performance --------------#
+
+
+
+IF ( NOT EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND KPIID = p_KPI ))
+
+THEN
+
+	INSERT into contestperformance(contestperformance.ContestID,contestperformance.UserID,contestperformance.KPIID,contestperformance.`Value`,contestperformance.LastUpdated)
+
+  values(p_contestid,p_userid,p_KPI ,p_total,p_importdate);
+
+
+
+ELSEIF(EXISTS(SELECT * FROM contestperformance WHERE UserID = p_userid AND KPIID = p_KPI))
+
+		THEN
+
+
+
+UPDATE contestperformance INNER JOIN tblkpi ON contestperformance.KPIID = tblkpi.KPI_ID
+
+SET contestperformance.`Value` = CASE 
+
+																 WHEN tblkpi.KPI_measure LIKE '%max%'  AND contestperformance.`Value` < p_total 
+
+																			 THEN p_total
+
+																 WHEN tblkpi.KPI_measure NOT LIKE '%max%'
+
+																			 THEN contestperformance.`Value` + p_total
+
+																 ELSE 
+
+																			 contestperformance.`Value`
+
+																 END
+
+WHERE contestperformance.UserID = p_userid AND contestperformance.KPIID = p_KPI ;
+
+
+
+END IF;
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8183,20 +9478,34 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertRole`(p_RoleName varchar(100))
-BEGIN
-
-
-
-
-
-	INSERT INTO tblRoles(Role_Name,ActiveUpdatedDate)
-
-
-
-	VALUES (p_RoleName,Curdate());
-
-
-
+BEGIN
+
+
+
+
+
+
+
+
+
+
+
+	INSERT INTO tblRoles(Role_Name,ActiveUpdatedDate)
+
+
+
+
+
+
+
+	VALUES (p_RoleName,Curdate());
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8219,8 +9528,10 @@ BEGIN
 	
 	INSERT INTO tblround (MatchID, RoundNumber,RoundName,NoOfDataSets,TimePerRound,PointsPerRound,CreatedDate, ShowHint)
 	VALUES (p_MatchID, p_RoundNumber, p_RoundName,p_NoOfDataSets,p_TimePerRound,p_PointsPerRound,now(),p_ShowHint);
-
-	
+
+
+	
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8263,35 +9574,64 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertScoreAuto`(p_LevelID int,p_UserID int,p_KPIID int,p_Score int, p_Measure varchar(50),p_EntryDate datetime)
-BEGIN
-	
-IF ( NOT EXISTS(SELECT * FROM tblScores WHERE Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID))
-then
-Insert into tblScores(User_ID,U_Type,Type_ID,Score,Entry_Date,LevelID,Measure)
-values(p_UserID,'KPI',p_KPIID,p_Score,p_EntryDate,p_LevelID,p_Measure);
-
-
-Else
-IF(p_Measure = 'MAX' OR p_Measure = 'max' OR p_Measure = 'Max')
-THEN
-
-SET @var = (Select Score from tblscores WHERE  Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID);
-
-IF(p_Score > @var)
-THEN
-Update tblScores
-Set Score= p_Score
-Where Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID;
-END IF;
-
-ELSE
-Update tblScores
-Set Score= Score + p_Score
-Where Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID;
-
-END IF;
-
-End IF;
+BEGIN
+
+	
+
+IF ( NOT EXISTS(SELECT * FROM tblScores WHERE Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID))
+
+then
+
+Insert into tblScores(User_ID,U_Type,Type_ID,Score,Entry_Date,LevelID,Measure)
+
+values(p_UserID,'KPI',p_KPIID,p_Score,p_EntryDate,p_LevelID,p_Measure);
+
+
+
+
+
+Else
+
+IF(p_Measure = 'MAX' OR p_Measure = 'max' OR p_Measure = 'Max')
+
+THEN
+
+
+
+SET @var = (Select Score from tblscores WHERE  Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID);
+
+
+
+IF(p_Score > @var)
+
+THEN
+
+Update tblScores
+
+Set Score= p_Score
+
+Where Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID;
+
+END IF;
+
+
+
+ELSE
+
+Update tblScores
+
+Set Score= Score + p_Score
+
+Where Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID;
+
+
+
+END IF;
+
+
+
+End IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8309,34 +9649,62 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertScoreAward`(p_UserID int,p_KPIID int,p_Score int, p_Measure varchar(50),p_AwardID int)
-BEGIN
-		
-IF ( NOT EXISTS(SELECT * FROM tblUserAwards WHERE award_id = p_AwardID  AND user_id =p_UserID))
-then
-Insert into tblUserAwards(award_id,user_id,achieved_scores,awarded_date,kpi_id,manual,popup_showed)
-values(p_AwardID,p_UserID,p_Score,NOW(),p_KPIID,0,0);
-
-
-Else
-IF(p_Measure = 'MAX' OR p_Measure = 'max' OR p_Measure = 'Max')
-THEN
-
-SET @var = (Select tblUserAwards.achieved_score FROM tblUserAwards WHERE award_id = p_AwardID  AND user_id =p_UserID);
-
-IF(p_Score > @var)
-THEN
-Update tblUserAwards
-Set tblUserAwards.achieved_scores= p_Score
-Where award_id=p_AwardID  AND user_id =p_UserID;
-END IF;
-
-ELSE
-Update tblUserAwards
-Set tblUserAwards.achieved_scores= tblUserAwards.achieved_scores + p_Score
-Where award_id=p_AwardID  AND user_id =p_UserID;
-END IF;
-
-End IF;
+BEGIN
+
+		
+
+IF ( NOT EXISTS(SELECT * FROM tblUserAwards WHERE award_id = p_AwardID  AND user_id =p_UserID))
+
+then
+
+Insert into tblUserAwards(award_id,user_id,achieved_scores,awarded_date,kpi_id,manual,popup_showed)
+
+values(p_AwardID,p_UserID,p_Score,NOW(),p_KPIID,0,0);
+
+
+
+
+
+Else
+
+IF(p_Measure = 'MAX' OR p_Measure = 'max' OR p_Measure = 'Max')
+
+THEN
+
+
+
+SET @var = (Select tblUserAwards.achieved_score FROM tblUserAwards WHERE award_id = p_AwardID  AND user_id =p_UserID);
+
+
+
+IF(p_Score > @var)
+
+THEN
+
+Update tblUserAwards
+
+Set tblUserAwards.achieved_scores= p_Score
+
+Where award_id=p_AwardID  AND user_id =p_UserID;
+
+END IF;
+
+
+
+ELSE
+
+Update tblUserAwards
+
+Set tblUserAwards.achieved_scores= tblUserAwards.achieved_scores + p_Score
+
+Where award_id=p_AwardID  AND user_id =p_UserID;
+
+END IF;
+
+
+
+End IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8447,34 +9815,62 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertSecurityAnswersTemp`(p_UserID int, p_Question int, p_Answer varchar(200))
-BEGIN
-	
-/*
-		UPDATE tblUser 
-		SET tblUser.U_Password = p_Password
-		WHERE tblUser.UserID = p_UserID;*/
-
-			
-
-			IF ( NOT EXISTS (SELECT * FROM tblSecurityAnswers WHERE UserID = p_UserID and Question_ID = p_Question))
-			THEN
-
-				INSERT INTO tblSecurityAnswers
-				(UserID,Question_ID,Answer)
-				VALUES
-				(p_UserID,p_Question,p_Answer);
-
-			ELSE
-				UPDATE tblSecurityAnswers
-				SET 	Answer = p_Answer
-				WHERE UserID =  p_UserID and Question_ID = p_Question;
-			END IF;
-							
-		
-	
-	
-	
-
+BEGIN
+
+	
+
+/*
+
+		UPDATE tblUser 
+
+		SET tblUser.U_Password = p_Password
+
+		WHERE tblUser.UserID = p_UserID;*/
+
+
+
+			
+
+
+
+			IF ( NOT EXISTS (SELECT * FROM tblSecurityAnswers WHERE UserID = p_UserID and Question_ID = p_Question))
+
+			THEN
+
+
+
+				INSERT INTO tblSecurityAnswers
+
+				(UserID,Question_ID,Answer)
+
+				VALUES
+
+				(p_UserID,p_Question,p_Answer);
+
+
+
+			ELSE
+
+				UPDATE tblSecurityAnswers
+
+				SET 	Answer = p_Answer
+
+				WHERE UserID =  p_UserID and Question_ID = p_Question;
+
+			END IF;
+
+							
+
+		
+
+	
+
+	
+
+	
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8527,34 +9923,62 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertTarget`(p_TargetValue int,p_KpiID int,p_LevelID int,p_RoleID int, p_Description varchar(500),p_Points int,p_Order INT)
-BEGIN
-
-
-
-
-
-
-
-IF (SELECT Target_id FROM tblTarget WHERE  Target_Value=p_TargetValue  AND Role_ID=p_RoleID AND KPI_ID=p_KpiID AND Level_ID=p_LevelID) IS NULL THEN
-
-
-
-INSERT INTO tblTarget(Target_Value,KPI_ID,Level_ID,Role_ID,Target_Desc,Points,Target_Order)
-
-
-
-VALUES(p_TargetValue,p_KpiID,p_LevelID,p_RoleID,p_Description,p_Points,p_Order);
-
-	
-
-END IF;
-
-
-
-
-
-
-
+BEGIN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+IF (SELECT Target_id FROM tblTarget WHERE  Target_Value=p_TargetValue  AND Role_ID=p_RoleID AND KPI_ID=p_KpiID AND Level_ID=p_LevelID) IS NULL THEN
+
+
+
+
+
+
+
+INSERT INTO tblTarget(Target_Value,KPI_ID,Level_ID,Role_ID,Target_Desc,Points,Target_Order)
+
+
+
+
+
+
+
+VALUES(p_TargetValue,p_KpiID,p_LevelID,p_RoleID,p_Description,p_Points,p_Order);
+
+
+
+	
+
+
+
+END IF;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8572,50 +9996,94 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertUser`(p_CurrentLevel int,p_NextLevel int,p_LastLevel int,p_LevelAchieved int, p_U_Name varchar(50) , p_U_EmpID varchar(200) , p_U_LastName varchar(50) , p_U_NickName varchar(50) , p_U_Password varchar(50) , p_U_Email varchar(50) , p_U_SiteID INT , p_U_SysRole varchar(50), p_U_RolesID INT , p_Active tinyint(1), p_U_FirstName varchar(50),p_ManagerID INT)
-BEGIN
-
- 
-
-
-
-DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
-
-    BEGIN
-
-        ROLLBACK;
-
-				CALL DuplicatePro;
-
-				
-
-    END;
-
-
-
-	START TRANSACTION;
-
-	insert into tblUser(U_EmpID,U_Name,U_LastName,U_NickName,U_Password,U_Email,U_SiteID,U_SysRole,U_RolesID,Active,U_FirstName,ManagerID)
-
-
-
-	values(p_U_EmpID,p_U_Name,p_U_LastName,p_U_NickName,NULL,p_U_Email,p_U_SiteID,p_U_SysRole,p_U_RolesID,p_Active,p_U_FirstName,p_ManagerID);
-
-	IF(LAST_INSERT_ID() <> 0)
-
-	then
-
-		insert into tblLevelPerformance(user_id,current_level,next_level,last_level,level_achieved,target_scores,achieved_scores)
-
-
-
-		values(LAST_INSERT_ID(),p_CurrentLevel,p_NextLevel,p_LastLevel,p_LevelAchieved,(Select IFNULL(Sum(Target_Value),'0') from tblTarget
-
-		where Role_ID =p_U_RolesID AND Level_ID=p_CurrentLevel),0);
-
-	End if;
-
-COMMIT;
-
+BEGIN
+
+
+
+ 
+
+
+
+
+
+
+
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
+
+
+
+    BEGIN
+
+
+
+        ROLLBACK;
+
+
+
+				CALL DuplicatePro;
+
+
+
+				
+
+
+
+    END;
+
+
+
+
+
+
+
+	START TRANSACTION;
+
+
+
+	insert into tblUser(U_EmpID,U_Name,U_LastName,U_NickName,U_Password,U_Email,U_SiteID,U_SysRole,U_RolesID,Active,U_FirstName,ManagerID)
+
+
+
+
+
+
+
+	values(p_U_EmpID,p_U_Name,p_U_LastName,p_U_NickName,NULL,p_U_Email,p_U_SiteID,p_U_SysRole,p_U_RolesID,p_Active,p_U_FirstName,p_ManagerID);
+
+
+
+	IF(LAST_INSERT_ID() <> 0)
+
+
+
+	then
+
+
+
+		insert into tblLevelPerformance(user_id,current_level,next_level,last_level,level_achieved,target_scores,achieved_scores)
+
+
+
+
+
+
+
+		values(LAST_INSERT_ID(),p_CurrentLevel,p_NextLevel,p_LastLevel,p_LevelAchieved,(Select IFNULL(Sum(Target_Value),'0') from tblTarget
+
+
+
+		where Role_ID =p_U_RolesID AND Level_ID=p_CurrentLevel),0);
+
+
+
+	End if;
+
+
+
+COMMIT;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8633,22 +10101,38 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_InsertUserAwards`(IN `p_user_id` int,IN `p_award_id` int,IN `p_manual` tinyint,IN `p_awardedBy` int)
-BEGIN
-
-	/*IF ( NOT EXISTS(SELECT * FROM tblUserAwards WHERE user_id = p_user_id AND award_id = p_award_id))
-
-	THEN*/
-
-			INSERT INTO tblUserAwards ( user_id,award_id,awarded_date,manual,awardedBy)
-
-      VALUES (p_user_id,p_award_id,NOW(),p_manual,p_awardedBy);
-
-	/*ELSE
-
-		CALL DuplicatePRO;
-
-	END IF;*/
-
+BEGIN
+
+
+
+	/*IF ( NOT EXISTS(SELECT * FROM tblUserAwards WHERE user_id = p_user_id AND award_id = p_award_id))
+
+
+
+	THEN*/
+
+
+
+			INSERT INTO tblUserAwards ( user_id,award_id,awarded_date,manual,awardedBy)
+
+
+
+      VALUES (p_user_id,p_award_id,NOW(),p_manual,p_awardedBy);
+
+
+
+	/*ELSE
+
+
+
+		CALL DuplicatePRO;
+
+
+
+	END IF;*/
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8691,24 +10175,42 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_levels_UpdateTargets`(p_TargetID INT,p_TargetValue int,p_KpiID INT,p_Points int,p_Order INT)
-BEGIN
-
-	
-
-UPDATE tblTarget
-
-SET Target_Value = p_TargetValue,
-
-    KPI_ID = p_KpiID,
-
-		Points = p_Points,	
-
-		Target_Order = p_Order
-
-WHERE Target_ID = p_TargetID ;
-
-
-
+BEGIN
+
+
+
+	
+
+
+
+UPDATE tblTarget
+
+
+
+SET Target_Value = p_TargetValue,
+
+
+
+    KPI_ID = p_KpiID,
+
+
+
+		Points = p_Points,	
+
+
+
+		Target_Order = p_Order
+
+
+
+WHERE Target_ID = p_TargetID ;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8725,39 +10227,71 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE  PROCEDURE `sp_level_UpdateLevelInfo`(p_BaseHours int, p_Points int, p_LevelID int,
-
-  p_LevelName varchar(50), p_CurrentlyIn varchar(45),
-
+CREATE  PROCEDURE `sp_level_UpdateLevelInfo`(p_BaseHours int, p_Points int, p_LevelID int,
+
+
+
+  p_LevelName varchar(50), p_CurrentlyIn varchar(45),
+
+
+
  p_Reach varchar(45), p_Game varchar(50),p_levelImage varchar(100),p_levelthumbnail varchar(100))
-BEGIN
-
-
-
-UPDATE tblLevel 
-
-SET BaseHours = p_BaseHours,
-
-		Level_Name = p_LevelName,
-
-		Points = p_Points,
-
-		CurrentlyIn = p_CurrentlyIn,
-
-		Reach = p_Reach,
-
-		Game = p_Game,
-    
-    ImageName =p_levelImage,
-    
-    ImageThumbnail =p_levelthumbnail
-
-
-
-WHERE Level_ID = p_LevelID;
-
-
-
+BEGIN
+
+
+
+
+
+
+
+UPDATE tblLevel 
+
+
+
+SET BaseHours = p_BaseHours,
+
+
+
+		Level_Name = p_LevelName,
+
+
+
+		Points = p_Points,
+
+
+
+		CurrentlyIn = p_CurrentlyIn,
+
+
+
+		Reach = p_Reach,
+
+
+
+		Game = p_Game,
+
+    
+
+    ImageName =p_levelImage,
+
+    
+
+    ImageThumbnail =p_levelthumbnail
+
+
+
+
+
+
+
+WHERE Level_ID = p_LevelID;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8775,21 +10309,36 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_MatchLevels`(p_MatchID INT)
-BEGIN
-	SELECT
-	tblRoles.Role_ID,
-	tblRoles.Role_Name,
-	tblLevel.Level_ID,
-	tblLevel.Level_Name,
-	tblLevel.Level_Position,
-	(Select 'yes' from tblmatchlevels where tblmatchlevels.LevelID=tblLevel.Level_ID and MatchID =p_MatchID) as Allow
-	FROM
-	tblRoles
-	INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
-	WHERE
-	tblRoles.Active = 1 and tblLevel.Active=1
-	ORDER BY tblRoles.Role_ID,tblLevel.Level_Position;
-
+BEGIN
+
+	SELECT
+
+	tblRoles.Role_ID,
+
+	tblRoles.Role_Name,
+
+	tblLevel.Level_ID,
+
+	tblLevel.Level_Name,
+
+	tblLevel.Level_Position,
+
+	(Select 'yes' from tblmatchlevels where tblmatchlevels.LevelID=tblLevel.Level_ID and MatchID =p_MatchID) as Allow
+
+	FROM
+
+	tblRoles
+
+	INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
+
+	WHERE
+
+	tblRoles.Active = 1 and tblLevel.Active=1
+
+	ORDER BY tblRoles.Role_ID,tblLevel.Level_Position;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8807,10 +10356,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_PasswordRequest`(p_UserNameID varchar(50))
-BEGIN
-UPDATE tblUser
-SET U_Password = NULL
-Where U_Name = p_UserNameID;
+BEGIN
+
+UPDATE tblUser
+
+SET U_Password = NULL
+
+Where U_Name = p_UserNameID;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -8828,25 +10381,44 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_PerformanceUdpate`()
-BEGIN
-	#--------- Creating Temporary Tables & Views -----------#
-	IF ( NOT EXISTS(SELECT * FROM temp_KPIdata))
-	THEN
-	CREATE Table temp_KPIdata(
-				 EMP_ID INT NOT NULL,
-				 DateTaken DATETIME,
-				 KPI_ID INT,
-				 PerformanceValue INT,
-				 Type VARCHAR(200)
-				 );
-	ELSE
-			CALL DuplicatePRO;
-
-	END IF;
-
-	
-	#-------------------------------------------------------#
-
+BEGIN
+
+	#--------- Creating Temporary Tables & Views -----------#
+
+	IF ( NOT EXISTS(SELECT * FROM temp_KPIdata))
+
+	THEN
+
+	CREATE Table temp_KPIdata(
+
+				 EMP_ID INT NOT NULL,
+
+				 DateTaken DATETIME,
+
+				 KPI_ID INT,
+
+				 PerformanceValue INT,
+
+				 Type VARCHAR(200)
+
+				 );
+
+	ELSE
+
+			CALL DuplicatePRO;
+
+
+
+	END IF;
+
+
+
+	
+
+	#-------------------------------------------------------#
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9172,22 +10744,38 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_QuizLevels`(p_QuizID INT)
-BEGIN
-	SELECT
-tblRoles.Role_ID,
-tblRoles.Role_Name,
-tblLevel.Level_ID,
-tblLevel.Level_Name,
-tblLevel.Level_Position,
-
-(Select 'yes' from tblquizlevels where tblquizlevels.LevelID=tblLevel.Level_ID and QuizID =p_QuizID) as Allow
-FROM
-tblRoles
-INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
-WHERE
-tblRoles.Active = 1 and tblLevel.Active=1
-ORDER BY tblRoles.Role_ID,tblLevel.Level_Position;
-
+BEGIN
+
+	SELECT
+
+tblRoles.Role_ID,
+
+tblRoles.Role_Name,
+
+tblLevel.Level_ID,
+
+tblLevel.Level_Name,
+
+tblLevel.Level_Position,
+
+
+
+(Select 'yes' from tblquizlevels where tblquizlevels.LevelID=tblLevel.Level_ID and QuizID =p_QuizID) as Allow
+
+FROM
+
+tblRoles
+
+INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
+
+WHERE
+
+tblRoles.Active = 1 and tblLevel.Active=1
+
+ORDER BY tblRoles.Role_ID,tblLevel.Level_Position;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9232,22 +10820,38 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_RolesLevels`(p_QuestionID int)
-BEGIN
-	SELECT
-tblRoles.Role_ID,
-tblRoles.Role_Name,
-tblLevel.Level_ID,
-tblLevel.Level_Name,
-tblLevel.Level_Position,
-
-(Select 'yes' from tblQuestionLevels where tblQuestionLevels.LevelID=tblLevel.Level_ID and QuestionID=p_QuestionID ) as Allow
-FROM
-tblRoles
-INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
-WHERE
-tblRoles.Active = 1 and tblLevel.Active=1
-ORDER BY tblRoles.Role_ID,tblLevel.Level_Position;
-
+BEGIN
+
+	SELECT
+
+tblRoles.Role_ID,
+
+tblRoles.Role_Name,
+
+tblLevel.Level_ID,
+
+tblLevel.Level_Name,
+
+tblLevel.Level_Position,
+
+
+
+(Select 'yes' from tblQuestionLevels where tblQuestionLevels.LevelID=tblLevel.Level_ID and QuestionID=p_QuestionID ) as Allow
+
+FROM
+
+tblRoles
+
+INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
+
+WHERE
+
+tblRoles.Active = 1 and tblLevel.Active=1
+
+ORDER BY tblRoles.Role_ID,tblLevel.Level_Position;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9265,21 +10869,36 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_RolesLevelsMatchDataSet`(p_DataSetID int)
-BEGIN
-	SELECT
-		tblRoles.Role_ID,
-		tblRoles.Role_Name,
-		tblLevel.Level_ID,
-		tblLevel.Level_Name,
-		tblLevel.Level_Position,
-		(SELECT 'yes' FROM tblMatchDataSetLevels where tblMatchDataSetLevels.LevelID = tblLevel.Level_ID and DataSetID = p_DataSetID ) as Allow
-	FROM
-		tblRoles
-	INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
-	WHERE
-		tblRoles.Active = 1 and tblLevel.Active=1
-	ORDER BY tblRoles.Role_ID, tblLevel.Level_Position;
-
+BEGIN
+
+	SELECT
+
+		tblRoles.Role_ID,
+
+		tblRoles.Role_Name,
+
+		tblLevel.Level_ID,
+
+		tblLevel.Level_Name,
+
+		tblLevel.Level_Position,
+
+		(SELECT 'yes' FROM tblMatchDataSetLevels where tblMatchDataSetLevels.LevelID = tblLevel.Level_ID and DataSetID = p_DataSetID ) as Allow
+
+	FROM
+
+		tblRoles
+
+	INNER JOIN tblLevel ON tblLevel.Role_ID = tblRoles.Role_ID
+
+	WHERE
+
+		tblRoles.Active = 1 and tblLevel.Active=1
+
+	ORDER BY tblRoles.Role_ID, tblLevel.Level_Position;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9530,54 +11149,102 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_TeamPerformance`(p_ManagerID INT)
-BEGIN
-
-	SELECT *,(CASE WHEN a.Likelihood < 80 THEN 'red' WHEN a.Likelihood < 90 AND a.Likelihood > 80 THEN 'Yellow' WHEN a.Likelihood > 90 AND a.Likelihood < 100 THEN 'Green' WHEN a.Likelihood = 100 THEN 'blue' WHEN a.Likelihood > 100 THEN 'Green' END) AS PlayerStatus FROM
-
-	(SELECT vscore.*,CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName)  AS PlayerName,tblRoles.Role_Name,tblLevel.Level_Position,tblUserImages.Player_Thumbnail,tbluser.U_Points,
-
-(select (IFNULL(sum(v_UserLevelScores.current_percentage),0)) / Count(*) from v_UserLevelScores where v_UserLevelScores.Level_ID=vscore.Level_ID and v_UserLevelScores.UserID=vscore.UserID ) AS Percentage
-
- 
-
-,BaseHours,
-
-
-
- (( (((BaseHours-Worked_Hour)/BaseHours)*100)/(100-   (select (IFNULL(sum(a.current_percentage),0)) / Count(*) from v_UserLevelScores a where a.Level_ID=vscore.Level_ID and a.UserID=vscore.UserID ))) *100) as Likelihood
-
-   ,(BaseHours-Worked_Hour) as remainingHours
-
-
-
-FROM v_UserLevelScores vscore
-
-
-
-INNER JOIN tblLevelPerformance ON vscore.Level_ID = tblLevelPerformance.current_level AND vscore.UserID = tblLevelPerformance.user_id
-
-INNER JOIN tblUser ON vscore.UserID = tblUser.UserID
-
-LEFT JOIN tblUserImages ON vscore.UserID = tblUserImages.UserID AND tblUserImages.U_Current = 1
-
-INNER JOIN tblRoles ON
-
-vscore.Role_ID = tblRoles.Role_ID 
-
-INNER JOIN tblLevel ON vscore.Level_ID = tblLevel.Level_ID
-
-WHERE tblLevelPerformance.level_achieved = 0 AND (Select tblUser.Active from tblUser Where tblUser.UserID = vscore.UserID) = 1 AND (SELECT tblUser.ManagerID  FROM tblUser WHERE tblUser.UserID = vscore.UserID) = p_ManagerID
-
-GROUP BY vscore.UserID,vscore.Level_ID ORDER BY Likelihood) a;
-
-
-
-
-
-
-
-
-
+BEGIN
+
+
+
+	SELECT *,(CASE WHEN a.Likelihood < 80 THEN 'red' WHEN a.Likelihood < 90 AND a.Likelihood > 80 THEN 'Yellow' WHEN a.Likelihood > 90 AND a.Likelihood < 100 THEN 'Green' WHEN a.Likelihood = 100 THEN 'blue' WHEN a.Likelihood > 100 THEN 'Green' END) AS PlayerStatus FROM
+
+
+
+	(SELECT vscore.*,CONCAT(tblUser.U_FirstName,' ',tblUser.U_LastName)  AS PlayerName,tblRoles.Role_Name,tblLevel.Level_Position,tblUserImages.Player_Thumbnail,tbluser.U_Points,
+
+
+
+(select (IFNULL(sum(v_UserLevelScores.current_percentage),0)) / Count(*) from v_UserLevelScores where v_UserLevelScores.Level_ID=vscore.Level_ID and v_UserLevelScores.UserID=vscore.UserID ) AS Percentage
+
+
+
+ 
+
+
+
+,BaseHours,
+
+
+
+
+
+
+
+ (( (((BaseHours-Worked_Hour)/BaseHours)*100)/(100-   (select (IFNULL(sum(a.current_percentage),0)) / Count(*) from v_UserLevelScores a where a.Level_ID=vscore.Level_ID and a.UserID=vscore.UserID ))) *100) as Likelihood
+
+
+
+   ,(BaseHours-Worked_Hour) as remainingHours
+
+
+
+
+
+
+
+FROM v_UserLevelScores vscore
+
+
+
+
+
+
+
+INNER JOIN tblLevelPerformance ON vscore.Level_ID = tblLevelPerformance.current_level AND vscore.UserID = tblLevelPerformance.user_id
+
+
+
+INNER JOIN tblUser ON vscore.UserID = tblUser.UserID
+
+
+
+LEFT JOIN tblUserImages ON vscore.UserID = tblUserImages.UserID AND tblUserImages.U_Current = 1
+
+
+
+INNER JOIN tblRoles ON
+
+
+
+vscore.Role_ID = tblRoles.Role_ID 
+
+
+
+INNER JOIN tblLevel ON vscore.Level_ID = tblLevel.Level_ID
+
+
+
+WHERE tblLevelPerformance.level_achieved = 0 AND (Select tblUser.Active from tblUser Where tblUser.UserID = vscore.UserID) = 1 AND (SELECT tblUser.ManagerID  FROM tblUser WHERE tblUser.UserID = vscore.UserID) = p_ManagerID
+
+
+
+GROUP BY vscore.UserID,vscore.Level_ID ORDER BY Likelihood) a;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9642,10 +11309,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateCategory`(p_CategoryName varchar(100),p_CategoryID int)
-BEGIN
-Update tblQuizCategory
-set CategoryName=p_CategoryName
-where CategoryID=p_CategoryID;
+BEGIN
+
+Update tblQuizCategory
+
+set CategoryName=p_CategoryName
+
+where CategoryID=p_CategoryID;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9703,13 +11374,16 @@ DELIMITER ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateDataElement`(p_ElementID INT, p_MatchID INT, p_ElementName VARCHAR(250), p_IsPicture INT)
 BEGIN
-
+
+
 UPDATE tbldataelement
 SET MatchID = p_MatchID,
 	ElementName = p_ElementName,
 	IsPicture = p_IsPicture
-WHERE ElementID = p_ElementID;
-
+WHERE ElementID = p_ElementID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9728,7 +11402,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateDataSet`(p_DataSetID int, p_DataSetElementsData VARCHAR(500), p_SiteID int, p_MatchID int, p_DataSetImage varchar(100), p_DataSetImageThumbnail varchar(100))
 BEGIN
-
+
+
 UPDATE tblmatchdatasets
 SET
 	DataSetID = p_DataSetID, 
@@ -9737,8 +11412,10 @@ SET
 	MatchID = p_MatchID,
 	DataSetImage = p_DataSetImage,
 	DataSetImageThumbnail = p_DataSetImageThumbnail
-WHERE DataSetID = p_DataSetID;
-
+WHERE DataSetID = p_DataSetID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -9818,36 +11495,66 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateKPI`(p_Descp Varchar(500),p_KpiID INT,p_KpiName VARCHAR(100),p_KpiMeasure VARCHAR(100),p_KpiType VARCHAR(100), p_Active TINYINT(4),p_KpiCategory varchar(50), p_KpiTipsDESC varchar(500), p_KpiTipsLINK varchar(500),p_TypeLevel varchar(10),p_TypeAward varchar(10),p_TypeContest varchar(10))
-BEGIN
-
-UPDATE tblKPI 
-
-SET KPI_name = p_KpiName,
-
-		KPI_measure = p_KpiMeasure, 
-
-		KPI_type = p_KpiType,
-
-		Active = p_Active,
-
-		KPI_Category = p_KpiCategory,
-
-		KPI_Descp=p_Descp,
-
-		TipsDESC = p_KpiTipsDESC,
-		
-		TipsLINK = p_KpiTipsLink,
-
-    TypeLevel = p_TypeLevel ,
-
-    TypeAward = p_TypeAward,
-
-    TypeContest = p_TypeContest
-
-
-
-WHERE KPI_ID = p_KpiID;
-
+BEGIN
+
+
+
+UPDATE tblKPI 
+
+
+
+SET KPI_name = p_KpiName,
+
+
+
+		KPI_measure = p_KpiMeasure, 
+
+
+
+		KPI_type = p_KpiType,
+
+
+
+		Active = p_Active,
+
+
+
+		KPI_Category = p_KpiCategory,
+
+
+
+		KPI_Descp=p_Descp,
+
+
+
+		TipsDESC = p_KpiTipsDESC,
+
+		
+
+		TipsLINK = p_KpiTipsLink,
+
+
+
+    TypeLevel = p_TypeLevel ,
+
+
+
+    TypeAward = p_TypeAward,
+
+
+
+    TypeContest = p_TypeContest
+
+
+
+
+
+
+
+WHERE KPI_ID = p_KpiID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10002,43 +11709,80 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateLevelperformance`(p_UserID INT,p_LevelID INT)
-BEGIN
-
-UPDATE tblLevelPerformance 
-	SET level_achieved = 1 
-	WHERE user_id = p_UserID 
-	AND current_level = p_LevelID;
-
-IF ( NOT EXISTS(SELECT * FROM tblLevelPerformance WHERE tblLevelPerformance.user_id = p_UserID and 
-																tblLevelPerformance.current_level=(SELECT Level_ID FROM tblLevel 
-																WHERE  tblLevel.Level_Position = 
-																						(SELECT (levels.Level_Position + 1) 
-																							FROM tblLevel levels 
-																							WHERE levels.Level_ID =p_LevelID 
-																						) AND tblLevel.Role_ID = (SELECT U_RolesID FROM tblUser WHERE UserID = p_UserID)
-																)))
-	THEN
-	INSERT INTO tblLevelPerformance 
-	(user_id,current_level,next_level,last_level,level_achieved,target_scores,achieved_scores)
-
-	values(p_UserID,(SELECT Level_ID FROM tblLevel 
-														WHERE  tblLevel.Level_Position = 
-																						(SELECT (levels.Level_Position + 1) 
-																							FROM tblLevel levels 
-																							WHERE levels.Level_ID =p_LevelID 
-																						) AND tblLevel.Role_ID = (SELECT U_RolesID FROM tblUser WHERE UserID = p_UserID)
-														),(SELECT Level_ID FROM tblLevel 
-														WHERE  tblLevel.Level_Position = 
-																						(SELECT (levels.Level_Position + 2) 
-																							FROM tblLevel levels 
-																							WHERE levels.Level_ID =p_LevelID 
-																						) AND tblLevel.Role_ID = (SELECT U_RolesID FROM tblUser WHERE UserID = p_UserID)
-														),p_LevelID,0,0,0);
-
-	UPDATE tblUser SET U_Points = U_Points + (SELECT Points FROM tblLevel WHERE Level_ID = p_LevelID AND Active = 1 )
-	WHERE UserID = p_UserID;
-
-	END IF;
+BEGIN
+
+
+
+UPDATE tblLevelPerformance 
+
+	SET level_achieved = 1 
+
+	WHERE user_id = p_UserID 
+
+	AND current_level = p_LevelID;
+
+
+
+IF ( NOT EXISTS(SELECT * FROM tblLevelPerformance WHERE tblLevelPerformance.user_id = p_UserID and 
+
+																tblLevelPerformance.current_level=(SELECT Level_ID FROM tblLevel 
+
+																WHERE  tblLevel.Level_Position = 
+
+																						(SELECT (levels.Level_Position + 1) 
+
+																							FROM tblLevel levels 
+
+																							WHERE levels.Level_ID =p_LevelID 
+
+																						) AND tblLevel.Role_ID = (SELECT U_RolesID FROM tblUser WHERE UserID = p_UserID)
+
+																)))
+
+	THEN
+
+	INSERT INTO tblLevelPerformance 
+
+	(user_id,current_level,next_level,last_level,level_achieved,target_scores,achieved_scores)
+
+
+
+	values(p_UserID,(SELECT Level_ID FROM tblLevel 
+
+														WHERE  tblLevel.Level_Position = 
+
+																						(SELECT (levels.Level_Position + 1) 
+
+																							FROM tblLevel levels 
+
+																							WHERE levels.Level_ID =p_LevelID 
+
+																						) AND tblLevel.Role_ID = (SELECT U_RolesID FROM tblUser WHERE UserID = p_UserID)
+
+														),(SELECT Level_ID FROM tblLevel 
+
+														WHERE  tblLevel.Level_Position = 
+
+																						(SELECT (levels.Level_Position + 2) 
+
+																							FROM tblLevel levels 
+
+																							WHERE levels.Level_ID =p_LevelID 
+
+																						) AND tblLevel.Role_ID = (SELECT U_RolesID FROM tblUser WHERE UserID = p_UserID)
+
+														),p_LevelID,0,0,0);
+
+
+
+	UPDATE tblUser SET U_Points = U_Points + (SELECT Points FROM tblLevel WHERE Level_ID = p_LevelID AND Active = 1 )
+
+	WHERE UserID = p_UserID;
+
+
+
+	END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10056,12 +11800,18 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateLevelperformance_PopupShowed`(p_UserID INT,p_LevelID INT)
-BEGIN
-
-UPDATE tblLevelPerformance 
-	SET popup_showed = 1
-	WHERE user_id = p_UserID 
-	AND current_level = p_LevelID;
+BEGIN
+
+
+
+UPDATE tblLevelPerformance 
+
+	SET popup_showed = 1
+
+	WHERE user_id = p_UserID 
+
+	AND current_level = p_LevelID;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10210,16 +11960,26 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdatePassword`(p_UserID int,p_NewPassword varchar(100))
-BEGIN
-
-	
-
-	UPDATE tblUser 
-
-	SET tblUser.U_Password = p_NewPassword
-
-	WHERE tblUser.UserID = p_UserID;
-
+BEGIN
+
+
+
+	
+
+
+
+	UPDATE tblUser 
+
+
+
+	SET tblUser.U_Password = p_NewPassword
+
+
+
+	WHERE tblUser.UserID = p_UserID;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10266,25 +12026,44 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateQuestions`(p_QuestionID INT,p_ShortQuestion Varchar(100),p_QuestionText Varchar(200), p_QuestionExplanation VARCHAR(300), p_Answer1 VarChar(100),p_Answer2 VarChar(100), p_Answer3 VarChar(100), p_Answer4 VarChar(100), p_CorrectAnswer VarChar(100), p_Category INT, p_SiteID INT, p_QuizID int, p_QuestionImage VARCHAR(100), p_QuestionImageThumbnail VarChar(100))
-BEGIN
-UPDATE tblQuizQuestions
-SET QuestionText =p_QuestionText,
-		QuestionExplanation = p_QuestionExplanation,
-		Answer1=p_Answer1,
-		Answer2=p_Answer2,
-		Answer3=p_Answer3,
-		Answer4=p_Answer4,
-		CorrectAnswer =p_CorrectAnswer,
-		Category=p_Category,
-		SiteID = p_SiteID,		
-		QuizID= p_QuizID,
-		QuestionImage=p_QuestionImage,
-		QuestionImageThumbnail = p_QuestionImageThumbnail,
-ShortQuestion=p_ShortQuestion
-
-WHERE QuestionID= p_QuestionID;
-
-
+BEGIN
+
+UPDATE tblQuizQuestions
+
+SET QuestionText =p_QuestionText,
+
+		QuestionExplanation = p_QuestionExplanation,
+
+		Answer1=p_Answer1,
+
+		Answer2=p_Answer2,
+
+		Answer3=p_Answer3,
+
+		Answer4=p_Answer4,
+
+		CorrectAnswer =p_CorrectAnswer,
+
+		Category=p_Category,
+
+		SiteID = p_SiteID,		
+
+		QuizID= p_QuizID,
+
+		QuestionImage=p_QuestionImage,
+
+		QuestionImageThumbnail = p_QuestionImageThumbnail,
+
+ShortQuestion=p_ShortQuestion
+
+
+
+WHERE QuestionID= p_QuestionID;
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10301,25 +12080,43 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE  PROCEDURE `sp_UpdateQuiz`(p_QuizID INT, p_QuizName VARCHAR(250), p_NoOfQuestions INT, 
-													p_TimePerQuestion INT, p_TimesPlayablePerDay INT, 
-													p_TimeBeforePointsDeduction INT, p_PointsPerQuestion INT, 
-													p_QuizImage VARCHAR(100),  p_QuizImageThumbnail VARCHAR(100),
+CREATE  PROCEDURE `sp_UpdateQuiz`(p_QuizID INT, p_QuizName VARCHAR(250), p_NoOfQuestions INT, 
+
+													p_TimePerQuestion INT, p_TimesPlayablePerDay INT, 
+
+													p_TimeBeforePointsDeduction INT, p_PointsPerQuestion INT, 
+
+													p_QuizImage VARCHAR(100),  p_QuizImageThumbnail VARCHAR(100),
+
 													p_KPIID INT)
-BEGIN
-UPDATE tblQuiz
-SET QuizName = p_QuizName,
-		NoOfQuestions = p_NoOfQuestions ,
-		TimePerQuestion = p_TimePerQuestion,
-		TimesPlayablePerDay = p_TimesPlayablePerDay,
-		TimeBeforePointsDeduction = p_TimeBeforePointsDeduction,
-		PointsPerQuestion = p_PointsPerQuestion,
-		QuizImage = p_QuizImage,
-		QuizImageThumbnail=p_QuizImageThumbnail,
-		KPI_ID = p_KPIID
-Where QuizID = p_QuizID;
-
-
+BEGIN
+
+UPDATE tblQuiz
+
+SET QuizName = p_QuizName,
+
+		NoOfQuestions = p_NoOfQuestions ,
+
+		TimePerQuestion = p_TimePerQuestion,
+
+		TimesPlayablePerDay = p_TimesPlayablePerDay,
+
+		TimeBeforePointsDeduction = p_TimeBeforePointsDeduction,
+
+		PointsPerQuestion = p_PointsPerQuestion,
+
+		QuizImage = p_QuizImage,
+
+		QuizImageThumbnail=p_QuizImageThumbnail,
+
+		KPI_ID = p_KPIID
+
+Where QuizID = p_QuizID;
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10382,42 +12179,78 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateRole`(p_RoleID INT,p_RoleName VARCHAR(100),p_Active TINYINT(4),p_ActiveStatus int)
-BEGIN
-
-if(p_ActiveStatus =1)
-
-then
-
-UPDATE tblRoles 
-
-SET Role_Name = p_RoleName,
-
-		Active =  p_Active,
-
-       ActiveUpdatedDate =CURRENT_TIMESTAMP()
-
-WHERE Role_ID = p_RoleID;
-
-END IF;
-
-
-
-if(p_ActiveStatus =0)
-
-then
-
-UPDATE tblRoles 
-
-SET Role_Name = p_RoleName,
-
-		Active =  p_Active
-
-WHERE Role_ID = p_RoleID;
-
-END IF;
-
-
-
+BEGIN
+
+
+
+if(p_ActiveStatus =1)
+
+
+
+then
+
+
+
+UPDATE tblRoles 
+
+
+
+SET Role_Name = p_RoleName,
+
+
+
+		Active =  p_Active,
+
+
+
+       ActiveUpdatedDate =CURRENT_TIMESTAMP()
+
+
+
+WHERE Role_ID = p_RoleID;
+
+
+
+END IF;
+
+
+
+
+
+
+
+if(p_ActiveStatus =0)
+
+
+
+then
+
+
+
+UPDATE tblRoles 
+
+
+
+SET Role_Name = p_RoleName,
+
+
+
+		Active =  p_Active
+
+
+
+WHERE Role_ID = p_RoleID;
+
+
+
+END IF;
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10437,7 +12270,8 @@ DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateRound`(p_MatchID INT, p_RoundID INT, p_RoundNumber int, p_RoundName VARCHAR(250),
 														p_NoOfDataSets int, p_TimePerRound int, p_PointsPerRound int, p_ShowHint int)
 BEGIN
-
+
+
 UPDATE tblround
 SET
 	MatchID = p_MatchID,
@@ -10448,7 +12282,8 @@ SET
 	PointsPerRound = p_PointsPerRound,
 	ShowHint = p_ShowHint
 WHERE `RoundID` = p_RoundID;
-
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10466,31 +12301,56 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateScoreManual`(p_Current int,p_UserID int,p_KPIID int,p_Score int)
-BEGIN
-DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;        
-    END;
-
-	START TRANSACTION;
-IF ( NOT EXISTS(SELECT * FROM tblScores WHERE Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_Current))
-then
-Insert into tblScores(User_ID,U_Type,Type_ID,Score,Entry_Date,LevelID)
-values(p_UserID,'KPI',p_KPIID,p_Score,NOW(),p_Current);
-/*Update tblLevelPerformance
-Set achieved_scores=p_Acheived
-Where user_id=p_UserID AND current_level = p_Current ;*/
-Else
-Update tblScores
-Set Score= p_Score
-Where Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_Current;
-
-/*Update tblLevelPerformance
-Set achieved_scores=p_Acheived
-Where user_id=p_UserID AND current_level = p_Current ;*/
-End IF;
-commit;
-
+BEGIN
+
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
+
+    BEGIN
+
+        ROLLBACK;        
+
+    END;
+
+
+
+	START TRANSACTION;
+
+IF ( NOT EXISTS(SELECT * FROM tblScores WHERE Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_Current))
+
+then
+
+Insert into tblScores(User_ID,U_Type,Type_ID,Score,Entry_Date,LevelID)
+
+values(p_UserID,'KPI',p_KPIID,p_Score,NOW(),p_Current);
+
+/*Update tblLevelPerformance
+
+Set achieved_scores=p_Acheived
+
+Where user_id=p_UserID AND current_level = p_Current ;*/
+
+Else
+
+Update tblScores
+
+Set Score= p_Score
+
+Where Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_Current;
+
+
+
+/*Update tblLevelPerformance
+
+Set achieved_scores=p_Acheived
+
+Where user_id=p_UserID AND current_level = p_Current ;*/
+
+End IF;
+
+commit;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10727,124 +12587,242 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateUser_Admin`(p_Hours int,p_Points int,p_previousLevel int,p_CurrentLevel int,p_NextLevel int,p_LastLevel int,p_LevelAchieved int,p_UserID INT , p_U_LastName varchar(50) , p_U_EmpID varchar(200) , p_U_NickName varchar(50) , p_U_Email varchar(50) , p_U_SiteID INT , p_U_SysRole varchar(50) , p_U_RolesID INT , p_Active tinyint(1), p_U_FirstName varchar(50),p_ActiveUpdateStatus INT , p_ManagerID INT)
-BEGIN
-
-DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
-
-    BEGIN
-
-        ROLLBACK;        
-
-    END;
-
-
-
-	START TRANSACTION;
-
-	
-
-IF(p_ActiveUpdateStatus = 1)
-
-THEN
-
-UPDATE tblUser
-
-SET U_EmpID = p_U_EmpID,
-
-		U_LastName = p_U_LastName ,
-
-		U_NickName = p_U_NickName ,		
-
-		U_Email = p_U_Email ,
-
-		U_SiteID = p_U_SiteID ,
-
-		U_SysRole = p_U_SysRole ,
-
-		U_RolesID = p_U_RolesID ,
-
-		Active = p_Active,
-
-		U_FirstName = p_U_FirstName,
-
-		ActiveUpdatedDate = CURRENT_TIMESTAMP(),
-
-		ManagerID = p_ManagerID,
-
-		U_Points=p_Points
-
-WHERE UserID = p_UserID ;
-
-
-
-Update tblLevelPerformance
-
-Set Worked_Hour=p_Hours
-
-Where user_id=p_UserID and level_achieved=0;
-
-
-
-ELSE
-
-UPDATE tblUser
-
-SET U_EmpID = p_U_EmpID,
-
-		U_LastName = p_U_LastName ,
-
-		U_NickName = p_U_NickName ,		
-
-		U_Email = p_U_Email ,
-
-		U_SiteID = p_U_SiteID ,
-
-		U_SysRole = p_U_SysRole ,
-
-		U_RolesID = p_U_RolesID ,
-
-		Active = p_Active,
-
-		U_FirstName = p_U_FirstName,
-
-		ManagerID = p_ManagerID,
-
-        U_Points=p_Points
-
-WHERE UserID = p_UserID ;
-
-
-
-update tblLevelPerformance
-
-set level_achieved =1
-
-where  tblLevelPerformance.current_level=p_previousLevel and user_id=p_UserID;
-
-
-
-insert into tblLevelPerformance(user_id,current_level,next_level,last_level,level_achieved,target_scores,achieved_scores)
-
-values(p_UserID,p_CurrentLevel,p_NextLevel,p_LastLevel,p_LevelAchieved,(Select IFNULL(Sum(Target_Value),'0') from tblTarget
-
-where Role_ID =p_U_RolesID AND Level_ID=p_CurrentLevel),0);
-
-
-
-Update tblLevelPerformance
-
-Set Worked_Hour=p_Hours
-
-Where user_id=p_UserID and level_achieved=0;
-
-
-
-
-
-END IF;
-
-Commit;
-
+BEGIN
+
+
+
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION 
+
+
+
+    BEGIN
+
+
+
+        ROLLBACK;        
+
+
+
+    END;
+
+
+
+
+
+
+
+	START TRANSACTION;
+
+
+
+	
+
+
+
+IF(p_ActiveUpdateStatus = 1)
+
+
+
+THEN
+
+
+
+UPDATE tblUser
+
+
+
+SET U_EmpID = p_U_EmpID,
+
+
+
+		U_LastName = p_U_LastName ,
+
+
+
+		U_NickName = p_U_NickName ,		
+
+
+
+		U_Email = p_U_Email ,
+
+
+
+		U_SiteID = p_U_SiteID ,
+
+
+
+		U_SysRole = p_U_SysRole ,
+
+
+
+		U_RolesID = p_U_RolesID ,
+
+
+
+		Active = p_Active,
+
+
+
+		U_FirstName = p_U_FirstName,
+
+
+
+		ActiveUpdatedDate = CURRENT_TIMESTAMP(),
+
+
+
+		ManagerID = p_ManagerID,
+
+
+
+		U_Points=p_Points
+
+
+
+WHERE UserID = p_UserID ;
+
+
+
+
+
+
+
+Update tblLevelPerformance
+
+
+
+Set Worked_Hour=p_Hours
+
+
+
+Where user_id=p_UserID and level_achieved=0;
+
+
+
+
+
+
+
+ELSE
+
+
+
+UPDATE tblUser
+
+
+
+SET U_EmpID = p_U_EmpID,
+
+
+
+		U_LastName = p_U_LastName ,
+
+
+
+		U_NickName = p_U_NickName ,		
+
+
+
+		U_Email = p_U_Email ,
+
+
+
+		U_SiteID = p_U_SiteID ,
+
+
+
+		U_SysRole = p_U_SysRole ,
+
+
+
+		U_RolesID = p_U_RolesID ,
+
+
+
+		Active = p_Active,
+
+
+
+		U_FirstName = p_U_FirstName,
+
+
+
+		ManagerID = p_ManagerID,
+
+
+
+        U_Points=p_Points
+
+
+
+WHERE UserID = p_UserID ;
+
+
+
+
+
+
+
+update tblLevelPerformance
+
+
+
+set level_achieved =1
+
+
+
+where  tblLevelPerformance.current_level=p_previousLevel and user_id=p_UserID;
+
+
+
+
+
+
+
+insert into tblLevelPerformance(user_id,current_level,next_level,last_level,level_achieved,target_scores,achieved_scores)
+
+
+
+values(p_UserID,p_CurrentLevel,p_NextLevel,p_LastLevel,p_LevelAchieved,(Select IFNULL(Sum(Target_Value),'0') from tblTarget
+
+
+
+where Role_ID =p_U_RolesID AND Level_ID=p_CurrentLevel),0);
+
+
+
+
+
+
+
+Update tblLevelPerformance
+
+
+
+Set Worked_Hour=p_Hours
+
+
+
+Where user_id=p_UserID and level_achieved=0;
+
+
+
+
+
+
+
+
+
+
+
+END IF;
+
+
+
+Commit;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10862,13 +12840,20 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UpdateWorkedHours`(p_hours int, p_user int)
-BEGIN
-
-UPDATE tbllevelperformance
-SET tbllevelperformance.Worked_Hour = tbllevelperformance.Worked_Hour + p_hours
-WHERE tbllevelperformance.user_id = p_user
-AND tbllevelperformance.level_achieved =0;
-
+BEGIN
+
+
+
+UPDATE tbllevelperformance
+
+SET tbllevelperformance.Worked_Hour = tbllevelperformance.Worked_Hour + p_hours
+
+WHERE tbllevelperformance.user_id = p_user
+
+AND tbllevelperformance.level_achieved =0;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -10886,84 +12871,162 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_Update_UserAwardAchieved`(p_UserID INT,p_AwardID INT)
-BEGIN
-
-
-
-
-
-	/*
-
-	INSERT INTO tblUserAwardAchieved 
-
-	(UserID,Award_ID)
-
-
-
-	values(p_UserID,p_AwardID);*/
-
-
-
-
-
-
-
-IF ( NOT EXISTS(SELECT * FROM tblUserAwards WHERE user_id=p_UserID AND award_id =p_AwardID ))
-
-then
-
-
-
-
-
-INSERT INTO tblUserAwards ( user_id,award_id,manual,popup_showed)
-
-      VALUES (p_UserID,p_AwardID,0,0);
-
-
-
-
-
-
-/*
-Else
-
-
-
-
-
-Update tblUserAwards
-
-
-
-Set popup_showed=1,awarded_date=NOW()
-
-
-
-WHERE user_id=p_UserID AND award_id =p_AwardID;*/
-
-
-
-
-
-End IF;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+BEGIN
+
+
+
+
+
+
+
+
+
+
+
+	/*
+
+
+
+	INSERT INTO tblUserAwardAchieved 
+
+
+
+	(UserID,Award_ID)
+
+
+
+
+
+
+
+	values(p_UserID,p_AwardID);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+IF ( NOT EXISTS(SELECT * FROM tblUserAwards WHERE user_id=p_UserID AND award_id =p_AwardID ))
+
+
+
+then
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO tblUserAwards ( user_id,award_id,manual,popup_showed)
+
+
+
+      VALUES (p_UserID,p_AwardID,0,0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+Else
+
+
+
+
+
+
+
+
+
+
+
+Update tblUserAwards
+
+
+
+
+
+
+
+Set popup_showed=1,awarded_date=NOW()
+
+
+
+
+
+
+
+WHERE user_id=p_UserID AND award_id =p_AwardID;*/
+
+
+
+
+
+
+
+
+
+
+
+End IF;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -11009,22 +13072,38 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_Update_UserTargetAchieved`(p_UserID INT,p_TargetID INT)
-BEGIN
-
-IF ( NOT EXISTS(SELECT * FROM tblUserTargetAchieved WHERE tblUserTargetAchieved.UserID = p_UserID and tblUserTargetAchieved.Target_ID=p_TargetID))
-	THEN
-	INSERT INTO tblUserTargetAchieved(UserID,Target_ID)
-	values(p_UserID,p_TargetID);
-
-	UPDATE tblUser SET U_Points = U_Points + (SELECT Points FROM tblTarget WHERE Target_ID = p_TargetID)
-	WHERE UserID = p_UserID;
-
-ELSE
-
-CALL DuplicatePRO;
-
-	END IF;
-
+BEGIN
+
+
+
+IF ( NOT EXISTS(SELECT * FROM tblUserTargetAchieved WHERE tblUserTargetAchieved.UserID = p_UserID and tblUserTargetAchieved.Target_ID=p_TargetID))
+
+	THEN
+
+	INSERT INTO tblUserTargetAchieved(UserID,Target_ID)
+
+	values(p_UserID,p_TargetID);
+
+
+
+	UPDATE tblUser SET U_Points = U_Points + (SELECT Points FROM tblTarget WHERE Target_ID = p_TargetID)
+
+	WHERE UserID = p_UserID;
+
+
+
+ELSE
+
+
+
+CALL DuplicatePRO;
+
+
+
+	END IF;
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
