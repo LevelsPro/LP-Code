@@ -1418,7 +1418,7 @@ CREATE TABLE `tbluser` (
 
 LOCK TABLES `tbluser` WRITE;
 /*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
-INSERT INTO `tbluser` VALUES (1,'EMP1','Admin','Admin',1,'1000:Myy1NgFm4oYRAQgcGIDAA1/KUtFEKdxH:UBGWkbfizVyOIcHLF/fXX6RyaTz56zlV','Stuart','Silverman','Stu',1,'stuart@impactsimulations.com',1,NULL,'2014-04-21 23:31:59',NULL,NULL,1,0,'2015-03-30 21:27:16'),(2,'EMP2','TopManager','Manager',2,'Manager','John','Parkin','John',1,'jparkin@impactsimulations.com',1,NULL,'2014-04-21 23:31:59',NULL,2,1,0,'2014-06-23 19:54:19')
+INSERT INTO `tbluser` VALUES (1,'EMP1','Admin','Admin',1,'1000:Myy1NgFm4oYRAQgcGIDAA1/KUtFEKdxH:UBGWkbfizVyOIcHLF/fXX6RyaTz56zlV','Stuart','Silverman','Stu',1,'stuart@impactsimulations.com',1,NULL,'2014-04-21 23:31:59',NULL,NULL,1,0,'2015-03-30 21:27:16'),(2,'EMP2','TopManager','Manager',2,'Manager','John','Parkin','John',1,'jparkin@impactsimulations.com',1,NULL,'2014-04-21 23:31:59',NULL,2,1,0,'2014-06-23 19:54:19');
 /*!40000 ALTER TABLE `tbluser` ENABLE KEYS */;
 UNLOCK TABLES;
 
