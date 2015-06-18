@@ -1067,6 +1067,16 @@ CREATE TABLE `tblroles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `tblroles`
+--
+
+LOCK TABLES `tblroles` WRITE;
+/*!40000 ALTER TABLE `tblroles` DISABLE KEYS */;
+INSERT INTO `tblroles` VALUES (1,'Admin',1,'2014-08-07'),(2,'Manager',1,'2014-03-28');
+/*!40000 ALTER TABLE `tblroles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tblround`
 --
 
@@ -1337,6 +1347,16 @@ CREATE TABLE `tblsite` (
   PRIMARY KEY (`site_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblsite`
+--
+
+LOCK TABLES `tblsite` WRITE;
+/*!40000 ALTER TABLE `tblsite` DISABLE KEYS */;
+INSERT INTO `tblsite` VALUES (1,'Acme - Broad St','Store-1','454 Broad Street\r\nPensacola, FL',1);
+/*!40000 ALTER TABLE `tblsite` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tbltarget`
@@ -1805,7 +1825,6 @@ DELIMITER ;
 --
 -- Dumping routines for database 'levelspro'
 --
-/*!50003 DROP FUNCTION IF EXISTS `fu_RaiseError` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1838,7 +1857,6 @@ DELIMITER ;*/
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `SPLIT_STR` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
