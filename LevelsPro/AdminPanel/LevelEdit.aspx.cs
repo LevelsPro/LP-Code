@@ -460,8 +460,8 @@ namespace LevelsPro.AdminPanel
         #region update and add level
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationManager.AppSettings["RolePath"].ToString());
             FileResources resource = FileResources.Instance;
+            string path = Server.MapPath(ConfigurationManager.AppSettings["RolePath"].ToString());
 
             if (btnUpdate.Text == "Update" || btnUpdate.Text == "mettre à jour" || btnUpdate.Text == "actualizar")
             {
@@ -481,9 +481,9 @@ namespace LevelsPro.AdminPanel
                     level.Reach = ddlHeadingTo.SelectedValue;
                     level.Game = ddlGame.SelectedValue;
                     // Save file resource.
-                    String imageID = resource.save(this.fileQuizImage, fileMetadata);
+                    string imageID = resource.save(this.fileQuizImage, fileMetadata);
                     ViewState["thumbpathnew"] = imageID;
-                    if (imageID != "")
+                    if (!string.IsNullOrEmpty(imageID))
                     {
                         ViewState["Image"] = imageID;
                         level.LevelImage = imageID;
@@ -614,12 +614,11 @@ namespace LevelsPro.AdminPanel
                         string levelposition = ViewState["count"].ToString();
                         level.LevelPosition = Convert.ToInt32(levelposition);
 
-
                         level.BaseHours = Convert.ToInt32(txtBaseHours.Text.Trim());
                         level.Points = Convert.ToInt32(txtlevelPoints.Text.Trim());
 
                         // Save file resource.
-                        String imageID = resource.save(this.fileQuizImage, fileMetadata);
+                        string imageID = resource.save(this.fileQuizImage, fileMetadata);
                         ViewState["thumbpathnew"] = imageID;
                         if (imageID != "")
                         {

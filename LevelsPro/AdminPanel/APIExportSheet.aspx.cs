@@ -13,6 +13,7 @@ using BusinessLogic.Select;
 using Common;
 using log4net;
 using LevelsPro.Util;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
@@ -20,6 +21,8 @@ namespace LevelsPro.AdminPanel
     {
         private static string pageURL;
         private ILog log;
+        protected FileResources resource = FileResources.Instance;
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -673,6 +676,7 @@ namespace LevelsPro.AdminPanel
                 a = fuImport.FileName.Split('.');
                 fileName = Convert.ToString(System.DateTime.Now.Ticks) + "." + a.GetValue(1).ToString();
                 FilePath = Server.MapPath(@"~\APIExcelSheet");
+                this.resource.preparePath(FilePath);
                 fuImport.SaveAs(FilePath + @"\" + fileName);
 
                 FullName = FilePath + @"\" + fileName;

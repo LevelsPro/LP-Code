@@ -15,21 +15,40 @@ using System.IO;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
 using log4net;
+using Common.Utils;
+using System.Collections;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class AwardEdit : AuthorizedPage
     {
         private static string pageURL;
-        private ILog log;
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-        }
+        protected static Hashtable fileMetadata;
         static DataTable dtImages = new DataTable();
         static int imageid = 0;
         static int previousid = 0;
         static int currentid = 0;
+        private ILog log;
+
+        static AwardEdit()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "AwardsPath");
+            fileMetadata.Add("thumbnailPath", "AwardsThumbPath");
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             lblmessage.Visible = false;
@@ -38,13 +57,13 @@ namespace LevelsPro.AdminPanel
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                
+
                 #region language check for images
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                 {
                     if (Session["MyCulture"].ToString() == "es-ES")
                     {
-                        imgUpload.ImageUrl = "Images/upload-photo_spanish.png";                        
+                        imgUpload.ImageUrl = "Images/upload-photo_spanish.png";
                     }
                     else if (Session["MyCulture"].ToString() == "fr-FR")
                     {
@@ -72,11 +91,11 @@ namespace LevelsPro.AdminPanel
                 {
                     throw exp;
                 }
-                
+
             }
             ExceptionUtility.CheckForErrorMessage(Session);
         }
-        
+
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
@@ -84,11 +103,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -107,9 +126,9 @@ namespace LevelsPro.AdminPanel
                 lblActive.Visible = true;
                 cbActive.Visible = true;
                 lblHeading.Text = Resources.TestSiteResources.EditAward;
-             
+
                 AwardViewBLL award = new AwardViewBLL();
-                
+
                 try
                 {
                     award.Invoke();
@@ -133,8 +152,8 @@ namespace LevelsPro.AdminPanel
                 ddlKPI.SelectedValue = dt.Rows[0]["KPIID"].ToString();
                 ddlAwardCategory.SelectedValue = dt.Rows[0]["AwardCategoryID"].ToString();
 
-               
-                
+
+
                 if (dt.Rows[0]["Award_Manual"].ToString() == "1")
                 {
                     ddlManual.SelectedIndex = 2;
@@ -164,7 +183,7 @@ namespace LevelsPro.AdminPanel
                 }
                 lblmessage.Visible = false;
 
-                
+
 
                 pnlImg.Visible = true;
                 btnAddAward.Text = Resources.TestSiteResources.Update;
@@ -172,7 +191,7 @@ namespace LevelsPro.AdminPanel
             else
             {
                 lblHeading.Text = Resources.TestSiteResources.AddAward;
-              
+
                 ddlManual.SelectedIndex = 0;
                 lblActive.Visible = false;
                 cbActive.Visible = false;
@@ -260,7 +279,7 @@ namespace LevelsPro.AdminPanel
             string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString());
             if (txtAwardName.Text.Equals(""))
             {
-              
+
                 return;
             }
             else
@@ -268,19 +287,19 @@ namespace LevelsPro.AdminPanel
 
                 Award award = new Award();
                 award.AwardName = txtAwardName.Text.Trim();
-             
+
                 award.AwardDesc = txtAwardDesc.Text.Trim();
                 award.AwardCategoryID = Convert.ToInt32(ddlAwardCategory.SelectedValue);
 
-                
 
 
-                if (ddlManual.SelectedIndex ==2)
+
+                if (ddlManual.SelectedIndex == 2)
                 {
                     revTarget.ValidationGroup = "manual";
                     award.AwardManual = 1;
                     award.KPIID = 0;
-                    award.TargetID = 0;                    
+                    award.TargetID = 0;
 
                     ddlKPI.Style.Add("visibility", "hidden");
                     txtTarget.Style.Add("visibility", "hidden");
@@ -311,7 +330,7 @@ namespace LevelsPro.AdminPanel
                         lblTarget.Style.Add("visibility", "visible");
                         return;
                     }
-                    
+
                 }
 
 
@@ -364,60 +383,60 @@ namespace LevelsPro.AdminPanel
                     }
                 }
                 else if (btnAddAward.Text == "Add" || btnAddAward.Text == "Ajouter" || btnAddAward.Text == "añadir")
+                {
+                    pnlImg.Visible = false;
+
+
+                    AwardInsertBLL insertAward = new AwardInsertBLL();
+                    insertAward.Award = award;
+                    lblmessage.Visible = true;
+                    try
                     {
-                        pnlImg.Visible = false;
-                          
+                        int AwardID = insertAward.Invoke();
 
-                        AwardInsertBLL insertAward = new AwardInsertBLL();
-                        insertAward.Award = award;
-                        lblmessage.Visible = true;
-                        try
+                        AwardImageInsertBLL insertimage = new AwardImageInsertBLL();
+                        if (dtImages != null && dtImages.Rows.Count > 0)
                         {
-                            int AwardID = insertAward.Invoke();
-
-                            AwardImageInsertBLL insertimage = new AwardImageInsertBLL();
-                            if (dtImages != null && dtImages.Rows.Count > 0)
+                            foreach (DataRow drow in dtImages.Rows)
                             {
-                                foreach (DataRow drow in dtImages.Rows)
+                                award.AwardID = AwardID;
+                                award.AwardImage = drow["Award_Image"].ToString();
+                                award.AwardThumbnail = drow["Award_Thumbnail"].ToString();
+                                if (currentid == Convert.ToInt32(drow["ID"]))
                                 {
-                                    award.AwardID = AwardID;
-                                    award.AwardImage = drow["Award_Image"].ToString();
-                                    award.AwardThumbnail = drow["Award_Thumbnail"].ToString();
-                                    if (currentid == Convert.ToInt32(drow["ID"]))
-                                    {
-                                        award.CurrentImage = 1;
-                                    }
-                                    else
-                                    {
-                                        award.CurrentImage = 0;
-                                    }
-                                    insertimage.Award = award;
-                                    insertimage.Invoke();                                        
-                                    
+                                    award.CurrentImage = 1;
                                 }
-                            }
+                                else
+                                {
+                                    award.CurrentImage = 0;
+                                }
+                                insertimage.Award = award;
+                                insertimage.Invoke();
 
-                            lblmessage.Text = Resources.TestSiteResources.AwardsB + ' ' + Resources.TestSiteResources.SavedMessage;
-                        }
-                        catch (Exception ex)
-                        {
-                            lblmessage.Visible = true;
-                            ExceptionUtility.ExceptionLogString(ex, Session);
-                            Session["ExpLogString"] += " Aditional Info : Message Box displayed";
-                            log.Debug(Session["ExpLogString"]);
-                            if (ex.Message.Contains("Duplicate"))
-                            {                                
-                                lblmessage.Text = Resources.TestSiteResources.AwardsB + ' ' + Resources.TestSiteResources.Already;
-                            }
-                            else
-                            {
-                                lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.AwardsB;
                             }
                         }
 
-                        
-
+                        lblmessage.Text = Resources.TestSiteResources.AwardsB + ' ' + Resources.TestSiteResources.SavedMessage;
                     }
+                    catch (Exception ex)
+                    {
+                        lblmessage.Visible = true;
+                        ExceptionUtility.ExceptionLogString(ex, Session);
+                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                        log.Debug(Session["ExpLogString"]);
+                        if (ex.Message.Contains("Duplicate"))
+                        {
+                            lblmessage.Text = Resources.TestSiteResources.AwardsB + ' ' + Resources.TestSiteResources.Already;
+                        }
+                        else
+                        {
+                            lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.AwardsB;
+                        }
+                    }
+
+
+
+                }
                 try
                 {
                     LoadData();
@@ -426,9 +445,9 @@ namespace LevelsPro.AdminPanel
                 {
                     throw exp;
                 }
-                btnAddAward.Text =Resources.TestSiteResources.Add;
+                btnAddAward.Text = Resources.TestSiteResources.Add;
                 txtAwardName.Text = "";
-          
+
                 txtAwardDesc.Text = "";
                 ddlKPI.Style.Add("visibility", "visible");
                 txtTarget.Style.Add("visibility", "visible");
@@ -437,7 +456,7 @@ namespace LevelsPro.AdminPanel
                 ddlKPI.SelectedIndex = -1;
                 txtTarget.Text = "";
                 cbActive.Checked = false;
-      
+
                 ddlManual.SelectedIndex = 0;
 
                 revTarget.ValidationGroup = "Insertion";
@@ -449,14 +468,12 @@ namespace LevelsPro.AdminPanel
         {
             btnAddAward.Text = Resources.TestSiteResources.Add;
             txtAwardName.Text = "";
-           
+
             txtAwardDesc.Text = "";
             ddlKPI.SelectedIndex = -1;
             ddlManual.SelectedIndex = 0;
             txtTarget.Text = "";
             cbActive.Checked = false;
-            
-            
 
             revTarget.ValidationGroup = "Insertion";
             ddlKPI.Style.Add("visibility", "visible");
@@ -465,98 +482,64 @@ namespace LevelsPro.AdminPanel
             lblTarget.Style.Add("visibility", "visible");
 
             Response.Redirect("AwardManagement.aspx");
-            
-        }
 
+        }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
-        }
 
         #region image upload and save code
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
+            FileResources resource = FileResources.Instance;
             AwardImageInsertBLL insertimage = new AwardImageInsertBLL();
-            string path = Server.MapPath(ConfigurationSettings.AppSettings["AwardsPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString());
 
             Award award = new Award();
             if (ViewState["awardid"] != null && ViewState["awardid"].ToString() != "" && Convert.ToInt32(ViewState["awardid"]) != 0)
             {
                 award.AwardID = Convert.ToInt32(ViewState["awardid"]);
-
-                if (fileAwardImage.HasFile)
+                string imageId = resource.save(fileAwardImage, fileMetadata);
+                if (string.IsNullOrEmpty(imageId))
                 {
-                    string s = fileAwardImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
+                    award.AwardImage = imageId;
+                    award.AwardThumbnail = imageId;
+                    award.CurrentImage = 0;
+                    try
                     {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fileAwardImage.FileName).ToLower();
-                        fileAwardImage.SaveAs(path + GuidOne + FileExtension);
-                        award.AwardImage = string.Format("{0}{1}", GuidOne, FileExtension);
+                        insertimage.Award = award;
+                        insertimage.Invoke();
 
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-                        award.AwardThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-                        award.CurrentImage = 0;
-                        try
-                        {
-                            insertimage.Award = award;
-                            insertimage.Invoke();
-
-                            
-                            LoadImagesData(Convert.ToInt32(Request.QueryString["awardid"]));
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                    }                    
+                        LoadImagesData(Convert.ToInt32(Request.QueryString["awardid"]));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
             else
-            {                
+            {
 
                 award.AwardID = Convert.ToInt32(Request.QueryString["awardid"]);
-
-                if (fileAwardImage.HasFile)
+                string imageId = resource.save(fileAwardImage, fileMetadata);
+                if (string.IsNullOrEmpty(imageId))
                 {
-                    string s = fileAwardImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
+                    award.AwardImage = imageId;
+                    award.AwardThumbnail = imageId;
+
+                    try
                     {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fileAwardImage.FileName).ToLower();
-                        fileAwardImage.SaveAs(path + GuidOne + FileExtension);
-                        award.AwardImage = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-                        award.AwardThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        try
-                        {
-                            dtImages.Rows.Add(imageid, award.AwardImage, award.AwardThumbnail, 1, 1, 0);
-                            imageid++;
-                            dtImages.AcceptChanges();
-                            LoadImagesData(0);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                        dtImages.Rows.Add(imageid, award.AwardImage, award.AwardThumbnail, 1, 1, 0);
+                        imageid++;
+                        dtImages.AcceptChanges();
+                        LoadImagesData(0);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
             }
@@ -564,14 +547,11 @@ namespace LevelsPro.AdminPanel
         }
         #endregion
 
-        #region get award image 
+        #region get award image
         protected void LoadImagesData(int AwardID)
         {
 
-            string path = Server.MapPath(ConfigurationSettings.AppSettings["AwardsPath"].ToString());
-            string Thumbpath = ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString();
-
-
+            string Thumbpath = ConfigurationManager.AppSettings["AwardsThumbPath"].ToString();
             if (AwardID != 0)
             {
                 AwardImagesViewBLL awardimage = new AwardImagesViewBLL();
@@ -597,7 +577,7 @@ namespace LevelsPro.AdminPanel
                 dvImage.RowFilter = "Award_ID=" + AwardID.ToString();
 
                 dlImages.DataSource = dvImage.ToTable();
-                dlImages.DataBind();              
+                dlImages.DataBind();
 
                 DataView dvImage1 = awardimage.ResultSet.Tables[0].DefaultView;
                 dvImage1.RowFilter = "Current_Image=1 AND Award_ID=" + AwardID.ToString();
@@ -606,7 +586,7 @@ namespace LevelsPro.AdminPanel
                 if (dtcImage != null && dtcImage.Rows.Count > 0 && dtcImage.Rows[0]["Award_Image"].ToString() != "")
                 {
                     imgCurrentImage.ImageUrl = Thumbpath + dtcImage.Rows[0]["Award_Image"].ToString();
-              
+
                 }
             }
             else
@@ -624,9 +604,6 @@ namespace LevelsPro.AdminPanel
                     dlImages.DataBind();
                 }
             }
-
-            
-
         }
         #endregion
 
@@ -635,15 +612,11 @@ namespace LevelsPro.AdminPanel
             if (e.CommandName == "ViewImages")
             {
 
-                string path = Server.MapPath(ConfigurationSettings.AppSettings["AwardsPath"].ToString());
-                string Thumbpath = ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString();
-
+                string Thumbpath = ConfigurationManager.AppSettings["AwardsThumbPath"].ToString();
                 if (ViewState["awardid"] != null && ViewState["awardid"].ToString() != "" && Convert.ToInt32(ViewState["awardid"]) != 0)
                 {
                     AwardImagesViewBLL awardimage = new AwardImagesViewBLL();
                     Award _award = new Award();
-
-
 
                     try
                     {
@@ -655,7 +628,6 @@ namespace LevelsPro.AdminPanel
                     }
 
                     DataView dvImage = awardimage.ResultSet.Tables[0].DefaultView;
-
 
                     dvImage.RowFilter = "Current_Image=1 AND Award_ID=" + Request.QueryString["awardid"].ToString();
 
@@ -705,25 +677,25 @@ namespace LevelsPro.AdminPanel
             {
                 if (ViewState["awardid"] != null && ViewState["awardid"].ToString() != "" && Convert.ToInt32(ViewState["awardid"]) != 0)
                 {
-                int ID = Convert.ToInt32(e.CommandArgument);
+                    int ID = Convert.ToInt32(e.CommandArgument);
 
-                AwardImageDeleteBLL deleteImage = new AwardImageDeleteBLL();
-                Award award = new Award();
+                    AwardImageDeleteBLL deleteImage = new AwardImageDeleteBLL();
+                    Award award = new Award();
 
-                award.ID = ID;
+                    award.ID = ID;
 
-                deleteImage.Award = award;
+                    deleteImage.Award = award;
 
-                try
-                {
-                    deleteImage.Invoke();
-                    LoadImagesData(Convert.ToInt32(Request.QueryString["awardid"]));
+                    try
+                    {
+                        deleteImage.Invoke();
+                        LoadImagesData(Convert.ToInt32(Request.QueryString["awardid"]));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-              }
                 else
                 {
                     int ID = Convert.ToInt32(e.CommandArgument);
@@ -746,8 +718,5 @@ namespace LevelsPro.AdminPanel
             }
 
         }
-
-        
-
     }
-    }
+}
