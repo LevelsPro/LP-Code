@@ -1752,6 +1752,7 @@
     </Compile>
     <Compile Include="Util\ErrorMessageUtility.cs" />
     <Compile Include="Util\ExceptionUtility.cs" />
+    <Compile Include="Util\FileResources.cs" />
     <Compile Include="Util\RedirectionStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
