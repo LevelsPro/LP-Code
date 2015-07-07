@@ -461,7 +461,7 @@ namespace LevelsPro.AdminPanel
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             FileResources resource = FileResources.Instance;
-            string path = Server.MapPath(ConfigurationManager.AppSettings["RolePath"].ToString());
+            string path = (string)fileMetadata["folderPath"];
 
             if (btnUpdate.Text == "Update" || btnUpdate.Text == "mettre à jour" || btnUpdate.Text == "actualizar")
             {

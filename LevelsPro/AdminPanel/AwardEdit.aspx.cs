@@ -275,8 +275,7 @@ namespace LevelsPro.AdminPanel
         #region add and update award code
         protected void btnAddAward_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationSettings.AppSettings["AwardsPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString());
+            string Thumbpath = (string)fileMetadata["thumbnailPath"];
             if (txtAwardName.Text.Equals(""))
             {
 
@@ -290,9 +289,6 @@ namespace LevelsPro.AdminPanel
 
                 award.AwardDesc = txtAwardDesc.Text.Trim();
                 award.AwardCategoryID = Convert.ToInt32(ddlAwardCategory.SelectedValue);
-
-
-
 
                 if (ddlManual.SelectedIndex == 2)
                 {
