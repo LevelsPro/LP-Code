@@ -111,6 +111,11 @@ namespace LevelsPro.Util
         /// <param name="server"></param>
         internal static void GenerateExpResponse(string sourcePage, RedirectionStrategy redirectionStrategy, HttpSessionState session, HttpServerUtility server, HttpResponse response, ILog log, Exception exp)
         {
+            if (string.IsNullOrEmpty(sourcePage))
+            {
+                return;
+            }
+
             if (session["role"] != null || session != null)
             {
 
