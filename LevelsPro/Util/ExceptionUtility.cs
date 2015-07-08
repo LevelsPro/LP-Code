@@ -379,7 +379,7 @@ namespace LevelsPro.Util
         private static void ManageExceptionEntry(string sourcePage,HttpSessionState session)
         {
             Dictionary<string, int> linkExceptionCount = (Dictionary<string, int>)session["ExCountDictionary"];
-            if (linkExceptionCount.ContainsKey(sourcePage))
+            if (!string.IsNullOrEmpty(sourcePage) && linkExceptionCount.ContainsKey(sourcePage))
             {
                 int value = linkExceptionCount[sourcePage];
                 value++;
