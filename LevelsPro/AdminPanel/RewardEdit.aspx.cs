@@ -15,22 +15,41 @@ using BusinessLogic.Delete;
 using LevelsPro.App_Code;
 using LevelsPro.Util;
 using log4net;
+using System.Collections;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class RewardEdit : AuthorizedPage
     {
         private static string pageURL;
+        static DataTable dtImages = new DataTable();
+        protected static Hashtable fileMetadata;
+        static int imageid = 0;
+        static int previousid = 0;
+        static int currentid = 0;
         private ILog log;
+
+        static RewardEdit()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "RewardsPath");
+            fileMetadata.Add("thumbnailPath", "RewardsThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
         }
-        static DataTable dtImages = new DataTable();
-        static int imageid = 0;
-        static int previousid = 0;
-        static int currentid = 0;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -95,7 +114,7 @@ namespace LevelsPro.AdminPanel
 
         protected void LoadData()
         {
-            string Thumbpath = ConfigurationSettings.AppSettings["RewardsThumbPath"].ToString();
+            string Thumbpath = (string)fileMetadata["thumbnailPath"];
             int id = Convert.ToInt32(Request.QueryString["rewardid"]);
 
             if (id != 0)
@@ -176,18 +195,16 @@ namespace LevelsPro.AdminPanel
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
+
         #region add and update reward
         protected void btnAddReward_Click1(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationSettings.AppSettings["RewardsPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["RewardsThumbPath"].ToString());
             if (txtRewardName.Text.Equals(""))
             {
                 return;
             }
             else
             {
-
                 Reward reward = new Reward();
                 reward.RewardName = txtRewardName.Text.Trim();
                 reward.RewardPoints = Convert.ToInt32(txtRewardPoints.Text.Trim());
@@ -332,90 +349,59 @@ namespace LevelsPro.AdminPanel
 
         }
         #endregion
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
-        }
 
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
             RewardImageInsertBLL insertimage = new RewardImageInsertBLL();
-            string path = Server.MapPath(ConfigurationSettings.AppSettings["RewardsPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationSettings.AppSettings["RewardsThumbPath"].ToString());
+            FileResources resource = FileResources.Instance;
+            string path = (string)fileMetadata["folderPath"];
+            string Thumbpath = (string)fileMetadata["thumbnailPath"];
 
             Reward reward = new Reward();
             if (ViewState["rewardid"] != null && ViewState["rewardid"].ToString() != "" && Convert.ToInt32(ViewState["rewardid"]) != 0)
             {
                 reward.RewardID = Convert.ToInt32(ViewState["rewardid"]);
-
-                if (fileRewardImage.HasFile)
+                string imageId = resource.save(fileRewardImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
-                    string s = fileRewardImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
+                    reward.RewardImage = imageId;
+                    reward.RewardThumbnail = imageId;
+
+                    reward.CurrentImage = 0;
+
+                    try
                     {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fileRewardImage.FileName).ToLower();
-                        fileRewardImage.SaveAs(path + GuidOne + FileExtension);
-                        reward.RewardImage = string.Format("{0}{1}", GuidOne, FileExtension);
+                        insertimage.Reward = reward;
+                        insertimage.Invoke();
 
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-                        reward.RewardThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-                        reward.CurrentImage = 0;
 
-                        try
-                        {
-                            insertimage.Reward = reward;
-                            insertimage.Invoke();
-
-                          
-                            LoadImagesData(Convert.ToInt32(Request.QueryString["rewardid"]));
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                        LoadImagesData(Convert.ToInt32(Request.QueryString["rewardid"]));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
             }
             else
             {
-
                 reward.RewardID = Convert.ToInt32(ViewState["rewardid"]);
-
-                if (fileRewardImage.HasFile)
+                string imageId = resource.save(fileRewardImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
-                    string s = fileRewardImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
+                    reward.RewardImage = imageId;
+                    reward.RewardThumbnail = imageId;
+
+                    try
                     {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fileRewardImage.FileName).ToLower();
-                        fileRewardImage.SaveAs(path + GuidOne + FileExtension);
-                        reward.RewardImage = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-                        reward.RewardThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-
-
-                        try
-                        {
-                            dtImages.Rows.Add(imageid, reward.RewardImage, reward.RewardThumbnail, 1, 1, 0);
-                            imageid++;
-                            dtImages.AcceptChanges();
-                            LoadImagesData(0);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                        dtImages.Rows.Add(imageid, reward.RewardImage, reward.RewardThumbnail, 1, 1, 0);
+                        imageid++;
+                        dtImages.AcceptChanges();
+                        LoadImagesData(0);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
             }
@@ -426,13 +412,9 @@ namespace LevelsPro.AdminPanel
         {
             if (RewardID != 0)
             {
-                string path = Server.MapPath(ConfigurationSettings.AppSettings["RewardsPath"].ToString());
-                string Thumbpath = ConfigurationSettings.AppSettings["RewardsThumbPath"].ToString();
-
+                string Thumbpath = (string)fileMetadata["thumbnailPath"];
                 RewardImagesViewBLL rewardimage = new RewardImagesViewBLL();
                 Reward _reward = new Reward();
-
-
 
                 try
                 {
@@ -444,10 +426,8 @@ namespace LevelsPro.AdminPanel
                 }
 
                 DataView dvImage = rewardimage.ResultSet.Tables[0].DefaultView;
-
                 DataTable dt = new DataTable();
                 dt = dvImage.ToTable();
-
 
                 dvImage.RowFilter = "Reward_ID=" + RewardID.ToString();
 
@@ -490,15 +470,11 @@ namespace LevelsPro.AdminPanel
         {
             if (e.CommandName == "ViewImages")
             {
-
-                string path = Server.MapPath(ConfigurationSettings.AppSettings["RewardsPath"].ToString());
-                string Thumbpath = ConfigurationSettings.AppSettings["RewardsThumbPath"].ToString();
+                string Thumbpath = (string)fileMetadata["thumbnailPath"];
                 if (ViewState["rewardid"] != null && ViewState["rewardid"].ToString() != "" && Convert.ToInt32(ViewState["rewardid"]) != 0)
                 {
                     RewardImagesViewBLL rewardimage = new RewardImagesViewBLL();
                     Reward _reward = new Reward();
-
-
 
                     try
                     {
@@ -511,7 +487,6 @@ namespace LevelsPro.AdminPanel
 
                     DataView dvImage = rewardimage.ResultSet.Tables[0].DefaultView;
 
-
                     dvImage.RowFilter = "Current_Image=1 AND Reward_ID=" + Request.QueryString["rewardid"].ToString();
 
                     DataTable dtcImage = new DataTable();
@@ -521,9 +496,7 @@ namespace LevelsPro.AdminPanel
 
                     DataView dvImage1 = rewardimage.ResultSet.Tables[0].DefaultView;
 
-
                     dvImage.RowFilter = "Reward_ID=" + Request.QueryString["rewardid"].ToString() + " AND ID=" + currentid;
-
 
                     DataTable dtcImage1 = new DataTable();
                     dtcImage1 = dvImage1.ToTable();
@@ -532,12 +505,9 @@ namespace LevelsPro.AdminPanel
                     {
                         previousid = Convert.ToInt32(dtcImage.Rows[0]["ID"]);
                     }
-
-
-
+                    
                     if (currentid != 0)
                     {
-
                         imgCurrentImage.ImageUrl = Thumbpath + dtcImage1.Rows[0]["Reward_Thumbnail"];
                     }
                 }
@@ -596,7 +566,6 @@ namespace LevelsPro.AdminPanel
                     }
                    
                     LoadImagesData(0);
-
                 }
             }
         }

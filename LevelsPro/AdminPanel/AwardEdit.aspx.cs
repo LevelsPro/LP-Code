@@ -35,6 +35,7 @@ namespace LevelsPro.AdminPanel
             fileMetadata = new Hashtable();
             fileMetadata.Add("folderPath", "AwardsPath");
             fileMetadata.Add("thumbnailPath", "AwardsThumbPath");
+
             string[] metadataKeys = { "folderPath", "thumbnailPath" };
             foreach (string key in metadataKeys)
             {

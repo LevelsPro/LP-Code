@@ -16,19 +16,39 @@ using LevelsPro.App_Code;
 using log4net;
 using LevelsPro.Util;
 using MySql.Data.MySqlClient;
+using System.Collections;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class MatchEdit : AuthorizedPage
     {
         private static string pageURL;
-        private ILog log;
+        protected static Hashtable fileMetadata;
         static DataSet dss;
+        private ILog log;
+
+        static MatchEdit()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "MatchPath");
+            fileMetadata.Add("thumbnailPath", "MatchThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             lblmessage.Visible = false;
@@ -38,7 +58,7 @@ namespace LevelsPro.AdminPanel
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
 
-                try 
+                try
                 {
                     LoadKPI();
 
@@ -57,10 +77,10 @@ namespace LevelsPro.AdminPanel
                     }
                     loadDataList();
                 }
-                catch(Exception exp)
+                catch (Exception exp)
                 {
                     throw exp;
-                }                
+                }
             }
             ExceptionUtility.CheckForErrorMessage(Session);
         }
@@ -87,7 +107,7 @@ namespace LevelsPro.AdminPanel
         {
             string path = ConfigurationManager.AppSettings["MatchPath"].ToString();
             MatchViewBLL matchview = new MatchViewBLL();
-            
+
             Match _match = new Match();
             _match.Where = " WHERE MatchID = " + MatchID.ToString();
             matchview.Match = _match;
@@ -157,17 +177,17 @@ namespace LevelsPro.AdminPanel
             ddlKPI_ID.Items.Insert(0, li);
         }
 
-        protected void LoadDataElements(int MatchID) 
+        protected void LoadDataElements(int MatchID)
         {
             DataElementViewBLL dataelement = new DataElementViewBLL();
             Match _match = new Match();
             _match.Where = " WHERE MatchID = " + MatchID.ToString();
             dataelement.Match = _match;
-            try 
+            try
             {
                 dataelement.Invoke();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
             }
             DataView dv = dataelement.ResultSet.Tables[0].DefaultView;
@@ -175,12 +195,12 @@ namespace LevelsPro.AdminPanel
             {
                 grdDataElements.DataSource = dv.ToTable();
                 grdDataElements.DataBind();
-                if (dv.Count == Convert.ToInt32(ddlNoOfDataSet.SelectedValue)) 
+                if (dv.Count == Convert.ToInt32(ddlNoOfDataSet.SelectedValue))
                 {
                     btnNewDataElement.Enabled = false;
                 }
             }
-            else 
+            else
             {
                 dv.AddNew();
                 grdDataElements.DataSource = dv.ToTable();
@@ -229,29 +249,24 @@ namespace LevelsPro.AdminPanel
                 grdRounds.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 grdRounds.Rows[0].Cells[0].Text = "No Record Found";
             }
-        }        
+        }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
-        
+
         #region add and update match
         protected void btnAddMatch_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationManager.AppSettings["MatchPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationManager.AppSettings["MatchThumbPath"].ToString());
             if (txtMatchName.Text.Equals(""))
             {
-                
                 return;
             }
             else
             {
-
                 Match match = new Match();
-
                 match.MatchName = txtMatchName.Text.Trim();
                 if (txtPointsForCompletation.Text.Trim() != "")
                 {
@@ -274,24 +289,12 @@ namespace LevelsPro.AdminPanel
                 {
                     match.KPIID = Convert.ToInt32(ddlKPI_ID.SelectedValue);
                 }
-                if (fuMatchImage.HasFile)
+                FileResources resource = FileResources.Instance;
+                string imageId = resource.save(fuMatchImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
-                    string s = fuMatchImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
-                    {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fuMatchImage.FileName).ToLower();
-                        fuMatchImage.SaveAs(path + GuidOne + FileExtension);
-
-                        match.MatchImage = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-
-                        match.MatchImageThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-                    }
+                    match.MatchImage = imageId;
+                    match.MatchImageThumbnail = imageId;
                 }
                 else
                 {
@@ -399,7 +402,7 @@ namespace LevelsPro.AdminPanel
                         Response.Redirect("MatchEdit.aspx?matchid=" + match.MatchID.ToString(), true);
                     }
 
-                }                
+                }
                 catch (Exception ex)
                 {
                     ExceptionUtility.ExceptionLogString(ex, Session);
@@ -412,7 +415,7 @@ namespace LevelsPro.AdminPanel
                     sqlTrans.Dispose();
                     scon.Close();
                 }
-            }                        
+            }
         }
         #endregion
 
@@ -430,16 +433,8 @@ namespace LevelsPro.AdminPanel
         }
         #endregion
 
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
-        }
-
         protected void btnCancel_Click(object sender, EventArgs e)
-        {            
+        {
             Response.Redirect("MatchManagement.aspx");
         }
 
@@ -454,7 +449,6 @@ namespace LevelsPro.AdminPanel
             {
                 DataList dlLevels = e.Item.FindControl("dlLevels") as DataList;
                 Literal ltRoleID = e.Item.FindControl("ltRoleID") as Literal;
-
 
                 DataView dv = dss.Tables[0].DefaultView;
                 dv.RowFilter = "Role_ID=" + Convert.ToInt32(ltRoleID.Text.Trim());

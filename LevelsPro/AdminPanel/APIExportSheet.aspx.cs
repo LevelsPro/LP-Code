@@ -21,7 +21,6 @@ namespace LevelsPro.AdminPanel
     {
         private static string pageURL;
         private ILog log;
-        protected FileResources resource = FileResources.Instance;
 
         protected override void OnInit(EventArgs e)
         {
@@ -71,7 +70,7 @@ namespace LevelsPro.AdminPanel
             dt.Rows.Add("23", "14", "70", "cum", "08/30/2013");
             dt.Rows.Add("94", "10", "106", "cum", "08/30/2013");
 
-       
+
 
             gvAPI.DataSource = dt;
             gvAPI.DataBind();
@@ -81,7 +80,7 @@ namespace LevelsPro.AdminPanel
         protected void btnImport_Click(object sender, EventArgs e)
         {
             DataView dvuserid = userdata.Select(DataSourceSelectArguments.Empty) as DataView;
-            DataTable dtuserid = new DataTable(); 
+            DataTable dtuserid = new DataTable();
 
             if (gvAPI.Rows.Count > 0)
             {
@@ -129,7 +128,7 @@ namespace LevelsPro.AdminPanel
                             UserLevelPercentBLL userlevelP = new UserLevelPercentBLL();
                             Common.User _userPercent = new Common.User();
 
-                           // _userPercent.UserID = Convert.ToInt32(gr.Cells[0].Text);
+                            // _userPercent.UserID = Convert.ToInt32(gr.Cells[0].Text);
 
                             _userPercent.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
 
@@ -497,92 +496,92 @@ namespace LevelsPro.AdminPanel
                     }
                     else if (gr.Cells[5].Text.Equals("Award"))
                     {
-                        if(Convert.ToInt32(gr.Cells[6].Text.ToString()) > 0)
+                        if (Convert.ToInt32(gr.Cells[6].Text.ToString()) > 0)
                         {
                             #region Updating Award Performance
-                        DataSet dsTarget = new DataSet();
+                            DataSet dsTarget = new DataSet();
 
-                        dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
-                        dtuserid = dvuserid.ToTable();
+                            dvuserid.RowFilter = "U_EmpID= '" + Convert.ToString(gr.Cells[0].Text) + "'";
+                            dtuserid = dvuserid.ToTable();
 
-                        Common.User _userPercent = new Common.User();
-                        _userPercent.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]); 
-                        int userid = Convert.ToInt32(dtuserid.Rows[0]["UserID"]); 
-                        int awardid=Convert.ToInt32(gr.Cells[6].Text);
-                        _userPercent.AwardID = Convert.ToInt32(gr.Cells[6].Text);
-                        TargetViewBLL Target = new TargetViewBLL();
-                        try
-                        {
-                            Target.Invoke();
-                            dsTarget = Target.ResultSet;
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-
-                        DataView dvTarget = dsTarget.Tables[1].DefaultView;
-                        dvTarget.RowFilter = "Award_ID = " + awardid;
-
-                        DataTable dtTarget = dvTarget.ToTable();
-                        AwardScoreInsertBLL score = new AwardScoreInsertBLL();
-                        Common.User user = new Common.User();
-
-                        user.UserID = userid;
-
-                        String KPIText = gr.Cells[2].Text;
-                        int KPIScore = Convert.ToInt32(gr.Cells[3].Text);
-                        KPIText = KPIText.Trim();
-
-                        
-                        for (int i = 0; i < dtTarget.Rows.Count; i++)
-                        {
-                            int TargetText = Convert.ToInt32(dtTarget.Rows[i]["Award_ID"].ToString());
-                            //TargetText = TargetText.Trim();
-
-                            if (awardid == TargetText)
+                            Common.User _userPercent = new Common.User();
+                            _userPercent.UserID = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
+                            int userid = Convert.ToInt32(dtuserid.Rows[0]["UserID"]);
+                            int awardid = Convert.ToInt32(gr.Cells[6].Text);
+                            _userPercent.AwardID = Convert.ToInt32(gr.Cells[6].Text);
+                            TargetViewBLL Target = new TargetViewBLL();
+                            try
                             {
-                                int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
-
-                                if (KPIScore < TargetValue)
-                                {
-                                    user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
-                                    user.Score = Convert.ToInt32(gr.Cells[3].Text);
-                                    user.AwardID = awardid;
-                                    break;
-
-                                }
-                                else if (KPIScore == TargetValue)
-                                {
-                                    user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
-                                    user.Score = Convert.ToInt32(gr.Cells[3].Text);
-                                    user.AwardID = awardid;
-                                    break;
-                                }
-                                else if (KPIScore > TargetValue)
-                                {
-                                    user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
-                                    user.Score = TargetValue;
-                                    user.AwardID = awardid;
-                                    break;
-                                }
+                                Target.Invoke();
+                                dsTarget = Target.ResultSet;
                             }
-                            
-                        }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
 
-                        user.Measure = gr.Cells[4].Text;
-                        score.User = user;
+                            DataView dvTarget = dsTarget.Tables[1].DefaultView;
+                            dvTarget.RowFilter = "Award_ID = " + awardid;
 
-                        try
-                        {
-                            score.Invoke();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                            DataTable dtTarget = dvTarget.ToTable();
+                            AwardScoreInsertBLL score = new AwardScoreInsertBLL();
+                            Common.User user = new Common.User();
 
-                        #endregion
+                            user.UserID = userid;
+
+                            String KPIText = gr.Cells[2].Text;
+                            int KPIScore = Convert.ToInt32(gr.Cells[3].Text);
+                            KPIText = KPIText.Trim();
+
+
+                            for (int i = 0; i < dtTarget.Rows.Count; i++)
+                            {
+                                int TargetText = Convert.ToInt32(dtTarget.Rows[i]["Award_ID"].ToString());
+                                //TargetText = TargetText.Trim();
+
+                                if (awardid == TargetText)
+                                {
+                                    int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
+
+                                    if (KPIScore < TargetValue)
+                                    {
+                                        user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                                        user.Score = Convert.ToInt32(gr.Cells[3].Text);
+                                        user.AwardID = awardid;
+                                        break;
+
+                                    }
+                                    else if (KPIScore == TargetValue)
+                                    {
+                                        user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                                        user.Score = Convert.ToInt32(gr.Cells[3].Text);
+                                        user.AwardID = awardid;
+                                        break;
+                                    }
+                                    else if (KPIScore > TargetValue)
+                                    {
+                                        user.KPIID = Convert.ToInt32(gr.Cells[2].Text);
+                                        user.Score = TargetValue;
+                                        user.AwardID = awardid;
+                                        break;
+                                    }
+                                }
+
+                            }
+
+                            user.Measure = gr.Cells[4].Text;
+                            score.User = user;
+
+                            try
+                            {
+                                score.Invoke();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+
+                            #endregion
                         }
                     }
                     else if (gr.Cells[5].Text.Equals("Contest"))
@@ -643,8 +642,8 @@ namespace LevelsPro.AdminPanel
 
                         }
                         #endregion
-                        
-                        
+
+
                         #endregion
                     }
                 }
@@ -653,7 +652,7 @@ namespace LevelsPro.AdminPanel
             }
             gvAPI.DataSource = null;
             gvAPI.DataBind();
-        
+
         }
         #endregion
         protected void btnLogout_Click(object sender, EventArgs e)
@@ -676,7 +675,8 @@ namespace LevelsPro.AdminPanel
                 a = fuImport.FileName.Split('.');
                 fileName = Convert.ToString(System.DateTime.Now.Ticks) + "." + a.GetValue(1).ToString();
                 FilePath = Server.MapPath(@"~\APIExcelSheet");
-                this.resource.preparePath(FilePath);
+                FileResources resource = FileResources.Instance;
+                resource.preparePath(FilePath);
                 fuImport.SaveAs(FilePath + @"\" + fileName);
 
                 FullName = FilePath + @"\" + fileName;
@@ -719,47 +719,47 @@ namespace LevelsPro.AdminPanel
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     #region Getting Award ID
-                        getContestIDBLL CID = new getContestIDBLL();
-                        KPI kpi = new KPI();
-                        kpi.KPIID = Convert.ToInt32(dt.Rows[i][2].ToString());
-                        CID.KPI = kpi;
-                        try
-                        {
-                            CID.Invoke();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                        finally
-                        {
-                        }
+                    getContestIDBLL CID = new getContestIDBLL();
+                    KPI kpi = new KPI();
+                    kpi.KPIID = Convert.ToInt32(dt.Rows[i][2].ToString());
+                    CID.KPI = kpi;
+                    try
+                    {
+                        CID.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                    }
 
-                        DataTable dtCID = new DataTable();
-                        if (CID.ResultSet != null)
-                        {
-                            dtCID = CID.ResultSet.Tables[1];
-                        }
+                    DataTable dtCID = new DataTable();
+                    if (CID.ResultSet != null)
+                    {
+                        dtCID = CID.ResultSet.Tables[1];
+                    }
 
-                        for (int x = 0; x < dtCID.Rows.Count; x++)
+                    for (int x = 0; x < dtCID.Rows.Count; x++)
+                    {
+                        for (int j = 0; j < dt.Rows.Count; j++)
                         {
-                            for (int j = 0; j < dt.Rows.Count; j++)
+                            if (dt.Rows[j][2].ToString().Equals(dtCID.Rows[x][1].ToString()))
                             {
-                                if (dt.Rows[j][2].ToString().Equals(dtCID.Rows[x][1].ToString()))
-                                {
-                                    dt.Rows[j]["AwardID"] = Convert.ToInt32(dtCID.Rows[x][0]);
-                                }
-                                else
-                                {
-                                    dt.Rows[j]["AwardID"] = 0;
-                                }
+                                dt.Rows[j]["AwardID"] = Convert.ToInt32(dtCID.Rows[x][0]);
+                            }
+                            else
+                            {
+                                dt.Rows[j]["AwardID"] = 0;
                             }
                         }
+                    }
                     #endregion
                 }
             }
             #endregion
-            
+
             gvAPI.DataSource = dt;
             gvAPI.DataBind();
         }

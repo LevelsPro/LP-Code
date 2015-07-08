@@ -16,28 +16,46 @@ using MySql.Data.MySqlClient;
 using BusinessLogic.Delete;
 using LevelsPro.Util;
 using log4net;
+using System.Collections;
+using Common.Utils;
 namespace LevelsPro.AdminPanel
 {
     public partial class QuestionEdit : AuthorizedPage
     {
-        static DataSet dss; 
+        static DataSet dss;
         private static string pageURL;
+        protected static Hashtable fileMetadata;
         private ILog log;
+
+        static QuestionEdit()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "QuestionPath");
+            fileMetadata.Add("thumbnailPath", "QuestionThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
             lblMessage.Visible = false;
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                
+
                 try
                 {
                     if (Request.QueryString["mess"] != null && Request.QueryString["mess"].ToString() != "")
@@ -69,7 +87,6 @@ namespace LevelsPro.AdminPanel
             ExceptionUtility.CheckForErrorMessage(Session);
         }
 
-
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
@@ -77,16 +94,15 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
         }
-
 
         #region show question for edit
         private void LoadData(int QuestionID)
@@ -126,7 +142,7 @@ namespace LevelsPro.AdminPanel
 
                 btnAddQuestion.Text = Resources.TestSiteResources.Update;
 
-                
+
             }
         }
         #endregion
@@ -150,9 +166,6 @@ namespace LevelsPro.AdminPanel
 
             ListItem li = new ListItem("Select", "0");
             ddlCategory.Items.Insert(0, li);
-
-
-            
         }
 
         private void LoadSites()
@@ -192,17 +205,12 @@ namespace LevelsPro.AdminPanel
         #region add and update question
         protected void btnAddQuestion_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationManager.AppSettings["QuestionPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationManager.AppSettings["QuestionThumbPath"].ToString());
-
             if (txtQuestion.Text.Equals(""))
             {
-               
                 return;
             }
             else
             {
-
                 Quiz quiz = new Quiz();
                 quiz.Question = txtQuestion.Text.Trim();
                 quiz.Explanation = txtExplanation.Text.Trim();
@@ -216,27 +224,14 @@ namespace LevelsPro.AdminPanel
                 if (ddlCategory.SelectedIndex > 0)
                 {
                     quiz.Category = Convert.ToInt32(ddlCategory.SelectedValue);
-                }             
+                }
                 quiz.SiteID = Convert.ToInt32(ddlLocation.SelectedValue);
-
-                if (fuQuestionImage.HasFile)
+                FileResources resource = FileResources.Instance;
+                string imageId = resource.save(fuQuestionImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
-                    string s = fuQuestionImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
-                    {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fuQuestionImage.FileName).ToLower();
-                        fuQuestionImage.SaveAs(path + GuidOne + FileExtension);
-
-                        quiz.QuestionImage = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-
-                        quiz.QuestionImageThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-                    }
+                    quiz.QuestionImage = imageId;
+                    quiz.QuestionImageThumbnail = imageId;
                 }
                 else
                 {
@@ -251,13 +246,10 @@ namespace LevelsPro.AdminPanel
 
                 }
 
-
-
-
                 if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
                 {
                     quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
-                    
+
 
                     MySqlConnection scon = new MySqlConnection(ConfigurationManager.ConnectionStrings["SQLCONN"].ToString());
                     scon.Open();
@@ -271,52 +263,52 @@ namespace LevelsPro.AdminPanel
                             {
                                 QuestionsUpdateBLL updategame = new QuestionsUpdateBLL();
                                 quiz.QuestionID = Convert.ToInt32(ViewState["questionid"]);
-                                
+
                                 updategame.Quiz = quiz;
-                                updategame.Invoke();                                  
+                                updategame.Invoke();
                             }
                         }
                         else
                         {
                             QuestionsInsertBLL insertquiz = new QuestionsInsertBLL();
-                           
+
                             insertquiz.Quiz = quiz;
                             insertquiz.Invoke();
                         }
 
-                     QuestionLevelDeleteBLL del = new QuestionLevelDeleteBLL();
-                     QuestionLevelsInsertBLL qLevels = new QuestionLevelsInsertBLL();
-                     
-                        del.Quiz = quiz;
-                         del.Invoke();
-                     
-                     for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
-                     {
-                         if (dss.Tables[0].Rows[i]["Allow"].ToString()=="yes")
-                         {
-                            quiz.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
-                            quiz.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
-                            qLevels.Quiz = quiz;
-                            qLevels.Invoke();
-                         }
+                        QuestionLevelDeleteBLL del = new QuestionLevelDeleteBLL();
+                        QuestionLevelsInsertBLL qLevels = new QuestionLevelsInsertBLL();
 
-                     }
-                     sqlTrans.Commit();
-                   
-                     if (btnAddQuestion.Text == "Update" || btnAddQuestion.Text == "mettre à jour" || btnAddQuestion.Text == "actualizar")
-                     {
-                         LoadData(int.Parse(quiz.QuestionID.ToString()));
-                         lblMessage.Visible = true;
-                         lblMessage.Text = "Question info " + Resources.TestSiteResources.UpdateMessage;
-                         Response.Redirect("QuestionEdit.aspx?mess=1" + "&questionid=" + ViewState["questionid"].ToString() + "&quizid=" + ViewState["quizid"].ToString(), false);                         
-                     }
-                     else
-                     {
-                         lblMessage.Visible = true;
-                         lblMessage.Text = "Question info " + ' ' + Resources.TestSiteResources.SavedMessage;
-                         Response.Redirect("QuestionManagement.aspx?quizid=" + ViewState["quizid"].ToString(), false);
-                     }
-                     
+                        del.Quiz = quiz;
+                        del.Invoke();
+
+                        for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+                        {
+                            if (dss.Tables[0].Rows[i]["Allow"].ToString() == "yes")
+                            {
+                                quiz.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
+                                quiz.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
+                                qLevels.Quiz = quiz;
+                                qLevels.Invoke();
+                            }
+
+                        }
+                        sqlTrans.Commit();
+
+                        if (btnAddQuestion.Text == "Update" || btnAddQuestion.Text == "mettre à jour" || btnAddQuestion.Text == "actualizar")
+                        {
+                            LoadData(int.Parse(quiz.QuestionID.ToString()));
+                            lblMessage.Visible = true;
+                            lblMessage.Text = "Question info " + Resources.TestSiteResources.UpdateMessage;
+                            Response.Redirect("QuestionEdit.aspx?mess=1" + "&questionid=" + ViewState["questionid"].ToString() + "&quizid=" + ViewState["quizid"].ToString(), false);
+                        }
+                        else
+                        {
+                            lblMessage.Visible = true;
+                            lblMessage.Text = "Question info " + ' ' + Resources.TestSiteResources.SavedMessage;
+                            Response.Redirect("QuestionManagement.aspx?quizid=" + ViewState["quizid"].ToString(), false);
+                        }
+
                     }
                     catch (Exception ex)
                     {
@@ -327,8 +319,8 @@ namespace LevelsPro.AdminPanel
                     }
                     finally
                     {
-                        
-                        
+
+
                         sqlTrans.Dispose();
                         scon.Close();
                     }
@@ -336,15 +328,6 @@ namespace LevelsPro.AdminPanel
             }
         }
         #endregion
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
-        }
-
-     
 
         protected void dlLevels_ItemCommand(object sender, DataListCommandEventArgs e)
         {
@@ -365,14 +348,14 @@ namespace LevelsPro.AdminPanel
                     {
                         dss.Tables[0].Rows[i]["Allow"] = "yes";
                         btnLevel.CssClass = "lvl-green";
-                    }                    
+                    }
                     break;
                 }
 
             }
 
 
-            
+
 
         }
 
@@ -412,6 +395,7 @@ namespace LevelsPro.AdminPanel
                 throw exp;
             }
         }
+
         protected void dlRoles_ItemDataBound(object sender, DataListItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -419,34 +403,31 @@ namespace LevelsPro.AdminPanel
                 DataList dlLevels = e.Item.FindControl("dlLevels") as DataList;
                 Literal ltRoleID = e.Item.FindControl("ltRoleID") as Literal;
 
-              
+
                 DataView dv = dss.Tables[0].DefaultView;
                 dv.RowFilter = "Role_ID=" + Convert.ToInt32(ltRoleID.Text.Trim());
                 dlLevels.DataSource = dv.ToTable();
                 dlLevels.DataBind();
 
-               
-                    foreach (DataListItem item in dlLevels.Items)
+
+                foreach (DataListItem item in dlLevels.Items)
+                {
+                    Button btnLevel = item.FindControl("btnLevels") as Button;
+
+                    if (dv.ToTable().Rows[item.ItemIndex]["Allow"].ToString().Trim() == "yes")
                     {
-                        Button btnLevel = item.FindControl("btnLevels") as Button;
-
-                        if (dv.ToTable().Rows[item.ItemIndex]["Allow"].ToString().Trim() == "yes")
-                        {
-                            btnLevel.CssClass = "lvl-green";
-                        }
-                        else
-                        {
-                            btnLevel.CssClass = "lvl-white";
-
-                        }
+                        btnLevel.CssClass = "lvl-green";
+                    }
+                    else
+                    {
+                        btnLevel.CssClass = "lvl-white";
 
                     }
-             
+
+                }
+
             }
         }
-
-        
-
 
         protected void gvCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -461,11 +442,9 @@ namespace LevelsPro.AdminPanel
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-
             mpeManualScore.Show();
             if (txtCategory.Text.Equals(""))
             {
-                
                 return;
             }
             else
@@ -482,7 +461,7 @@ namespace LevelsPro.AdminPanel
                     {
                         catgUp.Invoke();
                         lblcatgmess.Text = "Category name updated successfully";
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -490,7 +469,7 @@ namespace LevelsPro.AdminPanel
                         Session["ExpLogString"] += " Aditional Info : Message Box displayed";
                         log.Debug(Session["ExpLogString"]);
                         lblcatgmess.Text = "Category name not updated successfully";
-                       
+
                     }
                 }
                 else
@@ -501,7 +480,7 @@ namespace LevelsPro.AdminPanel
                     {
                         catgIn.Invoke();
                         lblcatgmess.Text = "Category name Added successfully";
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -511,12 +490,12 @@ namespace LevelsPro.AdminPanel
                         if (ex.Message.Contains("Duplicate"))
                         {
                             lblcatgmess.Text = "Category name Alreadt exists";
-                           
+
                         }
                         else
                         {
                             lblcatgmess.Text = "Category name not Added successfully";
-                            
+
                         }
                     }
                 }
@@ -539,8 +518,9 @@ namespace LevelsPro.AdminPanel
             }
             btnSave.Text = Resources.TestSiteResources.Save;
             mpeManualScore.Hide();
-           
+
         }
+
         protected void LoadCategoryPop()
         {
 
@@ -557,8 +537,8 @@ namespace LevelsPro.AdminPanel
             DataView dvCategory = catg.ResultSet.Tables[0].DefaultView;
             gvCategory.DataSource = dvCategory.ToTable();
             gvCategory.DataBind();
-        
-        
+
+
         }
 
         protected void btnCategoryEdit_Click(object sender, EventArgs e)
