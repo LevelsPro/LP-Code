@@ -621,12 +621,11 @@ namespace LevelsPro.AdminPanel
                         // Save file resource.
                         string imageID = resource.save(this.fileQuizImage, fileMetadata);
                         ViewState["thumbpathnew"] = imageID;
-                        if (imageID != "")
+                        if (!string.IsNullOrEmpty(imageID))
                         {
                             ViewState["Image"] = imageID;
                             level.LevelImage = imageID;
                             level.LevelThumbnail = ViewState["thumbpathnew"].ToString();
-
                         }
                         else
                         {

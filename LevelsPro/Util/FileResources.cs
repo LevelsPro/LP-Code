@@ -83,7 +83,7 @@ namespace Common.Utils
 
         public string save(FileUpload fileUpload, Hashtable fileMetadata)
         {
-            if (!fileUpload.HasFile)
+            if (fileUpload.HasFile)
             {
                 return this.save(fileUpload.PostedFile, fileMetadata);
             }
