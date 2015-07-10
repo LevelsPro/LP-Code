@@ -75,6 +75,7 @@ namespace LevelsPro.App_Code
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             return userinfo.ResultSet;
         }

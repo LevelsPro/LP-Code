@@ -222,6 +222,8 @@ namespace LevelsPro
                 if (log.IsErrorEnabled)
                 {
                     ExceptionUtility.ExceptionLogString(ex, Session);
+                    lblError.Visible = true;
+                    lblError.Text = ErrorMessageUtility.genericMessage;
                     log.Error(Session["ExpLogString"]);
                 }
             }
