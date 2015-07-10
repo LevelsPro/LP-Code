@@ -894,8 +894,6 @@ namespace LevelsPro
                     images.PlayerImage = imageId;
                     images.PlayerThumbnail = imageId;
 
-                    string s = fileUserImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
                     images.UserID = Convert.ToInt32(ViewState["userid"]);
                     UserImageInsertBLL updateimage = new UserImageInsertBLL();
                     try

@@ -483,13 +483,12 @@ namespace LevelsPro.AdminPanel
                     level.Game = ddlGame.SelectedValue;
                     // Save file resource.
                     string imageID = resource.save(this.fileQuizImage, fileMetadata);
-                    ViewState["thumbpathnew"] = imageID;
                     if (!string.IsNullOrEmpty(imageID))
                     {
-                        ViewState["Image"] = imageID;
                         level.LevelImage = imageID;
-                        level.LevelThumbnail = ViewState["thumbpathnew"].ToString();
-
+                        level.LevelThumbnail = imageID;
+                        ViewState["thumbpathnew"] = imageID;
+                        ViewState["Image"] = imageID;
                     }
                     else
                     {
@@ -620,12 +619,12 @@ namespace LevelsPro.AdminPanel
 
                         // Save file resource.
                         string imageID = resource.save(this.fileQuizImage, fileMetadata);
-                        ViewState["thumbpathnew"] = imageID;
                         if (!string.IsNullOrEmpty(imageID))
-                        {
-                            ViewState["Image"] = imageID;
+                        {   
                             level.LevelImage = imageID;
-                            level.LevelThumbnail = ViewState["thumbpathnew"].ToString();
+                            level.LevelThumbnail = imageID;
+                            ViewState["thumbpathnew"] = imageID;
+                            ViewState["Image"] = imageID;
                         }
                         else
                         {
