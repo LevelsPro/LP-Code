@@ -54,7 +54,7 @@ namespace LevelsPro.AdminPanel
         {
             lblmessage.Visible = false;
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!(Page.IsPostBack))
+            if (!Page.IsPostBack)
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
@@ -118,9 +118,8 @@ namespace LevelsPro.AdminPanel
 
         protected void LoadData()
         {
-            string Thumbpath = ConfigurationSettings.AppSettings["AwardsThumbPath"].ToString();//get path for award image
+            string Thumbpath = ConfigurationManager.AppSettings["AwardsThumbPath"].ToString();//get path for award image
             int id = Convert.ToInt32(Request.QueryString["awardid"]);
-
 
             if (id != 0)
             {
@@ -276,18 +275,15 @@ namespace LevelsPro.AdminPanel
         #region add and update award code
         protected void btnAddAward_Click(object sender, EventArgs e)
         {
-            string Thumbpath = (string)fileMetadata["thumbnailPath"];
             if (txtAwardName.Text.Equals(""))
             {
-
                 return;
             }
             else
             {
-
+                string Thumbpath = (string)fileMetadata["thumbnailPath"];
                 Award award = new Award();
                 award.AwardName = txtAwardName.Text.Trim();
-
                 award.AwardDesc = txtAwardDesc.Text.Trim();
                 award.AwardCategoryID = Convert.ToInt32(ddlAwardCategory.SelectedValue);
 
@@ -382,7 +378,6 @@ namespace LevelsPro.AdminPanel
                 else if (btnAddAward.Text == "Add" || btnAddAward.Text == "Ajouter" || btnAddAward.Text == "añadir")
                 {
                     pnlImg.Visible = false;
-
 
                     AwardInsertBLL insertAward = new AwardInsertBLL();
                     insertAward.Award = award;
@@ -499,7 +494,7 @@ namespace LevelsPro.AdminPanel
             {
                 award.AwardID = Convert.ToInt32(ViewState["awardid"]);
                 string imageId = resource.save(fileAwardImage, fileMetadata);
-                if (string.IsNullOrEmpty(imageId))
+                if (!string.IsNullOrEmpty(imageId))
                 {
                     award.AwardImage = imageId;
                     award.AwardThumbnail = imageId;
@@ -522,7 +517,7 @@ namespace LevelsPro.AdminPanel
 
                 award.AwardID = Convert.ToInt32(Request.QueryString["awardid"]);
                 string imageId = resource.save(fileAwardImage, fileMetadata);
-                if (string.IsNullOrEmpty(imageId))
+                if (!string.IsNullOrEmpty(imageId))
                 {
                     award.AwardImage = imageId;
                     award.AwardThumbnail = imageId;
@@ -548,13 +543,11 @@ namespace LevelsPro.AdminPanel
         protected void LoadImagesData(int AwardID)
         {
 
-            string Thumbpath = ConfigurationManager.AppSettings["AwardsThumbPath"].ToString();
             if (AwardID != 0)
             {
+                string Thumbpath = ConfigurationManager.AppSettings["AwardsThumbPath"].ToString();
                 AwardImagesViewBLL awardimage = new AwardImagesViewBLL();
                 Award _award = new Award();
-
-
 
                 try
                 {
@@ -569,7 +562,6 @@ namespace LevelsPro.AdminPanel
 
                 DataTable dt = new DataTable();
                 dt = dvImage.ToTable();
-
 
                 dvImage.RowFilter = "Award_ID=" + AwardID.ToString();
 
@@ -647,8 +639,6 @@ namespace LevelsPro.AdminPanel
                         previousid = Convert.ToInt32(dtcImage.Rows[0]["ID"]);
                     }
 
-
-
                     if (currentid != 0)
                     {
 
@@ -669,7 +659,6 @@ namespace LevelsPro.AdminPanel
                     }
                 }
             }
-
             else if (e.CommandName == "DeleteImage")
             {
                 if (ViewState["awardid"] != null && ViewState["awardid"].ToString() != "" && Convert.ToInt32(ViewState["awardid"]) != 0)
@@ -708,9 +697,7 @@ namespace LevelsPro.AdminPanel
                             }
                         }
                     }
-
                     LoadImagesData(0);
-
                 }
             }
 
