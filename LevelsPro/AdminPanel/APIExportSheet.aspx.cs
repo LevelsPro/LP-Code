@@ -56,6 +56,7 @@ namespace LevelsPro.AdminPanel
             // Clear the error from the server.
             Server.ClearError();
         }
+
         private void BindGridwithDummy()
         {
             DataTable dt = new DataTable();
@@ -76,6 +77,7 @@ namespace LevelsPro.AdminPanel
             gvAPI.DataBind();
 
         }
+
         #region  send record to score table
         protected void btnImport_Click(object sender, EventArgs e)
         {
@@ -655,11 +657,13 @@ namespace LevelsPro.AdminPanel
 
         }
         #endregion
+
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
+        
         #region import to grid from excel
         protected void btnImpToGrid_Click(object sender, EventArgs e)
         {
