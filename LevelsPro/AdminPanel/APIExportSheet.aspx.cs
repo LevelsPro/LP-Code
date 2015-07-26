@@ -663,106 +663,112 @@ namespace LevelsPro.AdminPanel
             Session.Abandon();
             Response.Redirect("~/Index.aspx");
         }
-        
+
         #region import to grid from excel
         protected void btnImpToGrid_Click(object sender, EventArgs e)
         {
             string FilePath = "";
-            string[] a = new string[1];
             string fileName = "";
             string FullName = "";
+            string[] a = new string[1];
 
-            DataTable dt = null;
-            DataSet ds = null;
-            if (fuImport.FileName.Length > 0)
+            try
             {
-                a = fuImport.FileName.Split('.');
-                fileName = Convert.ToString(System.DateTime.Now.Ticks) + "." + a.GetValue(1).ToString();
-                FilePath = Server.MapPath(@"~\APIExcelSheet");
-                FileResources resource = FileResources.Instance;
-                resource.preparePath(FilePath);
-                fuImport.SaveAs(FilePath + @"\" + fileName);
-
-                FullName = FilePath + @"\" + fileName;
-
-                // Database Saved Code
-                string connString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;HDR=yes'", FullName);
-                string sql = "SELECT * from [Sheet1$]";
-                dt = new DataTable();
-
-
-
-                using (OleDbConnection conn = new OleDbConnection(connString))
+                #region Import SpreadSheet
+                DataTable dt = null;
+                if (fuImport.FileName.Length > 0)
                 {
-                    conn.Open();
-                    using (OleDbCommand cmd = new OleDbCommand(sql, conn))
+                    a = fuImport.FileName.Split('.');
+                    fileName = Convert.ToString(System.DateTime.Now.Ticks) + "." + a.GetValue(1).ToString();
+                    FilePath = Server.MapPath(@"~\APIExcelSheet");
+                    FileResources resource = FileResources.Instance;
+                    resource.preparePath(FilePath);
+                    fuImport.SaveAs(FilePath + @"\" + fileName);
+
+                    FullName = FilePath + @"\" + fileName;
+
+                    // Database Saved Code
+                    string connString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;HDR=yes'", FullName);
+                    string sql = "SELECT * from [Sheet1$]";
+                    dt = new DataTable();
+
+                    using (OleDbConnection conn = new OleDbConnection(connString))
                     {
-                        using (OleDbDataReader rdr = cmd.ExecuteReader())
+                        conn.Open();
+                        using (OleDbCommand cmd = new OleDbCommand(sql, conn))
                         {
-                            dt.Load(rdr);
-                            //return dt;
+                            using (OleDbDataReader rdr = cmd.ExecuteReader())
+                            {
+                                dt.Load(rdr);
+                                //return dt;
+                            }
                         }
                     }
                 }
-            }
+                #endregion
 
-            #region Populate Award ID
-            int counterType = 0;
+                #region Populate Award ID
+                int counterType = 0;
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                if (dt.Rows[i][5].ToString().ToLower().Equals("award"))
-                {
-                    counterType++;
-                }
-            }
-
-            if (counterType > 0)
-            {
-                dt.Columns.Add("AwardID", typeof(System.Int32));
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    #region Getting Award ID
-                    getContestIDBLL CID = new getContestIDBLL();
-                    KPI kpi = new KPI();
-                    kpi.KPIID = Convert.ToInt32(dt.Rows[i][2].ToString());
-                    CID.KPI = kpi;
-                    try
+                    if (dt.Rows[i][5].ToString().ToLower().Equals("award"))
                     {
-                        CID.Invoke();
+                        counterType++;
                     }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                    finally
-                    {
-                    }
+                }
 
-                    DataTable dtCID = new DataTable();
-                    if (CID.ResultSet != null)
+                if (counterType > 0)
+                {
+                    dt.Columns.Add("AwardID", typeof(System.Int32));
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        dtCID = CID.ResultSet.Tables[1];
-                    }
-
-                    for (int x = 0; x < dtCID.Rows.Count; x++)
-                    {
-                        for (int j = 0; j < dt.Rows.Count; j++)
+                        #region Getting Award ID
+                        getContestIDBLL CID = new getContestIDBLL();
+                        KPI kpi = new KPI();
+                        kpi.KPIID = Convert.ToInt32(dt.Rows[i][2].ToString());
+                        CID.KPI = kpi;
+                        try
                         {
-                            if (dt.Rows[j][2].ToString().Equals(dtCID.Rows[x][1].ToString()))
+                            CID.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                        finally
+                        {
+                        }
+
+                        DataTable dtCID = new DataTable();
+                        if (CID.ResultSet != null)
+                        {
+                            dtCID = CID.ResultSet.Tables[1];
+                        }
+
+                        for (int x = 0; x < dtCID.Rows.Count; x++)
+                        {
+                            for (int j = 0; j < dt.Rows.Count; j++)
                             {
-                                dt.Rows[j]["AwardID"] = Convert.ToInt32(dtCID.Rows[x][0]);
-                            }
-                            else
-                            {
-                                dt.Rows[j]["AwardID"] = 0;
+                                if (dt.Rows[j][2].ToString().Equals(dtCID.Rows[x][1].ToString()))
+                                {
+                                    dt.Rows[j]["AwardID"] = Convert.ToInt32(dtCID.Rows[x][0]);
+                                }
+                                else
+                                {
+                                    dt.Rows[j]["AwardID"] = 0;
+                                }
                             }
                         }
+                        #endregion
                     }
-                    #endregion
                 }
+                #endregion
             }
-            #endregion
+            catch (Exception exc)
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
 
             gvAPI.DataSource = dt;
             gvAPI.DataBind();
