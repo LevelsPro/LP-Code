@@ -671,11 +671,11 @@ namespace LevelsPro.AdminPanel
             string fileName = "";
             string FullName = "";
             string[] a = new string[1];
+            DataTable dt = null;
 
             try
             {
                 #region Import SpreadSheet
-                DataTable dt = null;
                 if (fuImport.FileName.Length > 0)
                 {
                     a = fuImport.FileName.Split('.');
