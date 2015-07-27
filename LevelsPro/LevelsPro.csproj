@@ -38,6 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\AjaxControlToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\dlls\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\Facebook.dll</HintPath>
@@ -1755,6 +1758,7 @@
     <Compile Include="Util\ExceptionUtility.cs" />
     <Compile Include="Util\FileResources.cs" />
     <Compile Include="Util\RedirectionStrategy.cs" />
+    <Compile Include="Util\SpreadsheetReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminPanel\Reports\" />

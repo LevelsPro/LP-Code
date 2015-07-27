@@ -684,26 +684,10 @@ namespace LevelsPro.AdminPanel
                     FileResources resource = FileResources.Instance;
                     resource.preparePath(FilePath);
                     fuImport.SaveAs(FilePath + @"\" + fileName);
-
                     FullName = FilePath + @"\" + fileName;
 
-                    // Database Saved Code
-                    string connString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;HDR=yes'", FullName);
-                    string sql = "SELECT * from [Sheet1$]";
-                    dt = new DataTable();
-
-                    using (OleDbConnection conn = new OleDbConnection(connString))
-                    {
-                        conn.Open();
-                        using (OleDbCommand cmd = new OleDbCommand(sql, conn))
-                        {
-                            using (OleDbDataReader rdr = cmd.ExecuteReader())
-                            {
-                                dt.Load(rdr);
-                                //return dt;
-                            }
-                        }
-                    }
+                    // Load DataTable using OfficeOpenXml.
+                    dt = SpreadsheetReader.loadDataTable(FullName);
                 }
                 #endregion
 

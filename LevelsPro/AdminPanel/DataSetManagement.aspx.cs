@@ -14,6 +14,7 @@ using System.Data.OleDb;
 using System.Globalization;
 using System.IO;
 using Common.Utils;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
@@ -222,19 +223,6 @@ namespace LevelsPro.AdminPanel
             }
         }
 
-        public static DataTable exceldata(string filePath)
-        {
-            OleDbConnection cnn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + "; Extended Properties=Excel 12.0;");
-
-            OleDbCommand oconn = new OleDbCommand("select * from [Sheet1$]", cnn);
-            cnn.Open();
-            OleDbDataAdapter adp = new OleDbDataAdapter(oconn);
-            DataTable dt = new DataTable();
-            adp.Fill(dt);
-            return dt;
-
-        }
-
         protected bool AllowedFile(string extension)
         {
             string[] strArr = { ".xls", ".xlsx" };
@@ -263,9 +251,8 @@ namespace LevelsPro.AdminPanel
                 }
 
                 DataSet dsBulk = new DataSet();
-
-                DataTable dtBulk = exceldata(FilePath + s);
-
+                string filePath = FilePath + s;
+                DataTable dtBulk = SpreadsheetReader.loadDataTable(filePath);
                 dsBulk.Tables.Add(dtBulk);
 
                 BulkInsertMatchDataSetsBLL BulkInsert = new BulkInsertMatchDataSetsBLL();
@@ -277,7 +264,7 @@ namespace LevelsPro.AdminPanel
                 }
                 else
                 {
-                    //not success
+                    //not successFilePath + s
                 }
             }
         }
