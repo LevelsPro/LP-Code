@@ -199,9 +199,15 @@ namespace LevelsPro
                 user.UserEmail = txtEmail.Text.Trim();
                 user.Hours = Convert.ToInt32(txtWorkedHours.Text.Trim());
                 user.Score = Convert.ToInt32(txtPoints.Text.Trim());
+<<<<<<< HEAD
 
 
 
+=======
+                
+               bool isAdmin =  Convert.ToInt32(ddlRole.SelectedValue)==1 &&  Convert.ToInt32(ddlGeneralRole.SelectedValue)==6; 
+               
+>>>>>>> master
                 if (currentlevel > 0)
                 {
                     user.CurrentLevel = currentlevel;
@@ -264,10 +270,14 @@ namespace LevelsPro
 
                 }
                 else
-                {
-                    lblmessage.Visible = true;
-                    lblmessage.Text = Resources.TestSiteResources.LevelRequired;
-                    return;
+                {   
+                    //If is not an admin return the error message
+                   if(!isAdmin) {
+                        lblmessage.Visible = true;
+                        lblmessage.Text = Resources.TestSiteResources.LevelRequired;
+                        return;                       
+                   }
+
                 }
 
 
