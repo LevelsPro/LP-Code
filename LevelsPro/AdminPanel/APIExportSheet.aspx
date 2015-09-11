@@ -38,7 +38,7 @@
             OnClick="btnImport_Click" /><br />
         <asp:SqlDataSource ID="userdata" runat="server" 
             ConnectionString="<%$ ConnectionStrings:LevelsproCS %>" 
-            ProviderName="<%$ ConnectionStrings:LevelsproCS.ProviderName %>" 
+            ProviderName="MySql.Data.MySqlClient" 
             SelectCommand="Select UserID, U_EmpID from tblUser"></asp:SqlDataSource>
         <br /><br /><br />
         <asp:GridView ID="gvAPI" runat="server" AutoGenerateColumns="true" Width="100%">
