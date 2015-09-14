@@ -91,6 +91,7 @@ namespace LevelsPro.AdminPanel
                 dvuserid= userdata.Select(DataSourceSelectArguments.Empty) as DataView;
                 DataTable dtuserid = new DataTable();
 
+                /*
                 lblErrorMessages.Text = "Import Stp 2";
                 if (gvAPI.Rows.Count > 0)
                 {
@@ -662,7 +663,7 @@ namespace LevelsPro.AdminPanel
                 }
                 lblErrorMessages.Text = "Final";
                 gvAPI.DataSource = null;
-                gvAPI.DataBind();
+                gvAPI.DataBind();*/
             }
             catch (Exception exc)
             {
