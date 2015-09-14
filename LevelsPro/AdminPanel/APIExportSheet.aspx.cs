@@ -85,13 +85,11 @@ namespace LevelsPro.AdminPanel
         {
             try
             {
-                lblErrorMessages.Text = "Import Stp 1";
                 DataView dvuserid = new DataView();
                 userdata.Select(DataSourceSelectArguments.Empty);
                 dvuserid= userdata.Select(DataSourceSelectArguments.Empty) as DataView;
                 DataTable dtuserid = new DataTable();
 
-                lblErrorMessages.Text = "Import Stp 2";
                 if (gvAPI.Rows.Count > 0)
                 {
                     foreach (GridViewRow gr in gvAPI.Rows)
