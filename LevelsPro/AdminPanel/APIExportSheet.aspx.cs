@@ -87,12 +87,25 @@ namespace LevelsPro.AdminPanel
             {
                 lblErrorMessages.Text = "Import Stp 1";
                 DataView dvuserid = new DataView();
-                
+                dvuserid = userdata.Select(DataSourceSelectArguments.Empty) as DataView;
+                DataTable dtuserid = new DataTable();
+            }
+            catch (Exception ex)
+            {
+                lblErrorMessages.Text = "Erro: "+ ex.Message.ToString();
+                gvAPI.DataSource = null;
+                gvAPI.DataBind();
+            }
+
+            /*
+            try
+            {
+                lblErrorMessages.Text = "Import Stp 1";
+                DataView dvuserid = new DataView();
                 userdata.Select(DataSourceSelectArguments.Empty);
                 dvuserid= userdata.Select(DataSourceSelectArguments.Empty) as DataView;
-                /*DataTable dtuserid = new DataTable();
+                DataTable dtuserid = new DataTable();
 
-                
                 lblErrorMessages.Text = "Import Stp 2";
                 if (gvAPI.Rows.Count > 0)
                 {
@@ -664,13 +677,13 @@ namespace LevelsPro.AdminPanel
                 }
                 lblErrorMessages.Text = "Final";
                 gvAPI.DataSource = null;
-                gvAPI.DataBind();*/
+                gvAPI.DataBind();
             }
             catch (Exception exc)
             {
                 lblErrorMessages.Text = exc.Message;
                 ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
-            }
+            }*/
 
         }
         #endregion
