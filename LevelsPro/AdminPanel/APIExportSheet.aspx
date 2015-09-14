@@ -23,8 +23,8 @@
         <div class="user-nt fl">
      
          <asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources,  APIImportSheet %>"></asp:Label>
-         <p>changes</p>
-         <asp:Label ID="lblErrorMessages" runat="server"></asp:Label>
+         <p>2</p>
+         <asp:Label ID="lblErrorMessages" runat="server" Text=""></asp:Label>
            </div>
         <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
             CssClass="green-btn btn fr" OnClick="btnLogout_Click"></asp:Button>
