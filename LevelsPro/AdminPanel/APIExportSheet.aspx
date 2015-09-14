@@ -29,6 +29,7 @@
             CssClass="green-btn btn fr" OnClick="btnLogout_Click"></asp:Button>
         <div class="clear">
         </div>
+
     </div>
     <div class="box brd2">
         <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>
