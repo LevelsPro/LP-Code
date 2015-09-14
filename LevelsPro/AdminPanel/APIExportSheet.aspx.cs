@@ -664,6 +664,7 @@ namespace LevelsPro.AdminPanel
             }
             catch (Exception exc)
             {
+                lblErrorMessages.Text = exc.Message;
                 ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
 
