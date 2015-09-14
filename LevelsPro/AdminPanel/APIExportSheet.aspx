@@ -41,6 +41,8 @@
             OnClick="btnImport_Click" /><br />
             <p> Connection String : </p>
             <asp:Label runat="server" Text="<%$ ConnectionStrings:LevelsproCS %>"></asp:Label>
+            <p> Provider Name : </p>
+            <asp:Label ID="Label2" runat="server" Text="<%$ ConnectionStrings:LevelsproCS.ProviderName  %>"></asp:Label>
         <asp:SqlDataSource ID="userdata" runat="server" 
             ConnectionString="<%$ ConnectionStrings:LevelsproCS %>" 
             ProviderName="<%$ ConnectionStrings:LevelsproCS.ProviderName %>" 
