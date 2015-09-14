@@ -12,6 +12,7 @@ using BusinessLogic.Update;
 using LevelsPro.Util;
 using log4net;
 using System.Web.UI.HtmlControls;
+using System.Text.RegularExpressions;
 
 namespace LevelsPro.AdminPanel
 {
@@ -124,7 +125,15 @@ namespace LevelsPro.AdminPanel
 
             if (dvPlayer != null && dvPlayer.ToTable().Rows.Count > 0)
             {
-                dlPlayers.DataSource = dvPlayer;
+                IEnumerable<DataRow> query =
+                    from contest in dvPlayer.ToTable().AsEnumerable().OrderBy(contest => contest.Field<int>("Score").ToString(), new NaturalSortComparer<string>(false))
+                 .ToList()
+                select contest;
+
+                // Create a table from the query.
+                DataTable boundTable = query.CopyToDataTable<DataRow>();
+
+                dlPlayers.DataSource = boundTable;
                 dlPlayers.DataBind();
             }
             else
@@ -238,5 +247,9 @@ namespace LevelsPro.AdminPanel
                 Response.Redirect("ContestDetails.aspx?userid=" + e.CommandArgument.ToString());
             }
         }
+
+
     }
+
+   
 }
