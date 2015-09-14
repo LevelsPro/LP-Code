@@ -23,7 +23,7 @@
         <div class="user-nt fl">
      
          <asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources,  APIImportSheet %>"></asp:Label>
-         <p>2</p>
+         <p>3</p>
          <asp:Label ID="lblErrorMessages" runat="server" Text=""></asp:Label>
            </div>
         <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
@@ -39,6 +39,8 @@
             OnClick="btnImpToGrid_Click" Width="160px" />&nbsp;      &nbsp;&nbsp;  
         <asp:Button ID="btnImport" runat="server" CssClass="green-btn admin-edit fl" Text="<%$ Resources:TestSiteResources, Import %>"
             OnClick="btnImport_Click" /><br />
+            <p> Connection String : </p>
+            <asp:Label runat="server" Text="<%$ ConnectionStrings:LevelsproCS %>"></asp:Label>
         <asp:SqlDataSource ID="userdata" runat="server" 
             ConnectionString="<%$ ConnectionStrings:LevelsproCS %>" 
             ProviderName="<%$ ConnectionStrings:LevelsproCS.ProviderName %>" 
