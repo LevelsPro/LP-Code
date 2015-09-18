@@ -202,6 +202,9 @@ namespace LevelsPro
             }
             catch (Exception ex)
             {
+                lblError.Visible = true;
+                lblError.Text = ex.Message.ToString();
+               // lblErrroLogin.Text = ex.Message.ToString();
                 if (log.IsErrorEnabled)
                 {
                     ExceptionUtility.ExceptionLogString(ex, Session);
