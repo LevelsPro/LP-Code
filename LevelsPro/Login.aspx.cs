@@ -171,11 +171,11 @@ namespace LevelsPro
 
                 if (Sysrole.Equals("Admin"))
                 {
-                    Response.Redirect("~/AdminPanel/AdminHome.aspx?" + DateTime.Now.Ticks);
+                    Response.Redirect("~/AdminPanel/AdminHome.aspx?" + DateTime.Now.Ticks,false);
                 }
                 else if (Sysrole.Equals("Manager"))
                 {
-                    Response.Redirect("~/ManagerPanel/TeamPerformance.aspx?" + DateTime.Now.Ticks);
+                    Response.Redirect("~/ManagerPanel/TeamPerformance.aspx?" + DateTime.Now.Ticks,false);
                 }
                 else if (Sysrole.Equals("Player"))
                 {
@@ -183,7 +183,7 @@ namespace LevelsPro
                 }
                 else
                 {
-                    Response.Redirect("~\\Login.aspx?" + DateTime.Now.Ticks);
+                    Response.Redirect("~\\Login.aspx?" + DateTime.Now.Ticks,false);
                 }            
             }
             else
