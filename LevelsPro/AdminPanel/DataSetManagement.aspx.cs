@@ -13,6 +13,8 @@ using LevelsPro.App_Code;
 using System.Data.OleDb;
 using System.Globalization;
 using System.IO;
+using Common.Utils;
+using LevelsPro.Util;
 
 namespace LevelsPro.AdminPanel
 {
@@ -56,7 +58,7 @@ namespace LevelsPro.AdminPanel
 
             ListItem liFilter = new ListItem("Select All Location", "0");
             ddlRole.Items.Insert(0, liFilter);
-           
+
         }
         protected void LoadLevels(int RoleID)
         {
@@ -71,7 +73,7 @@ namespace LevelsPro.AdminPanel
             catch (Exception)
             {
             }
-            
+
             ddlLevel.DataTextField = "Level_Name";
             ddlLevel.DataValueField = "Level_ID";
 
@@ -112,17 +114,17 @@ namespace LevelsPro.AdminPanel
             DataSetViewBLL datasetview = new DataSetViewBLL();
             Match _match = new Match();
 
-            
+
             if (ViewState["roleid"] != null && ViewState["roleid"].ToString() != "")
             {
-               _match.Status = 1;
-               _match.Where = " WHERE MatchID=" + MatchID.ToString() + " AND tblmatchdatasetlevels.RoleID=" + Convert.ToInt32(ViewState["roleid"]) + " AND LevelID=" + Convert.ToInt32(ViewState["levelid"]);
+                _match.Status = 1;
+                _match.Where = " WHERE MatchID=" + MatchID.ToString() + " AND tblmatchdatasetlevels.RoleID=" + Convert.ToInt32(ViewState["roleid"]) + " AND LevelID=" + Convert.ToInt32(ViewState["levelid"]);
             }
             else if (ViewState["siteid"] != null && ViewState["siteid"].ToString() != "")
             {
                 _match.Status = 0;
-                _match.Where = " WHERE MatchID= " + MatchID.ToString() + " AND SiteID=" + Convert.ToInt32(ViewState["siteid"]) ;
-            
+                _match.Where = " WHERE MatchID= " + MatchID.ToString() + " AND SiteID=" + Convert.ToInt32(ViewState["siteid"]);
+
             }
             else
             {
@@ -200,14 +202,14 @@ namespace LevelsPro.AdminPanel
             {
                 if (Convert.ToInt32(ViewState["roleid"]) == 1)
                 {
-                    ViewState["siteid"]= null;
+                    ViewState["siteid"] = null;
                     ViewState["roleid"] = ddlRole.SelectedValue;
-                    LoadLevels(Convert.ToInt32( ViewState["roleid"]));
-                   // LoadDataSets(Convert.ToInt32(ViewState["matchid"]));
+                    LoadLevels(Convert.ToInt32(ViewState["roleid"]));
+                    // LoadDataSets(Convert.ToInt32(ViewState["matchid"]));
                 }
-                else if (Convert.ToInt32(ViewState["siteid"]) == 1 || Convert.ToInt32( ViewState["check"])==1)
+                else if (Convert.ToInt32(ViewState["siteid"]) == 1 || Convert.ToInt32(ViewState["check"]) == 1)
                 {
-                    ViewState["roleid"]= null;
+                    ViewState["roleid"] = null;
                     ViewState["siteid"] = ddlRole.SelectedValue;
                     LoadDataSets(Convert.ToInt32(ViewState["matchid"]));
                 }
@@ -221,22 +223,9 @@ namespace LevelsPro.AdminPanel
             }
         }
 
-        public static DataTable exceldata(string filePath)
-        {
-            OleDbConnection cnn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + "; Extended Properties=Excel 12.0;");
-
-            OleDbCommand oconn = new OleDbCommand("select * from [Sheet1$]", cnn);
-            cnn.Open();
-            OleDbDataAdapter adp = new OleDbDataAdapter(oconn);
-            DataTable dt = new DataTable();
-            adp.Fill(dt); 
-            return dt;
-
-        }
-
         protected bool AllowedFile(string extension)
         {
-            string[] strArr = { ".xls", ".xlsx"};
+            string[] strArr = { ".xls", ".xlsx" };
             if (strArr.Contains(extension))
                 return true;
             return false;
@@ -250,20 +239,20 @@ namespace LevelsPro.AdminPanel
                 string s = fpBulk.FileName;
                 s = Convert.ToString(System.DateTime.Now.Ticks) + "." + s;
                 FilePath = Server.MapPath(@"~\APIExcelSheet");
-
+                FileResources resource = FileResources.Instance;
+                resource.preparePath(FilePath);
                 FileInfo fleInfo = new FileInfo(s);
                 if (AllowedFile(fleInfo.Extension))
                 {
                     string GuidOne = Guid.NewGuid().ToString();
                     string FileExtension = Path.GetExtension(fpBulk.FileName).ToLower();
                     fpBulk.SaveAs(FilePath + s);
-                    
+
                 }
 
                 DataSet dsBulk = new DataSet();
-
-                DataTable dtBulk = exceldata(FilePath + s);
-
+                string filePath = FilePath + s;
+                DataTable dtBulk = SpreadsheetReader.loadDataTable(filePath);
                 dsBulk.Tables.Add(dtBulk);
 
                 BulkInsertMatchDataSetsBLL BulkInsert = new BulkInsertMatchDataSetsBLL();
@@ -275,7 +264,7 @@ namespace LevelsPro.AdminPanel
                 }
                 else
                 {
-                    //not success
+                    //not successFilePath + s
                 }
             }
         }
@@ -294,25 +283,25 @@ namespace LevelsPro.AdminPanel
                 else if (ddlFilterBy.SelectedValue == "2")
                 {
                     ddlLevel.Items.Clear();
-                    
+
                     ViewState["roleid"] = null;
                     ViewState["siteid"] = 1;
                     ViewState["check"] = 1;
                     LoadSites();
                     ddlRole_SelectedIndexChanged(null, null);
                 }
-               
+
             }
             else if (ddlFilterBy.SelectedIndex == 0)
             {
                 ddlRole.Items.Clear();
                 ddlLevel.Items.Clear();
-               
+
                 ViewState["roleid"] = null;
                 ViewState["siteid"] = null;
                 ViewState["check"] = null;
                 LoadDataSets(Convert.ToInt32(ViewState["matchid"]));
-                
+
             }
         }
 

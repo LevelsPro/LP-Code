@@ -15,17 +15,35 @@ using LevelsPro.App_Code;
 using System.Data;
 using MySql.Data.MySqlClient;
 using BusinessLogic.Delete;
+using Common.Utils;
+using System.Collections;
 
 namespace LevelsPro.AdminPanel
 {
     public partial class DataSetEdit : AuthorizedPage
     {
         static DataSet dss;
+        protected static Hashtable fileMetadata;
         int CountTextBoxes = 0;
         int CountHtmlImage = 0;
         private TextBox[] dynamicTextBoxes;
         private HtmlImage[] dynamicHtmlImage;
         private FileUpload[] dynamicFileUpload;
+
+        static DataSetEdit()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "DataSetPath");
+            fileMetadata.Add("thumbnailPath", "DataSetThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
 
         protected override void OnInit(EventArgs e)
         {
@@ -37,6 +55,7 @@ namespace LevelsPro.AdminPanel
             base.OnInit(e);
 
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -49,7 +68,7 @@ namespace LevelsPro.AdminPanel
                     lblMessage.Text = "DataSet info " + Resources.TestSiteResources.UpdateMessage;
                 }
 
-                LoadSites();                
+                LoadSites();
 
                 if (Request.QueryString["datasetid"] != null && Request.QueryString["datasetid"].ToString() != "")
                 {
@@ -58,7 +77,7 @@ namespace LevelsPro.AdminPanel
                 }
                 loadDataList();
             }
-            else 
+            else
             {
                 dynamicTextBoxes = (TextBox[])Session["dynamicTextBoxes"];
                 dynamicHtmlImage = (HtmlImage[])Session["dynamicHtmlImage"];
@@ -67,7 +86,7 @@ namespace LevelsPro.AdminPanel
         }
 
         #region add controls
-        private void LoadDataElements(int MatchID) 
+        private void LoadDataElements(int MatchID)
         {
             DataElementViewBLL dataelement = new DataElementViewBLL();
             Match _match = new Match();
@@ -95,7 +114,7 @@ namespace LevelsPro.AdminPanel
                     if (ispicture == 0)
                         CountTextBoxes++;
                     else
-                        CountHtmlImage++;                    
+                        CountHtmlImage++;
                 }
 
                 dynamicTextBoxes = new TextBox[CountTextBoxes];
@@ -105,12 +124,12 @@ namespace LevelsPro.AdminPanel
                 CountTextBoxes = 0;
                 CountHtmlImage = 0;
 
-                for (var i = dataelement.ResultSet.Tables[0].Rows.Count; i-- > 0;)
+                for (var i = dataelement.ResultSet.Tables[0].Rows.Count; i-- > 0; )
                 {
                     elementid = Convert.ToInt32(dataelement.ResultSet.Tables[0].Rows[i]["ElementID"].ToString());
                     elementname = dataelement.ResultSet.Tables[0].Rows[i]["ElementName"].ToString();
                     ispicture = Convert.ToInt32(dataelement.ResultSet.Tables[0].Rows[i]["IsPicture"].ToString());
-                    
+
                     if (ispicture == 0)
                         CountTextBoxes++;
                     else
@@ -126,14 +145,15 @@ namespace LevelsPro.AdminPanel
                 Session["dynamicFileUpload"] = dynamicFileUpload;
             }
         }
-        private void CreateDataSetControls(int ElementID, string ElementName, int IsPicture, int counter) 
+
+        private void CreateDataSetControls(int ElementID, string ElementName, int IsPicture, int counter)
         {
             ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
             HtmlGenericControl flwrapper = (HtmlGenericControl)content.FindControl("flWrapper");
-            
+
             int controlNumber = 2;
 
-            if(IsPicture == 1)
+            if (IsPicture == 1)
             {
                 #region Picture
                 //div fl-wrapper img-r mt10 pr
@@ -159,7 +179,7 @@ namespace LevelsPro.AdminPanel
                 //field hdImage
                 HiddenField hdImage = new HiddenField();
                 hdImage.ID = "hdImage_" + ElementID;
-                hdImage.Value = "/Images/No_Image_Wide.png";                
+                hdImage.Value = "/Images/No_Image_Wide.png";
 
                 _rimage.Controls.Add(imgDataSet);
                 _rimage.Controls.Add(hdImage);
@@ -180,7 +200,7 @@ namespace LevelsPro.AdminPanel
                 _flwrapper.Controls.Add(_greenbtn);
 
                 FileUpload fuDataSetImage = new FileUpload();
-                fuDataSetImage.ID = "fuQuestionImage_" + ElementID; 
+                fuDataSetImage.ID = "fuQuestionImage_" + ElementID;
                 fuDataSetImage.CssClass = "change-img-transparent";
                 fuDataSetImage.Attributes.Add("onchange", "readURL(this, '" + content.ID + "_" + imgDataSet.ID + "');");
                 dynamicFileUpload[counter - 1] = fuDataSetImage;
@@ -203,7 +223,7 @@ namespace LevelsPro.AdminPanel
                 flwrapper.Controls.AddAt(controlNumber, _flwrapper);
 
                 controlNumber = controlNumber + _flwrapper.Controls.Count + 1;
-                #endregion                
+                #endregion
             }
             else
             {
@@ -229,7 +249,7 @@ namespace LevelsPro.AdminPanel
                 txtDataSet.MaxLength = 200;
                 txtDataSet.AutoCompleteType = AutoCompleteType.Disabled;
                 txtDataSet.Attributes.Add("onfocus", "disableautocompletion(this.id);");
-                dynamicTextBoxes[counter-1] = txtDataSet;
+                dynamicTextBoxes[counter - 1] = txtDataSet;
 
                 _editright.Controls.Add(txtDataSet);
 
@@ -257,7 +277,7 @@ namespace LevelsPro.AdminPanel
                 controlNumber = controlNumber + _strip.Controls.Count + 1;
                 #endregion
             }
-            
+
         }
         #endregion
 
@@ -291,16 +311,16 @@ namespace LevelsPro.AdminPanel
                 imgDataSet.Src = path + matchview.ResultSet.Tables[0].Rows[0]["DataSetImage"].ToString();
 
                 string[] dataElementData = matchview.ResultSet.Tables[0].Rows[0]["DataSetElementsData"].ToString().Split('|');
-                 
-                for (var j = 0; j < dataElementData.Length; j++) 
+
+                for (var j = 0; j < dataElementData.Length; j++)
                 {
-                    if (!string.IsNullOrEmpty(dataElementData[j])) 
+                    if (!string.IsNullOrEmpty(dataElementData[j]))
                     {
                         var txtData = (TextBox)content.FindControl(dynamicTextBoxes[j].ID);
 
                         txtData.Text = dataElementData[j];
-                    }                     
-                }                
+                    }
+                }
 
                 ViewState["DataSetImage"] = matchview.ResultSet.Tables[0].Rows[0]["DataSetImage"].ToString();
                 ViewState["DataSetImageThumbnail"] = matchview.ResultSet.Tables[0].Rows[0]["DataSetImageThumbnail"].ToString();
@@ -308,7 +328,7 @@ namespace LevelsPro.AdminPanel
                 btnAddDataSet.Text = Resources.TestSiteResources.Update;
             }
         }
-        #endregion        
+        #endregion
 
         private void LoadSites()
         {
@@ -347,18 +367,15 @@ namespace LevelsPro.AdminPanel
         protected void btnAddDataSet_Click(object sender, EventArgs e)
         {
             ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
-
-            string path = Server.MapPath(ConfigurationManager.AppSettings["DataSetPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationManager.AppSettings["DataSetThumbPath"].ToString());
+            FileResources resource = FileResources.Instance;
 
             Match match = new Match();
 
             string data = "";
-            for (int i = 0; i < dynamicTextBoxes.Length; i++ )
+            for (int i = 0; i < dynamicTextBoxes.Length; i++)
             {
                 //var txtData = (TextBox)content.FindControl(dynamicTextBoxes[i].ID);
                 var txtData = Request[dynamicTextBoxes[i].UniqueID].ToString(); // (TextBox)content.FindControl(dynamicTextBoxes[i].ID);
-
                 data = data + txtData + "|";
             }
 
@@ -367,25 +384,11 @@ namespace LevelsPro.AdminPanel
             match.SiteID = Convert.ToInt32(Request[ddlLocation.UniqueID]);
 
             var fuDataSetImage = Request.Files[dynamicFileUpload[0].UniqueID];
-
-            if (fuDataSetImage.FileName != "")
+            string imageId = resource.save(fuDataSetImage, fileMetadata);
+            if (!string.IsNullOrEmpty(imageId))
             {
-                string s = fuDataSetImage.FileName;
-                FileInfo fleInfo = new FileInfo(s);
-                if (AllowedFile(fleInfo.Extension))
-                {
-                    string GuidOne = Guid.NewGuid().ToString();
-                    string FileExtension = Path.GetExtension(fuDataSetImage.FileName).ToLower();
-                    fuDataSetImage.SaveAs(path + GuidOne + FileExtension);
-
-                    match.DataSetImage = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                    System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                    thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-
-                    match.DataSetImageThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-                }
+                match.DataSetImage = imageId;
+                match.DataSetImageThumbnail = imageId;
             }
             else
             {
@@ -402,7 +405,7 @@ namespace LevelsPro.AdminPanel
             if (ViewState["matchid"] != null && ViewState["matchid"].ToString() != "")
             {
                 match.MatchID = Convert.ToInt32(ViewState["matchid"]);
-                    
+
                 MySqlConnection scon = new MySqlConnection(ConfigurationManager.ConnectionStrings["SQLCONN"].ToString());
                 scon.Open();
                 MySqlTransaction sqlTrans = scon.BeginTransaction();
@@ -415,15 +418,15 @@ namespace LevelsPro.AdminPanel
                         {
                             DataSetUpdateBLL updategame = new DataSetUpdateBLL();
                             match.DataSetID = Convert.ToInt32(ViewState["datasetid"]);
-                                
-                            updategame.Match = match;                                                                  
+
+                            updategame.Match = match;
                             updategame.Invoke();
                         }
                     }
                     else
                     {
                         DataSetsInsertBLL insertmatch = new DataSetsInsertBLL();
-                           
+
                         insertmatch.Match = match;
                         insertmatch.Invoke();
                     }
@@ -436,12 +439,12 @@ namespace LevelsPro.AdminPanel
 
                     for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
                     {
-                        if (dss.Tables[0].Rows[i]["Allow"].ToString()=="yes")
+                        if (dss.Tables[0].Rows[i]["Allow"].ToString() == "yes")
                         {
-                        match.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
-                        match.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
-                        qLevels.Match = match;
-                        qLevels.Invoke();
+                            match.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
+                            match.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
+                            qLevels.Match = match;
+                            qLevels.Invoke();
                         }
 
                     }
@@ -454,7 +457,7 @@ namespace LevelsPro.AdminPanel
                         lblMessage.Visible = true;
                         lblMessage.Text = "DataSet info " + Resources.TestSiteResources.UpdateMessage;
                         Response.Redirect("DataSetEdit.aspx?mess=1" + "&datasetid=" + ViewState["datasetid"].ToString() + "&matchid=" + ViewState["matchid"].ToString(), false);
-                         
+
                     }
                     else
                     {
@@ -463,12 +466,12 @@ namespace LevelsPro.AdminPanel
                         Response.Redirect("DataSetManagement.aspx?matchid=" + ViewState["matchid"].ToString(), false);
                     }
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     sqlTrans.Rollback();
                 }
                 finally
-                {                        
+                {
                     sqlTrans.Dispose();
                     scon.Close();
                 }
@@ -476,13 +479,6 @@ namespace LevelsPro.AdminPanel
         }
         #endregion
 
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
-        }
         protected void dlLevels_ItemCommand(object sender, DataListCommandEventArgs e)
         {
             DataList dlLevels = sender as DataList;
@@ -502,7 +498,7 @@ namespace LevelsPro.AdminPanel
                     {
                         dss.Tables[0].Rows[i]["Allow"] = "yes";
                         btnLevel.CssClass = "lvl-green";
-                    }                    
+                    }
                     break;
                 }
             }
@@ -533,7 +529,7 @@ namespace LevelsPro.AdminPanel
             Rolelevel.Invoke();
             dss = new DataSet();
             dss = Rolelevel.ResultSet;
-            dlRoles.DataSource = Rolelevel.ResultSet.Tables[0].DefaultView.ToTable(true, "Role_ID","Role_Name");
+            dlRoles.DataSource = Rolelevel.ResultSet.Tables[0].DefaultView.ToTable(true, "Role_ID", "Role_Name");
             dlRoles.DataBind();
         }
 
@@ -543,13 +539,13 @@ namespace LevelsPro.AdminPanel
             {
                 DataList dlLevels = e.Item.FindControl("dlLevels") as DataList;
                 Literal ltRoleID = e.Item.FindControl("ltRoleID") as Literal;
-              
+
                 DataView dv = dss.Tables[0].DefaultView;
                 dv.RowFilter = "Role_ID=" + Convert.ToInt32(ltRoleID.Text.Trim());
                 dlLevels.DataSource = dv.ToTable();
                 dlLevels.DataBind();
 
-               
+
                 foreach (DataListItem item in dlLevels.Items)
                 {
                     Button btnLevel = item.FindControl("btnLevels") as Button;
@@ -562,7 +558,7 @@ namespace LevelsPro.AdminPanel
                     {
                         btnLevel.CssClass = "lvl-white";
                     }
-                }             
+                }
             }
         }
     }

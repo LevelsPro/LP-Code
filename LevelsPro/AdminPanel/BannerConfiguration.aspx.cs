@@ -8,6 +8,7 @@ using System.IO;
 using System.Configuration;
 using LevelsPro.Util;
 using log4net;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
@@ -15,6 +16,7 @@ namespace LevelsPro.AdminPanel
     {
         private static string pageURL;
         private ILog log;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             System.Uri url = Request.Url;
@@ -36,7 +38,7 @@ namespace LevelsPro.AdminPanel
 
         protected bool AllowedFile(string extension)
         {
-            string[] strArr = {".png"};
+            string[] strArr = { ".png" };
             if (strArr.Contains(extension))
                 return true;
             return false;
@@ -49,11 +51,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -63,11 +65,16 @@ namespace LevelsPro.AdminPanel
         {
             try
             {
+                FileResources resource = FileResources.Instance;
                 string MainPath = Server.MapPath(ConfigurationManager.AppSettings["MainImagePath"].ToString());
+                resource.preparePath(MainPath);
                 string PlayerPath = Server.MapPath(ConfigurationManager.AppSettings["PlayerPanelImagePath"].ToString());
+                resource.preparePath(PlayerPath);
                 string AdminPath = Server.MapPath(ConfigurationManager.AppSettings["AdminPanelImagePath"].ToString());
+                resource.preparePath(AdminPath);
                 string ManagerPath = Server.MapPath(ConfigurationManager.AppSettings["ManagerPanelImagePath"].ToString());
-            
+                resource.preparePath(ManagerPath);
+
                 #region Logo Chaning Logic in all folders
                 if (fpLogoImage.HasFile)
                 {
@@ -117,8 +124,6 @@ namespace LevelsPro.AdminPanel
             {
                 throw ex;
             }
-
-
         }
     }
 }

@@ -20,11 +20,18 @@ namespace LevelsPro
     {
         // Comments for GitHUb
         // static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
+        private static string pageURL;
+
         private ILog log;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            if (!Page.IsPostBack)
+            {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+            }
             ExceptionUtility.CheckForLoginErrorMessage();
             Session["ExCountDictionary"] = new Dictionary<string, int>();
             if (Session["MyUICulture"] != null && Session["MyCulture"] != null)
@@ -56,18 +63,29 @@ namespace LevelsPro
             }
 
             lblError.Visible = false;
-
-
-
         }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
         }
-
-
-
-
 
         protected void btnSignin_Click(object sender, EventArgs e)
         {
@@ -171,11 +189,11 @@ namespace LevelsPro
 
                     if (Sysrole.Equals("Admin"))
                     {
-                        Response.Redirect("~/AdminPanel/AdminHome.aspx?" + DateTime.Now.Ticks, false);
+                        Response.Redirect("~/AdminPanel/AdminHome.aspx?" + DateTime.Now.Ticks);
                     }
                     else if (Sysrole.Equals("Manager"))
                     {
-                        Response.Redirect("~/ManagerPanel/TeamPerformance.aspx?" + DateTime.Now.Ticks, false);
+                        Response.Redirect("~/ManagerPanel/TeamPerformance.aspx?" + DateTime.Now.Ticks);
                     }
                     else if (Sysrole.Equals("Player"))
                     {
@@ -183,7 +201,7 @@ namespace LevelsPro
                     }
                     else
                     {
-                        Response.Redirect("~\\Login.aspx?" + DateTime.Now.Ticks, false);
+                        Response.Redirect("~\\Login.aspx?" + DateTime.Now.Ticks);
                     }
                 }
                 else
@@ -205,6 +223,8 @@ namespace LevelsPro
                 if (log.IsErrorEnabled)
                 {
                     ExceptionUtility.ExceptionLogString(ex, Session);
+                    lblError.Visible = true;
+                    lblError.Text = ErrorMessageUtility.genericMessage;
                     log.Error(Session["ExpLogString"]);
                 }
             }

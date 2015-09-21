@@ -15,6 +15,7 @@ using System.Globalization;
 using System.IO;
 using LevelsPro.Util;
 using log4net;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
@@ -22,11 +23,13 @@ namespace LevelsPro.AdminPanel
     {
         private static string pageURL;
         private ILog log;
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -58,11 +61,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -90,8 +93,9 @@ namespace LevelsPro.AdminPanel
 
             ListItem liFilter = new ListItem("Select All Location", "0");
             ddlRole.Items.Insert(0, liFilter);
-           
+
         }
+
         protected void LoadLevels(int RoleID)
         {
             LevelsViewBLL level = new LevelsViewBLL();
@@ -107,7 +111,7 @@ namespace LevelsPro.AdminPanel
                 throw ex;
             }
 
-            
+
             ddlLevel.DataTextField = "Level_Name";
             ddlLevel.DataValueField = "Level_ID";
 
@@ -119,6 +123,7 @@ namespace LevelsPro.AdminPanel
             ddlLevel.Items.Insert(0, liFilter);
 
         }
+
         protected void LoadRoles()
         {
             RolesViewBLL role = new RolesViewBLL();
@@ -150,17 +155,17 @@ namespace LevelsPro.AdminPanel
             QuizQuestionsViewBLL questionview = new QuizQuestionsViewBLL();
             Quiz _quiz = new Quiz();
 
-            
+
             if (ViewState["roleid"] != null && ViewState["roleid"].ToString() != "")
             {
-               _quiz.Status = 1;
-                _quiz.Where = " WHERE QuizID=" + QuizID.ToString() + " AND tblQuestionLevels.RoleID=" + Convert.ToInt32(ViewState["roleid"]) + " AND LevelID=" + Convert.ToInt32(ViewState["levelid"]) ;
+                _quiz.Status = 1;
+                _quiz.Where = " WHERE QuizID=" + QuizID.ToString() + " AND tblQuestionLevels.RoleID=" + Convert.ToInt32(ViewState["roleid"]) + " AND LevelID=" + Convert.ToInt32(ViewState["levelid"]);
             }
             else if (ViewState["siteid"] != null && ViewState["siteid"].ToString() != "")
             {
                 _quiz.Status = 0;
-                _quiz.Where = " WHERE QuizID= " + QuizID.ToString() + " AND SiteID=" + Convert.ToInt32(ViewState["siteid"]) ;
-            
+                _quiz.Where = " WHERE QuizID= " + QuizID.ToString() + " AND SiteID=" + Convert.ToInt32(ViewState["siteid"]);
+
             }
             else
             {
@@ -217,7 +222,7 @@ namespace LevelsPro.AdminPanel
                     throw ex;
                 }
 
-               
+
             }
         }
 
@@ -267,26 +272,13 @@ namespace LevelsPro.AdminPanel
             {
                 throw exp;
             }
-            
-             
-        }
 
-        public static DataTable exceldata(string filePath)
-        {
-            OleDbConnection cnn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + "; Extended Properties=Excel 12.0;");
-
-            OleDbCommand oconn = new OleDbCommand("select * from [Sheet1$]", cnn);
-            cnn.Open();
-            OleDbDataAdapter adp = new OleDbDataAdapter(oconn);
-            DataTable dt = new DataTable();
-            adp.Fill(dt); 
-            return dt;
 
         }
 
         protected bool AllowedFile(string extension)
         {
-            string[] strArr = { ".xls", ".xlsx"};
+            string[] strArr = { ".xls", ".xlsx" };
             if (strArr.Contains(extension))
                 return true;
             return false;
@@ -300,6 +292,8 @@ namespace LevelsPro.AdminPanel
                 string s = fpBulk.FileName;
                 s = Convert.ToString(System.DateTime.Now.Ticks) + "." + s;
                 FilePath = Server.MapPath(@"~\APIExcelSheet");
+                FileResources resource = FileResources.Instance;
+                resource.preparePath(FilePath);
 
                 FileInfo fleInfo = new FileInfo(s);
                 if (AllowedFile(fleInfo.Extension))
@@ -307,12 +301,12 @@ namespace LevelsPro.AdminPanel
                     string GuidOne = Guid.NewGuid().ToString();
                     string FileExtension = Path.GetExtension(fpBulk.FileName).ToLower();
                     fpBulk.SaveAs(FilePath + s);
-                    
+
                 }
 
                 DataSet dsBulk = new DataSet();
-
-                DataTable dtBulk = exceldata(FilePath + s);
+                string filePath = FilePath + s;
+                DataTable dtBulk = SpreadsheetReader.loadDataTable(filePath);
 
                 dsBulk.Tables.Add(dtBulk);
 
@@ -327,7 +321,7 @@ namespace LevelsPro.AdminPanel
                 {
                     //not success
                 }
-                
+
             }
         }
 

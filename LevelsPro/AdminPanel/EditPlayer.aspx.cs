@@ -15,17 +15,22 @@ using System.Configuration;
 using System.IO;
 using LevelsPro.Util;
 using log4net;
+using System.Collections;
+using Common.Utils;
 
 namespace LevelsPro
 {
     public partial class EditPlayer : AuthorizedPage
     {
+        private static string pageURL;
         public static DataSet dsPlayer = new DataSet();
+        protected static Hashtable fileMetadata;
+
         static int currentlevel = 0;
         static int previouslevel = 1;
         static int previousid = 0;
         static int currentid = 0;
-        private static string pageURL;
+
         private ILog log;
         protected string TypedPassword
         {
@@ -58,6 +63,20 @@ namespace LevelsPro
             }
         }
 
+        static EditPlayer()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "PlayersPath");
+            fileMetadata.Add("thumbnailPath", "PlayersThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
 
         protected override void OnInit(EventArgs e)
         {
@@ -91,7 +110,7 @@ namespace LevelsPro
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                
+
                 #region language check for images
 
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
@@ -127,14 +146,14 @@ namespace LevelsPro
                 txtPoints.Enabled = false;
                 txtPoints.Text = "0";
 
-               
+
 
                 if (Request.QueryString["userid"] != null && Request.QueryString["userid"].ToString() != "")
                 {
                     divImages.Visible = true;
                     HoursRow.Visible = true;
                     txtWorkedHours.Visible = true;
-                    ltHeading.Text =Resources.TestSiteResources.EditPlayer;
+                    ltHeading.Text = Resources.TestSiteResources.EditPlayer;
                     ViewState["userid"] = Request.QueryString["userid"];
                     try
                     {
@@ -162,7 +181,7 @@ namespace LevelsPro
             string strActive = "";
             if (btnInsertInfo.Text != "Mass Update" && txtFirstName.Text.Equals(""))
             {
-               
+
                 return;
             }
             else
@@ -182,7 +201,7 @@ namespace LevelsPro
                 user.Score = Convert.ToInt32(txtPoints.Text.Trim());
                 
                bool isAdmin =  Convert.ToInt32(ddlRole.SelectedValue)==1 &&  Convert.ToInt32(ddlGeneralRole.SelectedValue)==6; 
-               
+
                 if (currentlevel > 0)
                 {
                     user.CurrentLevel = currentlevel;
@@ -192,7 +211,7 @@ namespace LevelsPro
                 user.LevelAchieved = 0;
 
 
-              
+
                 if (ddlSite.SelectedIndex > 0)
                 {
                     user.SiteID = Convert.ToInt32(ddlSite.SelectedValue);
@@ -229,7 +248,7 @@ namespace LevelsPro
                     {
                         user.ManagerID = Convert.ToInt32(ddlManager.SelectedValue);
                     }
-                    else 
+                    else
                     {
                         user.ManagerID = 0;
                     }
@@ -255,7 +274,7 @@ namespace LevelsPro
 
                 }
 
-                
+
 
                 if (btnInsertInfo.Text == "Mass Update" || btnInsertInfo.Text == "Mise à jour de masse" || btnInsertInfo.Text == "masa actualizar")
                 {
@@ -273,7 +292,7 @@ namespace LevelsPro
                     user.CurrentLevel = currentlevel;
                     user.NextLevel = currentlevel + 1;
 
-                    
+
 
                 }
                 else if (btnInsertInfo.Text == "Update" || btnInsertInfo.Text == "mettre à jour" || btnInsertInfo.Text == "actualizar")
@@ -347,9 +366,9 @@ namespace LevelsPro
 
 
                             UpdateImage.UserImage = _userimage;
-                            
+
                             UpdateImage.Invoke();
-                            
+
                             int previous = Convert.ToInt32(previousid);
                             _userimage.UserIDImage = previous;
 
@@ -358,17 +377,17 @@ namespace LevelsPro
 
 
                             UpdateImage.UserImage = _userimage;
-                            
+
                             UpdateImage.Invoke();
-                            
+
 
 
 
                             lblmessage.Visible = true;
                             lblmessage.Text = Resources.TestSiteResources.Player + ' ' + Resources.TestSiteResources.UpdateMessage;
-                            
+
                             LoadData(Convert.ToInt32(ViewState["userid"]));
-                            
+
                         }
                         catch (Exception ex)
                         {
@@ -382,7 +401,7 @@ namespace LevelsPro
                 }
                 else
                 {
-                  
+
                     UserInsertBLL insertuser = new UserInsertBLL();
 
                     user.Active = 1;
@@ -391,11 +410,11 @@ namespace LevelsPro
 
                     try
                     {
-                        
-                        insertuser.Invoke();
-                        Response.Redirect("PlayerManagement.aspx?saved=1",false);
 
-                        
+                        insertuser.Invoke();
+                        Response.Redirect("PlayerManagement.aspx?saved=1", false);
+
+
 
                     }
                     catch (Exception ex)
@@ -415,7 +434,7 @@ namespace LevelsPro
                     }
                 }
 
-                
+
             }
         }
         #endregion
@@ -427,11 +446,11 @@ namespace LevelsPro
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -440,7 +459,7 @@ namespace LevelsPro
         protected void btnCancelInfo_Click(object sender, EventArgs e)
         {
 
-            
+
 
         }
         #region load user data
@@ -513,8 +532,8 @@ namespace LevelsPro
 
                     previouslevel = Convert.ToInt32(ddlLevel.SelectedValue);
                     currentlevel = 0;
-                    
-                    
+
+
 
                     btnInsertInfo.Text = Resources.TestSiteResources.Update;
                     PointsRow.Visible = true;
@@ -545,7 +564,7 @@ namespace LevelsPro
 
                     DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
 
-                    
+
 
                     dlImages.DataSource = dvImage.ToTable();
                     dlImages.DataBind();
@@ -562,7 +581,7 @@ namespace LevelsPro
 
                 }
             }
-           
+
         }
         #endregion
         protected void LoadRoles()
@@ -590,7 +609,7 @@ namespace LevelsPro
             ListItem li = new ListItem("Select", "0");
             ddlRole.Items.Insert(0, li);
 
-            
+
         }
 
         protected void LoadGeneralRoles()
@@ -609,7 +628,7 @@ namespace LevelsPro
                 throw ex;
             }
 
-            
+
 
             ddlGeneralRole.DataTextField = "Description";
             ddlGeneralRole.DataValueField = "ReferenceData_ID";
@@ -620,7 +639,7 @@ namespace LevelsPro
             ListItem li = new ListItem("Select", "0");
             ddlGeneralRole.Items.Insert(0, li);
 
-            
+
         }
 
         protected void LoadLevel(int RoleID)
@@ -645,7 +664,7 @@ namespace LevelsPro
             ddlLevel.DataTextField = "LevelName";
             ddlLevel.DataValueField = "Level_ID";
 
-            
+
 
             ddlLevel.DataSource = dv.ToTable();
             ddlLevel.DataBind();
@@ -669,7 +688,7 @@ namespace LevelsPro
             ddlManager.DataTextField = "U_Name";
             ddlManager.DataValueField = "UserID";
 
-            
+
 
             DataView dv = selectddlSite.ResultSet.Tables[0].DefaultView;
 
@@ -679,7 +698,7 @@ namespace LevelsPro
             ListItem li = new ListItem("Select", "0");
             ddlManager.Items.Insert(0, li);
 
-            
+
 
         }
 
@@ -698,7 +717,7 @@ namespace LevelsPro
             ddlSite.DataTextField = "site_name";
             ddlSite.DataValueField = "site_id";
 
-            
+
 
             DataView dv = selectddlSite.ResultSet.Tables[0].DefaultView;
 
@@ -708,7 +727,7 @@ namespace LevelsPro
             ListItem li = new ListItem("Select", "0");
             ddlSite.Items.Insert(0, li);
 
-            
+
         }
 
         protected void ddlRole_SelectedIndexChanged(object sender, EventArgs e)
@@ -730,9 +749,9 @@ namespace LevelsPro
         {
             if (ddlLevel.SelectedIndex > 0)
             {
-                
+
                 Session["LevelCheck"] = ddlLevel.SelectedValue.ToString();
-                
+
                 currentlevel = Convert.ToInt32(ddlLevel.SelectedValue);
 
             }
@@ -765,7 +784,7 @@ namespace LevelsPro
                     catch (Exception ex)
                     {
                         throw ex;
-                    }                   
+                    }
 
                     DataView dvImage1 = UserImages.ResultSet.Tables[0].DefaultView;
 
@@ -775,7 +794,7 @@ namespace LevelsPro
 
                     if (dtcImage != null && dtcImage.Rows.Count > 0 && dtcImage.Rows[0]["Player_Thumbnail"].ToString() != "")
                     {
-                        previousid = Convert.ToInt32(dtcImage.Rows[0]["U_UserIDImage"]);                                   
+                        previousid = Convert.ToInt32(dtcImage.Rows[0]["U_UserIDImage"]);
                     }
 
                     currentid = Convert.ToInt32(strArray[0]);
@@ -863,59 +882,37 @@ namespace LevelsPro
         {
             if (ViewState["userid"] != null && ViewState["userid"].ToString() != "")
             {
-                Response.Redirect("PlayerAward.aspx?userid=" + ViewState["userid"].ToString(),false);
+                Response.Redirect("PlayerAward.aspx?userid=" + ViewState["userid"].ToString(), false);
             }
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationManager.AppSettings["PlayersPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationManager.AppSettings["PlayersThumbPath"].ToString());
-
             if (ViewState["userid"] != null && ViewState["userid"].ToString() != "")
             {
                 UserImage images = new UserImage();
-                if (fileUserImage.HasFile)
+                FileResources resource = FileResources.Instance;
+                string imageId = resource.save(fileUserImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
+                    images.PlayerImage = imageId;
+                    images.PlayerThumbnail = imageId;
 
-                    string s = fileUserImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
+                    images.UserID = Convert.ToInt32(ViewState["userid"]);
+                    UserImageInsertBLL updateimage = new UserImageInsertBLL();
+                    try
                     {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fileUserImage.FileName).ToLower();
-                        fileUserImage.SaveAs(path + GuidOne + FileExtension);
-                        images.PlayerImage = string.Format("{0}{1}", GuidOne, FileExtension);
+                        updateimage.UserImage = images;
+                        updateimage.Invoke();
 
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-                        images.PlayerThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        images.UserID = Convert.ToInt32(ViewState["userid"]);
-                        UserImageInsertBLL updateimage = new UserImageInsertBLL();
-                        try
-                        {
-                            updateimage.UserImage = images;
-                            updateimage.Invoke();
-
-                            LoadData(Convert.ToInt32(ViewState["userid"]));
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                    }                    
+                        LoadData(Convert.ToInt32(ViewState["userid"]));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
-        }
-
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
         }
 
         protected void btnProgress_Click(object sender, EventArgs e)

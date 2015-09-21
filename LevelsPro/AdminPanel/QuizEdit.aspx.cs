@@ -16,20 +16,40 @@ using MySql.Data.MySqlClient;
 using BusinessLogic.Delete;
 using LevelsPro.Util;
 using log4net;
+using System.Collections;
+using Common.Utils;
 
 namespace LevelsPro.AdminPanel
 {
-    
+
     public partial class QuizEdit : AuthorizedPage
     {
         private static string pageURL;
-        private ILog log;
+        protected static Hashtable fileMetadata;
         static DataSet dss;
+        private ILog log;
+
+        static QuizEdit()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "QuizPath");
+            fileMetadata.Add("thumbnailPath", "QuizThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             lblmessage.Visible = false;
@@ -38,7 +58,7 @@ namespace LevelsPro.AdminPanel
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                
+
                 try
                 {
                     LoadKPI();
@@ -73,11 +93,11 @@ namespace LevelsPro.AdminPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -109,7 +129,7 @@ namespace LevelsPro.AdminPanel
                 txtTimeBeforePointDeduction.Text = quizview.ResultSet.Tables[0].Rows[0]["TimeBeforePointsDeduction"].ToString();
                 txtPointsPerQuestion.Text = quizview.ResultSet.Tables[0].Rows[0]["PointsPerQuestion"].ToString();
                 ddlKPI_ID.SelectedValue = quizview.ResultSet.Tables[0].Rows[0]["KPI_ID"].ToString();
-               
+
 
 
                 hdImage.Value = path + quizview.ResultSet.Tables[0].Rows[0]["QuizImage"].ToString();
@@ -155,19 +175,13 @@ namespace LevelsPro.AdminPanel
         #region add and update quiz
         protected void btnAddQuiz_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationManager.AppSettings["QuizPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationManager.AppSettings["QuizThumbPath"].ToString());
             if (txtQuizName.Text.Equals(""))
             {
-                
                 return;
             }
             else
             {
-
                 Quiz quiz = new Quiz();
-
-
                 quiz.QuizName = txtQuizName.Text.Trim();
                 if (txtNoOfQuestions.Text.Trim() != "")
                 {
@@ -199,25 +213,12 @@ namespace LevelsPro.AdminPanel
                     quiz.KPIID = Convert.ToInt32(ddlKPI_ID.SelectedValue);
                 }
 
-
-                if (fuQuizImage.HasFile)
+                FileResources resource = FileResources.Instance;
+                string imageId = resource.save(fuQuizImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
-                    string s = fuQuizImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
-                    {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fuQuizImage.FileName).ToLower();
-                        fuQuizImage.SaveAs(path + GuidOne + FileExtension);
-
-                        quiz.QuizImage = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-
-                        quiz.QuizImageThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-                    }
+                    quiz.QuizImage = imageId;
+                    quiz.QuizImageThumbnail = imageId;
                 }
                 else
                 {
@@ -239,124 +240,117 @@ namespace LevelsPro.AdminPanel
                 try
                 {
 
-                if (btnAddQuiz.Text == "Update" || btnAddQuiz.Text == "mettre à jour" || btnAddQuiz.Text == "actualizar")
-                {
-                    if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
+                    if (btnAddQuiz.Text == "Update" || btnAddQuiz.Text == "mettre à jour" || btnAddQuiz.Text == "actualizar")
                     {
-                        quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
-                        lblmessage.Visible = true;
+                        if (ViewState["quizid"] != null && ViewState["quizid"].ToString() != "")
+                        {
+                            quiz.QuizID = Convert.ToInt32(ViewState["quizid"]);
+                            lblmessage.Visible = true;
 
-                        QuizUpdateBLL updategame = new QuizUpdateBLL();
-                        updategame.Quiz = quiz;
+                            QuizUpdateBLL updategame = new QuizUpdateBLL();
+                            updategame.Quiz = quiz;
+                            lblmessage.Visible = true;
+                            try
+                            {
+                                updategame.Invoke();
+                                lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.UpdateMessage;
+                                LoadData(Convert.ToInt32(ViewState["quizid"]));
+
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionUtility.ExceptionLogString(ex, Session);
+                                Session["ExpLogString"] += " Aditional Info : Message Box displayed";
+                                log.Debug(Session["ExpLogString"]);
+                                lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.GameName;
+                            }
+                        }
+                    }
+                    else
+                    {
+
                         lblmessage.Visible = true;
+                        QuizInsertBLL insertquiz = new QuizInsertBLL();
+                        insertquiz.Quiz = quiz;
                         try
                         {
-                            updategame.Invoke();
-                            lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.UpdateMessage;
-                            LoadData(Convert.ToInt32(ViewState["quizid"]));
-                           
+                            insertquiz.Invoke();
+
+                            //Response.Redirect("QuizManagement.aspx",false);
                         }
                         catch (Exception ex)
                         {
                             ExceptionUtility.ExceptionLogString(ex, Session);
                             Session["ExpLogString"] += " Aditional Info : Message Box displayed";
                             log.Debug(Session["ExpLogString"]);
-                            lblmessage.Text = Resources.TestSiteResources.NotUpdate + ' ' + Resources.TestSiteResources.GameName;
+                            if (ex.Message.Contains("Duplicate"))
+                            {
+                                lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.Already;
+                            }
+                            else
+                            {
+                                //show unsuceess
+                                lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.GameName;
+                            }
                         }
                     }
+
+                    QuizLevelsDeleteBLL del = new QuizLevelsDeleteBLL();
+                    QuizLevelsInsertBLL qLevels = new QuizLevelsInsertBLL();
+
+                    del.Quiz = quiz;
+                    del.Invoke();
+
+                    for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
+                    {
+                        if (dss.Tables[0].Rows[i]["Allow"].ToString() == "yes")
+                        {
+                            quiz.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
+                            quiz.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
+                            qLevels.Quiz = quiz;
+                            qLevels.Invoke();
+                        }
+
+                    }
+                    sqlTrans.Commit();
+
+                    if (btnAddQuiz.Text == "Update" || btnAddQuiz.Text == "mettre à jour" || btnAddQuiz.Text == "actualizar")
+                    {
+                        LoadData(int.Parse(quiz.QuizID.ToString()));
+                        lblmessage.Visible = true;
+                        lblmessage.Text = "Quiz info " + Resources.TestSiteResources.UpdateMessage;
+                        Response.Redirect("QuizEdit.aspx?mess=1" + "&quizid=" + ViewState["quizid"].ToString(), false);
+
+                    }
+                    else
+                    {
+                        lblmessage.Visible = true;
+                        lblmessage.Text = "Quiz info " + ' ' + Resources.TestSiteResources.SavedMessage;
+                        Response.Redirect("QuizManagement.aspx");
+                    }
+
                 }
-                else
+                catch (Exception ex)
+                {
+                    ExceptionUtility.ExceptionLogString(ex, Session);
+                    Session["ExpLogString"] += " Aditional Info : Transaction Rolledback";
+                    log.Debug(Session["ExpLogString"]);
+                    sqlTrans.Rollback();
+                }
+                finally
                 {
 
-                    lblmessage.Visible = true;
-                    QuizInsertBLL insertquiz = new QuizInsertBLL();
-                    insertquiz.Quiz = quiz;
-                    try
-                    {
-                        insertquiz.Invoke();
-                        
-                        //Response.Redirect("QuizManagement.aspx",false);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionUtility.ExceptionLogString(ex, Session);
-                        Session["ExpLogString"] += " Aditional Info : Message Box displayed";
-                        log.Debug(Session["ExpLogString"]);
-                        if (ex.Message.Contains("Duplicate"))
-                        {
-                            lblmessage.Text = Resources.TestSiteResources.GameName + ' ' + Resources.TestSiteResources.Already;
-                        }
-                        else
-                        {
-                            //show unsuceess
-                            lblmessage.Text = Resources.TestSiteResources.NotAdd + ' ' + Resources.TestSiteResources.GameName;
-                        }
-                    }
+
+                    sqlTrans.Dispose();
+                    scon.Close();
                 }
-               
-                QuizLevelsDeleteBLL del = new QuizLevelsDeleteBLL();
-                QuizLevelsInsertBLL qLevels = new QuizLevelsInsertBLL();
-
-                del.Quiz = quiz;
-                del.Invoke();
-
-                for (int i = 0; i < dss.Tables[0].Rows.Count; i++)
-                {
-                    if (dss.Tables[0].Rows[i]["Allow"].ToString() == "yes")
-                    {
-                        quiz.RoleID = Convert.ToInt32(dss.Tables[0].Rows[i]["Role_ID"].ToString());
-                        quiz.LevelID = Convert.ToInt32(dss.Tables[0].Rows[i]["Level_ID"].ToString());
-                        qLevels.Quiz = quiz;
-                        qLevels.Invoke();
-                    }
-
-                }
-                sqlTrans.Commit();
-
-                  if (btnAddQuiz.Text == "Update" || btnAddQuiz.Text == "mettre à jour" || btnAddQuiz.Text == "actualizar")
-                     {
-                         LoadData(int.Parse(quiz.QuizID.ToString()));
-                         lblmessage.Visible = true;
-                         lblmessage.Text = "Quiz info " + Resources.TestSiteResources.UpdateMessage;
-                         Response.Redirect("QuizEdit.aspx?mess=1" + "&quizid=" + ViewState["quizid"].ToString(), false);
-                         
-                     }
-                     else
-                     {
-                         lblmessage.Visible = true;
-                         lblmessage.Text = "Quiz info " + ' ' + Resources.TestSiteResources.SavedMessage;
-                         Response.Redirect("QuizManagement.aspx");
-                     }
-                     
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionUtility.ExceptionLogString(ex, Session);
-                        Session["ExpLogString"] += " Aditional Info : Transaction Rolledback";
-                        log.Debug(Session["ExpLogString"]);
-                        sqlTrans.Rollback();
-                    }
-                    finally
-                    {
-                        
-                        
-                        sqlTrans.Dispose();
-                        scon.Close();
-                    }
             }
-                        
+
         }
         #endregion
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
-        }
 
         protected void btnCancel_Click(object sender, EventArgs e)
-        {            
+        {
             Response.Redirect("QuizManagement.aspx");
         }
 

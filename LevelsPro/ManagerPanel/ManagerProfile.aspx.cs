@@ -15,15 +15,34 @@ using System.Configuration;
 using System.IO;
 using LevelsPro.Util;
 using log4net;
+using System.Collections;
+using Common.Utils;
 
 namespace LevelsPro.ManagerPanel
 {
     public partial class ManagerProfile : AuthorizedPage
     {
         private static string pageURL;
-        private ILog log;
+        protected static Hashtable fileMetadata;
         static int previousid = 0;
         static int currentid = 0;
+        private ILog log;
+
+        static ManagerProfile()
+        {
+            fileMetadata = new Hashtable();
+            fileMetadata.Add("folderPath", "PlayersPath");
+            fileMetadata.Add("thumbnailPath", "PlayersThumbPath");
+
+            string[] metadataKeys = { "folderPath", "thumbnailPath" };
+            foreach (string key in metadataKeys)
+            {
+                string appKey = (string)fileMetadata[key];
+                string settingValue = ConfigurationManager.AppSettings[appKey].ToString();
+                fileMetadata[key] = HttpContext.Current.Server.MapPath(settingValue);
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -37,8 +56,8 @@ namespace LevelsPro.ManagerPanel
             {
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
-                
-                
+
+
                 if (Session["MyCulture"] != null && Session["MyCulture"].ToString() != "")
                 {
                     if (Session["MyCulture"].ToString() == "es-ES")
@@ -77,11 +96,11 @@ namespace LevelsPro.ManagerPanel
             // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response,log, exc);
+                ExceptionUtility.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
             // Clear the error from the server.
             Server.ClearError();
@@ -136,7 +155,7 @@ namespace LevelsPro.ManagerPanel
 
                 }
 
-                
+
                 Common.UserImage image = new Common.UserImage();
 
                 image.UserID = Convert.ToInt32(Session["userid"]);
@@ -154,7 +173,7 @@ namespace LevelsPro.ManagerPanel
 
                 DataView dvImage = UserImage.ResultSet.Tables[0].DefaultView;
 
-                
+
                 dlImages.DataSource = dvImage.ToTable();
                 dlImages.DataBind();
 
@@ -168,7 +187,7 @@ namespace LevelsPro.ManagerPanel
                     currentid = Convert.ToInt32(dtcImage.Rows[0]["U_UserIDImage"]);
                 }
 
-                
+
             }
         }
 
@@ -176,7 +195,7 @@ namespace LevelsPro.ManagerPanel
         {
             if (txtFirstName.Text.Equals(""))
             {
-                
+
                 return;
             }
             else
@@ -184,7 +203,7 @@ namespace LevelsPro.ManagerPanel
 
                 User user = new User();
                 user.FirstName = txtFirstName.Text.Trim();
-                
+
                 user.UserLastName = txtLastName.Text.Trim();
                 user.UserNickName = txtNickName.Text.Trim();
                 if (rblName.Items[0].Selected == true)
@@ -209,14 +228,14 @@ namespace LevelsPro.ManagerPanel
                 try
                 {
                     UpdateUser.Invoke();
-                    
+
                 }
                 catch (Exception ex)
                 {
                     throw ex;
-                    
+
                 }
-                
+
                 UserImageUpdateBLL UpdateImage = new UserImageUpdateBLL();
                 UserImage _userimage = new UserImage();
                 int id = Convert.ToInt32(currentid);
@@ -346,52 +365,31 @@ namespace LevelsPro.ManagerPanel
 
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath(ConfigurationManager.AppSettings["PlayersPath"].ToString());
-            string Thumbpath = Server.MapPath(ConfigurationManager.AppSettings["PlayersThumbPath"].ToString());
-
             if (Session["userid"] != null && Session["userid"].ToString() != "")
             {
                 UserImage images = new UserImage();
-                if (fileUserImage.HasFile)
+                FileResources resource = FileResources.Instance;
+                string imageId = resource.save(fileUserImage, fileMetadata);
+                if (!string.IsNullOrEmpty(imageId))
                 {
-                    string s = fileUserImage.FileName;
-                    FileInfo fleInfo = new FileInfo(s);
-                    if (AllowedFile(fleInfo.Extension))
+                    images.PlayerImage = imageId;
+                    images.PlayerThumbnail = imageId;
+
+                    images.UserID = Convert.ToInt32(Session["userid"]);
+                    UserImageInsertBLL updateimage = new UserImageInsertBLL();
+                    try
                     {
-                        string GuidOne = Guid.NewGuid().ToString();
-                        string FileExtension = Path.GetExtension(fileUserImage.FileName).ToLower();
-                        fileUserImage.SaveAs(path + GuidOne + FileExtension);
-                        images.PlayerImage = string.Format("{0}{1}", GuidOne, FileExtension);
+                        updateimage.UserImage = images;
+                        updateimage.Invoke();
 
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(path + GuidOne + FileExtension);
-                        System.Drawing.Image thumbImage = img.GetThumbnailImage(72, 72, null, IntPtr.Zero);
-                        thumbImage.Save(Thumbpath + GuidOne + FileExtension);
-                        images.PlayerThumbnail = string.Format("{0}{1}", GuidOne, FileExtension);
-
-                        images.UserID = Convert.ToInt32(Session["userid"]);
-                        UserImageInsertBLL updateimage = new UserImageInsertBLL();
-                        try
-                        {
-                            updateimage.UserImage = images;
-                            updateimage.Invoke();
-
-                            LoadData(Convert.ToInt32(Session["userid"]));
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                        LoadData(Convert.ToInt32(Session["userid"]));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
             }
-        }
-
-        protected bool AllowedFile(string extension)
-        {
-            string[] strArr = { ".jpeg", ".jpg", ".bmp", ".png", ".gif" };
-            if (strArr.Contains(extension))
-                return true;
-            return false;
         }
     }
 }

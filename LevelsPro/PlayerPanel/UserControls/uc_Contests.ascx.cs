@@ -45,6 +45,10 @@ namespace LevelsPro.PlayerPanel.UserControls
                 lvViewContests.DataSource = contest.ResultSet.Tables[0];
                 lvViewContests.DataBind();
             }
+            else
+            {
+                this.Parent.Visible = false;
+            }
         }
 
         protected void lvViewContests_ItemCommand(object source, ListViewCommandEventArgs e)

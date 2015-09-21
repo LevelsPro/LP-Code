@@ -21,12 +21,15 @@
         <asp:Button ID="btnHome" runat="server" Text="<%$ Resources:TestSiteResources, Back %>" PostBackUrl="~/AdminPanel/AdminHome.aspx"
             CssClass="green-btn btn fl"></asp:Button>
         <div class="user-nt fl">
+     
          <asp:Label ID="Label1" runat="server" Text="<%$ Resources:TestSiteResources,  APIImportSheet %>"></asp:Label>
+         <asp:Label ID="lblErrorMessages" runat="server" Text=""></asp:Label>
            </div>
         <asp:Button ID="btnLogout" runat="server" Text="<%$ Resources:TestSiteResources, LogoutAdmin %>"
             CssClass="green-btn btn fr" OnClick="btnLogout_Click"></asp:Button>
         <div class="clear">
         </div>
+
     </div>
     <div class="box brd2">
         <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>
