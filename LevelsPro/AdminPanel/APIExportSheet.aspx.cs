@@ -707,11 +707,15 @@ namespace LevelsPro.AdminPanel
                 #region Populate Award ID
                 int counterType = 0;
 
-                for (int i = 0; i < dt.Rows.Count; i++)
+                if (dt.Columns.Count > 5)
                 {
-                    if (dt.Rows[i][5].ToString().ToLower().Equals("award"))
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        counterType++;
+                        if (dt.Rows[i][5].ToString().ToLower().Equals("award"))
+                        {
+                            counterType++;
+                        }
                     }
                 }
 
