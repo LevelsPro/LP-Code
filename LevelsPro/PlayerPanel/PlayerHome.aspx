@@ -65,8 +65,11 @@
         }
         $(document).ready(function () {
 
-            $('#scrollbar2').tinyscrollbar({ axis: "x" });
+            var setScrollBar = function () {
+                $('#scrollbar2').tinyscrollbar({ axis: "x" });
+            }
 
+            setScrollBar();
             $('.grpoints .grey').digits();
 
             var faw = $('.filled-area').text();
@@ -75,6 +78,9 @@
             var dh = $(document).height();
             $('.opac-wrap').height(dh);
 
+            $(window).resize(function () {
+                setScrollBar();
+            });
             //	$('.filled-area').slideRight();
 
             //var lof = $('.lof').outerHeight();
@@ -349,7 +355,7 @@
                             </div>
                             <div class="updateProgress">
                                 <table width="100%">
-                                    <tr>
+                                    <tr>scro
                                         <td style="width: 30%">
                                             <img src="../Images/loading-small.gif" alt="wait" />
                                         </td>
