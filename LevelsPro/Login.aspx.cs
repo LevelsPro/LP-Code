@@ -21,6 +21,7 @@ namespace LevelsPro
         // Comments for GitHUb
         // static byte[] bytes = ASCIIEncoding.ASCII.GetBytes("ZeroCool");
         private static string pageURL;
+
         private ILog log;
 
         protected void Page_Load(object sender, EventArgs e)
