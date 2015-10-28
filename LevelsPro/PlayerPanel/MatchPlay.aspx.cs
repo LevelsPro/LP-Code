@@ -869,7 +869,7 @@ namespace LevelsPro.PlayerPanel
 
             DataTable dtTarget = dvTarget.ToTable();
 
-            ScoreManualUpdateBLL score = new ScoreManualUpdateBLL();
+            ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();
            
 
             user.UserID = UserID;

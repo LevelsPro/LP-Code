@@ -1575,7 +1575,7 @@ namespace LevelsPro.PlayerPanel
 
             DataTable dtTarget = dvTarget.ToTable();
 
-            ScoreManualUpdateBLL score = new ScoreManualUpdateBLL();
+            ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();
 
 
             user.UserID = UserID;
@@ -1603,6 +1603,7 @@ namespace LevelsPro.PlayerPanel
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                         user.Score = TargetValue;
                         ViewState["TargetCurrentScore"] = TargetValue;
+
                         #region KPI Score Acheived
                         PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
                         targetprogress.User = user;
