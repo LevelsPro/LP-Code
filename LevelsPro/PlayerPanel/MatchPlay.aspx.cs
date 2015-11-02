@@ -851,6 +851,7 @@ namespace LevelsPro.PlayerPanel
 
             int UserID = Convert.ToInt32(Session["userid"]);
             int LevelID = Convert.ToInt32(ViewState["CurrenLevel"]);
+            //ViewState["targetmeasure"]
 
             String UserPoints = "0";
 
@@ -869,8 +870,7 @@ namespace LevelsPro.PlayerPanel
 
             DataTable dtTarget = dvTarget.ToTable();
 
-            ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();
-           
+            ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();           
 
             user.UserID = UserID;
             user.CurrentLevel = LevelID;
@@ -882,8 +882,10 @@ namespace LevelsPro.PlayerPanel
 
                 if (Convert.ToInt32(ViewState["LinkedKPIID"]).Equals(TargetText))
                 {
-                    int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
+
+                   int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
                    ViewState["targetvalue"]=TargetValue;
+                   ViewState["targetmeasure"] = "";
 
                     if (Convert.ToInt32(ViewState["TotalPlayerScore"]) < TargetValue)
                     {
@@ -1008,7 +1010,7 @@ namespace LevelsPro.PlayerPanel
                                 {
                                     UserPoints = dr["Points"].ToString();
                                 }
-
+                                
                             }
 
                         }
@@ -1021,9 +1023,30 @@ namespace LevelsPro.PlayerPanel
             if (Convert.ToInt32(ViewState["LinkedKPIID"]) > 0)
             {
 
+                KPIViewBLL kpi = new KPIViewBLL();
+                try
+                {
+
+                    kpi.Invoke();
+
+                    var dvKPI = kpi.ResultSet.Tables[0].DefaultView;
+                    dvKPI.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
+                    DataTable dT = new DataTable();
+                    dT = dvKPI.ToTable();
+                    user.Measure = dT.Rows[0]["KPI_Type_Name"].ToString().Substring(0,3);
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            
+
                 user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                 user.CurrentLevel = LevelID;
                 user.Score = Convert.ToInt32(ViewState["targetvalue"]);
+                user.EntryDate = Convert.ToDateTime(DateTime.Now);
+
                 score.User = user;
 
                 try

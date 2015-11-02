@@ -4251,6 +4251,8 @@ USE `levelspro`$$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_InsertScoreAuto`(p_LevelID int,p_UserID int,p_KPIID int,p_Score int, p_Measure varchar(50),p_EntryDate datetime)
 BEGIN
 	
+SET SQL_SAFE_UPDATES=0;
+
 IF ( NOT EXISTS(SELECT * FROM tblScores WHERE Type_ID=p_KPIID AND U_Type ='KPI' AND User_ID =p_UserID AND LevelID = p_LevelID))
 then
 Insert into tblScores(User_ID,U_Type,Type_ID,Score,Entry_Date,LevelID,Measure)

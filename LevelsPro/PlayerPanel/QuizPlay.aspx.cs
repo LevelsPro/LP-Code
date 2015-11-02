@@ -1577,7 +1577,6 @@ namespace LevelsPro.PlayerPanel
 
             ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();
 
-
             user.UserID = UserID;
             user.CurrentLevel = LevelID;
 
@@ -1661,9 +1660,28 @@ namespace LevelsPro.PlayerPanel
             }
             if (Convert.ToInt32(ViewState["LinkedKPIID"]) > 0)
             {
+
+                KPIViewBLL kpi = new KPIViewBLL();
+                try
+                {
+
+                    kpi.Invoke();
+
+                    var dvKPI = kpi.ResultSet.Tables[0].DefaultView;
+                    dvKPI.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
+                    DataTable dT = new DataTable();
+                    dT = dvKPI.ToTable();
+                    user.Measure = dT.Rows[0]["KPI_Type_Name"].ToString().Substring(0, 3);
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
                 user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                 user.Score = Convert.ToInt32(ViewState["TargetCurrentScore"]);
                 score.User = user;
+                user.EntryDate = Convert.ToDateTime(DateTime.Now);
 
                 try
                 {
