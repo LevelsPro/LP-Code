@@ -503,6 +503,7 @@ namespace LevelsPro.PlayerPanel
             _match.IsCorrect = 1;
 
             insertpoints.Match = _match;
+            ViewState["Match_total_score"] = TotalPlayerScore;
             try
             {
                 insertpoints.Invoke();
@@ -885,20 +886,19 @@ namespace LevelsPro.PlayerPanel
 
                    int TargetValue = Convert.ToInt32(dtTarget.Rows[i]["Target_Value"].ToString());
                    ViewState["targetvalue"]=TargetValue;
-                   ViewState["targetmeasure"] = "";
 
-                    if (Convert.ToInt32(ViewState["TotalPlayerScore"]) < TargetValue)
+                   if (Convert.ToInt32(ViewState["Match_total_score"]) < TargetValue)
                     {
-                        ViewState["targetvalue"]=Convert.ToInt32(ViewState["TotalPlayerScore"]);
+                        ViewState["targetvalue"] = Convert.ToInt32(ViewState["Match_total_score"]);
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
-                        user.Score = Convert.ToInt32(ViewState["TotalPlayerScore"]);
+                        user.Score = Convert.ToInt32(ViewState["Match_total_score"]);
 
                         break;
                     }
-                    else if (Convert.ToInt32(ViewState["TotalPlayerScore"]) == TargetValue)
+                   else if (Convert.ToInt32(ViewState["Match_total_score"]) == TargetValue)
                     {
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
-                        user.Score = Convert.ToInt32(ViewState["TotalPlayerScore"]);
+                        user.Score = Convert.ToInt32(ViewState["Match_total_score"]);
 
                         #region KPI Score Acheived
                         PlayerTargetScoreViewBLL targetprogress = new PlayerTargetScoreViewBLL();
@@ -912,6 +912,7 @@ namespace LevelsPro.PlayerPanel
                         {
                             throw ex;
                         }
+
                         DataView dv = targetprogress.ResultSet.Tables[0].DefaultView;
                         dv.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
                         DataTable dT = new DataTable();
@@ -955,7 +956,7 @@ namespace LevelsPro.PlayerPanel
 
                         break;
                     }
-                    else if (Convert.ToInt32(ViewState["TotalPlayerScore"]) > TargetValue)
+                   else if (Convert.ToInt32(ViewState["Match_total_score"]) > TargetValue)
                     {
                         user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                         user.Score = TargetValue;
