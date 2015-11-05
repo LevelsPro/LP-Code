@@ -871,8 +871,6 @@ namespace LevelsPro.PlayerPanel
 
             DataTable dtTarget = dvTarget.ToTable();
 
-            ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();           
-
             user.UserID = UserID;
             user.CurrentLevel = LevelID;
 
@@ -1024,35 +1022,27 @@ namespace LevelsPro.PlayerPanel
             if (Convert.ToInt32(ViewState["LinkedKPIID"]) > 0)
             {
 
-                KPIViewBLL kpi = new KPIViewBLL();
-                try
-                {
-
-                    kpi.Invoke();
-
-                    var dvKPI = kpi.ResultSet.Tables[0].DefaultView;
-                    dvKPI.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
-                    DataTable dT = new DataTable();
-                    dT = dvKPI.ToTable();
-                    user.Measure = dT.Rows[0]["KPI_Type_Name"].ToString().Substring(0,3);
-
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            
-
+                user.Measure = ViewState["KPI_Type"].ToString().Substring(0, 3);
                 user.KPIID = Convert.ToInt32(ViewState["LinkedKPIID"]);
                 user.CurrentLevel = LevelID;
                 user.Score = Convert.ToInt32(ViewState["targetvalue"]);
                 user.EntryDate = Convert.ToDateTime(DateTime.Now);
 
-                score.User = user;
-
                 try
                 {
-                    score.Invoke();
+                    if (ViewState["KPI_Type"].ToString().ToLower().Substring(0, 3) == "max")
+                    {
+
+                        ScoreInsertAutoBLL score = new ScoreInsertAutoBLL();
+                        score.User = user;
+                        score.Invoke();
+                    }
+                    else
+                    {
+                        ScoreManualUpdateBLL score = new ScoreManualUpdateBLL();
+                        score.User = user;
+                        score.Invoke();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1105,15 +1095,38 @@ namespace LevelsPro.PlayerPanel
             {
                 throw ex;
             }
-            DataView dv = Match_Selection.ResultSet.Tables[0].DefaultView;
-            dv.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND MatchID =" +
-                                                    Convert.ToInt32(Request.QueryString["matchid"]);
-            
-            DataRow[] drs = dv.ToTable().Select("MatchPoints = max(MatchPoints)");
 
-            if (drs.Length > 0)
+            KPIViewBLL kpi = new KPIViewBLL();
+            bool isMaxKPI = false;
+            try
             {
-                ViewState["TotalPlayerScore"] = Convert.ToInt32(drs[0]["MatchPoints"].ToString());
+
+                kpi.Invoke();
+
+                var dvKPI = kpi.ResultSet.Tables[0].DefaultView;
+                dvKPI.RowFilter = "KPI_ID = " + Convert.ToInt32(ViewState["LinkedKPIID"]);
+                DataTable dT = new DataTable();
+                dT = dvKPI.ToTable();
+                ViewState["KPI_Type"] = dT.Rows[0]["KPI_Type_Name"].ToString();
+                isMaxKPI = dT.Rows[0]["KPI_Type_Name"].ToString().Substring(0, 3).ToLower() == "max";
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            if (!isMaxKPI)
+            {
+                DataView dv = Match_Selection.ResultSet.Tables[0].DefaultView;
+                dv.RowFilter = "UserID =" + Convert.ToInt32(Session["userid"]) + " AND MatchID =" +                                                        Convert.ToInt32(Request.QueryString["matchid"]);
+
+                DataRow[] drs = dv.ToTable().Select("MatchPoints = max(MatchPoints)");
+
+                if (drs.Length > 0)
+                {
+                    ViewState["Match_total_score"] = Convert.ToInt32(drs[0]["MatchPoints"].ToString());
+                }
             }
         }
 
