@@ -629,6 +629,8 @@
     <Content Include="PlayerPanel\ContestDetails.aspx" />
     <Content Include="PlayerPanel\fonts\avengeance_mightiest_avenger-webfont.svg" />
     <Content Include="PlayerPanel\Images\bg-scrollbar-thumb-x.png" />
+    <Content Include="PlayerPanel\Images\bg-scrollbar-track-x-end.png" />
+    <Content Include="PlayerPanel\Images\bg-scrollbar-trackbody-x.png" />
     <Content Include="PlayerPanel\Images\body-bg2.png" />
     <Content Include="PlayerPanel\Images\contest-points-bg.png" />
     <Content Include="PlayerPanel\Images\divisor.png" />
@@ -652,6 +654,7 @@
     <Content Include="PlayerPanel\Images\qbtns-disabled-bg-white.png" />
     <Content Include="PlayerPanel\Images\qbtns-disabled-blue-bg.png" />
     <Content Include="PlayerPanel\Images\qbtns-wrong-nox-bg.png" />
+    <Content Include="PlayerPanel\Images\scrollbar-body.png" />
     <Content Include="PlayerPanel\Images\stars_bronze.png" />
     <Content Include="PlayerPanel\Images\stars_gold.png" />
     <Content Include="PlayerPanel\Images\stars_silver.png" />
