@@ -59,7 +59,6 @@
 
     </script>
     <script type="text/javascript" src="Scripts/jquery.min.js"></script>
-    <script type="text/javascript" src="Scripts/jquery.tinyscrollbar.min.js"></script>
     <link href="Styles/theme-3.css" rel="stylesheet" type="text/css" />
   	<link href="Styles/theme.css" rel="stylesheet" type="text/css" />
 	<link href="Styles/website.css" rel="stylesheet" type="text/css" />
@@ -71,12 +70,12 @@
         }
 
         $(document).ready(function () {
-            $('#scrollbar1').tinyscrollbar();
+           // $('#scrollbar1').tinyscrollbar();
             $('.amount').digits();
 
-            var h = $('.scrollbar').height();
-            h = h - 11;
-            $('.scrollbar').css("height", h);
+           // var h = $('.scrollbar').height();
+           // h = h - 11;
+           // $('.scrollbar').css("height", h);
         });
     </script>
 </asp:Content>
@@ -105,7 +104,6 @@
     
 		<div class="redemption-holder redemption" id="scrollbar1">
 				
-				<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
 		<div class="viewport redemption">
             <div style="width:100px;position:absolute; top:-50px; height:100px; right:-50px;"></div>
             <div style="width:100px;position:absolute; bottom:-50px; height:100px; right:-50px;"></div>
