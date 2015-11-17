@@ -512,7 +512,6 @@ namespace LevelsPro.PlayerPanel
             {
                 throw ex;
             }
-            LevelUp();
         }
 
         protected void btnCnfrm_Click(object sender, EventArgs e)
@@ -543,7 +542,7 @@ namespace LevelsPro.PlayerPanel
             Confirm();
 
             UpdatingTargetScore();
-
+            LevelUp();
             Response.Redirect("QuizSelection.aspx", true);
         }
 

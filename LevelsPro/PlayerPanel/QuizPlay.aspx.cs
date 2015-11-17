@@ -528,6 +528,7 @@ namespace LevelsPro.PlayerPanel
             if (Convert.ToInt32( Session["check"]) == 1)
             {
 
+                LevelUp();
                 ViewState["TargetCurrentScore"] = 0;
                 Response.Redirect("QuizResult.aspx?check= " + Convert.ToInt32(Request.QueryString["quizid"]));
                 btnNext.Visible = false;
@@ -683,6 +684,7 @@ namespace LevelsPro.PlayerPanel
                 Session["scoreTemp"] = Convert.ToDecimal(Session["score"]) / (Convert.ToInt32(Session["timeSec"]));
                 Session["values"] = 100 - (100 / Convert.ToInt32(Session["timeSec"]));
                 TimerQuestion.Enabled = true;
+                LevelUp();
                 //
                 /////////////
             }
@@ -1373,7 +1375,6 @@ namespace LevelsPro.PlayerPanel
             btnAnswer3.Attributes["Class"] = "qbtn option";
             btnAnswer4.Attributes["Class"] = "qbtn option";
             Next();
-            LevelUp();
 
         }
 
