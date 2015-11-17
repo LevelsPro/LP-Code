@@ -527,7 +527,7 @@ namespace LevelsPro.PlayerPanel
             if (Convert.ToInt32( Session["check"]) == 1)
             {
 
-
+                LevelUp();
                 Response.Redirect("QuizResult.aspx?check= " + Convert.ToInt32(Request.QueryString["quizid"]));
                 btnNext.Visible = false;
                 lblExplain.Visible = false;
@@ -684,6 +684,7 @@ namespace LevelsPro.PlayerPanel
                 TimerQuestion.Enabled = true;
                 //
                 /////////////
+                LevelUp();
             }
 
         }
@@ -1373,7 +1374,6 @@ namespace LevelsPro.PlayerPanel
             btnAnswer3.Attributes["Class"] = "qbtn option";
             btnAnswer4.Attributes["Class"] = "qbtn option";
             Next();
-            LevelUp();
 
         }
 
@@ -1496,9 +1496,6 @@ namespace LevelsPro.PlayerPanel
                                 throw ex;
                             }
 
-
-
-                            //
                         }
 
 
