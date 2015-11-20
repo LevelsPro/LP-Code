@@ -13,7 +13,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#scrollbar1').tinyscrollbar();
+
+            $(".close-alert").on("click", function () {
+                $(".alert-box").hide();
+            })
         });
+
+ 
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -45,7 +51,11 @@
             SelectCommand="Select UserID, U_EmpID from tblUser"></asp:SqlDataSource>
         <br /><br /><br />
         <asp:GridView ID="gvAPI" runat="server" AutoGenerateColumns="true" Width="100%">
-                    </asp:GridView>
+        </asp:GridView>
+        <asp:panel ID="pnlAlertBox" class="alert-box" runat="server" Visible="true">
+            <p>The data were successfully imported</p>
+            <span class="close-alert">X</span>
+        </asp:panel>
         <div class="manager-cont" id="scrollbar1">
             <div class="scrollbar">
                 <div class="track">

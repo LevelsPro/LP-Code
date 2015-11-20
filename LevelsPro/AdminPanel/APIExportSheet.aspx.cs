@@ -31,6 +31,7 @@ namespace LevelsPro.AdminPanel
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            pnlAlertBox.Visible = false;
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             lblMessage.Visible = false;
             if (!IsPostBack)
@@ -85,6 +86,7 @@ namespace LevelsPro.AdminPanel
         {
             try
             {
+                pnlAlertBox.Visible = false;
                 DataView dvuserid = new DataView();
                 userdata.Select(DataSourceSelectArguments.Empty);
                 dvuserid= userdata.Select(DataSourceSelectArguments.Empty) as DataView;
@@ -661,6 +663,8 @@ namespace LevelsPro.AdminPanel
                 lblErrorMessages.Text = "Final";
                 gvAPI.DataSource = null;
                 gvAPI.DataBind();
+                pnlAlertBox.Visible = true;
+
             }
             catch (Exception exc)
             {
@@ -680,6 +684,7 @@ namespace LevelsPro.AdminPanel
         #region import to grid from excel
         protected void btnImpToGrid_Click(object sender, EventArgs e)
         {
+            pnlAlertBox.Visible = false;
             string FilePath = "";
             string fileName = "";
             string FullName = "";
