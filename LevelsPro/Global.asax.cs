@@ -63,8 +63,7 @@ namespace LevelsPro
             Session["username"] = null;
             Session.Clear();
             Session.RemoveAll();
-            
-
+            Response.Redirect("~/Login.aspx", true);   
         }
 
     }
