@@ -75,7 +75,8 @@
 
            // var h = $('.scrollbar').height();
            // h = h - 11;
-           // $('.scrollbar').css("height", h);
+           // $('.scrollbar').css("height", h);
+
         });
     </script>
 </asp:Content>
@@ -102,7 +103,7 @@
 	<uc:Profile ID="ViewProfile" runat="server" />
 	
     
-		<div class="redemption-holder redemption" id="scrollbar1">
+		<div class="redemption-holder redemption">
 				
 		<div class="viewport redemption">
             <div style="width:100px;position:absolute; top:-50px; height:100px; right:-50px;"></div>
