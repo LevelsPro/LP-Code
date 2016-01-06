@@ -13,7 +13,7 @@
         <ItemTemplate>
             <li>
                 <asp:LinkButton ID="lnkbtnContestDetail" runat="server" CommandArgument='<%# Eval("ContestID") %>'
-                    CommandName="ViewContests" Enabled="false">
+                    CommandName="ViewContests">
                     <div class="strip">
                         <div class="msg-r">
                             <span class='st <%# Eval("cssClass") %>'>
